@@ -138,7 +138,7 @@ function WorkspaceShell({ workspace, onPersist }: {
   const { studioMode } = useEditor();
   return (
     <div
-      className={`flex h-screen flex-col overflow-hidden ${studioMode ? 'bg-[#0d1011]' : 'bg-[#1a2123]'}`}
+      className={`flex h-screen flex-col overflow-hidden ${studioMode ? 'bg-[#050506]' : 'bg-[#111113]'}`}
       data-studio-mode={studioMode ? 'on' : 'off'}
     >
       <TopNavbar />

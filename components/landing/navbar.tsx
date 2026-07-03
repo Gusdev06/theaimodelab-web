@@ -53,7 +53,7 @@ export function Navbar() {
         className={cn(
           "fixed top-0 right-0 left-0 z-50 border-b transition-all duration-500",
           scrolled
-            ? "border-[#f3f0ed]/[0.06] bg-[#141a1c]/90 shadow-[0_1px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
+            ? "border-[#f3f0ed]/[0.06] bg-[#0a0a0b]/90 shadow-[0_1px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl"
             : "border-transparent bg-transparent",
         )}
       >
@@ -61,7 +61,7 @@ export function Navbar() {
           {/* logo */}
           <a href="/" className="group flex items-center gap-2">
             <Image
-              src="/logo_2.svg"
+              src="/logo-red.jpg"
               alt="The AI Model Lab"
               width={130}
               height={32}
@@ -93,8 +93,8 @@ export function Navbar() {
               </>
             ) : isLoggedIn ? (
               <a
-                href="/workspace"
-                className="rounded-xl bg-landing-accent px-5 py-2.5 text-[13px] font-semibold text-[#1a2123] transition-all duration-300 hover:shadow-[0_0_24px_rgba(245,64,157,0.3)] hover:brightness-110"
+                href="/home"
+                className="landing-btn bg-landing-accent px-5 py-2.5 text-[13px] font-semibold text-[#111113] shadow-[0_0_24px_rgba(225,29,42,0.18)] hover:shadow-[0_0_28px_rgba(225,29,42,0.32)]"
               >
                 {tNav("accessPlatform")}
               </a>
@@ -102,16 +102,17 @@ export function Navbar() {
               <>
                 <button
                   onClick={() => openLoginModal()}
-                  className="rounded-xl border border-[#f3f0ed]/[0.08] px-5 py-2.5 text-[13px] font-medium text-[#f3f0ed]/60 transition-all duration-300 hover:border-[#f3f0ed]/[0.15] hover:text-[#f3f0ed]"
+                  className="landing-ease rounded-full border border-[#f3f0ed]/[0.08] px-5 py-2.5 text-[13px] font-medium text-[#f3f0ed]/60 transition-all duration-300 hover:border-[#f3f0ed]/[0.15] hover:text-[#f3f0ed]"
                 >
                   {tNav("login")}
                 </button>
-                <a
-                  href="/workspace?register=true"
-                  className="rounded-xl bg-landing-accent px-5 py-2.5 text-[13px] font-semibold text-[#1a2123] transition-all duration-300 hover:shadow-[0_0_24px_rgba(245,64,157,0.3)] hover:brightness-110"
+                <button
+                  type="button"
+                  onClick={() => openLoginModal({ mode: "register" })}
+                  className="landing-btn bg-landing-accent px-5 py-2.5 text-[13px] font-semibold text-[#111113] shadow-[0_0_24px_rgba(225,29,42,0.18)] hover:shadow-[0_0_28px_rgba(225,29,42,0.32)]"
                 >
                   {tNav("tryFree")}
-                </a>
+                </button>
               </>
             )}
           </div>
@@ -119,7 +120,7 @@ export function Navbar() {
           {/* mobile hamburger */}
           <button
             onClick={() => setOpen(!open)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#141a1c]/80 text-[#f3f0ed]/80 transition-colors hover:bg-[#f3f0ed]/[0.08] hover:text-[#f3f0ed] md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0a0a0b]/80 text-[#f3f0ed]/80 transition-colors hover:bg-[#f3f0ed]/[0.08] hover:text-[#f3f0ed] md:hidden"
             aria-label="Menu"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -139,13 +140,13 @@ export function Navbar() {
       {/* mobile aside — drawer */}
       <aside
         className={cn(
-          "fixed top-0 right-0 z-[70] flex h-full w-[280px] flex-col bg-[#141a1c] shadow-2xl transition-transform duration-300 ease-in-out md:hidden",
+          "fixed top-0 right-0 z-[70] flex h-full w-[280px] flex-col bg-[#0a0a0b] shadow-2xl transition-transform duration-300 ease-in-out md:hidden",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
         {/* header do aside */}
         <div className="flex h-[64px] items-center justify-between border-b border-[#f3f0ed]/[0.06] px-5 sm:h-[72px]">
-          <Image src="/logo_2.svg" alt="The AI Model Lab" width={100} height={28} className="h-7 w-auto" />
+          <Image src="/logo-red.jpg" alt="The AI Model Lab" width={100} height={28} className="h-7 w-auto" />
           <button
             onClick={() => setOpen(false)}
             className="flex h-9 w-9 items-center justify-center rounded-xl text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]"
@@ -177,8 +178,8 @@ export function Navbar() {
             </>
           ) : isLoggedIn ? (
             <a
-              href="/workspace"
-              className="rounded-xl bg-landing-accent py-3.5 text-center text-[14px] font-semibold text-[#1a2123] transition-all hover:brightness-110"
+              href="/home"
+              className="landing-btn block bg-landing-accent py-3.5 text-center text-[14px] font-semibold text-[#111113]"
             >
               Acessar Plataforma
             </a>
@@ -186,17 +187,17 @@ export function Navbar() {
             <>
               <button
                 onClick={() => { setOpen(false); openLoginModal(); }}
-                className="w-full rounded-xl border border-[#f3f0ed]/[0.08] py-3.5 text-center text-[14px] font-medium text-[#f3f0ed]/60 transition-all hover:border-[#f3f0ed]/[0.15] hover:text-[#f3f0ed]"
+                className="landing-ease w-full rounded-full border border-[#f3f0ed]/[0.08] py-3.5 text-center text-[14px] font-medium text-[#f3f0ed]/60 transition-all hover:border-[#f3f0ed]/[0.15] hover:text-[#f3f0ed]"
               >
                 {tNav("login")}
               </button>
-              <a
-                href="/workspace?register=true"
-                onClick={() => setOpen(false)}
-                className="block rounded-xl bg-landing-accent py-3.5 text-center text-[14px] font-semibold text-[#1a2123] transition-all hover:brightness-110"
+              <button
+                type="button"
+                onClick={() => { setOpen(false); openLoginModal({ mode: "register" }); }}
+                className="landing-btn block w-full bg-landing-accent py-3.5 text-center text-[14px] font-semibold text-[#111113]"
               >
                 {tNav("tryFree")}
-              </a>
+              </button>
             </>
           )}
         </div>

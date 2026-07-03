@@ -18,7 +18,7 @@ function StatusBadge({ status }: { status: string }) {
   const config: Record<string, { color: string; icon: React.ElementType }> = {
     PENDING: { color: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400', icon: Clock },
     PROCESSING: { color: 'border-blue-500/30 bg-blue-500/10 text-blue-400', icon: Loader2 },
-    COMPLETED: { color: 'border-pink-500/30 bg-pink-500/10 text-pink-400', icon: CheckCircle2 },
+    COMPLETED: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: CheckCircle2 },
     PARTIAL_FAILURE: { color: 'border-orange-500/30 bg-orange-500/10 text-orange-400', icon: AlertCircle },
     FAILED: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: XCircle },
   };
@@ -55,9 +55,9 @@ export default function AdminEmailsListPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="app-reveal">
           <div className="flex items-center gap-2">
-            <Mail className="h-5 w-5 text-[#f5409d]" />
+            <Mail className="h-5 w-5 text-[#e11d2a]" />
             <h1 className="text-xl font-semibold text-[#f3f0ed]">Emails</h1>
           </div>
           <p className="mt-1 text-sm text-[#f3f0ed]/50">
@@ -66,17 +66,17 @@ export default function AdminEmailsListPage() {
         </div>
         <Link
           href="/admin/emails/novo"
-          className="inline-flex items-center gap-2 rounded-lg bg-[#f5409d] px-4 py-2 text-sm font-semibold text-[#111618] transition-colors hover:bg-[#f5409d]/90"
+          className="app-btn inline-flex items-center gap-2 bg-[#e11d2a] px-4 py-2 text-sm font-semibold text-[#111618]"
         >
           <Plus className="h-4 w-4" />
           Novo email
         </Link>
       </div>
 
-      <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c]">
+      <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b]">
         {query.isLoading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+            <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
           </div>
         ) : query.error ? (
           <div className="px-6 py-12 text-center text-sm text-red-400">
@@ -110,7 +110,7 @@ export default function AdminEmailsListPage() {
                     <td className="px-5 py-3">
                       <Link
                         href={`/admin/emails/${b.id}`}
-                        className="block max-w-md truncate font-medium hover:text-[#f5409d]"
+                        className="block max-w-md truncate font-medium hover:text-[#e11d2a]"
                       >
                         {b.subject}
                       </Link>
@@ -124,7 +124,7 @@ export default function AdminEmailsListPage() {
                       </div>
                     </td>
                     <td className="px-5 py-3">
-                      <span className="text-pink-400">{b.sentCount}</span>
+                      <span className="text-red-400">{b.sentCount}</span>
                       {b.failedCount > 0 && (
                         <>
                           <span className="text-[#f3f0ed]/30"> / </span>

@@ -9,7 +9,7 @@ interface SparklineProps {
   height?: number;
 }
 
-export function Sparkline({ data, color = '#f5409d', width = 80, height = 32 }: SparklineProps) {
+export function Sparkline({ data, color = '#e11d2a', width = 80, height = 32 }: SparklineProps) {
   if (!data.length) return null;
 
   return (

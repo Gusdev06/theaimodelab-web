@@ -261,7 +261,7 @@ export function CreateInfluencerPanel({ nodeId, onClose, onDuplicate }: CreateIn
 
           {genState === 'idle' && !generatedImageUrl ? (
             <div
-              className="flex flex-col items-center justify-center gap-2 rounded-xl bg-[#0d1011] px-3 text-[#f3f0ed]/40"
+              className="flex flex-col items-center justify-center gap-2 rounded-xl bg-[#050506] px-3 text-[#f3f0ed]/40"
               style={{ aspectRatio: '9 / 16' }}
             >
               <PersonStanding className="h-6 w-6" />
@@ -286,7 +286,7 @@ export function CreateInfluencerPanel({ nodeId, onClose, onDuplicate }: CreateIn
                   onClick={handleGenerate}
                   disabled={isGenerating}
                   title={t('generate')}
-                  className="inline-flex items-center gap-1 rounded-full bg-[#f5409d] px-2.5 py-1 text-[11px] font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center gap-1 rounded-full bg-[#e11d2a] px-2.5 py-1 text-[11px] font-bold text-[#111113] transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isGenerating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Sparkles className="h-3 w-3" />}
                   {creditCost || '—'}
@@ -300,11 +300,11 @@ export function CreateInfluencerPanel({ nodeId, onClose, onDuplicate }: CreateIn
   }
 
   return (
-    <div className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#1a2123] shadow-2xl shadow-black/50 sm:w-[320px]">
+    <div className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#111113] shadow-2xl shadow-black/50 sm:w-[320px]">
       {/* Header — drag handle */}
       <div className="panel-drag-handle flex cursor-grab items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3 active:cursor-grabbing">
         <div className="flex items-center gap-2">
-          <PersonStanding className="h-4 w-4 text-[#f5409d]" />
+          <PersonStanding className="h-4 w-4 text-[#e11d2a]" />
           <span className="text-xs font-bold tracking-[0.15em] text-[#f3f0ed]/90">
             {t('title')}
           </span>
@@ -326,7 +326,7 @@ export function CreateInfluencerPanel({ nodeId, onClose, onDuplicate }: CreateIn
 
         {/* ── Idle state — empty placeholder ────────────────────────── */}
         {genState === 'idle' && !generatedImageUrl && (
-          <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#4b1e3a]/10 px-4 py-10">
+          <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#3a0f16]/10 px-4 py-10">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f3f0ed]/[0.05]">
               <PersonStanding className="h-6 w-6 text-[#f3f0ed]/25" />
             </div>
@@ -355,7 +355,7 @@ export function CreateInfluencerPanel({ nodeId, onClose, onDuplicate }: CreateIn
         {genState !== 'generating' && (
           <div className="flex items-center justify-between rounded-xl border border-[#f3f0ed]/7 bg-[#f3f0ed]/3 px-3 py-2">
             <div className="flex items-center gap-1.5">
-              <Coins className="h-3 w-3 text-[#f5409d]" />
+              <Coins className="h-3 w-3 text-[#e11d2a]" />
               <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/40 uppercase">{t('cost')}</span>
             </div>
             {estimateLoading ? (
@@ -363,7 +363,7 @@ export function CreateInfluencerPanel({ nodeId, onClose, onDuplicate }: CreateIn
             ) : estimate ? (
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold text-[#f3f0ed]/70">{t('creditsLabel', { credits: estimate.creditsRequired })}</span>
-                <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#f5409d]' : 'bg-red-400'}`} />
+                <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#e11d2a]' : 'bg-red-400'}`} />
               </div>
             ) : null}
           </div>
@@ -375,9 +375,9 @@ export function CreateInfluencerPanel({ nodeId, onClose, onDuplicate }: CreateIn
           disabled={genState === 'generating'}
           className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
           style={{
-            background: genState === 'generating' ? 'rgba(245,64,157,0.12)' : '#f5409d',
-            color: genState === 'generating' ? '#f5409d' : '#1a2123',
-            border: genState === 'generating' ? '1px solid rgba(245,64,157,0.2)' : 'none',
+            background: genState === 'generating' ? 'rgba(225,29,42,0.12)' : '#e11d2a',
+            color: genState === 'generating' ? '#e11d2a' : '#111113',
+            border: genState === 'generating' ? '1px solid rgba(225,29,42,0.2)' : 'none',
           }}
         >
           {genState === 'generating' ? (

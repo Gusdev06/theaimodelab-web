@@ -23,13 +23,13 @@ export default function InicioPage() {
     <div className="mx-auto w-full max-w-[1280px] px-6 pb-16 pt-8 lg:px-11">
       {/* saudação + Criar */}
       <div className="mb-7 flex items-end justify-between gap-4">
-        <h1 className="text-[28px] font-bold leading-tight tracking-[-0.4px] text-app-text md:text-[38px]">
+        <h1 className="app-reveal text-[28px] font-bold leading-tight tracking-[-0.4px] text-app-text md:text-[38px]">
           {firstName ? t('hero.greetingNamed', { name: firstName }) : t('hero.greeting')}
         </h1>
         <CreateMenu align="end">
           <button
             type="button"
-            className="flex h-10 shrink-0 items-center gap-2 rounded-[10px] bg-app-lime px-4 text-[14.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover"
+            className="app-btn flex h-10 shrink-0 items-center gap-2 bg-app-lime px-4 text-[14.5px] font-semibold text-app-lime-ink"
           >
             <Plus className="size-[17px]" strokeWidth={2.2} />
             {t('shell.create')}
@@ -41,7 +41,7 @@ export default function InicioPage() {
       <button
         type="button"
         onClick={openPalette}
-        className="mb-7 flex w-full items-center gap-3 rounded-[14px] border border-app-hairline bg-app-surface px-4 py-3.5 text-left transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)]"
+        className="app-press mb-7 flex w-full items-center gap-3 rounded-[14px] border border-app-hairline bg-app-surface px-4 py-3.5 text-left transition-colors duration-200 ease-app hover:border-[rgba(225,29,42,0.4)]"
       >
         <Search className="size-[18px] text-app-muted" strokeWidth={1.8} />
         <span className="flex-1 truncate text-[14.5px] text-app-muted">{searchTyped}</span>

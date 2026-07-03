@@ -107,7 +107,7 @@ function PostCard({
           // reserva o espaço do card enquanto a mídia não carregou (evita salto no masonry)
           style={!loaded && !showFallback ? { aspectRatio: String(aspect) } : undefined}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(245,64,157,0.08),transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(225,29,42,0.08),transparent_55%)]" />
 
           {/* preview borrado de baixa qualidade (quando há thumbnail) enquanto a mídia carrega */}
           {!loaded && !showFallback && post.thumbnailUrl && (
@@ -350,7 +350,7 @@ export function CommunityView() {
         <div className="sticky top-0 z-10 flex items-center gap-3 bg-app-bg pb-4 pt-6">
           <p
             className={cn(
-              'min-w-0 flex-1 truncate text-[14px] text-app-text-2 sm:text-[15px]',
+              'app-reveal min-w-0 flex-1 truncate text-[14px] text-app-text-2 sm:text-[15px]',
               // libera espaço para a busca no mobile quando ela está aberta
               searchOpen && 'max-sm:hidden',
             )}
@@ -360,7 +360,7 @@ export function CommunityView() {
 
           {/* busca expansível */}
           {searchOpen ? (
-            <div className="flex h-10 max-w-[280px] flex-1 items-center gap-2 rounded-full border border-app-hairline bg-app-surface px-3.5 transition-colors duration-200 ease-app focus-within:border-[rgba(245,64,157,0.4)]">
+            <div className="flex h-10 max-w-[280px] flex-1 items-center gap-2 rounded-full border border-app-hairline bg-app-surface px-3.5 transition-colors duration-200 ease-app focus-within:border-[rgba(225,29,42,0.4)]">
               <Search className="size-4 shrink-0 text-app-muted" strokeWidth={1.8} />
               <input
                 autoFocus
@@ -386,7 +386,7 @@ export function CommunityView() {
               type="button"
               aria-label={t('community.searchPlaceholder')}
               onClick={() => setSearchOpen(true)}
-              className="flex size-10 shrink-0 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
+              className="app-press flex size-10 shrink-0 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
             >
               <Search className="size-[18px]" strokeWidth={1.8} />
             </button>
@@ -397,7 +397,7 @@ export function CommunityView() {
             type="button"
             onClick={() => setSubmitOpen(true)}
             aria-label={t('community.post')}
-            className="flex h-10 shrink-0 items-center justify-center gap-2 rounded-[10px] bg-app-lime px-4 text-[13.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover max-sm:w-10 max-sm:px-0"
+            className="app-btn flex h-10 shrink-0 items-center justify-center gap-2 bg-app-lime px-4 text-[13.5px] font-semibold text-app-lime-ink max-sm:w-10 max-sm:px-0"
           >
             <Plus className="size-4" strokeWidth={2.2} />
             <span className="max-sm:hidden">{t('community.post')}</span>

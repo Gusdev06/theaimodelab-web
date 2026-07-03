@@ -49,7 +49,7 @@ export function AdminBarChart({
   data,
   dataKey,
   xAxisKey,
-  color = '#f5409d',
+  color = '#e11d2a',
   colors,
   formatValue,
   formatXAxis,

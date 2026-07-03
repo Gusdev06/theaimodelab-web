@@ -29,7 +29,7 @@ export function UnlimitedToggle({
   className,
 }: UnlimitedToggleProps) {
   const t = useTranslations('editorPanels.unlimited');
-  const accentColor = '#a855f7'; // violeta — distingue de outros toggles (#f5409d)
+  const accentColor = '#a855f7'; // violeta — distingue de outros toggles (#e11d2a)
   const inactiveColor = 'rgba(243,240,237,0.4)';
 
   const handleClick = () => {
@@ -45,7 +45,7 @@ export function UnlimitedToggle({
     <button
       onClick={handleClick}
       disabled={disabled}
-      className={cn('relative flex w-full items-center justify-between rounded-xl border px-3 py-2 transition-all', className)}
+      className={cn('app-press app-ease relative flex w-full items-center justify-between rounded-xl border px-3 py-2 transition-all', className)}
       style={{
         background: enabled ? 'rgba(168,85,247,0.08)' : 'transparent',
         borderColor: enabled ? 'rgba(168,85,247,0.25)' : 'rgba(243,240,237,0.07)',

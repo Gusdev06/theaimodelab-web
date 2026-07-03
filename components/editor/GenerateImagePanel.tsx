@@ -982,7 +982,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
             <StudioImageOutputHandle />
           <div
             ref={panelRef}
-            className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#f5409d]/30' : ''}`}
+            className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#e11d2a]/30' : ''}`}
             style={{ width: studioWidth, transition: 'width 0.4s ease, border-color 0.2s ease' }}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -1009,7 +1009,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
 
               {genState === 'idle' && !generatedImageUrl && (
                 <div
-                  className="rounded-xl bg-[#0d1011]"
+                  className="rounded-xl bg-[#050506]"
                   style={{
                     aspectRatio: PROPORTION_LABELS[proportion] ? proportion.replace('-', ' / ') : undefined,
                     transition: 'aspect-ratio 0.4s ease',
@@ -1036,8 +1036,8 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                 imageFilter={upscaleState === 'done' ? 'blur(0px) brightness(1.06) contrast(1.04) saturate(1.12)' : undefined}
               >
                 {upscaleState === 'done' && (
-                  <div className="absolute left-2 top-2 flex items-center justify-center rounded-full bg-[#f5409d] px-2 py-0.5">
-                    <span className="text-[8px] font-black tracking-widest text-[#1a2123]">HD+</span>
+                  <div className="absolute left-2 top-2 flex items-center justify-center rounded-full bg-[#e11d2a] px-2 py-0.5">
+                    <span className="text-[8px] font-black tracking-widest text-[#111113]">HD+</span>
                   </div>
                 )}
                 <ActionButton title={tCommon('expand')} onClick={() => window.open(generatedImageUrl!, '_blank')}>
@@ -1074,7 +1074,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                     <button
                       onClick={() => fileInputRef.current?.click()}
                       disabled={isGenerating || attachedImages.length >= 4}
-                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <Plus className="h-3.5 w-3.5" />
                     </button>
@@ -1086,7 +1086,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                     <button
                       onClick={() => openGalleryPicker({ nodeId, remaining: 4 - attachedImages.length, onSelect: (url) => { addImageFromUrl(url); toast.success(tCommon('imageAddedAsReference')); } })}
                       disabled={isGenerating || attachedImages.length >= 4}
-                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <FolderOpen className="h-3.5 w-3.5" />
                     </button>
@@ -1120,7 +1120,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                       options={modelSelectOptions}
                       onChange={setModel}
                       disabled={isGenerating}
-                      icon={<Sparkles className="h-3 w-3 text-[#f5409d]" />}
+                      icon={<Sparkles className="h-3 w-3 text-[#e11d2a]" />}
                       newLabel={tCommon('newBadge')}
                     />
                     <StudioSelectPill
@@ -1147,8 +1147,8 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                             disabled={isGenerating}
                             className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-medium transition-all disabled:cursor-not-allowed disabled:opacity-40 ${
                               enhancePrompt
-                                ? 'border-[#f5409d]/40 bg-[#f5409d]/10 text-[#f5409d]'
-                                : 'border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.04] text-[#f3f0ed]/55 hover:border-[#f5409d]/30 hover:text-[#f3f0ed]'
+                                ? 'border-[#e11d2a]/40 bg-[#e11d2a]/10 text-[#e11d2a]'
+                                : 'border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.04] text-[#f3f0ed]/55 hover:border-[#e11d2a]/30 hover:text-[#f3f0ed]'
                             }`}
                           >
                             {isEnhancing ? <Loader2 className="h-3 w-3 animate-spin" /> : <Wand2 className="h-3 w-3" />}
@@ -1164,7 +1164,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                       onClick={handleGenerate}
                       disabled={isGenerating || !prompt.trim()}
                       title={tCommon('generate')}
-                      className={`ml-auto inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 ${unlimited ? 'bg-[#a855f7] text-white' : 'bg-[#f5409d] text-[#1a2123]'}`}
+                      className={`ml-auto inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 ${unlimited ? 'bg-[#a855f7] text-white' : 'bg-[#e11d2a] text-[#111113]'}`}
                     >
                       {isGenerating ? (
                         <Loader2 className="h-3 w-3 animate-spin" />
@@ -1193,7 +1193,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
   // Hover dos botões de upload (referências) — violeta em modo ilimitado.
   const refHoverClass = unlimited
     ? 'hover:border-[#a855f7]/40 hover:text-[#a855f7]/60'
-    : 'hover:border-[#f5409d]/40 hover:text-[#f5409d]/60';
+    : 'hover:border-[#e11d2a]/40 hover:text-[#e11d2a]/60';
 
   const qualityOptionsForNormalMode = (
     isSeedreamLite
@@ -1215,11 +1215,11 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
       <TooltipProvider>
         <div
           ref={panelRef}
-          className={`w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border bg-[#1a2123] shadow-2xl shadow-black/50 transition-colors sm:w-[360px] ${
+          className={`w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border bg-[#111113] shadow-2xl shadow-black/50 transition-colors sm:w-[360px] ${
             unlimited
               ? 'unlimited-shimmer-border border-[#a855f7]/25'
               : isDraggingOver
-                ? 'border-[#f5409d]/50 ring-2 ring-[#f5409d]/30'
+                ? 'border-[#e11d2a]/50 ring-2 ring-[#e11d2a]/30'
                 : 'border-[#f3f0ed]/8'
           }`}
           onDragOver={handleDragOver}
@@ -1229,7 +1229,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
           {/* Header — drag handle */}
           <div className="panel-drag-handle flex cursor-grab items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3 active:cursor-grabbing">
             <div className="flex items-center gap-2">
-              <Image className={`h-4 w-4 ${unlimited ? 'text-[#a855f7]' : 'text-[#f5409d]'}`} />
+              <Image className={`h-4 w-4 ${unlimited ? 'text-[#a855f7]' : 'text-[#e11d2a]'}`} />
               <span className="text-xs font-bold tracking-[0.15em] text-[#f3f0ed]/90">
                 {t('header')}
               </span>
@@ -1252,7 +1252,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
               onChange={(e) => setPrompt(e.target.value)}
               rows={3}
               placeholder={t('promptPlaceholder')}
-              className={`w-full resize-none rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 py-2.5 text-sm text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:bg-[#4b1e3a]/30 ${unlimited ? 'focus:border-[#a855f7]/40' : 'focus:border-[#f5409d]/40'}`}
+              className={`w-full resize-none rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 py-2.5 text-sm text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:bg-[#3a0f16]/30 ${unlimited ? 'focus:border-[#a855f7]/40' : 'focus:border-[#e11d2a]/40'}`}
             />
 
             {/* Unlimited toggle (sempre aparece) */}
@@ -1300,8 +1300,8 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
             >
               {/* Upscale done badge */}
               {upscaleState === 'done' && (
-                <div className="absolute left-2 top-2 flex items-center justify-center rounded-full bg-[#f5409d] px-2 py-0.5">
-                  <span className="text-[8px] font-black tracking-widest text-[#1a2123]">HD+</span>
+                <div className="absolute left-2 top-2 flex items-center justify-center rounded-full bg-[#e11d2a] px-2 py-0.5">
+                  <span className="text-[8px] font-black tracking-widest text-[#111113]">HD+</span>
                 </div>
               )}
               <ActionButton title={tCommon('expand')} onClick={() => window.open(generatedImageUrl!, '_blank')}>
@@ -1350,7 +1350,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                     onClick={() => setOptionsOpen((o) => !o)}
                     className={`flex h-6 w-6 items-center justify-center rounded-full transition-all ${unlimited
                       ? 'text-[#a855f7]/60 hover:bg-[#a855f7]/10 hover:text-[#a855f7]'
-                      : 'text-[#f5409d]/60 hover:bg-[#f5409d]/10 hover:text-[#f5409d]'
+                      : 'text-[#e11d2a]/60 hover:bg-[#e11d2a]/10 hover:text-[#e11d2a]'
                       }`}
                   >
                     <Settings
@@ -1377,7 +1377,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                   <label className="flex items-center gap-1.5 text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/35">
                     {t('labels.model')}
                     {imageModelOptions.some((o) => o.badge) && (
-                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#f5409d] shadow-[0_0_6px_rgba(245,64,157,0.8)] animate-pulse" />
+                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#e11d2a] shadow-[0_0_6px_rgba(225,29,42,0.8)] animate-pulse" />
                     )}
                   </label>
                   <PanelSelect
@@ -1493,9 +1493,9 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                 {genState !== 'generating' && (
                   <div className="flex flex-col gap-1.5">
                     {estimate?.canUseFreeGeneration && (
-                      <div className="flex items-center gap-2 rounded-xl border border-pink-500/20 bg-pink-500/8 px-3 py-2">
-                        <Sparkles className="h-3 w-3 text-pink-400" />
-                        <span className="text-[11px] font-bold text-pink-400">
+                      <div className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/8 px-3 py-2">
+                        <Sparkles className="h-3 w-3 text-red-400" />
+                        <span className="text-[11px] font-bold text-red-400">
                           {tCommon('freeGeneration')} {tCommon('freeGenerationRemaining', { count: estimate.freeGenerationsRemainingForType, plural: estimate.freeGenerationsRemainingForType !== 1 ? 's' : '' })}
                         </span>
                       </div>
@@ -1511,7 +1511,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                         {unlimited ? (
                           <InfinityIcon className="h-3 w-3 text-[#a855f7]" />
                         ) : (
-                          <Coins className="h-3 w-3 text-[#f5409d]" />
+                          <Coins className="h-3 w-3 text-[#e11d2a]" />
                         )}
                         <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/40 uppercase">{tCommon('cost')}</span>
                       </div>
@@ -1522,11 +1522,11 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                       ) : estimate ? (
                         <div className="flex items-center gap-2">
                           {estimate.canUseFreeGeneration ? (
-                            <span className="text-xs font-bold text-pink-400">{tCommon('free')}</span>
+                            <span className="text-xs font-bold text-red-400">{tCommon('free')}</span>
                           ) : (
                             <span className="text-xs font-bold text-[#f3f0ed]/70">{estimate.creditsRequired} {tCommon('credits')}</span>
                           )}
-                          <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#f5409d]' : 'bg-red-400'}`} />
+                          <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#e11d2a]' : 'bg-red-400'}`} />
                         </div>
                       ) : null}
                     </div>
@@ -1543,23 +1543,23 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                       genState === 'generating'
                         ? unlimited
                           ? 'rgba(168,85,247,0.12)'
-                          : 'rgba(245,64,157,0.12)'
+                          : 'rgba(225,29,42,0.12)'
                         : unlimited
                           ? '#a855f7'
-                          : '#f5409d',
+                          : '#e11d2a',
                     color:
                       genState === 'generating'
                         ? unlimited
                           ? '#a855f7'
-                          : '#f5409d'
+                          : '#e11d2a'
                         : unlimited
                           ? '#ffffff'
-                          : '#1a2123',
+                          : '#111113',
                     border:
                       genState === 'generating'
                         ? unlimited
                           ? '1px solid rgba(168,85,247,0.25)'
-                          : '1px solid rgba(245,64,157,0.2)'
+                          : '1px solid rgba(225,29,42,0.2)'
                         : 'none',
                   }}
                 >
@@ -1620,7 +1620,7 @@ function ActionButton({
       <TooltipTrigger asChild>
         <button
           onClick={onClick}
-          className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1a2123]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#4b1e3a] hover:text-[#f5409d]"
+          className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111113]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#3a0f16] hover:text-[#e11d2a]"
         >
           {children}
         </button>
@@ -1665,7 +1665,7 @@ function FolderAddDialog({
 
   return (
     <Dialog open={open} onOpenChange={(v) => { onOpenChange(v); if (!v) setNewName(''); }}>
-      <DialogContent className="max-w-xs rounded-2xl border border-[#f3f0ed]/10 bg-[#1a2123] p-5 shadow-2xl">
+      <DialogContent className="max-w-xs rounded-2xl border border-[#f3f0ed]/10 bg-[#111113] p-5 shadow-2xl">
         <DialogHeader>
           <DialogTitle className="text-sm font-bold text-[#f3f0ed]">{title}</DialogTitle>
           <DialogDescription className="text-xs text-[#f3f0ed]/40">
@@ -1684,10 +1684,10 @@ function FolderAddDialog({
                   className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition-all hover:bg-[#f3f0ed]/5"
                 >
                   <div className="flex items-center gap-2">
-                    <FolderPlus className="h-3.5 w-3.5 text-[#f5409d]/60" />
+                    <FolderPlus className="h-3.5 w-3.5 text-[#e11d2a]/60" />
                     <span className="text-[#f3f0ed]/80">{f.name}</span>
                   </div>
-                  {isActive && <span className="text-[10px] text-[#f5409d]">✓</span>}
+                  {isActive && <span className="text-[10px] text-[#e11d2a]">✓</span>}
                 </button>
               );
             })}
@@ -1700,14 +1700,14 @@ function FolderAddDialog({
             onChange={(e) => setNewName(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') handleCreate(); }}
             placeholder={newFolderPlaceholder}
-            className="flex-1 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 px-3 py-2 text-xs text-[#f3f0ed]/80 placeholder-[#f3f0ed]/25 outline-none focus:border-[#f5409d]/40"
+            className="flex-1 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 px-3 py-2 text-xs text-[#f3f0ed]/80 placeholder-[#f3f0ed]/25 outline-none focus:border-[#e11d2a]/40"
           />
           <button
             onClick={handleCreate}
             disabled={!newName.trim()}
-            className="flex items-center justify-center rounded-lg bg-[#f5409d] px-3 py-2 transition-all hover:bg-[#fa4da6] disabled:opacity-40"
+            className="flex items-center justify-center rounded-lg bg-[#e11d2a] px-3 py-2 transition-all hover:bg-[#ff5964] disabled:opacity-40"
           >
-            <Plus className="h-3.5 w-3.5 text-[#1a2123]" />
+            <Plus className="h-3.5 w-3.5 text-[#111113]" />
           </button>
         </div>
       </DialogContent>
@@ -1734,22 +1734,22 @@ function PanelSelect({
   const isViolet = accent === 'violet';
   const triggerFocus = isViolet
     ? 'focus:border-[#a855f7]/40'
-    : 'focus:border-[#f5409d]/40';
+    : 'focus:border-[#e11d2a]/40';
   const checkedColor = isViolet
     ? 'data-[state=checked]:text-[#a855f7] [&>span:last-child>svg]:text-[#a855f7]'
-    : 'data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]';
+    : 'data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]';
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className={`h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:ring-0 data-[placeholder]:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30 ${triggerFocus}`}>
+      <SelectTrigger className={`h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:ring-0 data-[placeholder]:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30 ${triggerFocus}`}>
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
+      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#111113] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
         {options.map((opt) => (
           <SelectItem
             key={opt.value}
             value={opt.value}
             disabled={opt.disabled}
-            className={`cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#4b1e3a]/40 focus:text-[#f3f0ed] data-disabled:cursor-not-allowed data-disabled:opacity-50 ${checkedColor}`}
+            className={`cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#3a0f16]/40 focus:text-[#f3f0ed] data-disabled:cursor-not-allowed data-disabled:opacity-50 ${checkedColor}`}
           >
             <span className="flex items-center gap-1.5">
               {opt.label}
@@ -1757,7 +1757,7 @@ function PanelSelect({
                 <InfinityIcon className="h-3 w-3 text-[#a855f7]" />
               )}
               {opt.badge && (
-                <span className="ml-2 rounded-full border border-[#f5409d]/40 bg-[#f5409d]/15 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#f5409d]">
+                <span className="ml-2 rounded-full border border-[#e11d2a]/40 bg-[#e11d2a]/15 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#e11d2a]">
                   {opt.badge}
                 </span>
               )}

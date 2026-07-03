@@ -631,7 +631,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
       const totalGap = barGap * (barCount - 1);
       const barWidth = (rect.width - totalGap) / barCount;
 
-      ctx.fillStyle = '#f5409d';
+      ctx.fillStyle = '#e11d2a';
       for (let i = 0; i < barCount; i++) {
         const idx = Math.floor((i / barCount) * buffer.length);
         const value = buffer[idx] / 255;
@@ -886,19 +886,19 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
             </div>
 
             {genState === 'done' && generatedAudioUrl ? (
-              <div className="rounded-xl bg-[#0d1011] p-2">
+              <div className="rounded-xl bg-[#050506] p-2">
                 <InlineAudioPlayer src={generatedAudioUrl} />
                 <div className="mt-1.5 flex justify-end gap-1.5">
                   <a
                     href={generatedAudioUrl}
                     download
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/60 transition-all hover:text-[#f5409d]"
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/60 transition-all hover:text-[#e11d2a]"
                   >
                     <Download className="h-3.5 w-3.5" />
                   </a>
                   <button
                     onClick={handleDiscard}
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/60 transition-all hover:text-[#f5409d]"
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/60 transition-all hover:text-[#e11d2a]"
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
@@ -919,9 +919,9 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                 readOnly={mode === 'clone' && cloneTextLocked}
                 rows={3}
                 maxLength={MAX_TEXT_LENGTH}
-                className={`min-h-[80px] w-full resize-none rounded-xl bg-[#0d1011] px-3 py-2.5 text-[12px] text-[#f3f0ed]/85 placeholder-[#f3f0ed]/30 outline-none disabled:opacity-50 ${
+                className={`min-h-[80px] w-full resize-none rounded-xl bg-[#050506] px-3 py-2.5 text-[12px] text-[#f3f0ed]/85 placeholder-[#f3f0ed]/30 outline-none disabled:opacity-50 ${
                   mode === 'clone' && cloneTextLocked
-                    ? 'cursor-pointer ring-1 ring-[#f3f0ed]/8 hover:ring-[#f5409d]/30'
+                    ? 'cursor-pointer ring-1 ring-[#f3f0ed]/8 hover:ring-[#e11d2a]/30'
                     : ''
                 }`}
               />
@@ -946,20 +946,20 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                   </button>
                 </div>
               ) : referenceAudio ? (
-                <div className="flex items-center gap-2 rounded-xl bg-[#0d1011] px-2 py-1.5">
+                <div className="flex items-center gap-2 rounded-xl bg-[#050506] px-2 py-1.5">
                   <button
                     type="button"
                     onClick={() => setVoiceConsent((v) => !v)}
-                    className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border transition-all ${voiceConsent ? 'border-[#f5409d] bg-[#f5409d]' : 'border-[#f3f0ed]/30'}`}
+                    className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border transition-all ${voiceConsent ? 'border-[#e11d2a] bg-[#e11d2a]' : 'border-[#f3f0ed]/30'}`}
                     aria-label="Consent"
                   >
                     {voiceConsent && (
-                      <svg viewBox="0 0 12 12" className="h-2.5 w-2.5 text-[#1a2123]" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg viewBox="0 0 12 12" className="h-2.5 w-2.5 text-[#111113]" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="2.5,6.5 5,9 9.5,3.5" />
                       </svg>
                     )}
                   </button>
-                  <MicVocal className="h-3.5 w-3.5 shrink-0 text-[#f5409d]" />
+                  <MicVocal className="h-3.5 w-3.5 shrink-0 text-[#e11d2a]" />
                   <span className="flex-1 truncate text-[11px] text-[#f3f0ed]/70">Referência carregada</span>
                   <button
                     onClick={clearReferenceAudio}
@@ -975,7 +975,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isGenerating}
-                    className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#0d1011] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#050506] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     <Upload className="h-3.5 w-3.5" />
                     Anexar
@@ -984,7 +984,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                     type="button"
                     onClick={startRecording}
                     disabled={isGenerating}
-                    className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#0d1011] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#050506] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     <Mic className="h-3.5 w-3.5" />
                     Gravar
@@ -1004,7 +1004,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                       options={voiceOptions}
                       onChange={setVoiceId}
                       disabled={isGenerating}
-                      icon={<MicVocal className="h-3 w-3 text-[#f5409d]" />}
+                      icon={<MicVocal className="h-3 w-3 text-[#e11d2a]" />}
                     />
                   )}
                   <StudioSelectPill
@@ -1017,7 +1017,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                   <button
                     onClick={handleGenerate}
                     disabled={!canGenerate}
-                    className="ml-auto inline-flex items-center gap-1 rounded-full bg-[#f5409d] px-2.5 py-1 text-[11px] font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="ml-auto inline-flex items-center gap-1 rounded-full bg-[#e11d2a] px-2.5 py-1 text-[11px] font-bold text-[#111113] transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isGenerating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Sparkles className="h-3 w-3" />}
                     {creditsCost}
@@ -1035,12 +1035,12 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
     <TooltipProvider>
       <div
         ref={panelRef}
-        className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.07] bg-[#1a2123] shadow-2xl shadow-black/50 sm:w-[320px]"
+        className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.07] bg-[#111113] shadow-2xl shadow-black/50 sm:w-[320px]"
       >
         {/* Header */}
         <div className="panel-drag-handle flex cursor-grab items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3 active:cursor-grabbing">
           <div className="flex items-center gap-2">
-            <Mic className="h-4 w-4 text-[#f5409d]" />
+            <Mic className="h-4 w-4 text-[#e11d2a]" />
             <span className="text-xs font-bold tracking-[0.15em] text-[#f3f0ed]/90">
               {t('header')}
             </span>
@@ -1100,10 +1100,10 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
 
           {/* ── Generating state ─────────────────────────────────────── */}
           {genState === 'generating' && (
-            <div className="rounded-xl border border-[#f5409d]/20 bg-[#4b1e3a]/20 p-4">
+            <div className="rounded-xl border border-[#e11d2a]/20 bg-[#3a0f16]/20 p-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f5409d]/15">
-                  <Loader2 className="h-4 w-4 animate-spin text-[#f5409d]" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e11d2a]/15">
+                  <Loader2 className="h-4 w-4 animate-spin text-[#e11d2a]" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#f3f0ed]/70">
@@ -1111,7 +1111,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                   </div>
                   <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-[#f3f0ed]/8">
                     <div
-                      className="h-full bg-[#f5409d] transition-all"
+                      className="h-full bg-[#e11d2a] transition-all"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -1126,10 +1126,10 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
           {/* ── Done state ──────────────────────────────────────────── */}
           {genState === 'done' && generatedAudioUrl && (
             <div className="space-y-2">
-              <div className="rounded-xl border border-[#f5409d]/20 bg-[#4b1e3a]/15 p-3">
+              <div className="rounded-xl border border-[#e11d2a]/20 bg-[#3a0f16]/15 p-3">
                 <div className="mb-2 flex items-center gap-1.5">
-                  <div className="h-1.5 w-1.5 rounded-full bg-[#f5409d]" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#f5409d]/70">
+                  <div className="h-1.5 w-1.5 rounded-full bg-[#e11d2a]" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#e11d2a]/70">
                     {t('states.audioGenerated')}
                   </span>
                 </div>
@@ -1142,7 +1142,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                   <TooltipTrigger asChild>
                     <button
                       onClick={handleDownload}
-                      className="flex h-9 flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#f3f0ed]/8 bg-[#4b1e3a]/20 text-xs font-semibold text-[#f3f0ed]/60 transition-all hover:border-[#f5409d]/30 hover:text-[#f5409d]"
+                      className="flex h-9 flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#f3f0ed]/8 bg-[#3a0f16]/20 text-xs font-semibold text-[#f3f0ed]/60 transition-all hover:border-[#e11d2a]/30 hover:text-[#e11d2a]"
                     >
                       <Download className="h-3.5 w-3.5" />
                       {t('buttons.download')}
@@ -1161,9 +1161,9 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
 
                 if (showSaveVoiceForm) {
                   return (
-                    <div className="space-y-2.5 rounded-2xl border border-[#f5409d]/30 bg-gradient-to-br from-[#f5409d]/[0.08] to-transparent p-3">
+                    <div className="space-y-2.5 rounded-2xl border border-[#e11d2a]/30 bg-gradient-to-br from-[#e11d2a]/[0.08] to-transparent p-3">
                       <div className="flex items-start gap-2.5">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/15 text-[#f5409d]">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/15 text-[#e11d2a]">
                           <Bookmark className="h-4 w-4" />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -1206,7 +1206,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                               }
                             }}
                             placeholder={t('placeholders.voiceName')}
-                            className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 pr-12 text-xs text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:border-[#f5409d]/40 focus:bg-[#4b1e3a]/30"
+                            className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 pr-12 text-xs text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:border-[#e11d2a]/40 focus:bg-[#3a0f16]/30"
                           />
                           <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] tabular-nums text-[#f3f0ed]/30">
                             {saveVoiceName.length}/40
@@ -1217,7 +1217,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                       <button
                         onClick={handleSaveVoice}
                         disabled={savingVoice || !saveVoiceName.trim()}
-                        className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl bg-[#f5409d] text-xs font-bold text-[#1a2123] transition-all active:scale-95 disabled:opacity-50"
+                        className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl bg-[#e11d2a] text-xs font-bold text-[#111113] transition-all active:scale-95 disabled:opacity-50"
                       >
                         {savingVoice ? (
                           <>
@@ -1250,7 +1250,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                         <button
                           onClick={() => disabled ? undefined : setShowSaveVoiceForm(true)}
                           disabled={disabled}
-                          className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl border border-[#f5409d]/25 bg-[#f5409d]/5 text-xs font-bold text-[#f5409d] transition-all hover:bg-[#f5409d]/12 disabled:opacity-40"
+                          className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl border border-[#e11d2a]/25 bg-[#e11d2a]/5 text-xs font-bold text-[#e11d2a] transition-all hover:bg-[#e11d2a]/12 disabled:opacity-40"
                         >
                           <Bookmark className="h-3.5 w-3.5" />
                           {t('buttons.saveVoice')}
@@ -1308,9 +1308,9 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                         ? t('placeholders.ttsText')
                         : t('placeholders.cloneText')
                     }
-                    className={`w-full resize-none rounded-xl border bg-[#4b1e3a]/15 px-3 py-2 pb-6 text-sm leading-snug text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:border-[#f5409d]/40 focus:bg-[#4b1e3a]/30 ${
+                    className={`w-full resize-none rounded-xl border bg-[#3a0f16]/15 px-3 py-2 pb-6 text-sm leading-snug text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:border-[#e11d2a]/40 focus:bg-[#3a0f16]/30 ${
                       mode === 'clone' && cloneTextLocked
-                        ? 'cursor-pointer border-[#f3f0ed]/[0.07] hover:border-[#f5409d]/40'
+                        ? 'cursor-pointer border-[#f3f0ed]/[0.07] hover:border-[#e11d2a]/40'
                         : 'border-[#f3f0ed]/[0.07]'
                     }`}
                   />
@@ -1373,8 +1373,8 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                       />
                       <div
                         className={`mt-2 overflow-hidden rounded-xl border transition-all ${voiceConsent
-                          ? 'border-[#f5409d]/40 bg-[#f5409d]/[0.06]'
-                          : 'border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/15'
+                          ? 'border-[#e11d2a]/40 bg-[#e11d2a]/[0.06]'
+                          : 'border-[#f3f0ed]/[0.07] bg-[#3a0f16]/15'
                           }`}
                       >
                         <div className="flex items-center gap-2 px-2.5 py-2">
@@ -1385,14 +1385,14 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                           >
                             <span
                               className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border transition-all ${voiceConsent
-                                ? 'border-[#f5409d] bg-[#f5409d]'
+                                ? 'border-[#e11d2a] bg-[#e11d2a]'
                                 : 'border-[#f3f0ed]/30 bg-transparent'
                                 }`}
                             >
                               {voiceConsent && (
                                 <svg
                                   viewBox="0 0 12 12"
-                                  className="h-2.5 w-2.5 text-[#1a2123]"
+                                  className="h-2.5 w-2.5 text-[#111113]"
                                   fill="none"
                                   stroke="currentColor"
                                   strokeWidth="2.5"
@@ -1433,14 +1433,14 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           onClick={() => fileInputRef.current?.click()}
-                          className="flex h-12 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[#f3f0ed]/15 text-[#f3f0ed]/40 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d]"
+                          className="flex h-12 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[#f3f0ed]/15 text-[#f3f0ed]/40 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a]"
                         >
                           <Upload className="h-3.5 w-3.5" />
                           <span className="text-[10px] font-bold tracking-wider">{t('buttons.upload')}</span>
                         </button>
                         <button
                           onClick={startRecording}
-                          className="flex h-12 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[#f3f0ed]/15 text-[#f3f0ed]/40 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d]"
+                          className="flex h-12 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[#f3f0ed]/15 text-[#f3f0ed]/40 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a]"
                         >
                           <Mic className="h-3.5 w-3.5" />
                           <span className="text-[10px] font-bold tracking-wider">{t('buttons.record')}</span>
@@ -1497,7 +1497,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
               {/* Custo estimado */}
               <div className="flex items-center justify-between rounded-xl border border-[#f3f0ed]/7 bg-[#f3f0ed]/3 px-3 py-2">
                 <div className="flex items-center gap-1.5">
-                  <Coins className="h-3 w-3 text-[#f5409d]" />
+                  <Coins className="h-3 w-3 text-[#e11d2a]" />
                   <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#f3f0ed]/40">
                     {t('estimatedCost')}
                   </span>
@@ -1506,7 +1506,7 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                   <span className="text-xs font-bold text-[#f3f0ed]/70">
                     {t('credits', { count: creditsCost })}
                   </span>
-                  <div className="h-1.5 w-1.5 rounded-full bg-[#f5409d]" />
+                  <div className="h-1.5 w-1.5 rounded-full bg-[#e11d2a]" />
                 </div>
               </div>
 
@@ -1516,8 +1516,8 @@ export function GenerateAudioPanel({ nodeId, onClose, onDuplicate }: GenerateAud
                 disabled={!canGenerate}
                 className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all active:scale-95 disabled:opacity-60"
                 style={{
-                  background: '#f5409d',
-                  color: '#1a2123',
+                  background: '#e11d2a',
+                  color: '#111113',
                 }}
               >
                 <MicVocal className="h-4 w-4" />
@@ -1570,30 +1570,30 @@ function ModeTab({
       onClick={onClick}
       disabled={disabled}
       className={`group relative flex flex-col items-start gap-0.5 overflow-hidden rounded-xl border px-3 py-2.5 text-left transition-all disabled:opacity-50 ${active
-        ? 'border-[#f5409d]/50 bg-[#f5409d]/8'
-        : 'border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/15 hover:border-[#f3f0ed]/15 hover:bg-[#4b1e3a]/25'
+        ? 'border-[#e11d2a]/50 bg-[#e11d2a]/8'
+        : 'border-[#f3f0ed]/[0.07] bg-[#3a0f16]/15 hover:border-[#f3f0ed]/15 hover:bg-[#3a0f16]/25'
         }`}
     >
       <div className="flex items-center gap-1.5">
         <Icon
-          className={`h-3.5 w-3.5 transition-colors ${active ? 'text-[#f5409d]' : 'text-[#f3f0ed]/40 group-hover:text-[#f3f0ed]/70'
+          className={`h-3.5 w-3.5 transition-colors ${active ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/40 group-hover:text-[#f3f0ed]/70'
             }`}
         />
         <span
-          className={`text-xs font-bold transition-colors ${active ? 'text-[#f5409d]' : 'text-[#f3f0ed]/70 group-hover:text-[#f3f0ed]'
+          className={`text-xs font-bold transition-colors ${active ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/70 group-hover:text-[#f3f0ed]'
             }`}
         >
           {label}
         </span>
       </div>
       <span
-        className={`text-[10px] transition-colors ${active ? 'text-[#f5409d]/60' : 'text-[#f3f0ed]/30'
+        className={`text-[10px] transition-colors ${active ? 'text-[#e11d2a]/60' : 'text-[#f3f0ed]/30'
           }`}
       >
         {hint}
       </span>
       {active && (
-        <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-[#f5409d]/20" />
+        <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-[#e11d2a]/20" />
       )}
     </button>
   );
@@ -1610,15 +1610,15 @@ function PanelSelect({
 }) {
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:border-[#f5409d]/40 focus:ring-0 [&>svg]:text-[#f3f0ed]/30">
+      <SelectTrigger className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:border-[#e11d2a]/40 focus:ring-0 [&>svg]:text-[#f3f0ed]/30">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
+      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#111113] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
         {options.map((opt) => (
           <SelectItem
             key={opt.value}
             value={opt.value}
-            className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#4b1e3a]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]"
+            className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#3a0f16]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]"
           >
             {opt.label}
           </SelectItem>
@@ -1662,11 +1662,11 @@ function VoicePickerButton({
     <button
       type="button"
       onClick={onClick}
-      className="flex h-9 w-full items-center gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all hover:border-[#f5409d]/40 hover:bg-[#4b1e3a]/30 focus:border-[#f5409d]/40"
+      className="flex h-9 w-full items-center gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all hover:border-[#e11d2a]/40 hover:bg-[#3a0f16]/30 focus:border-[#e11d2a]/40"
     >
-      <MicVocal className="h-3.5 w-3.5 shrink-0 text-[#f5409d]" />
+      <MicVocal className="h-3.5 w-3.5 shrink-0 text-[#e11d2a]" />
       <span className="flex-1 truncate text-left">{label}</span>
-      <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-bold uppercase tracking-wider text-[#f5409d]/80">
+      <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-bold uppercase tracking-wider text-[#e11d2a]/80">
         {t('voicesButton')}
         <ChevronRight className="h-3 w-3" />
       </span>

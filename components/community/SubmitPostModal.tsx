@@ -193,7 +193,7 @@ export function SubmitPostModal({ onClose }: { onClose: () => void }) {
             type="button"
             aria-label={t('palette.close')}
             onClick={close}
-            className="flex size-9 shrink-0 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
+            className="app-press flex size-9 shrink-0 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
           >
             <X className="size-[18px]" strokeWidth={1.8} />
           </button>
@@ -262,7 +262,7 @@ export function SubmitPostModal({ onClose }: { onClose: () => void }) {
             type="button"
             disabled={!selected || submitMutation.isPending}
             onClick={() => selected && submitMutation.mutate(selected)}
-            className="flex h-10 shrink-0 items-center gap-2 rounded-[10px] bg-app-lime px-5 text-[13.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover disabled:opacity-50"
+            className="app-btn flex h-10 shrink-0 items-center gap-2 bg-app-lime px-5 text-[13.5px] font-semibold text-app-lime-ink disabled:opacity-50"
           >
             {submitMutation.isPending && <Loader2 className="size-4 animate-spin" strokeWidth={2} />}
             {t('community.submitCta')}

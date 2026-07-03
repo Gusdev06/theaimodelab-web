@@ -58,7 +58,7 @@ export default function TransacoesPage() {
 
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : charges.length === 0 ? (
         <p className="py-10 text-center text-sm text-[#f3f0ed]/30">Nenhuma transação</p>
@@ -162,7 +162,7 @@ export default function TransacoesPage() {
           onClick={() => !refundMut.isPending && setPendingRefund(null)}
         >
           <div
-            className="flex w-full max-w-md flex-col gap-5 rounded-2xl border border-amber-500/20 bg-[#1a2123] p-6"
+            className="flex w-full max-w-md flex-col gap-5 rounded-2xl border border-amber-500/20 bg-[#111113] p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3">
@@ -199,14 +199,14 @@ export default function TransacoesPage() {
               <button
                 onClick={() => setPendingRefund(null)}
                 disabled={refundMut.isPending}
-                className="flex h-9 items-center rounded-xl border border-[#f3f0ed]/10 px-4 text-xs font-bold text-[#f3f0ed]/60 transition-colors hover:bg-[#f3f0ed]/5 disabled:opacity-50"
+                className="flex h-9 items-center rounded-xl border border-[#f3f0ed]/10 px-4 text-xs font-bold text-[#f3f0ed]/60 transition-colors app-ease app-press hover:bg-[#f3f0ed]/5 disabled:opacity-50"
               >
                 Cancelar
               </button>
               <button
                 onClick={() => refundMut.mutate(pendingRefund.id)}
                 disabled={refundMut.isPending}
-                className="flex h-9 items-center gap-1.5 rounded-xl bg-amber-500 px-4 text-xs font-bold text-[#1a2123] transition-all hover:bg-amber-400 active:scale-[0.97] disabled:opacity-50"
+                className="flex h-9 items-center gap-1.5 rounded-xl bg-amber-500 px-4 text-xs font-bold text-[#111113] transition-all app-ease hover:bg-amber-400 active:scale-[0.97] disabled:opacity-50"
               >
                 {refundMut.isPending ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />

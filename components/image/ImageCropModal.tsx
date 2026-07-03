@@ -202,14 +202,14 @@ export function ImageCropModal({ src, mimeType = 'image/png', onClose, onCrop }:
             type="button"
             aria-label={t('palette.close')}
             onClick={close}
-            className="flex size-8 shrink-0 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
+            className="app-press flex size-8 shrink-0 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
           >
             <X className="size-[18px]" strokeWidth={1.8} />
           </button>
         </div>
 
         {/* área de recorte */}
-        <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#0d1011] p-5">
+        <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-[#050506] p-5">
           <div className="relative inline-block leading-[0]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -270,7 +270,7 @@ export function ImageCropModal({ src, mimeType = 'image/png', onClose, onCrop }:
           <button
             type="button"
             onClick={() => measure(true)}
-            className="flex h-10 items-center gap-2 rounded-[10px] border border-app-hairline px-4 text-[13.5px] font-semibold text-app-text-2 transition-colors duration-200 ease-app hover:border-app-hairline-2 hover:text-app-text"
+            className="app-press flex h-10 items-center gap-2 rounded-[10px] border border-app-hairline px-4 text-[13.5px] font-semibold text-app-text-2 transition-colors duration-200 ease-app hover:border-app-hairline-2 hover:text-app-text"
           >
             <RotateCcw className="size-4" strokeWidth={1.8} />
             {t('image.cropReset')}
@@ -278,7 +278,7 @@ export function ImageCropModal({ src, mimeType = 'image/png', onClose, onCrop }:
           <button
             type="button"
             onClick={apply}
-            className="flex h-10 items-center gap-2 rounded-[10px] bg-app-lime px-5 text-[13.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover"
+            className="app-btn flex h-10 items-center gap-2 bg-app-lime px-5 text-[13.5px] font-semibold text-app-lime-ink"
           >
             <Check className="size-4" strokeWidth={2.2} />
             {t('image.cropApply')}

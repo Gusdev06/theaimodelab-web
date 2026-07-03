@@ -45,7 +45,7 @@ export function Footer() {
           <div className="md:col-span-4">
             <div className="flex items-center gap-2.5">
               <Image
-                src="/logo_2.svg"
+                src="/logo-red.jpg"
                 alt="The AI Model Lab"
                 width={130}
                 height={32}
@@ -69,7 +69,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#f3f0ed]/[0.06] text-landing-text-muted transition-all duration-300 hover:border-landing-accent/20 hover:text-landing-accent"
+                  className="landing-ease flex h-9 w-9 items-center justify-center rounded-lg border border-[#f3f0ed]/[0.06] text-landing-text-muted transition-all duration-300 hover:border-landing-accent/20 hover:text-landing-accent"
                 >
                   <s.Icon className="h-4 w-4" />
                 </a>
@@ -87,7 +87,7 @@ export function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
+                    className="landing-ease text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
                   >
                     {l.label}
                   </a>
@@ -106,7 +106,7 @@ export function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
+                    className="landing-ease text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
                   >
                     {l.label}
                   </a>
@@ -125,7 +125,7 @@ export function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
+                    className="landing-ease text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
                   >
                     {l.label}
                   </a>

@@ -63,7 +63,7 @@ export function UnlimitedHeaderButton({
       title={title}
       onMouseEnter={(e) => (e.currentTarget.style.background = hoverBackground)}
       onMouseLeave={(e) => (e.currentTarget.style.background = background)}
-      className="flex h-6 items-center gap-1 rounded-full px-2 transition-all disabled:cursor-not-allowed disabled:opacity-40"
+      className="app-press app-ease flex h-6 items-center gap-1 rounded-full px-2 transition-all disabled:cursor-not-allowed disabled:opacity-40"
       style={{ background, border }}
     >
       {isLoading ? (

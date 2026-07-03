@@ -54,7 +54,7 @@ function Modal({ onClose, title, children }: { onClose: () => void; title: strin
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onClose}>
       <div
-        className="flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#141a1c]"
+        className="flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#0a0a0b]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-[#f3f0ed]/6 px-5 py-3">
@@ -70,7 +70,7 @@ function Modal({ onClose, title, children }: { onClose: () => void; title: strin
 }
 
 function inputClass() {
-  return 'h-9 w-full rounded-lg border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus:border-[#f5409d]/40 focus:outline-none';
+  return 'h-9 w-full rounded-lg border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus:border-[#e11d2a]/40 focus:outline-none';
 }
 
 function ImageUpload({
@@ -332,7 +332,7 @@ export default function AdminPromptsPage() {
   return (
     <div className="flex flex-col gap-4 md:gap-6">
       <div className="flex items-start justify-between gap-3">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">Biblioteca de Prompts</h1>
           <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
             {total.toLocaleString('pt-BR')} {hasFilters ? 'prompt(s) no filtro' : 'prompts'} · gerencie
@@ -344,7 +344,7 @@ export default function AdminPromptsPage() {
             onClick={() => setShowManage((v) => !v)}
             className={`flex h-9 items-center gap-1.5 rounded-xl border px-3 text-xs font-semibold transition-colors ${
               showManage
-                ? 'border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]'
+                ? 'border-[#e11d2a]/30 bg-[#e11d2a]/10 text-[#e11d2a]'
                 : 'border-[#f3f0ed]/8 text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/5'
             }`}
           >
@@ -366,7 +366,7 @@ export default function AdminPromptsPage() {
               }
               newTemplate(defaultNewCategoryId);
             }}
-            className="flex h-9 items-center gap-1.5 rounded-xl bg-[#f5409d] px-3 text-xs font-semibold text-[#111618] hover:bg-[#f5409d]/90"
+            className="app-btn flex h-9 items-center gap-1.5 bg-[#e11d2a] px-3 text-xs font-semibold text-[#111618]"
           >
             <Plus className="h-4 w-4" /> Novo prompt
           </button>
@@ -387,7 +387,7 @@ export default function AdminPromptsPage() {
           </div>
           {sectionsLoading ? (
             <div className="flex h-24 items-center justify-center">
-              <Loader2 className="h-4 w-4 animate-spin text-[#f5409d]" />
+              <Loader2 className="h-4 w-4 animate-spin text-[#e11d2a]" />
             </div>
           ) : sections?.length === 0 ? (
             <p className="py-6 text-center text-sm text-[#f3f0ed]/30">Nenhuma seção cadastrada</p>
@@ -448,7 +448,7 @@ export default function AdminPromptsPage() {
                                 setCategoryFilter(category.id);
                                 setPage(1);
                               }}
-                              className="flex-1 text-left transition-colors hover:text-[#f5409d]"
+                              className="flex-1 text-left transition-colors hover:text-[#e11d2a]"
                               title="Filtrar por esta categoria"
                             >
                               <span className="text-[13px] text-[#f3f0ed]/85">{category.title}</span>
@@ -496,7 +496,7 @@ export default function AdminPromptsPage() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Título ou conteúdo…"
-                className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 outline-none transition-colors focus:border-[#f5409d]/50"
+                className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 outline-none transition-colors focus:border-[#e11d2a]/50"
               />
             </div>
           </FilterField>
@@ -542,7 +542,7 @@ export default function AdminPromptsPage() {
       {/* Grade de prompts */}
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : templates.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-[#f3f0ed]/10 py-20 text-center">
@@ -550,7 +550,7 @@ export default function AdminPromptsPage() {
             {hasFilters ? 'Nenhum prompt corresponde aos filtros.' : 'Nenhum prompt cadastrado.'}
           </p>
           {hasFilters && (
-            <button onClick={resetFilters} className="text-xs font-medium text-[#f5409d]/80 hover:text-[#f5409d]">
+            <button onClick={resetFilters} className="text-xs font-medium text-[#e11d2a]/80 hover:text-[#e11d2a]">
               Limpar filtros
             </button>
           )}
@@ -584,7 +584,7 @@ export default function AdminPromptsPage() {
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
-                <span className="absolute bottom-1.5 left-1.5 rounded-md bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-[#f5409d] backdrop-blur">
+                <span className="absolute bottom-1.5 left-1.5 rounded-md bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-[#e11d2a] backdrop-blur">
                   {typeLabel(t.type)}
                 </span>
               </div>
@@ -645,7 +645,7 @@ export default function AdminPromptsPage() {
             <button
               onClick={() => sectionSave.mutate(sectionForm)}
               disabled={sectionSave.isPending || !sectionForm.slug || !sectionForm.title}
-              className="mt-2 h-10 rounded-xl bg-[#f5409d] text-sm font-semibold text-[#111618] hover:bg-[#f5409d]/90 disabled:opacity-40"
+              className="mt-2 h-10 rounded-xl bg-[#e11d2a] text-sm font-semibold text-[#111618] hover:bg-[#e11d2a]/90 disabled:opacity-40"
             >
               {sectionSave.isPending ? 'Salvando...' : 'Salvar'}
             </button>
@@ -659,7 +659,7 @@ export default function AdminPromptsPage() {
             <Field label="Seção">
               <select className={inputClass()} value={categoryForm.sectionId} onChange={(e) => setCategoryForm({ ...categoryForm, sectionId: e.target.value })}>
                 {sections?.map((s) => (
-                  <option key={s.id} value={s.id} className="bg-[#141a1c]">{s.title}</option>
+                  <option key={s.id} value={s.id} className="bg-[#0a0a0b]">{s.title}</option>
                 ))}
               </select>
             </Field>
@@ -672,7 +672,7 @@ export default function AdminPromptsPage() {
             <button
               onClick={() => categorySave.mutate(categoryForm)}
               disabled={categorySave.isPending || !categoryForm.title}
-              className="mt-2 h-10 rounded-xl bg-[#f5409d] text-sm font-semibold text-[#111618] hover:bg-[#f5409d]/90 disabled:opacity-40"
+              className="mt-2 h-10 rounded-xl bg-[#e11d2a] text-sm font-semibold text-[#111618] hover:bg-[#e11d2a]/90 disabled:opacity-40"
             >
               {categorySave.isPending ? 'Salvando...' : 'Salvar'}
             </button>
@@ -687,7 +687,7 @@ export default function AdminPromptsPage() {
               <select className={inputClass()} value={templateForm.categoryId} onChange={(e) => setTemplateForm({ ...templateForm, categoryId: e.target.value })}>
                 {sections?.flatMap((s) =>
                   s.categories.map((c) => (
-                    <option key={c.id} value={c.id} className="bg-[#141a1c]">{s.title} › {c.title}</option>
+                    <option key={c.id} value={c.id} className="bg-[#0a0a0b]">{s.title} › {c.title}</option>
                   )),
                 )}
               </select>
@@ -698,7 +698,7 @@ export default function AdminPromptsPage() {
             <Field label="Tipo">
               <select className={inputClass()} value={templateForm.type} onChange={(e) => setTemplateForm({ ...templateForm, type: e.target.value })}>
                 {TYPES.map((t) => (
-                  <option key={t} value={t} className="bg-[#141a1c]">{typeLabel(t)}</option>
+                  <option key={t} value={t} className="bg-[#0a0a0b]">{typeLabel(t)}</option>
                 ))}
               </select>
             </Field>
@@ -717,7 +717,7 @@ export default function AdminPromptsPage() {
             <button
               onClick={() => templateSave.mutate(templateForm)}
               disabled={templateSave.isPending || !templateForm.title || !templateForm.prompt}
-              className="mt-2 h-10 rounded-xl bg-[#f5409d] text-sm font-semibold text-[#111618] hover:bg-[#f5409d]/90 disabled:opacity-40"
+              className="mt-2 h-10 rounded-xl bg-[#e11d2a] text-sm font-semibold text-[#111618] hover:bg-[#e11d2a]/90 disabled:opacity-40"
             >
               {templateSave.isPending ? 'Salvando...' : 'Salvar'}
             </button>

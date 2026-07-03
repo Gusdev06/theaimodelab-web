@@ -201,7 +201,7 @@ export default function NewEmailBroadcastPage() {
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
-        <div>
+        <div className="app-reveal">
           <h1 className="text-xl font-semibold text-[#f3f0ed]">Novo email</h1>
           <p className="text-sm text-[#f3f0ed]/50">
             Compõe e dispara um broadcast pros usuários.
@@ -213,9 +213,9 @@ export default function NewEmailBroadcastPage() {
         {/* ── Coluna esquerda: formulário ─────────────────── */}
         <div className="space-y-5">
           {/* Destinatários */}
-          <section className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c] p-5">
+          <section className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] p-5">
             <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#f3f0ed]">
-              <Users className="h-4 w-4 text-[#f5409d]" />
+              <Users className="h-4 w-4 text-[#e11d2a]" />
               Destinatários
             </h2>
             <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
@@ -232,7 +232,7 @@ export default function NewEmailBroadcastPage() {
                   onClick={() => setRecipientType(type)}
                   className={`flex items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
                     recipientType === type
-                      ? 'border-[#f5409d] bg-[#f5409d]/10 text-[#f5409d]'
+                      ? 'border-[#e11d2a] bg-[#e11d2a]/10 text-[#e11d2a]'
                       : 'border-[#f3f0ed]/10 text-[#f3f0ed]/70 hover:border-[#f3f0ed]/20'
                   }`}
                 >
@@ -250,7 +250,7 @@ export default function NewEmailBroadcastPage() {
                 <select
                   value={planSlug}
                   onChange={(e) => setPlanSlug(e.target.value)}
-                  className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#f5409d]"
+                  className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#e11d2a]"
                 >
                   {PLANS.map((p) => (
                     <option key={p.slug} value={p.slug}>
@@ -271,7 +271,7 @@ export default function NewEmailBroadcastPage() {
                   onChange={(e) => setEmailsRaw(e.target.value)}
                   rows={4}
                   placeholder="user1@example.com, user2@example.com"
-                  className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#f5409d]"
+                  className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#e11d2a]"
                 />
               </div>
             )}
@@ -286,7 +286,7 @@ export default function NewEmailBroadcastPage() {
                   value={singleEmail}
                   onChange={(e) => setSingleEmail(e.target.value)}
                   placeholder="usuario@example.com"
-                  className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#f5409d]"
+                  className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#e11d2a]"
                 />
               </div>
             )}
@@ -299,7 +299,7 @@ export default function NewEmailBroadcastPage() {
               ) : countQuery.data ? (
                 <span className="text-[#f3f0ed]">
                   Vai disparar para{' '}
-                  <strong className="text-[#f5409d]">
+                  <strong className="text-[#e11d2a]">
                     {countQuery.data.count.toLocaleString('pt-BR')}
                   </strong>{' '}
                   {countQuery.data.count === 1 ? 'pessoa' : 'pessoas'}
@@ -311,9 +311,9 @@ export default function NewEmailBroadcastPage() {
           </section>
 
           {/* Conteúdo */}
-          <section className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c] p-5">
+          <section className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] p-5">
             <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#f3f0ed]">
-              <Mail className="h-4 w-4 text-[#f5409d]" />
+              <Mail className="h-4 w-4 text-[#e11d2a]" />
               Conteúdo
             </h2>
 
@@ -328,7 +328,7 @@ export default function NewEmailBroadcastPage() {
               onFocus={() => (lastFocusedRef.current = 'subject')}
               maxLength={200}
               placeholder="Ex: {{firstName}}, sua capacidade triplicou"
-              className="mb-4 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#f5409d]"
+              className="mb-4 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 text-sm text-[#f3f0ed] outline-none focus:border-[#e11d2a]"
             />
 
             <div className="mb-1.5 flex items-center justify-between">
@@ -340,7 +340,7 @@ export default function NewEmailBroadcastPage() {
                   href="https://www.markdownguide.org/cheat-sheet/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-[#f5409d]/70 hover:text-[#f5409d]"
+                  className="text-xs text-[#e11d2a]/70 hover:text-[#e11d2a]"
                 >
                   Cheat sheet
                 </a>
@@ -357,7 +357,7 @@ export default function NewEmailBroadcastPage() {
                     type="button"
                     onClick={() => setFormat(opt)}
                     className={`flex-1 rounded-md px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-all ${active
-                      ? 'bg-[#f5409d]/15 text-[#f5409d]'
+                      ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
                       : 'text-[#f3f0ed]/40 hover:text-[#f3f0ed]/70'
                       }`}
                   >
@@ -378,7 +378,7 @@ export default function NewEmailBroadcastPage() {
               onFocus={() => (lastFocusedRef.current = 'body')}
               rows={16}
               maxLength={50_000}
-              className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 font-mono text-sm text-[#f3f0ed] outline-none focus:border-[#f5409d]"
+              className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#111618] px-3 py-2 font-mono text-sm text-[#f3f0ed] outline-none focus:border-[#e11d2a]"
             />
             <p className="mt-1 text-xs text-[#f3f0ed]/40">
               {bodyMarkdown.length} / 50.000 caracteres
@@ -396,7 +396,7 @@ export default function NewEmailBroadcastPage() {
                     key={mt.key}
                     type="button"
                     onClick={() => insertMergeTag(mt.tag)}
-                    className="inline-flex items-center gap-1.5 rounded-md border border-[#f3f0ed]/10 bg-[#141a1c] px-2.5 py-1 text-xs text-[#f3f0ed]/80 transition-colors hover:border-[#f5409d]/40 hover:text-[#f5409d]"
+                    className="inline-flex items-center gap-1.5 rounded-md border border-[#f3f0ed]/10 bg-[#0a0a0b] px-2.5 py-1 text-xs text-[#f3f0ed]/80 transition-colors hover:border-[#e11d2a]/40 hover:text-[#e11d2a]"
                     title={mt.label}
                   >
                     <code className="font-mono text-[11px]">{mt.tag}</code>
@@ -418,7 +418,7 @@ export default function NewEmailBroadcastPage() {
               type="button"
               disabled={!subject.trim() || !bodyMarkdown.trim() || sendTestMutation.isPending}
               onClick={() => sendTestMutation.mutate()}
-              className="inline-flex items-center gap-2 rounded-lg border border-[#f3f0ed]/15 bg-[#141a1c] px-4 py-2 text-sm font-medium text-[#f3f0ed] transition-colors hover:bg-[#f3f0ed]/5 disabled:opacity-40 disabled:hover:bg-[#141a1c]"
+              className="inline-flex items-center gap-2 rounded-lg border border-[#f3f0ed]/15 bg-[#0a0a0b] px-4 py-2 text-sm font-medium text-[#f3f0ed] transition-colors hover:bg-[#f3f0ed]/5 disabled:opacity-40 disabled:hover:bg-[#0a0a0b]"
             >
               {sendTestMutation.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -432,7 +432,7 @@ export default function NewEmailBroadcastPage() {
               type="button"
               disabled={!canSubmit || sendBroadcastMutation.isPending}
               onClick={() => setConfirmOpen(true)}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#f5409d] px-4 py-2 text-sm font-semibold text-[#111618] transition-colors hover:bg-[#f5409d]/90 disabled:opacity-40 disabled:hover:bg-[#f5409d]"
+              className="app-btn inline-flex items-center gap-2 bg-[#e11d2a] px-4 py-2 text-sm font-semibold text-[#111618] disabled:opacity-40"
             >
               <Send className="h-4 w-4" />
               Enviar broadcast
@@ -442,12 +442,12 @@ export default function NewEmailBroadcastPage() {
 
         {/* ── Coluna direita: preview ─────────────────────── */}
         <div className="lg:sticky lg:top-6 lg:self-start">
-          <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c] p-5">
+          <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] p-5">
             <h2 className="mb-3 text-sm font-semibold text-[#f3f0ed]">Preview</h2>
             <div className="overflow-hidden rounded-lg border border-[#f3f0ed]/6 bg-white">
               {htmlPreview.isFetching && !htmlPreview.data ? (
                 <div className="flex h-96 items-center justify-center">
-                  <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+                  <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
                 </div>
               ) : htmlPreview.error ? (
                 <div className="p-6 text-sm text-red-500">
@@ -469,7 +469,7 @@ export default function NewEmailBroadcastPage() {
       {/* ── Modal de confirmação ─────────────────────────── */}
       {confirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
-          <div className="w-full max-w-md rounded-2xl border border-[#f3f0ed]/10 bg-[#141a1c] p-6">
+          <div className="w-full max-w-md rounded-2xl border border-[#f3f0ed]/10 bg-[#0a0a0b] p-6">
             <div className="mb-4 flex items-center gap-3">
               <div className="rounded-full bg-yellow-500/15 p-2">
                 <AlertTriangle className="h-5 w-5 text-yellow-400" />
@@ -480,7 +480,7 @@ export default function NewEmailBroadcastPage() {
             </div>
             <p className="mb-2 text-sm text-[#f3f0ed]/70">
               Vai enviar este email para{' '}
-              <strong className="text-[#f5409d]">
+              <strong className="text-[#e11d2a]">
                 {countQuery.data?.count.toLocaleString('pt-BR')}{' '}
                 {countQuery.data?.count === 1 ? 'pessoa' : 'pessoas'}
               </strong>
@@ -503,7 +503,7 @@ export default function NewEmailBroadcastPage() {
                 type="button"
                 onClick={() => sendBroadcastMutation.mutate()}
                 disabled={sendBroadcastMutation.isPending}
-                className="inline-flex items-center gap-2 rounded-lg bg-[#f5409d] px-4 py-2 text-sm font-semibold text-[#111618] hover:bg-[#f5409d]/90 disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#e11d2a] px-4 py-2 text-sm font-semibold text-[#111618] hover:bg-[#e11d2a]/90 disabled:opacity-50"
               >
                 {sendBroadcastMutation.isPending ? (
                   <Loader2 className="h-4 w-4 animate-spin" />

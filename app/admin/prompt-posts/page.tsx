@@ -121,7 +121,7 @@ export default function AdminPromptPostsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-2xl font-bold text-[#f3f0ed]">Posts Públicos</h1>
           <p className="mt-1 text-sm text-[#f3f0ed]/40">
             Páginas estilo Instagram com prompts copiáveis. Cada post pode ter
@@ -131,7 +131,7 @@ export default function AdminPromptPostsPage() {
         <button
           type="button"
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 rounded-lg bg-[#f5409d] px-4 py-2 text-sm font-semibold text-black hover:bg-[#cc3684]"
+          className="app-btn flex items-center gap-2 bg-[#e11d2a] px-4 py-2 text-sm font-semibold text-black"
         >
           <Plus className="h-4 w-4" />
           Novo post
@@ -150,7 +150,7 @@ export default function AdminPromptPostsPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
         </div>
       ) : posts.length === 0 ? (
         <div className="rounded-2xl border-2 border-dashed border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.02] py-16 text-center">
@@ -212,8 +212,8 @@ export default function AdminPromptPostsPage() {
                       </div>
                       <div>copies</div>
                     </div>
-                    <div className="rounded bg-[#f5409d]/10 px-1 py-1">
-                      <div className="font-semibold text-[#f5409d]">
+                    <div className="rounded bg-[#e11d2a]/10 px-1 py-1">
+                      <div className="font-semibold text-[#e11d2a]">
                         {post.useCount}
                       </div>
                       <div>uses</div>
@@ -226,7 +226,7 @@ export default function AdminPromptPostsPage() {
                       className="flex flex-1 items-center justify-center gap-1 rounded-md bg-[#f3f0ed]/[0.04] px-2 py-1.5 text-[11px] font-medium text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/[0.08]"
                     >
                       {copiedSlug === post.slug ? (
-                        <Check className="h-3 w-3 text-[#f5409d]" />
+                        <Check className="h-3 w-3 text-[#e11d2a]" />
                       ) : (
                         <Copy className="h-3 w-3" />
                       )}
@@ -246,7 +246,7 @@ export default function AdminPromptPostsPage() {
                       title={post.isPublished ? 'Despublicar' : 'Publicar'}
                       className={`flex h-7 w-7 items-center justify-center rounded-md ${
                         post.isPublished
-                          ? 'bg-[#f5409d]/15 text-[#f5409d]'
+                          ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
                           : 'bg-[#f3f0ed]/[0.04] text-[#f3f0ed]/40'
                       }`}
                     >
@@ -364,7 +364,7 @@ function NewPostModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-      <div className="flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#141a1c]">
+      <div className="flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#0a0a0b]">
         <header className="flex items-center justify-between border-b border-[#f3f0ed]/6 px-5 py-4">
           <h2 className="text-lg font-semibold text-[#f3f0ed]">Novo Post Público</h2>
           <button
@@ -389,7 +389,7 @@ function NewPostModal({
                 onChange={(e) => setCaption(e.target.value)}
                 maxLength={500}
                 placeholder="Ex: não é edição. não é montagem."
-                className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#f5409d]/40 focus:outline-none"
+                className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#e11d2a]/40 focus:outline-none"
               />
             </div>
             <div>
@@ -403,7 +403,7 @@ function NewPostModal({
                   setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-'))
                 }
                 placeholder="gerado-automaticamente"
-                className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#f5409d]/40 focus:outline-none"
+                className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#e11d2a]/40 focus:outline-none"
               />
               <p className="mt-1 text-[11px] text-[#f3f0ed]/30">
                 URL: /p/{slug || '<gerado>'}
@@ -455,7 +455,7 @@ function NewPostModal({
             type="button"
             onClick={handleSubmit}
             disabled={submitting || slides.some((s) => s.uploading)}
-            className="flex items-center gap-2 rounded-lg bg-[#f5409d] px-4 py-2 text-sm font-semibold text-black hover:bg-[#cc3684] disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#e11d2a] px-4 py-2 text-sm font-semibold text-black hover:bg-[#cc3684] disabled:opacity-50"
           >
             {submitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -557,10 +557,10 @@ function SlideEditor({
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={slide.uploading}
-              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.02] text-xs text-[#f3f0ed]/50 hover:border-[#f5409d]/40 hover:bg-[#f5409d]/5"
+              className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.02] text-xs text-[#f3f0ed]/50 hover:border-[#e11d2a]/40 hover:bg-[#e11d2a]/5"
             >
               {slide.uploading ? (
-                <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+                <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
               ) : (
                 <>
                   <Upload className="h-5 w-5" />
@@ -577,13 +577,13 @@ function SlideEditor({
             onChange={(e) => onChange({ prompt: e.target.value })}
             rows={3}
             placeholder="Prompt usado para gerar essa imagem..."
-            className="w-full resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#f5409d]/40 focus:outline-none"
+            className="w-full resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#e11d2a]/40 focus:outline-none"
           />
           <div className="grid grid-cols-2 gap-2">
             <select
               value={slide.generationType}
               onChange={(e) => onChange({ generationType: e.target.value })}
-              className="rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] px-2 py-1.5 text-xs text-[#f3f0ed] focus:border-[#f5409d]/40 focus:outline-none"
+              className="rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] px-2 py-1.5 text-xs text-[#f3f0ed] focus:border-[#e11d2a]/40 focus:outline-none"
             >
               {GENERATION_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>
@@ -594,7 +594,7 @@ function SlideEditor({
             <select
               value={slide.aspectRatio}
               onChange={(e) => onChange({ aspectRatio: e.target.value })}
-              className="rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] px-2 py-1.5 text-xs text-[#f3f0ed] focus:border-[#f5409d]/40 focus:outline-none"
+              className="rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] px-2 py-1.5 text-xs text-[#f3f0ed] focus:border-[#e11d2a]/40 focus:outline-none"
             >
               {ASPECT_RATIOS.map((a) => (
                 <option key={a.value} value={a.value}>
@@ -608,7 +608,7 @@ function SlideEditor({
             value={slide.aiModel}
             onChange={(e) => onChange({ aiModel: e.target.value })}
             placeholder="Modelo de IA (opcional, ex: nano-banana-2)"
-            className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-1.5 text-xs text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#f5409d]/40 focus:outline-none"
+            className="w-full rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-1.5 text-xs text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#e11d2a]/40 focus:outline-none"
           />
         </div>
       </div>

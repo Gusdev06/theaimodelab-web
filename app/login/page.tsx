@@ -14,7 +14,7 @@ const slideMedia = [
     id: 0,
     slideKey: 's0' as const,
     bg: 'bg-black',
-    accent: '#f5409d',
+    accent: '#e11d2a',
     video: 'https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/generations/cmmwn2wq5007vus01furnxyh4/22c243fd-ce57-4c3e-aa8a-afadc811da46/output_0.mp4',
   },
   {
@@ -34,8 +34,8 @@ const slideMedia = [
   {
     id: 3,
     slideKey: 's2' as const,
-    bg: 'bg-gradient-to-br from-teal-950 via-pink-900 to-cyan-950',
-    accent: '#f472b6',
+    bg: 'bg-gradient-to-br from-teal-950 via-red-900 to-cyan-950',
+    accent: '#ff5964',
     image: 'https://qwmnnkgejgjlpzofrxrl.supabase.co/storage/v1/s3/ai-generations/generations/cmmxwz1zt00zsus01w8hjs14n/2738ecf9-5b07-4fc0-ac89-589eb0b45600/output_0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=2e3c372ae61232c26638c35c24b50688%2F20260319%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260319T202137Z&X-Amz-Expires=604800&X-Amz-Signature=ef47cb739b190f79059bd5fb95e9f78a579e062d999d89f578c3ecaf0d241e15&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject'
   },
 ];
@@ -404,11 +404,11 @@ function LoginPageContent() {
   return (
     <div className="flex min-h-screen bg-black">
       {/* ── Left panel ── */}
-      <div className="relative z-10 flex w-full flex-col items-center justify-center px-8 py-12 lg:w-[620px] lg:px-12 bg-[#1a2123]">
+      <div className="relative z-10 flex w-full flex-col items-center justify-center px-8 py-12 lg:w-[620px] lg:px-12 bg-[#111113]">
         {/* Logo */}
-        <div className="mb-8 flex flex-col items-center">
+        <div className="app-reveal mb-8 flex flex-col items-center">
           <Image
-            src="/full_logo.svg"
+            src="/logo-red.jpg"
             alt="The AI Model Lab"
             width={180}
             height={180}
@@ -443,7 +443,7 @@ function LoginPageContent() {
                 window.location.href = '/api/v1/auth/google';
               }}
               disabled={loading || googleLoading}
-              className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98] disabled:opacity-50"
+              className="app-ease flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98] disabled:opacity-50"
             >
               {googleLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -474,7 +474,7 @@ function LoginPageContent() {
             {/* Email */}
             <button
               onClick={() => setView('email')}
-              className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98]"
+              className="app-ease flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98]"
             >
               <Mail className="h-4 w-4 opacity-60" />
               {tCommon('continueWithEmail')}
@@ -483,10 +483,10 @@ function LoginPageContent() {
             <p className="mt-4 text-center text-[11px] text-white/18 leading-relaxed">
               {tCommon.rich('legal', {
                 terms: (chunks) => (
-                  <Link href="/termos-de-uso" className="text-[#f5409d]/50 hover:text-[#f5409d]/80 transition-colors">{chunks}</Link>
+                  <Link href="/termos-de-uso" className="text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors">{chunks}</Link>
                 ),
                 privacy: (chunks) => (
-                  <Link href="/politica-de-privacidade" className="text-[#f5409d]/50 hover:text-[#f5409d]/80 transition-colors">{chunks}</Link>
+                  <Link href="/politica-de-privacidade" className="text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors">{chunks}</Link>
                 ),
               })}
             </p>
@@ -506,8 +506,8 @@ function LoginPageContent() {
 
             {forgotSent ? (
               <div className="flex flex-col items-center gap-4 text-center">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f5409d]/15">
-                  <CheckCircle className="h-7 w-7 text-[#f5409d]" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e11d2a]/15">
+                  <CheckCircle className="h-7 w-7 text-[#e11d2a]" />
                 </div>
                 <h2 className="text-lg font-bold text-white">{tForgot('sentTitle')}</h2>
                 <p className="text-sm text-white/50">
@@ -519,7 +519,7 @@ function LoginPageContent() {
                 <p className="text-xs text-white/30">{tForgot('checkSpam')}</p>
                 <button
                   onClick={() => { setView('email'); setForgotEmail(''); setForgotSent(false); }}
-                  className="mt-1 flex items-center gap-1.5 text-xs text-[#f5409d]/60 hover:text-[#f5409d]/90 transition-colors"
+                  className="mt-1 flex items-center gap-1.5 text-xs text-[#e11d2a]/60 hover:text-[#e11d2a]/90 transition-colors"
                 >
                   <ArrowLeft className="h-3.5 w-3.5" />
                   {tCommon('backToLogin')}
@@ -542,7 +542,7 @@ function LoginPageContent() {
                         value={forgotEmail}
                         onChange={(e) => setForgotEmail(e.target.value)}
                         placeholder={tCommon('placeholders.email')}
-                        className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] pl-10 pr-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]"
+                        className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] pl-10 pr-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]"
                       />
                     </div>
                   </div>
@@ -554,7 +554,7 @@ function LoginPageContent() {
                   <button
                     type="submit"
                     disabled={forgotLoading}
-                    className="mt-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] font-bold text-[#1a2123] text-sm transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+                    className="app-btn mt-1 flex h-11 items-center justify-center gap-2 bg-[#e11d2a] font-bold text-[#111113] text-sm disabled:opacity-60"
                   >
                     {forgotLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : tForgot('submit')}
                   </button>
@@ -569,14 +569,14 @@ function LoginPageContent() {
           <div className="w-full">
             {resetSuccess ? (
               <div className="flex flex-col items-center gap-4 text-center">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f5409d]/15">
-                  <CheckCircle className="h-7 w-7 text-[#f5409d]" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e11d2a]/15">
+                  <CheckCircle className="h-7 w-7 text-[#e11d2a]" />
                 </div>
                 <h2 className="text-lg font-bold text-white">{tReset('successTitle')}</h2>
                 <p className="text-sm text-white/50">{tReset('successBodyShort')}</p>
                 <button
                   onClick={() => { setView('email'); setResetSuccess(false); setResetNewPassword(''); setResetConfirmPassword(''); }}
-                  className="mt-1 flex items-center gap-2 rounded-xl bg-[#f5409d] px-5 py-2.5 text-sm font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-[0.98]"
+                  className="app-btn mt-1 flex items-center gap-2 bg-[#e11d2a] px-5 py-2.5 text-sm font-bold text-[#111113]"
                 >
                   <LogIn className="h-4 w-4" />
                   {tReset('signIn')}
@@ -603,7 +603,7 @@ function LoginPageContent() {
                         value={resetNewPassword}
                         onChange={(e) => setResetNewPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 pr-10 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]"
+                        className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 pr-10 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]"
                       />
                       <button
                         type="button"
@@ -622,7 +622,7 @@ function LoginPageContent() {
                       value={resetConfirmPassword}
                       onChange={(e) => setResetConfirmPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]"
+                      className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]"
                     />
                   </div>
                   <p className="text-[10px] text-white/25">
@@ -636,7 +636,7 @@ function LoginPageContent() {
                   <button
                     type="submit"
                     disabled={resetLoading}
-                    className="mt-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] font-bold text-[#1a2123] text-sm transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+                    className="app-btn mt-1 flex h-11 items-center justify-center gap-2 bg-[#e11d2a] font-bold text-[#111113] text-sm disabled:opacity-60"
                   >
                     {resetLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : tReset('submit')}
                   </button>
@@ -674,7 +674,7 @@ function LoginPageContent() {
                   disabled={verifyStatus === 'loading'}
                   className={`h-14 w-12 rounded-xl border text-center text-xl font-bold outline-none transition-all ${verifyStatus === 'error'
                       ? 'border-red-400/40 bg-red-400/10 text-red-400'
-                      : 'border-white/[0.08] bg-white/[0.04] text-white focus:border-[#f5409d]/50 focus:bg-white/[0.06]'
+                      : 'border-white/[0.08] bg-white/[0.04] text-white focus:border-[#e11d2a]/50 focus:bg-white/[0.06]'
                     } disabled:opacity-50`}
                 />
               ))}
@@ -695,7 +695,7 @@ function LoginPageContent() {
                 </div>
                 <button
                   onClick={handleVerifyRetry}
-                  className="text-xs text-[#f5409d]/70 hover:text-[#f5409d] transition-colors"
+                  className="text-xs text-[#e11d2a]/70 hover:text-[#e11d2a] transition-colors"
                 >
                   {tVerify('tryAgain')}
                 </button>
@@ -703,7 +703,7 @@ function LoginPageContent() {
             )}
 
             {resendVerifySuccess && (
-              <p className="rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/10 px-3 py-2 text-xs text-[#f5409d]">
+              <p className="rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-3 py-2 text-xs text-[#e11d2a]">
                 {resendVerifySuccess}
               </p>
             )}
@@ -767,7 +767,7 @@ function LoginPageContent() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={tCommon('placeholders.name')}
-                    className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]"
+                    className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]"
                   />
                 </div>
               )}
@@ -782,7 +782,7 @@ function LoginPageContent() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={tCommon('placeholders.email')}
-                  className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]"
+                  className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]"
                 />
               </div>
 
@@ -797,7 +797,7 @@ function LoginPageContent() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 pr-10 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]"
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 pr-10 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]"
                   />
                   <button
                     type="button"
@@ -814,7 +814,7 @@ function LoginPageContent() {
               </div>
 
               {success && (
-                <p className="rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/10 px-3 py-2 text-xs text-[#f5409d]">
+                <p className="rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-3 py-2 text-xs text-[#e11d2a]">
                   {success}
                 </p>
               )}
@@ -829,7 +829,7 @@ function LoginPageContent() {
                       type="button"
                       onClick={handleResendVerification}
                       disabled={resendLoading}
-                      className="text-xs text-[#f5409d]/70 hover:text-[#f5409d] transition-colors disabled:opacity-50"
+                      className="text-xs text-[#e11d2a]/70 hover:text-[#e11d2a] transition-colors disabled:opacity-50"
                     >
                       {resendLoading ? tCommon('resending') : tCommon('resendVerification')}
                     </button>
@@ -842,7 +842,7 @@ function LoginPageContent() {
                   <button
                     type="button"
                     onClick={() => { setForgotEmail(email); setView('forgot'); }}
-                    className="text-[11px] text-[#f5409d]/50 hover:text-[#f5409d]/80 transition-colors"
+                    className="text-[11px] text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors"
                   >
                     {tCommon('forgotPasswordLink')}
                   </button>
@@ -852,10 +852,10 @@ function LoginPageContent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] font-bold text-[#1a2123] text-sm transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+                className="app-btn mt-1 flex h-11 items-center justify-center gap-2 bg-[#e11d2a] font-bold text-[#111113] text-sm disabled:opacity-60"
               >
                 {loading ? (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#1a2123]/30 border-t-[#1a2123]" />
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#111113]/30 border-t-[#111113]" />
                 ) : mode === 'register' ? (
                   <>
                     <UserPlus className="h-4 w-4" />

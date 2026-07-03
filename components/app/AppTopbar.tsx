@@ -46,7 +46,7 @@ export function AppTopbar() {
   const RING_R = 19;
   const RING_C = 2 * Math.PI * RING_R;
   const ringOffset = RING_C * (1 - fraction);
-  const ringColor = fraction > 0.25 ? '#f5409d' : fraction > 0.1 ? '#f59e0b' : '#ef4444';
+  const ringColor = fraction > 0.25 ? '#e11d2a' : fraction > 0.1 ? '#f59e0b' : '#ef4444';
 
   return (
     <header className="flex items-center justify-between gap-5 bg-app-bg px-7 pt-5">
@@ -66,7 +66,7 @@ export function AppTopbar() {
         ) : (
           /* sem título (Início) — exibe a marca apenas no mobile (sidebar oculta) */
           <Link href="/home" className="flex items-center gap-2.5 lg:hidden">
-            <Image src="/logo_2.svg" alt="The AI Model Lab" width={26} height={26} className="size-[26px] shrink-0" />
+            <Image src="/logo-red.jpg" alt="The AI Model Lab" width={26} height={26} className="size-[26px] shrink-0" />
             <span className="text-[18px] font-bold text-app-text">The AI Model Lab</span>
           </Link>
         )}

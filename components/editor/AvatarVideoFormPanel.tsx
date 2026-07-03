@@ -432,7 +432,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
     // after the user closed/cleared this panel's storage).
     return (
       <TooltipProvider>
-        <div className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#1a2123] shadow-2xl shadow-black/50 sm:w-[320px]">
+        <div className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#111113] shadow-2xl shadow-black/50 sm:w-[320px]">
           <div className="panel-drag-handle flex cursor-grab items-center justify-between px-3 py-2.5 active:cursor-grabbing">
             <div className="flex items-center gap-1.5">
               <Video className="h-3.5 w-3.5 text-[#f3f0ed]/40" />
@@ -565,7 +565,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
 
   return (
     <TooltipProvider>
-      <div ref={panelRef} className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#1a2123] shadow-2xl shadow-black/50 sm:w-[320px]">
+      <div ref={panelRef} className="w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#111113] shadow-2xl shadow-black/50 sm:w-[320px]">
         {/* Drag handle / header */}
         <div className="panel-drag-handle flex cursor-grab items-center justify-between gap-2 px-3 py-3 active:cursor-grabbing">
           <div className="flex min-w-0 items-center gap-2.5">
@@ -574,11 +574,11 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
               <img
                 src={avatar.previewImageUrl}
                 alt={avatar.name}
-                className="h-9 w-9 shrink-0 rounded-full border border-[#f5409d]/35 object-cover shadow-[0_0_0_3px_rgba(245,64,157,0.06)]"
+                className="h-9 w-9 shrink-0 rounded-full border border-[#e11d2a]/35 object-cover shadow-[0_0_0_3px_rgba(225,29,42,0.06)]"
               />
             ) : (
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#f5409d]/30 bg-[#f5409d]/10">
-                <Video className="h-4 w-4 text-[#f5409d]/70" />
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#e11d2a]/30 bg-[#e11d2a]/10">
+                <Video className="h-4 w-4 text-[#e11d2a]/70" />
               </span>
             )}
             <div className="min-w-0 flex-1">
@@ -609,7 +609,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
 
         <div className="space-y-2 px-3 pb-3">
           {/* ── Input mode switch (Voz ↔ Áudio) ─────────────────────── */}
-          <div className="grid grid-cols-2 gap-1 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/10 p-0.5">
+          <div className="grid grid-cols-2 gap-1 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/10 p-0.5">
             {(['voice', 'audio'] as const).map((mode) => {
               const active = inputMode === mode;
               const label = mode === 'voice' ? t('modeVoice') : t('modeAudio');
@@ -622,9 +622,9 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                   disabled={isGenerating}
                   className="flex items-center justify-center gap-1.5 rounded-lg py-2 text-[11px] font-bold transition-all disabled:cursor-not-allowed disabled:opacity-50"
                   style={{
-                    background: active ? 'rgba(245,64,157,0.12)' : 'transparent',
-                    color: active ? '#f5409d' : 'rgba(243,240,237,0.45)',
-                    boxShadow: active ? '0 0 0 1px rgba(245,64,157,0.25)' : 'none',
+                    background: active ? 'rgba(225,29,42,0.12)' : 'transparent',
+                    color: active ? '#e11d2a' : 'rgba(243,240,237,0.45)',
+                    boxShadow: active ? '0 0 0 1px rgba(225,29,42,0.25)' : 'none',
                   }}
                 >
                   <Icon className="h-3 w-3" />
@@ -645,7 +645,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                 maxLength={3000}
                 rows={3}
                 disabled={isGenerating}
-                className="w-full resize-none rounded-lg border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 py-2.5 text-[12.5px] leading-relaxed text-[#f3f0ed]/90 placeholder:text-[#f3f0ed]/25 outline-none transition-all focus:border-[#f5409d]/40 focus:bg-[#4b1e3a]/30 disabled:opacity-60"
+                className="w-full resize-none rounded-lg border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 py-2.5 text-[12.5px] leading-relaxed text-[#f3f0ed]/90 placeholder:text-[#f3f0ed]/25 outline-none transition-all focus:border-[#e11d2a]/40 focus:bg-[#3a0f16]/30 disabled:opacity-60"
               />
               <div className="mt-1 flex justify-end">
                 <span className="text-[10px] tabular-nums text-[#f3f0ed]/30">
@@ -660,7 +660,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
             <div>
               <FieldLabel label={t('audioInputLabel')} />
               {customAudio ? (
-                <div className="flex flex-col gap-2 rounded-lg border border-[#f5409d]/30 bg-[#f5409d]/[0.05] px-3 py-2.5">
+                <div className="flex flex-col gap-2 rounded-lg border border-[#e11d2a]/30 bg-[#e11d2a]/[0.05] px-3 py-2.5">
                   <audio src={customAudio.previewUrl} controls className="h-8 w-full" />
                   <div className="flex items-center justify-between text-[10.5px] text-[#f3f0ed]/55">
                     <span className="tabular-nums">
@@ -715,7 +715,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                     type="button"
                     onClick={() => audioInputRef.current?.click()}
                     disabled={isGenerating}
-                    className="flex h-16 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-[#f3f0ed]/15 text-[10.5px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-16 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-[#f3f0ed]/15 text-[10.5px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <Upload className="h-3.5 w-3.5" />
                     {t('audioUpload')}
@@ -724,7 +724,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                     type="button"
                     onClick={startCustomAudioRecording}
                     disabled={isGenerating}
-                    className="flex h-16 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-[#f3f0ed]/15 text-[10.5px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-16 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-[#f3f0ed]/15 text-[10.5px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <Mic className="h-3.5 w-3.5" />
                     {t('audioStartRecording')}
@@ -806,7 +806,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                 <button
                   type="button"
                   onClick={() => setOptionsOpen((o) => !o)}
-                  className="flex h-6 w-6 items-center justify-center rounded-full text-[#f5409d]/60 transition-all hover:bg-[#f5409d]/10 hover:text-[#f5409d]"
+                  className="flex h-6 w-6 items-center justify-center rounded-full text-[#e11d2a]/60 transition-all hover:bg-[#e11d2a]/10 hover:text-[#e11d2a]"
                 >
                   <Settings
                     className="h-5 w-5 transition-transform duration-500"
@@ -877,10 +877,10 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                           title={t(a.hintKey)}
                           className="flex-1 rounded-xl py-2 text-[11px] font-bold transition-all active:scale-95 disabled:opacity-30"
                           style={{
-                            background: active ? 'rgba(245,64,157,0.1)' : 'rgba(30,73,75,0.15)',
-                            color: active ? '#f5409d' : 'rgba(243,240,237,0.3)',
-                            border: `1px solid ${active ? 'rgba(245,64,157,0.28)' : 'rgba(243,240,237,0.06)'}`,
-                            boxShadow: active ? '0 0 12px rgba(245,64,157,0.08)' : 'none',
+                            background: active ? 'rgba(225,29,42,0.1)' : 'rgba(30,73,75,0.15)',
+                            color: active ? '#e11d2a' : 'rgba(243,240,237,0.3)',
+                            border: `1px solid ${active ? 'rgba(225,29,42,0.28)' : 'rgba(243,240,237,0.06)'}`,
+                            boxShadow: active ? '0 0 12px rgba(225,29,42,0.08)' : 'none',
                           }}
                         >
                           {a.label}
@@ -902,7 +902,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <Coins className="h-3 w-3 text-[#f5409d]" />
+                    <Coins className="h-3 w-3 text-[#e11d2a]" />
                     <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#f3f0ed]/40">
                       {t('estimateLabel')}
                     </span>
@@ -911,7 +911,7 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                     <span className="text-xs font-bold text-[#f3f0ed]/70">
                       {t('estimateValue', { credits: estimatedCost.toLocaleString() })}
                     </span>
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#f5409d]" />
+                    <div className="h-1.5 w-1.5 rounded-full bg-[#e11d2a]" />
                   </div>
                 </div>
                 <p className="mt-1 text-[9.5px] leading-relaxed text-[#f3f0ed]/30">
@@ -939,9 +939,9 @@ export function AvatarVideoFormPanel({ nodeId, onClose }: AvatarVideoFormPanelPr
                   disabled={!canSubmit}
                   className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
                   style={{
-                    background: isGenerating ? 'rgba(245,64,157,0.12)' : '#f5409d',
-                    color: isGenerating ? '#f5409d' : '#1a2123',
-                    border: isGenerating ? '1px solid rgba(245,64,157,0.2)' : 'none',
+                    background: isGenerating ? 'rgba(225,29,42,0.12)' : '#e11d2a',
+                    color: isGenerating ? '#e11d2a' : '#111113',
+                    border: isGenerating ? '1px solid rgba(225,29,42,0.2)' : 'none',
                   }}
                 >
                   {isGenerating ? (
@@ -998,15 +998,15 @@ function PanelSelect({
 }) {
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:border-[#f5409d]/40 focus:ring-0 data-placeholder:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30">
+      <SelectTrigger className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:border-[#e11d2a]/40 focus:ring-0 data-placeholder:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="z-[110] rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
+      <SelectContent className="z-[110] rounded-xl border border-[#f3f0ed]/8 bg-[#111113] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
         {options.map((opt) => (
           <SelectItem
             key={opt.value}
             value={opt.value}
-            className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#4b1e3a]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]"
+            className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#3a0f16]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]"
           >
             {opt.label}
           </SelectItem>
@@ -1053,11 +1053,11 @@ function VoicePickerButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex h-9 w-full items-center gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all hover:border-[#f5409d]/40 hover:bg-[#4b1e3a]/30 focus:border-[#f5409d]/40 disabled:cursor-not-allowed disabled:opacity-50"
+      className="flex h-9 w-full items-center gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all hover:border-[#e11d2a]/40 hover:bg-[#3a0f16]/30 focus:border-[#e11d2a]/40 disabled:cursor-not-allowed disabled:opacity-50"
     >
-      <MicVocal className="h-3.5 w-3.5 shrink-0 text-[#f5409d]" />
+      <MicVocal className="h-3.5 w-3.5 shrink-0 text-[#e11d2a]" />
       <span className="flex-1 truncate text-left">{label}</span>
-      <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-bold uppercase tracking-wider text-[#f5409d]/80">
+      <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-bold uppercase tracking-wider text-[#e11d2a]/80">
         {t('voicesAction')}
         <ChevronRight className="h-3 w-3" />
       </span>
@@ -1079,7 +1079,7 @@ function ActionButton({
       <TooltipTrigger asChild>
         <button
           onClick={onClick}
-          className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1a2123]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#4b1e3a] hover:text-[#f5409d]"
+          className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111113]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#3a0f16] hover:text-[#e11d2a]"
         >
           {children}
         </button>

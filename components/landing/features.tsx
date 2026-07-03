@@ -269,7 +269,7 @@ function FeatureCard({
   return (
     <div
       ref={ref}
-      className="group overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(245,64,157,0.06)]"
+      className="group overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(225,29,42,0.06)]"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(28px)",
@@ -323,7 +323,7 @@ export function Features() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div
           ref={ref}
-          className="mx-auto max-w-2xl text-center transition-all duration-700"
+          className="landing-reveal mx-auto max-w-2xl text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(24px)",

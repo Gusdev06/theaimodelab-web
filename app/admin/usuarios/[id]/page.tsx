@@ -99,7 +99,7 @@ function modelLabel(modelUsed: string | null): string | null {
 
 function statusBadge(status: string) {
   const config: Record<string, { color: string; icon: React.ElementType }> = {
-    COMPLETED: { color: 'border-pink-500/30 bg-pink-500/10 text-pink-400', icon: CheckCircle2 },
+    COMPLETED: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: CheckCircle2 },
     PROCESSING: { color: 'border-blue-500/30 bg-blue-500/10 text-blue-400', icon: Clock },
     PENDING: { color: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400', icon: Clock },
     FAILED: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: XCircle },
@@ -167,8 +167,8 @@ function TransactionRow({ tx }: { tx: CreditTransaction }) {
       <div
         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
         style={{
-          background: debit ? 'rgba(239,68,68,0.08)' : 'rgba(245,64,157,0.08)',
-          color: debit ? 'rgba(239,68,68,0.7)' : 'rgba(245,64,157,0.8)',
+          background: debit ? 'rgba(239,68,68,0.08)' : 'rgba(225,29,42,0.08)',
+          color: debit ? 'rgba(239,68,68,0.7)' : 'rgba(225,29,42,0.8)',
         }}
       >
         {txIcon(tx.type, tx.description)}
@@ -184,7 +184,7 @@ function TransactionRow({ tx }: { tx: CreditTransaction }) {
       <div className="shrink-0 text-right">
         <span
           className="text-sm font-bold tabular-nums"
-          style={{ color: debit ? 'rgba(239,68,68,0.75)' : 'rgba(245,64,157,0.9)' }}
+          style={{ color: debit ? 'rgba(239,68,68,0.75)' : 'rgba(225,29,42,0.9)' }}
         >
           {debit ? '' : '+'}{tx.amount.toLocaleString('pt-BR')}
         </span>
@@ -210,15 +210,15 @@ function MediaPreview({ output, genType }: { output: AdminUserGeneration['output
 
   if (isAudioMime(output.mimeType) || AUDIO_GENERATION_TYPES.includes(genType)) {
     return (
-      <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-lg border border-[#f3f0ed]/8 bg-gradient-to-br from-[#f5409d]/[0.06] to-transparent p-4">
-        <AudioLines className="h-10 w-10 text-[#f5409d]/60" strokeWidth={1.5} />
+      <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-lg border border-[#f3f0ed]/8 bg-gradient-to-br from-[#e11d2a]/[0.06] to-transparent p-4">
+        <AudioLines className="h-10 w-10 text-[#e11d2a]/60" strokeWidth={1.5} />
         <audio
           src={output.url}
           controls
           preload="metadata"
           className="w-full max-w-[200px]"
         />
-        <Badge className="border-none bg-[#f5409d]/15 text-[10px] text-[#f5409d]/90">
+        <Badge className="border-none bg-[#e11d2a]/15 text-[10px] text-[#e11d2a]/90">
           AUDIO
         </Badge>
       </div>
@@ -431,7 +431,7 @@ export default function AdminUserDetailPage() {
   if (isLoading || !user) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -453,25 +453,25 @@ export default function AdminUserDetailPage() {
       {/* Back */}
       <button
         onClick={() => router.push('/admin/usuarios')}
-        className="flex w-fit items-center gap-2 text-sm text-[#f3f0ed]/50 transition-colors hover:text-[#f3f0ed]"
+        className="app-press app-ease flex w-fit items-center gap-2 text-sm text-[#f3f0ed]/50 transition-colors hover:text-[#f3f0ed]"
       >
         <ArrowLeft className="h-4 w-4" />
         Voltar
       </button>
 
       {/* User info header */}
-      <div className="flex flex-col gap-6 rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] p-6 sm:flex-row sm:items-start sm:justify-between">
+      <div className="app-reveal flex flex-col gap-6 rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] p-6 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-bold text-[#f3f0ed]">{user.name || 'Sem nome'}</h1>
-            <Badge variant="outline" className="border-[#f5409d]/20 bg-[#f5409d]/5 text-[#f5409d]">
+            <Badge variant="outline" className="border-[#e11d2a]/20 bg-[#e11d2a]/5 text-[#e11d2a]">
               {user.role}
             </Badge>
             <Badge
               variant="outline"
               className={
                 user.isActive
-                  ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                  ? 'border-red-500/30 bg-red-500/10 text-red-400'
                   : 'border-red-500/30 bg-red-500/10 text-red-400'
               }
             >
@@ -502,7 +502,7 @@ export default function AdminUserDetailPage() {
             disabled={toggleStatusMutation.isPending}
             className={`flex h-9 items-center gap-1.5 rounded-xl px-4 text-xs font-bold transition-all active:scale-[0.97] disabled:opacity-50 ${user.isActive
               ? 'border border-yellow-500/30 bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20'
-              : 'bg-[#f5409d] text-[#1a2123] hover:bg-[#fa4da6]'
+              : 'bg-[#e11d2a] text-[#111113] hover:bg-[#ff5964]'
               }`}
           >
             {toggleStatusMutation.isPending ? (
@@ -529,8 +529,8 @@ export default function AdminUserDetailPage() {
               Créditos
             </span>
             <div className="flex items-center gap-1.5">
-              <Coins className="h-4 w-4 text-[#f5409d]" />
-              <span className="text-2xl font-bold tabular-nums text-[#f5409d]">
+              <Coins className="h-4 w-4 text-[#e11d2a]" />
+              <span className="text-2xl font-bold tabular-nums text-[#e11d2a]">
                 {totalCredits.toLocaleString('pt-BR')}
               </span>
             </div>
@@ -542,7 +542,7 @@ export default function AdminUserDetailPage() {
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setShowDeleteConfirm(false)}>
           <div
-            className="flex w-full max-w-md flex-col gap-5 rounded-2xl border border-red-500/20 bg-[#1a2123] p-6"
+            className="flex w-full max-w-md flex-col gap-5 rounded-2xl border border-red-500/20 bg-[#111113] p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3">
@@ -601,7 +601,7 @@ export default function AdminUserDetailPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-[#f3f0ed]/40">Status</span>
-                <Badge variant="outline" className="border-[#f5409d]/20 bg-[#f5409d]/5 text-[#f5409d]">
+                <Badge variant="outline" className="border-[#e11d2a]/20 bg-[#e11d2a]/5 text-[#e11d2a]">
                   {user.subscription.status}
                 </Badge>
               </div>
@@ -627,7 +627,7 @@ export default function AdminUserDetailPage() {
         {/* Credits breakdown */}
         <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] p-5">
           <div className="mb-4 flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-[#f5409d]/60" />
+            <Sparkles className="h-4 w-4 text-[#e11d2a]/60" />
             <h3 className="text-sm font-semibold text-[#f3f0ed]">Créditos</h3>
           </div>
           {user.credits ? (
@@ -640,7 +640,7 @@ export default function AdminUserDetailPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-[#f3f0ed]/40">Bônus</span>
-                <span className="text-sm font-medium tabular-nums text-[#f5409d]">
+                <span className="text-sm font-medium tabular-nums text-[#e11d2a]">
                   {user.credits.bonusCreditsRemaining.toLocaleString('pt-BR')}
                 </span>
               </div>
@@ -651,14 +651,14 @@ export default function AdminUserDetailPage() {
                 </span>
               </div>
               {user.credits.freeGenerations && (
-                <div className="mt-2 flex flex-col gap-1 rounded-lg border border-pink-500/10 bg-pink-500/5 p-3">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-pink-400/70">
+                <div className="mt-2 flex flex-col gap-1 rounded-lg border border-red-500/10 bg-red-500/5 p-3">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-red-400/70">
                     Gerações Gratuitas
                   </span>
                   {(['NB2', 'NB_PRO', 'FACE_SWAP', 'VIRTUAL_TRY_ON', 'THEAIMODELAB_FAST', 'UPSCALE'] as const).map((k) => (
                     <div key={k} className="flex items-center justify-between">
                       <span className="text-xs text-[#f3f0ed]/40">{freeGenLabel(k)}</span>
-                      <span className="text-sm font-medium tabular-nums text-pink-400">
+                      <span className="text-sm font-medium tabular-nums text-red-400">
                         {user.credits!.freeGenerations[k] ?? 0}
                       </span>
                     </div>
@@ -691,9 +691,9 @@ export default function AdminUserDetailPage() {
               onChange={(e) => setSelectedPlan(e.target.value)}
               className="h-9 rounded-xl border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 text-sm text-[#f3f0ed] focus:border-purple-500/30 focus:outline-none focus:ring-1 focus:ring-purple-500/10"
             >
-              <option value="" className="bg-[#1a2123]">Selecione um plano</option>
+              <option value="" className="bg-[#111113]">Selecione um plano</option>
               {availablePlans.map((p) => (
-                <option key={p.slug} value={p.slug} className="bg-[#1a2123]">
+                <option key={p.slug} value={p.slug} className="bg-[#111113]">
                   {p.name} — {p.creditsPerMonth} créditos/mês — R$ {(p.priceCents / 100).toFixed(2)}
                 </option>
               ))}
@@ -721,9 +721,9 @@ export default function AdminUserDetailPage() {
       </div>
 
       {/* Credit adjustment */}
-      <div className="rounded-2xl border border-[#f5409d]/15 bg-[#f5409d]/[0.03] p-5">
+      <div className="rounded-2xl border border-[#e11d2a]/15 bg-[#e11d2a]/[0.03] p-5">
         <div className="mb-4 flex items-center gap-2">
-          <Coins className="h-4 w-4 text-[#f5409d]" />
+          <Coins className="h-4 w-4 text-[#e11d2a]" />
           <h3 className="text-sm font-semibold text-[#f3f0ed]">Ajustar Créditos</h3>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
@@ -737,7 +737,7 @@ export default function AdminUserDetailPage() {
               placeholder="500"
               value={creditAmount}
               onChange={(e) => setCreditAmount(e.target.value)}
-              className="h-9 w-32 border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] text-sm tabular-nums text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-9 w-32 border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] text-sm tabular-nums text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
           <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -748,14 +748,14 @@ export default function AdminUserDetailPage() {
               placeholder="Ex: Compensa\u00e7\u00e3o por erro no sistema"
               value={creditDesc}
               onChange={(e) => setCreditDesc(e.target.value)}
-              className="h-9 border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-9 border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
           <div className="flex gap-2">
             <button
               onClick={() => handleAdjust(true)}
               disabled={adjustMutation.isPending}
-              className="flex h-9 items-center gap-1.5 rounded-xl bg-[#f5409d] px-4 text-xs font-bold text-[#1a2123] transition-all hover:bg-[#fa4da6] active:scale-[0.97] disabled:opacity-50"
+              className="flex h-9 items-center gap-1.5 rounded-xl bg-[#e11d2a] px-4 text-xs font-bold text-[#111113] transition-all hover:bg-[#ff5964] active:scale-[0.97] disabled:opacity-50"
             >
               {adjustMutation.isPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -777,11 +777,11 @@ export default function AdminUserDetailPage() {
       </div>
 
       {/* Free generations adjustment */}
-      <div className="rounded-2xl border border-pink-500/15 bg-pink-500/[0.03] p-5">
+      <div className="rounded-2xl border border-red-500/15 bg-red-500/[0.03] p-5">
         <div className="mb-4 flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-pink-400" />
+          <Sparkles className="h-4 w-4 text-red-400" />
           <h3 className="text-sm font-semibold text-[#f3f0ed]">Gerações Gratuitas</h3>
-          <Badge variant="outline" className="border-pink-500/20 bg-pink-500/5 text-pink-400 text-[10px]">
+          <Badge variant="outline" className="border-red-500/20 bg-red-500/5 text-red-400 text-[10px]">
             Atual ({freeGenLabel(freeGenType)}): {user.credits?.freeGenerations?.[freeGenType] ?? 0}
           </Badge>
         </div>
@@ -793,10 +793,10 @@ export default function AdminUserDetailPage() {
             <select
               value={freeGenType}
               onChange={(e) => setFreeGenType(e.target.value as FreeGenerationType)}
-              className="h-9 rounded-xl border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 text-sm text-[#f3f0ed] focus:border-pink-500/30 focus:outline-none focus:ring-1 focus:ring-pink-500/10"
+              className="h-9 rounded-xl border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 text-sm text-[#f3f0ed] focus:border-red-500/30 focus:outline-none focus:ring-1 focus:ring-red-500/10"
             >
               {FREE_GEN_TYPES.map((t) => (
-                <option key={t} value={t} className="bg-[#1a2123]">{freeGenLabel(t)}</option>
+                <option key={t} value={t} className="bg-[#111113]">{freeGenLabel(t)}</option>
               ))}
             </select>
           </div>
@@ -810,7 +810,7 @@ export default function AdminUserDetailPage() {
               placeholder="2"
               value={freeGenAmount}
               onChange={(e) => setFreeGenAmount(e.target.value)}
-              className="h-9 w-32 border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] text-sm tabular-nums text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus-visible:border-pink-500/30 focus-visible:ring-pink-500/10"
+              className="h-9 w-32 border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] text-sm tabular-nums text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus-visible:border-red-500/30 focus-visible:ring-red-500/10"
             />
           </div>
           <button
@@ -823,7 +823,7 @@ export default function AdminUserDetailPage() {
               adjustFreeGenMutation.mutate({ type: freeGenType, amount });
             }}
             disabled={adjustFreeGenMutation.isPending}
-            className="flex h-9 items-center gap-1.5 rounded-xl bg-pink-500 px-4 text-xs font-bold text-white transition-all hover:bg-pink-600 active:scale-[0.97] disabled:opacity-50"
+            className="flex h-9 items-center gap-1.5 rounded-xl bg-red-500 px-4 text-xs font-bold text-white transition-all hover:bg-red-600 active:scale-[0.97] disabled:opacity-50"
           >
             {adjustFreeGenMutation.isPending ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -870,7 +870,7 @@ export default function AdminUserDetailPage() {
                   value={txStart}
                   max={txEnd || undefined}
                   onChange={(e) => { setTxStart(e.target.value); setTxPage(1); }}
-                  className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] px-3 text-sm text-[#f3f0ed] outline-none transition-colors [color-scheme:dark] focus:border-[#f5409d]/50"
+                  className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] px-3 text-sm text-[#f3f0ed] outline-none transition-colors [color-scheme:dark] focus:border-[#e11d2a]/50"
                 />
               </FilterField>
               <FilterField label="Até" className="min-w-[140px]">
@@ -879,7 +879,7 @@ export default function AdminUserDetailPage() {
                   value={txEnd}
                   min={txStart || undefined}
                   onChange={(e) => { setTxEnd(e.target.value); setTxPage(1); }}
-                  className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] px-3 text-sm text-[#f3f0ed] outline-none transition-colors [color-scheme:dark] focus:border-[#f5409d]/50"
+                  className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] px-3 text-sm text-[#f3f0ed] outline-none transition-colors [color-scheme:dark] focus:border-[#e11d2a]/50"
                 />
               </FilterField>
               <FilterField label="Tipo" className="min-w-[170px] flex-1">
@@ -915,7 +915,7 @@ export default function AdminUserDetailPage() {
                   <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">
                     Total recebido
                   </span>
-                  <span className="text-lg font-bold tabular-nums text-[#f5409d] sm:text-xl">
+                  <span className="text-lg font-bold tabular-nums text-[#e11d2a] sm:text-xl">
                     {txSummary.received.toLocaleString('pt-BR')}
                   </span>
                 </div>
@@ -935,7 +935,7 @@ export default function AdminUserDetailPage() {
             <div className="sidebar-scroll divide-y divide-[#f3f0ed]/4 overflow-y-auto" style={{ maxHeight: '28rem' }}>
               {txLoading ? (
                 <div className="flex h-32 items-center justify-center">
-                  <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+                  <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
                 </div>
               ) : transactions.length === 0 ? (
                 <div className="flex flex-col items-center gap-2 py-12 text-center">
@@ -992,7 +992,7 @@ export default function AdminUserDetailPage() {
 
         {genLoading ? (
           <div className="flex h-48 items-center justify-center rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02]">
-            <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+            <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
           </div>
         ) : generations.length > 0 ? (
           <>
@@ -1028,7 +1028,7 @@ export default function AdminUserDetailPage() {
                     {modelLabel(gen.modelUsed) && (
                       <Badge
                         variant="outline"
-                        className="w-fit border-[#f5409d]/20 bg-[#f5409d]/5 text-[9px] font-medium text-[#f5409d]/80"
+                        className="w-fit border-[#e11d2a]/20 bg-[#e11d2a]/5 text-[9px] font-medium text-[#e11d2a]/80"
                       >
                         {modelLabel(gen.modelUsed)}
                       </Badge>
@@ -1042,7 +1042,7 @@ export default function AdminUserDetailPage() {
                       <span className="text-[10px] tabular-nums text-[#f3f0ed]/30">
                         {new Date(gen.createdAt).toLocaleDateString('pt-BR')}
                       </span>
-                      <span className="flex items-center gap-1 text-[10px] tabular-nums text-[#f5409d]/70">
+                      <span className="flex items-center gap-1 text-[10px] tabular-nums text-[#e11d2a]/70">
                         <Coins className="h-2.5 w-2.5" />
                         {gen.creditsConsumed}
                       </span>

@@ -75,7 +75,7 @@ function GrowthBadge({ value }: { value?: string }) {
   if (value === '-' || value === '0%') return null;
 
   return (
-    <span className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[8px] font-black ring-1 tabular-nums ${isNeg ? 'text-red-400 bg-red-500/10 ring-red-500/20' : 'text-[#f5409d] bg-[#f5409d]/10 ring-[#f5409d]/20'
+    <span className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[8px] font-black ring-1 tabular-nums ${isNeg ? 'text-red-400 bg-red-500/10 ring-red-500/20' : 'text-[#e11d2a] bg-[#e11d2a]/10 ring-[#e11d2a]/20'
       }`}>
       {isNeg ? <TrendingDown className="h-2 w-2" /> : <TrendingUp className="h-2 w-2" />}
       {value}
@@ -96,7 +96,7 @@ function ProductCard({ item, rank, highlight, onUse }: { item: RankItem; rank: n
   const hasCommission = item.commission_rate_show && item.commission_rate_show !== '-';
 
   return (
-    <div className="group relative flex flex-col rounded-xl ring-1 ring-white/[0.06] bg-[#1d2527] hover:ring-[#f5409d]/25 hover:bg-landing-card transition-all duration-300 overflow-hidden">
+    <div className="group relative flex flex-col rounded-xl ring-1 ring-white/[0.06] bg-[#1d2527] hover:ring-[#e11d2a]/25 hover:bg-landing-card transition-all duration-300 overflow-hidden">
       {/* Thumbnail */}
       <div className="relative aspect-square overflow-hidden bg-[#161e20]">
         <img
@@ -154,7 +154,7 @@ function ProductCard({ item, rank, highlight, onUse }: { item: RankItem; rank: n
 
         {/* Category */}
         {item.category_name?.[0] && (
-          <span className="self-start text-[8px] font-bold uppercase tracking-wider text-[#f5409d]/60 bg-[#f5409d]/[0.07] px-1.5 py-0.5 rounded-full ring-1 ring-[#f5409d]/10 truncate max-w-full">
+          <span className="self-start text-[8px] font-bold uppercase tracking-wider text-[#e11d2a]/60 bg-[#e11d2a]/[0.07] px-1.5 py-0.5 rounded-full ring-1 ring-[#e11d2a]/10 truncate max-w-full">
             {item.category_name[0]}
           </span>
         )}
@@ -188,7 +188,7 @@ function ProductCard({ item, rank, highlight, onUse }: { item: RankItem; rank: n
         {/* CTA */}
         <button
           onClick={() => onUse(item)}
-          className="mt-1 w-full rounded-lg bg-[#f5409d]/10 py-1.5 text-[10px] font-black text-[#f5409d] ring-1 ring-[#f5409d]/25 hover:bg-[#f5409d]/20 transition-all duration-200"
+          className="mt-1 w-full rounded-lg bg-[#e11d2a]/10 py-1.5 text-[10px] font-black text-[#e11d2a] ring-1 ring-[#e11d2a]/25 hover:bg-[#e11d2a]/20 transition-all duration-200"
         >
           {t('useProduct')}
         </button>
@@ -199,11 +199,11 @@ function ProductCard({ item, rank, highlight, onUse }: { item: RankItem; rank: n
 
 function StatBadge({ icon: Icon, label, value, highlighted }: { icon: React.ElementType; label: string; value: string; highlighted?: boolean }) {
   return (
-    <div className={`flex items-center gap-1 rounded-lg px-1.5 py-1 ring-1 transition-colors ${highlighted ? 'bg-[#f5409d]/10 ring-[#f5409d]/25' : 'bg-white/3 ring-white/4'}`}>
-      <Icon className={`h-2.5 w-2.5 shrink-0 ${highlighted ? 'text-[#f5409d]' : 'text-white/25'}`} />
+    <div className={`flex items-center gap-1 rounded-lg px-1.5 py-1 ring-1 transition-colors ${highlighted ? 'bg-[#e11d2a]/10 ring-[#e11d2a]/25' : 'bg-white/3 ring-white/4'}`}>
+      <Icon className={`h-2.5 w-2.5 shrink-0 ${highlighted ? 'text-[#e11d2a]' : 'text-white/25'}`} />
       <div className="min-w-0">
-        <p className={`text-[9px] leading-none truncate ${highlighted ? 'text-[#f5409d]/60' : 'text-white/25'}`}>{label}</p>
-        <p className={`text-[10px] font-bold leading-tight tabular-nums ${highlighted ? 'text-[#f5409d]' : 'text-white/70'}`}>{value}</p>
+        <p className={`text-[9px] leading-none truncate ${highlighted ? 'text-[#e11d2a]/60' : 'text-white/25'}`}>{label}</p>
+        <p className={`text-[10px] font-bold leading-tight tabular-nums ${highlighted ? 'text-[#e11d2a]' : 'text-white/70'}`}>{value}</p>
       </div>
     </div>
   );
@@ -299,13 +299,13 @@ export function TrendingProductsDialog({ open, onOpenChange }: TrendingProductsD
   const activeTabSubtitleKey = TAB_I18N_KEY[activeTab].subtitle;
 
   return (
-    <aside className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col border-r border-landing-text/[0.07] ${studioMode ? 'bg-[#0d1011]' : 'bg-[#171f21]'} text-landing-text overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0`}>
+    <aside className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col border-r border-landing-text/[0.07] ${studioMode ? 'bg-[#050506]' : 'bg-[#171f21]'} text-landing-text overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0`}>
 
       {/* Header */}
       <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.05] bg-gradient-to-b from-[#f3f0ed]/[0.02] to-transparent px-4 py-3">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#f5409d]/10">
-            <Flame className="h-3.5 w-3.5 text-[#f5409d]" />
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#e11d2a]/10">
+            <Flame className="h-3.5 w-3.5 text-[#e11d2a]" />
           </div>
           <div>
             <h2 className="text-sm font-bold text-[#f3f0ed]/80">{t('title')}</h2>
@@ -313,8 +313,8 @@ export function TrendingProductsDialog({ open, onOpenChange }: TrendingProductsD
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[9px] flex items-center gap-1 font-black tracking-widest text-[#f5409d] bg-[#f5409d]/10 px-2 py-0.5 rounded-full ring-1 ring-[#f5409d]/25">
-            <Spotlight className="h-3.5 w-3.5 text-[#f5409d]" />
+          <span className="text-[9px] flex items-center gap-1 font-black tracking-widest text-[#e11d2a] bg-[#e11d2a]/10 px-2 py-0.5 rounded-full ring-1 ring-[#e11d2a]/25">
+            <Spotlight className="h-3.5 w-3.5 text-[#e11d2a]" />
             {t('top10')}
           </span>
           <button
@@ -336,7 +336,7 @@ export function TrendingProductsDialog({ open, onOpenChange }: TrendingProductsD
               key={id}
               onClick={() => { if (!isActive) setActiveTab(id); }}
               className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 sm:py-1.5 text-[10px] font-bold transition-all ${isActive
-                ? 'bg-[#f5409d]/15 text-[#f5409d] ring-1 ring-[#f5409d]/25'
+                ? 'bg-[#e11d2a]/15 text-[#e11d2a] ring-1 ring-[#e11d2a]/25'
                 : 'text-white/30 hover:text-white/60 hover:bg-white/4'
                 }`}
             >
@@ -371,7 +371,7 @@ export function TrendingProductsDialog({ open, onOpenChange }: TrendingProductsD
               </div>
               <button
                 onClick={() => fetchProducts(activeTab)}
-                className="rounded-lg bg-[#f5409d]/10 px-3 py-1.5 text-[10px] font-bold text-[#f5409d] ring-1 ring-[#f5409d]/20 hover:bg-[#f5409d]/20 transition-colors"
+                className="rounded-lg bg-[#e11d2a]/10 px-3 py-1.5 text-[10px] font-bold text-[#e11d2a] ring-1 ring-[#e11d2a]/20 hover:bg-[#e11d2a]/20 transition-colors"
               >
                 {t('retry')}
               </button>
@@ -402,8 +402,8 @@ export function TrendingProductsDialog({ open, onOpenChange }: TrendingProductsD
         {/* Paywall overlay */}
         {isFreePlan && !loading && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 px-6 text-center bg-[#171f21]/70 backdrop-blur-[2px]">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f5409d]/10 ring-1 ring-[#f5409d]/20">
-              <Lock className="h-6 w-6 text-[#f5409d]" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e11d2a]/10 ring-1 ring-[#e11d2a]/20">
+              <Lock className="h-6 w-6 text-[#e11d2a]" />
             </div>
             <div className="space-y-1">
               <p className="text-sm font-bold text-white/80">{t('paywallTitle')}</p>
@@ -413,7 +413,7 @@ export function TrendingProductsDialog({ open, onOpenChange }: TrendingProductsD
             </div>
             <a
               href="/creditos"
-              className="rounded-xl bg-[#f5409d] px-5 py-2 text-xs font-black text-black hover:bg-[#fa4da6] transition-colors"
+              className="rounded-xl bg-[#e11d2a] px-5 py-2 text-xs font-black text-black hover:bg-[#ff5964] transition-colors"
             >
               {t('viewPlans')}
             </a>

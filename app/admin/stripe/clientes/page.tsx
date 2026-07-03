@@ -51,7 +51,7 @@ export default function ClientesPage() {
           placeholder="Buscar por email... (ou 'email:a@b.com name:x' para Stripe search)"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="h-10 w-full border-[#f3f0ed]/8 bg-[#f3f0ed]/3 pl-9 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30"
+          className="h-10 w-full border-[#f3f0ed]/8 bg-[#f3f0ed]/3 pl-9 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30"
         />
       </div>
 
@@ -77,7 +77,7 @@ export default function ClientesPage() {
 
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : customers.length === 0 ? (
         <p className="py-10 text-center text-sm text-[#f3f0ed]/30">Nenhum cliente</p>

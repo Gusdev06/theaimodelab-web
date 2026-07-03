@@ -4,6 +4,7 @@ import { Sparkles, SlidersHorizontal, Download, ArrowRight } from "lucide-react"
 import { useTranslations } from "next-intl";
 import { useScrollReveal } from "./use-scroll-reveal";
 import { useAuth } from "@/lib/auth-context";
+import { useLoginModal } from "@/lib/login-modal-context";
 
 const STEP_META = [
   { num: "01", icon: Sparkles, key: "step1" },
@@ -36,7 +37,7 @@ function Step({
       }}
     >
       {/* Card */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(245,64,157,0.06)] sm:p-8">
+      <div className="relative overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(225,29,42,0.06)] sm:p-8">
         {/* Large decorative number */}
         <span className="pointer-events-none absolute -top-3 -left-1 font-sora text-[80px] font-extrabold leading-none text-landing-accent/[0.06] select-none">
           {step.num}
@@ -73,6 +74,7 @@ function Step({
 export function HowItWorks() {
   const { user } = useAuth();
   const isLoggedIn = !!user;
+  const { openLoginModal } = useLoginModal();
   const { ref, isVisible } = useScrollReveal();
   const t = useTranslations("howItWorks");
 
@@ -121,13 +123,24 @@ export function HowItWorks() {
 
         {/* CTA */}
         <div className="mt-10 flex justify-center sm:mt-14">
-          <a
-            href="/workspace"
-            className="group inline-flex items-center gap-2.5 rounded-xl bg-landing-accent px-6 py-3 text-[13px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-colors duration-200 hover:bg-[#f75fae] active:scale-[0.98] sm:px-7 sm:py-3.5 sm:text-[14px]"
-          >
-            {isLoggedIn ? t("ctaLoggedIn") : t("cta")}
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
+          {isLoggedIn ? (
+            <a
+              href="/home"
+              className="landing-btn group inline-flex items-center gap-2.5 bg-landing-accent px-6 py-3 text-[13px] font-bold text-landing-bg-secondary shadow-[0_8px_24px_rgba(225,29,42,0.24)] sm:px-7 sm:py-3.5 sm:text-[14px]"
+            >
+              {t("ctaLoggedIn")}
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => openLoginModal({ mode: "register" })}
+              className="landing-btn group inline-flex items-center gap-2.5 bg-landing-accent px-6 py-3 text-[13px] font-bold text-landing-bg-secondary shadow-[0_8px_24px_rgba(225,29,42,0.24)] sm:px-7 sm:py-3.5 sm:text-[14px]"
+            >
+              {t("cta")}
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+          )}
         </div>
       </div>
     </section>

@@ -146,7 +146,7 @@ export function PixAutoCheckoutModal({
       onClick={onClose}
     >
       <div
-        className="relative flex w-full max-w-md flex-col gap-5 rounded-2xl border border-[#f3f0ed]/10 bg-[#1c2527] p-6 sm:p-7"
+        className="relative flex w-full max-w-md flex-col gap-5 rounded-2xl border border-[#f3f0ed]/10 bg-[#1a1a1e] p-6 sm:p-7"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -195,14 +195,14 @@ export function PixAutoCheckoutModal({
 
         {step === 'loading' && (
           <div className="flex flex-col items-center gap-3 py-12">
-            <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+            <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
           </div>
         )}
 
         {/* Step: confirma CPF salvo */}
         {step === 'confirm' && taxIdMasked && (
           <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3 rounded-xl border border-[#f5409d]/15 bg-[#f5409d]/[0.04] p-4">
+            <div className="flex flex-col gap-3 rounded-xl border border-[#e11d2a]/15 bg-[#e11d2a]/[0.04] p-4">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/45">
                   Documento do pagador
@@ -210,13 +210,13 @@ export function PixAutoCheckoutModal({
                 <button
                   type="button"
                   onClick={() => setStep('input')}
-                  className="text-[11px] font-semibold text-[#f5409d]/70 transition-colors hover:text-[#f5409d] hover:underline"
+                  className="text-[11px] font-semibold text-[#e11d2a]/70 transition-colors hover:text-[#e11d2a] hover:underline"
                 >
                   Usar outro
                 </button>
               </div>
               <div className="flex items-center gap-2 font-mono text-base font-semibold tabular-nums text-[#f3f0ed]">
-                <Check className="h-4 w-4 text-[#f5409d]" />
+                <Check className="h-4 w-4 text-[#e11d2a]" />
                 {taxIdMasked}
               </div>
             </div>
@@ -237,7 +237,7 @@ export function PixAutoCheckoutModal({
               type="button"
               onClick={() => createAuthorization()}
               disabled={creating}
-              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] text-sm font-bold text-[#141a1c] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#0a0a0b] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {creating ? (
                 <>
@@ -258,7 +258,7 @@ export function PixAutoCheckoutModal({
               <label className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/50">
                 <span>CPF ou CNPJ do pagador</span>
                 {taxIdKind && taxIdValid && (
-                  <span className="flex items-center gap-1 text-[#f5409d]">
+                  <span className="flex items-center gap-1 text-[#e11d2a]">
                     <Check className="h-3 w-3" />
                     {taxIdKind.toUpperCase()} válido
                   </span>
@@ -277,8 +277,8 @@ export function PixAutoCheckoutModal({
                   showTaxIdError
                     ? 'border-red-500/40 focus:border-red-500/60'
                     : taxIdValid
-                      ? 'border-[#f5409d]/30 focus:border-[#f5409d]/50'
-                      : 'border-[#f3f0ed]/10 focus:border-[#f5409d]/40'
+                      ? 'border-[#e11d2a]/30 focus:border-[#e11d2a]/50'
+                      : 'border-[#f3f0ed]/10 focus:border-[#e11d2a]/40'
                 }`}
               />
               {showTaxIdError ? (
@@ -305,7 +305,7 @@ export function PixAutoCheckoutModal({
             <button
               type="submit"
               disabled={!taxIdValid || creating}
-              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] text-sm font-bold text-[#141a1c] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#0a0a0b] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {creating ? (
                 <>
@@ -324,8 +324,8 @@ export function PixAutoCheckoutModal({
           <>
             {active ? (
               <div className="flex flex-col items-center gap-3 py-8">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f5409d]/15">
-                  <Check className="h-7 w-7 text-[#f5409d]" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e11d2a]/15">
+                  <Check className="h-7 w-7 text-[#e11d2a]" />
                 </div>
                 <p className="text-base font-bold text-[#f3f0ed]">Assinatura ativada</p>
                 <p className="text-center text-xs text-[#f3f0ed]/50">
@@ -370,7 +370,7 @@ export function PixAutoCheckoutModal({
                     <button
                       onClick={handleCopy}
                       disabled={!auth.qrCodePayload}
-                      className="flex h-8 shrink-0 items-center gap-1.5 rounded-md bg-[#f5409d] px-3 text-[11px] font-bold text-[#141a1c] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="flex h-8 shrink-0 items-center gap-1.5 rounded-md bg-[#e11d2a] px-3 text-[11px] font-bold text-[#0a0a0b] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       {copied ? (
                         <>

@@ -69,7 +69,7 @@ export function GalleryCard({ item, onOpen, onToggleFavorite }: GalleryCardProps
             !showImage && (kind === 'voice' ? 'h-[130px]' : 'h-[240px]'),
           )}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(245,64,157,0.08),transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(225,29,42,0.08),transparent_55%)]" />
           {showImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -108,7 +108,7 @@ export function GalleryCard({ item, onOpen, onToggleFavorite }: GalleryCardProps
               e.stopPropagation();
               downloadMedia(downloadUrl, kind);
             }}
-            className="flex size-8 items-center justify-center rounded-full bg-[rgba(13,16,17,0.65)] text-app-text opacity-0 backdrop-blur-md transition-all duration-200 ease-app hover:bg-[rgba(13,16,17,0.85)] group-hover:opacity-100"
+            className="app-press flex size-8 items-center justify-center rounded-full bg-[rgba(13,16,17,0.65)] text-app-text opacity-0 backdrop-blur-md transition-all duration-200 ease-app hover:bg-[rgba(13,16,17,0.85)] group-hover:opacity-100"
           >
             <Download className="size-4" strokeWidth={2} />
           </button>
@@ -123,7 +123,7 @@ export function GalleryCard({ item, onOpen, onToggleFavorite }: GalleryCardProps
               onToggleFavorite(item);
             }}
             className={cn(
-              'flex size-8 items-center justify-center rounded-full bg-[rgba(13,16,17,0.65)] backdrop-blur-md transition-all duration-200 ease-app hover:bg-[rgba(13,16,17,0.85)]',
+              'app-press flex size-8 items-center justify-center rounded-full bg-[rgba(13,16,17,0.65)] backdrop-blur-md transition-all duration-200 ease-app hover:bg-[rgba(13,16,17,0.85)]',
               item.isFavorited
                 ? 'text-app-lime opacity-100'
                 : 'text-app-text opacity-0 group-hover:opacity-100',

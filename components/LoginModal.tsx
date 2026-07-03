@@ -15,7 +15,7 @@ const slides = [
     id: 0,
     slideKey: 's0' as const,
     bg: 'bg-black',
-    accent: '#f5409d',
+    accent: '#e11d2a',
     video: 'https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/generations/cmmwn2wq5007vus01furnxyh4/22c243fd-ce57-4c3e-aa8a-afadc811da46/output_0.mp4',
   },
   {
@@ -28,8 +28,8 @@ const slides = [
   {
     id: 2,
     slideKey: 's2' as const,
-    bg: 'bg-gradient-to-br from-teal-950 via-pink-900 to-cyan-950',
-    accent: '#f472b6',
+    bg: 'bg-gradient-to-br from-teal-950 via-red-900 to-cyan-950',
+    accent: '#ff5964',
     video: 'https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/generations/cmndiy1070058n4018hi1nnr7/848a6510-414d-4796-9da7-4a9a428a11fb/output_0.mp4',
   },
   {
@@ -333,21 +333,21 @@ function LoginModalContent() {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={closeLoginModal} />
 
       {/* Modal card — split layout on desktop */}
-      <div className="relative bg-[#1a2123] p-2 z-10 flex h-[75vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-white/[0.08] shadow-2xl" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
+      <div className="relative bg-[#111113] p-2 z-10 flex h-[75vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-white/[0.08] shadow-2xl" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
 
         {/* ── Left: Form panel ── */}
-        <div className="relative flex w-full flex-col items-center justify-center overflow-y-auto bg-[#1a2123] px-8 py-8 lg:w-[420px] lg:shrink-0">
+        <div className="relative flex w-full flex-col items-center justify-center overflow-y-auto bg-[#111113] px-8 py-8 lg:w-[420px] lg:shrink-0">
           {/* Close button */}
           <button
             onClick={closeLoginModal}
-            className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-xl text-white/30 transition-colors hover:bg-white/[0.08] hover:text-white/70"
+            className="app-press app-ease absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-xl text-white/30 transition-colors hover:bg-white/[0.08] hover:text-white/70"
           >
             <X className="h-4 w-4" />
           </button>
 
           {/* Logo */}
-          <div className="mb-6 flex flex-col items-center">
-            <Image src="/full_logo.svg" alt="The AI Model Lab" width={140} height={140} className="mix-blend-lighten" />
+          <div className="app-reveal mb-6 flex flex-col items-center">
+            <Image src="/logo-red.jpg" alt="The AI Model Lab" width={140} height={140} className="mix-blend-lighten" />
             <p className="mt-1 text-xs text-white/25">{tCommon('tagline')}</p>
           </div>
 
@@ -367,7 +367,7 @@ function LoginModalContent() {
                   window.location.href = '/api/v1/auth/google';
                 }}
                 disabled={loading || googleLoading}
-                className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98] disabled:opacity-50"
+                className="app-ease flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98] disabled:opacity-50"
               >
                 {googleLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -394,7 +394,7 @@ function LoginModalContent() {
 
               <button
                 onClick={() => setView('email')}
-                className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98]"
+                className="app-ease flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-[0.98]"
               >
                 <Mail className="h-4 w-4 opacity-60" />
                 {tCommon('continueWithEmail')}
@@ -403,10 +403,10 @@ function LoginModalContent() {
               <p className="mt-3 text-center text-[11px] text-white/18 leading-relaxed">
                 {tCommon.rich('legal', {
                   terms: (chunks) => (
-                    <Link href="/termos-de-uso" onClick={closeLoginModal} className="text-[#f5409d]/50 hover:text-[#f5409d]/80 transition-colors">{chunks}</Link>
+                    <Link href="/termos-de-uso" onClick={closeLoginModal} className="text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors">{chunks}</Link>
                   ),
                   privacy: (chunks) => (
-                    <Link href="/politica-de-privacidade" onClick={closeLoginModal} className="text-[#f5409d]/50 hover:text-[#f5409d]/80 transition-colors">{chunks}</Link>
+                    <Link href="/politica-de-privacidade" onClick={closeLoginModal} className="text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors">{chunks}</Link>
                   ),
                 })}
               </p>
@@ -421,8 +421,8 @@ function LoginModalContent() {
               </button>
               {forgotSent ? (
                 <div className="flex flex-col items-center gap-4 text-center">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f5409d]/15">
-                    <CheckCircle className="h-7 w-7 text-[#f5409d]" />
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e11d2a]/15">
+                    <CheckCircle className="h-7 w-7 text-[#e11d2a]" />
                   </div>
                   <h2 className="text-lg font-bold text-white">{tForgot('sentTitle')}</h2>
                   <p className="text-sm text-white/50">
@@ -432,7 +432,7 @@ function LoginModalContent() {
                     })}
                   </p>
                   <p className="text-xs text-white/30">{tForgot('checkSpam')}</p>
-                  <button onClick={() => { setView('email'); setForgotEmail(''); setForgotSent(false); }} className="mt-1 flex items-center gap-1.5 text-xs text-[#f5409d]/60 hover:text-[#f5409d]/90 transition-colors">
+                  <button onClick={() => { setView('email'); setForgotEmail(''); setForgotSent(false); }} className="mt-1 flex items-center gap-1.5 text-xs text-[#e11d2a]/60 hover:text-[#e11d2a]/90 transition-colors">
                     <ArrowLeft className="h-3.5 w-3.5" /> {tCommon('backToLogin')}
                   </button>
                 </div>
@@ -445,11 +445,11 @@ function LoginModalContent() {
                       <label className="text-[10px] font-bold tracking-[0.12em] text-white/40">{tCommon('labels.email')}</label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
-                        <input type="email" required value={forgotEmail} onChange={(e) => setForgotEmail(e.target.value)} placeholder={tCommon('placeholders.email')} className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] pl-10 pr-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]" />
+                        <input type="email" required value={forgotEmail} onChange={(e) => setForgotEmail(e.target.value)} placeholder={tCommon('placeholders.email')} className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] pl-10 pr-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]" />
                       </div>
                     </div>
                     {forgotError && <p className="rounded-xl border border-red-400/20 bg-red-400/10 px-3 py-2 text-xs text-red-400">{forgotError}</p>}
-                    <button type="submit" disabled={forgotLoading} className="mt-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] font-bold text-[#1a2123] text-sm transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60">
+                    <button type="submit" disabled={forgotLoading} className="app-btn mt-1 flex h-11 items-center justify-center gap-2 bg-[#e11d2a] font-bold text-[#111113] text-sm disabled:opacity-60">
                       {forgotLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : tForgot('submit')}
                     </button>
                   </form>
@@ -480,7 +480,7 @@ function LoginModalContent() {
                     onKeyDown={(e) => handleDigitKeyDown(i, e)}
                     onPaste={handleDigitPaste}
                     disabled={verifyStatus === 'loading'}
-                    className={`h-14 w-12 rounded-xl border text-center text-xl font-bold outline-none transition-all ${verifyStatus === 'error' ? 'border-red-400/40 bg-red-400/10 text-red-400' : 'border-white/[0.08] bg-white/[0.04] text-white focus:border-[#f5409d]/50 focus:bg-white/[0.06]'} disabled:opacity-50`}
+                    className={`h-14 w-12 rounded-xl border text-center text-xl font-bold outline-none transition-all ${verifyStatus === 'error' ? 'border-red-400/40 bg-red-400/10 text-red-400' : 'border-white/[0.08] bg-white/[0.04] text-white focus:border-[#e11d2a]/50 focus:bg-white/[0.06]'} disabled:opacity-50`}
                   />
                 ))}
               </div>
@@ -490,10 +490,10 @@ function LoginModalContent() {
               {verifyStatus === 'error' && (
                 <div className="flex flex-col items-center gap-3">
                   <div className="flex items-center gap-2 text-red-400"><XCircle className="h-4 w-4" /><span className="text-sm">{verifyMessage}</span></div>
-                  <button onClick={handleVerifyRetry} className="text-xs text-[#f5409d]/70 hover:text-[#f5409d] transition-colors">{tVerify('tryAgain')}</button>
+                  <button onClick={handleVerifyRetry} className="text-xs text-[#e11d2a]/70 hover:text-[#e11d2a] transition-colors">{tVerify('tryAgain')}</button>
                 </div>
               )}
-              {resendVerifySuccess && <p className="rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/10 px-3 py-2 text-xs text-[#f5409d]">{resendVerifySuccess}</p>}
+              {resendVerifySuccess && <p className="rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-3 py-2 text-xs text-[#e11d2a]">{resendVerifySuccess}</p>}
               <div className="flex flex-col items-center gap-3 pt-1">
                 <button onClick={handleResendVerify} disabled={resendVerifyLoading} className="flex items-center gap-1.5 text-xs text-white/35 hover:text-white/60 transition-colors disabled:opacity-50">
                   <RefreshCw className={`h-3.5 w-3.5 ${resendVerifyLoading ? 'animate-spin' : ''}`} />
@@ -523,28 +523,28 @@ function LoginModalContent() {
                 {mode === 'register' && (
                   <div className="flex flex-col gap-1.5">
                     <label className="text-[10px] font-bold tracking-[0.12em] text-white/40">{tCommon('labels.name')}</label>
-                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder={tCommon('placeholders.name')} className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]" />
+                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder={tCommon('placeholders.name')} className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]" />
                   </div>
                 )}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-bold tracking-[0.12em] text-white/40">{tCommon('labels.email')}</label>
-                  <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder={tCommon('placeholders.email')} className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]" />
+                  <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder={tCommon('placeholders.email')} className="h-11 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]" />
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-bold tracking-[0.12em] text-white/40">{tCommon('labels.password')}</label>
                   <div className="relative">
-                    <input type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 pr-10 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]" />
+                    <input type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 pr-10 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]" />
                     <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/50 transition-colors">
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
-                {success && <p className="rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/10 px-3 py-2 text-xs text-[#f5409d]">{success}</p>}
+                {success && <p className="rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-3 py-2 text-xs text-[#e11d2a]">{success}</p>}
                 {error && (
                   <div className="flex flex-col gap-2">
                     <p className="rounded-xl border border-red-400/20 bg-red-400/10 px-3 py-2 text-xs text-red-400">{error}</p>
                     {showResend && (
-                      <button type="button" onClick={handleResendVerification} disabled={resendLoading} className="text-xs text-[#f5409d]/70 hover:text-[#f5409d] transition-colors disabled:opacity-50">
+                      <button type="button" onClick={handleResendVerification} disabled={resendLoading} className="text-xs text-[#e11d2a]/70 hover:text-[#e11d2a] transition-colors disabled:opacity-50">
                         {resendLoading ? tCommon('resending') : tCommon('resendVerification')}
                       </button>
                     )}
@@ -552,14 +552,14 @@ function LoginModalContent() {
                 )}
                 {mode === 'login' && (
                   <div className="flex justify-end">
-                    <button type="button" onClick={() => { setForgotEmail(email); setView('forgot'); }} className="text-[11px] text-[#f5409d]/50 hover:text-[#f5409d]/80 transition-colors">
+                    <button type="button" onClick={() => { setForgotEmail(email); setView('forgot'); }} className="text-[11px] text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors">
                       {tCommon('forgotPasswordLink')}
                     </button>
                   </div>
                 )}
-                <button type="submit" disabled={loading} className="mt-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] font-bold text-[#1a2123] text-sm transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60">
+                <button type="submit" disabled={loading} className="app-btn mt-1 flex h-11 items-center justify-center gap-2 bg-[#e11d2a] font-bold text-[#111113] text-sm disabled:opacity-60">
                   {loading ? (
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#1a2123]/30 border-t-[#1a2123]" />
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#111113]/30 border-t-[#111113]" />
                   ) : mode === 'register' ? (
                     <><UserPlus className="h-4 w-4" />{tCommon('submitRegister')}</>
                   ) : (

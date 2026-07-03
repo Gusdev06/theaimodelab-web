@@ -11,7 +11,7 @@ import { AdminBarChart } from '@/components/admin/charts/bar-chart';
 
 const PLAN_COLORS: Record<string, string> = {
   starter: '#3b82f6',
-  creator: '#ec4899',
+  creator: '#e11d2a',
   pro: '#a78bfa',
   studio: '#f59e0b',
   free: '#6b7280',
@@ -41,7 +41,7 @@ export function FinancialTab({ active }: { active: boolean }) {
   if (isLoading || !data) {
     return (
       <div className="flex h-[40vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -106,7 +106,7 @@ export function FinancialTab({ active }: { active: boolean }) {
                       <p className="text-[10px] text-[#f3f0ed]/30">{b.credits.toLocaleString('pt-BR')} créditos · {formatBRL(b.priceCents)}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold tabular-nums text-[#f5409d]">{b.soldCount}x</p>
+                      <p className="text-sm font-bold tabular-nums text-[#e11d2a]">{b.soldCount}x</p>
                       <p className="text-[10px] text-[#f3f0ed]/30">{formatBRL(b.totalRevenueCents)}</p>
                     </div>
                   </div>

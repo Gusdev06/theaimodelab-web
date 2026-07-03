@@ -29,7 +29,7 @@ import {
 function subStatusBadge(status: string) {
   const upper = status.toUpperCase();
   const config: Record<string, { color: string; icon: React.ElementType; label: string }> = {
-    ACTIVE: { color: 'border-pink-500/30 bg-pink-500/10 text-pink-400', icon: CheckCircle2, label: 'Ativa' },
+    ACTIVE: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: CheckCircle2, label: 'Ativa' },
     CANCELED: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: XCircle, label: 'Cancelada' },
     PAST_DUE: { color: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400', icon: AlertTriangle, label: 'Atrasada' },
   };
@@ -93,7 +93,7 @@ export default function AdminSubscriptionsPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
-      <div>
+      <div className="app-reveal">
         <h1 className="text-2xl font-bold text-[#f3f0ed]">Assinaturas</h1>
         <p className="mt-1 text-sm text-[#f3f0ed]/40">Gerenciamento de planos e assinaturas</p>
       </div>
@@ -103,10 +103,10 @@ export default function AdminSubscriptionsPage() {
         {[
           { slug: 'free', label: 'Free', color: '#f3f0ed' },
           { slug: 'starter', label: 'Starter', color: '#60a5fa' },
-          { slug: 'creator', label: 'Creator', color: '#f472b6' },
+          { slug: 'creator', label: 'Creator', color: '#ff5964' },
           { slug: 'pro', label: 'Pro', color: '#a78bfa' },
           { slug: 'studio', label: 'Studio', color: '#fbbf24' },
-          { slug: '_active', label: 'Ativas', color: '#f5409d' },
+          { slug: '_active', label: 'Ativas', color: '#e11d2a' },
         ].map((p) => (
           <div
             key={p.slug}
@@ -125,7 +125,7 @@ export default function AdminSubscriptionsPage() {
       {/* Table */}
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : (
         <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02]">
@@ -172,7 +172,7 @@ export default function AdminSubscriptionsPage() {
                     </span>
                   </TableCell>
                   <TableCell>
-                    <span className="text-xs tabular-nums text-[#f5409d]">
+                    <span className="text-xs tabular-nums text-[#e11d2a]">
                       {user.credits?.bonusCreditsRemaining?.toLocaleString('pt-BR') ?? '0'}
                     </span>
                   </TableCell>

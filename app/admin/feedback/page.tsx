@@ -71,7 +71,7 @@ const PAGE_SIZE = 20;
 
 function npsBadge(score: number) {
   let cls = 'border-red-500/30 bg-red-500/10 text-red-400';
-  if (score >= 9) cls = 'border-[#f5409d]/40 bg-[#f5409d]/10 text-[#f5409d]';
+  if (score >= 9) cls = 'border-[#e11d2a]/40 bg-[#e11d2a]/10 text-[#e11d2a]';
   else if (score >= 6) cls = 'border-amber-500/30 bg-amber-500/10 text-amber-400';
   return (
     <Badge variant="outline" className={`${cls} font-bold tabular-nums`}>
@@ -86,7 +86,7 @@ function ratingStars(n: number) {
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
-          className={`h-3.5 w-3.5 ${i <= n ? 'fill-[#f5409d] text-[#f5409d]' : 'text-[#f3f0ed]/15'}`}
+          className={`h-3.5 w-3.5 ${i <= n ? 'fill-[#e11d2a] text-[#e11d2a]' : 'text-[#f3f0ed]/15'}`}
         />
       ))}
     </div>
@@ -118,7 +118,7 @@ function formatDate(iso: string) {
 }
 
 const dateInputClass =
-  'h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] px-2.5 text-sm text-[#f3f0ed]/85 outline-none transition-colors [color-scheme:dark] hover:border-[#f3f0ed]/20 focus:border-[#f5409d]/50';
+  'h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] px-2.5 text-sm text-[#f3f0ed]/85 outline-none transition-colors [color-scheme:dark] hover:border-[#f3f0ed]/20 focus:border-[#e11d2a]/50';
 
 type View = 'list' | 'dashboard';
 
@@ -126,7 +126,7 @@ type View = 'list' | 'dashboard';
 // para serem anexadas ao final do PDF.
 async function captureDashboardPages(node: HTMLElement): Promise<DashboardImagePage[]> {
   const canvas = await toCanvas(node, {
-    backgroundColor: '#141a1c',
+    backgroundColor: '#0a0a0b',
     pixelRatio: 2,
     cacheBust: true,
   });
@@ -142,7 +142,7 @@ async function captureDashboardPages(node: HTMLElement): Promise<DashboardImageP
     tmp.height = h;
     const ctx = tmp.getContext('2d');
     if (!ctx) break;
-    ctx.fillStyle = '#141a1c';
+    ctx.fillStyle = '#0a0a0b';
     ctx.fillRect(0, 0, cw, h);
     ctx.drawImage(canvas, 0, yPx, cw, h, 0, 0, cw, h);
     pages.push({ dataUrl: tmp.toDataURL('image/png'), wPx: cw, hPx: h });
@@ -324,7 +324,7 @@ export default function AdminFeedbackPage() {
     <div className="flex flex-col gap-4 md:gap-6">
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">Feedback</h1>
           <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
             {hasFilters
@@ -350,7 +350,7 @@ export default function AdminFeedbackPage() {
           <button
             onClick={handleExport}
             disabled={exporting || isLoading || filtered.length === 0}
-            className="flex h-9 items-center gap-2 rounded-xl border border-[#f5409d]/30 bg-[#f5409d]/10 px-3.5 text-sm font-semibold text-[#f5409d] transition-colors hover:bg-[#f5409d]/20 disabled:cursor-not-allowed disabled:opacity-40"
+            className="app-press app-ease flex h-9 items-center gap-2 rounded-xl border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-3.5 text-sm font-semibold text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/20 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileDown className="h-4 w-4" />}
             <span className="hidden sm:inline">
@@ -372,7 +372,7 @@ export default function AdminFeedbackPage() {
         {/* Linha 1: busca + título */}
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-[#f3f0ed]/40">
-            <SlidersHorizontal className="h-3.5 w-3.5 text-[#f5409d]" />
+            <SlidersHorizontal className="h-3.5 w-3.5 text-[#e11d2a]" />
             Filtros
           </div>
           <div className="relative flex-1">
@@ -381,7 +381,7 @@ export default function AdminFeedbackPage() {
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
               placeholder="Buscar por nome ou email…"
-              className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 outline-none transition-colors focus:border-[#f5409d]/50"
+              className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 outline-none transition-colors focus:border-[#e11d2a]/50"
             />
           </div>
         </div>
@@ -466,7 +466,7 @@ export default function AdminFeedbackPage() {
               <button
                 key={i}
                 onClick={chip.onRemove}
-                className="group inline-flex items-center gap-1.5 rounded-full border border-[#f5409d]/25 bg-[#f5409d]/10 py-1 pl-3 pr-2 text-xs font-medium text-[#f5409d] transition-colors hover:bg-[#f5409d]/20"
+                className="group inline-flex items-center gap-1.5 rounded-full border border-[#e11d2a]/25 bg-[#e11d2a]/10 py-1 pl-3 pr-2 text-xs font-medium text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/20"
               >
                 {chip.label}
                 <X className="h-3 w-3 opacity-60 group-hover:opacity-100" />
@@ -486,7 +486,7 @@ export default function AdminFeedbackPage() {
       {/* Conteúdo */}
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : view === 'dashboard' ? (
         <FeedbackDashboard items={filtered} />
@@ -537,12 +537,12 @@ function ListView({
       {stats.total > 0 && (
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           <StatCard
-            icon={<MessageSquareHeart className="h-4 w-4 text-[#f5409d]" />}
+            icon={<MessageSquareHeart className="h-4 w-4 text-[#e11d2a]" />}
             label={hasFilters ? 'Total (filtrado)' : 'Total'}
             value={stats.total.toLocaleString('pt-BR')}
           />
           <StatCard
-            icon={<TrendingUp className="h-4 w-4 text-[#f5409d]" />}
+            icon={<TrendingUp className="h-4 w-4 text-[#e11d2a]" />}
             label="NPS Score"
             value={stats.npsScore !== null ? `${stats.npsScore}` : '—'}
             hint={`${stats.promoters} promotores · ${stats.detractors} detratores`}
@@ -553,7 +553,7 @@ function ListView({
             value={stats.avgNps !== null ? stats.avgNps.toFixed(1) : '—'}
           />
           <StatCard
-            icon={<Star className="h-4 w-4 text-[#f5409d]" />}
+            icon={<Star className="h-4 w-4 text-[#e11d2a]" />}
             label="Rating médio"
             value={stats.avgRating !== null ? stats.avgRating.toFixed(1) : '—'}
           />
@@ -567,7 +567,7 @@ function ListView({
             {allCount === 0 ? 'Nenhum feedback recebido ainda.' : 'Nenhum feedback corresponde aos filtros.'}
           </p>
           {hasFilters && allCount > 0 && (
-            <button onClick={resetFilters} className="text-xs font-medium text-[#f5409d]/80 transition-colors hover:text-[#f5409d]">
+            <button onClick={resetFilters} className="text-xs font-medium text-[#e11d2a]/80 transition-colors hover:text-[#e11d2a]">
               Limpar filtros
             </button>
           )}
@@ -617,7 +617,7 @@ function ListView({
                         {f.features.map((feat) => (
                           <span
                             key={feat}
-                            className="rounded-full border border-[#f5409d]/20 bg-[#f5409d]/5 px-2 py-0.5 text-[10px] font-medium text-[#f5409d]/80"
+                            className="rounded-full border border-[#e11d2a]/20 bg-[#e11d2a]/5 px-2 py-0.5 text-[10px] font-medium text-[#e11d2a]/80"
                           >
                             {featureLabel(feat)}
                           </span>
@@ -629,7 +629,7 @@ function ListView({
                   <div className="flex shrink-0 flex-col items-end gap-1.5 text-right">
                     <span className="text-[11px] text-[#f3f0ed]/40">{formatDate(f.createdAt)}</span>
                     {f.creditsAwarded > 0 && (
-                      <span className="inline-flex items-center gap-1 text-[11px] text-[#f5409d]/70">
+                      <span className="inline-flex items-center gap-1 text-[11px] text-[#e11d2a]/70">
                         <Coins className="h-3 w-3" />
                         +{f.creditsAwarded.toLocaleString('pt-BR')}
                       </span>
@@ -692,7 +692,7 @@ function TabButton({
       onClick={onClick}
       className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
         active
-          ? 'bg-[#f5409d]/15 text-[#f5409d]'
+          ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
           : 'text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/80'
       }`}
     >
@@ -737,12 +737,12 @@ function FreeTextBlock({
   return (
     <div
       className={`rounded-xl border p-3 ${
-        highlight ? 'border-[#f5409d]/20 bg-[#f5409d]/5' : 'border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.02]'
+        highlight ? 'border-[#e11d2a]/20 bg-[#e11d2a]/5' : 'border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.02]'
       }`}
     >
       <div
         className={`mb-1.5 text-[10px] font-semibold uppercase tracking-wider ${
-          highlight ? 'text-[#f5409d]/80' : 'text-[#f3f0ed]/40'
+          highlight ? 'text-[#e11d2a]/80' : 'text-[#f3f0ed]/40'
         }`}
       >
         {label}

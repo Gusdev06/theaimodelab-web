@@ -87,10 +87,10 @@ export function GenerationPreview({
       neutralBg: 'rgba(30,15,50,0.95)',
     }
     : {
-      strong: 'rgba(245,64,157,0.28)',
-      medium: 'rgba(245,64,157,0.18)',
-      faint: 'rgba(245,64,157,0.12)',
-      base: 'rgba(245,64,157,0.20)',
+      strong: 'rgba(225,29,42,0.28)',
+      medium: 'rgba(225,29,42,0.18)',
+      faint: 'rgba(225,29,42,0.12)',
+      base: 'rgba(225,29,42,0.20)',
       neutralDark: 'rgba(30,73,75,0.9)',
       neutralMid: 'rgba(30,73,75,0.5)',
       neutralBg: 'rgba(20,40,42,0.95)',

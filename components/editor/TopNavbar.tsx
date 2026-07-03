@@ -110,7 +110,7 @@ export function TopNavbar() {
               {t('home')}
             </Link>
             <Image
-              src="/logo_2.svg"
+              src="/logo-red.jpg"
               alt={t('logoAlt')}
               width={22}
               height={22}
@@ -125,7 +125,7 @@ export function TopNavbar() {
             ) : user ? (
               <>
                 <div className="flex h-7 items-center gap-1.5 rounded-full bg-[#f3f0ed]/[0.04] px-2.5 text-[11px] font-medium text-[#f3f0ed]/70">
-                  <Coins className="h-3 w-3 text-[#f5409d]" />
+                  <Coins className="h-3 w-3 text-[#e11d2a]" />
                   {creditsLoading ? (
                     <span className="h-2.5 w-8 animate-pulse rounded-full bg-[#f3f0ed]/10" />
                   ) : (
@@ -136,7 +136,7 @@ export function TopNavbar() {
                 <button
                   onClick={() => setPlansModalOpen(true)}
                   title={t('buyCredits')}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#f5409d]/12 text-[#f5409d] transition-all hover:bg-[#f5409d]/20"
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e11d2a]/12 text-[#e11d2a] transition-all hover:bg-[#e11d2a]/20"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
@@ -161,10 +161,10 @@ export function TopNavbar() {
                   </button>
 
                   {affiliateMenuOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl bg-[#1a2123] shadow-2xl backdrop-blur-md">
+                    <div className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl bg-[#111113] shadow-2xl backdrop-blur-md">
                       {!affiliateFetched || affiliateLoading ? (
                         <div className="flex items-center justify-center gap-2 px-4 py-8">
-                          <Loader2 className="h-3.5 w-3.5 animate-spin text-[#f5409d]" />
+                          <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e11d2a]" />
                           <span className="text-xs text-[#f3f0ed]/50">{t('affiliateLoading')}</span>
                         </div>
                       ) : affiliateData ? (
@@ -172,18 +172,18 @@ export function TopNavbar() {
                           <div className="flex items-center justify-between px-4 py-3">
                             <div>
                               <p className="text-xs font-medium text-[#f3f0ed]/85">{t('affiliateMenuTitle')}</p>
-                              <p className="mt-0.5 font-mono text-[10px] tracking-wide text-[#f5409d]">
+                              <p className="mt-0.5 font-mono text-[10px] tracking-wide text-[#e11d2a]">
                                 {affiliateData.affiliate.code}
                               </p>
                             </div>
-                            <span className="rounded-full bg-[#f5409d]/10 px-2 py-0.5 text-[10px] font-semibold text-[#f5409d]">
+                            <span className="rounded-full bg-[#e11d2a]/10 px-2 py-0.5 text-[10px] font-semibold text-[#e11d2a]">
                               {affiliateData.affiliate.commissionPercent}%
                             </span>
                           </div>
                           <div className="grid grid-cols-2 gap-2 px-3 pb-3">
                             <div className="flex flex-col gap-1 rounded-lg bg-[#f3f0ed]/[0.03] p-3">
                               <div className="flex items-center gap-1.5">
-                                <Wallet className="h-3 w-3 text-pink-400" />
+                                <Wallet className="h-3 w-3 text-red-400" />
                                 <span className="text-[9px] font-medium uppercase tracking-wide text-[#f3f0ed]/40">
                                   {t('affiliateAvailable')}
                                 </span>
@@ -209,7 +209,7 @@ export function TopNavbar() {
                               setAffiliateMenuOpen(false);
                               router.push('/painel-afiliado');
                             }}
-                            className="flex w-full items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-medium text-[#f5409d] transition-colors hover:bg-[#f5409d]/5"
+                            className="flex w-full items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-medium text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/5"
                           >
                             {t('affiliateViewPanel')}
                             <ArrowRight className="h-3 w-3" />
@@ -224,7 +224,7 @@ export function TopNavbar() {
                   onClick={toggleStudioMode}
                   aria-pressed={studioMode}
                   title="Studio Mode"
-                  className="hidden h-7 items-center gap-1.5 rounded-full bg-[#f5409d]/10 px-3 text-[11px] font-medium text-[#f5409d] transition-all hover:bg-[#f5409d]/15 md:flex"
+                  className="hidden h-7 items-center gap-1.5 rounded-full bg-[#e11d2a]/10 px-3 text-[11px] font-medium text-[#e11d2a] transition-all hover:bg-[#e11d2a]/15 md:flex"
                 >
                   <Clapperboard className="h-3 w-3" />
                   Studio
@@ -238,14 +238,14 @@ export function TopNavbar() {
                     {user?.avatarUrl ? (
                       <img src={user.avatarUrl} alt={user.name} width={28} height={28} className="h-full w-full object-cover" />
                     ) : (
-                      <span className="flex h-full w-full items-center justify-center bg-[#4b1e3a]">
+                      <span className="flex h-full w-full items-center justify-center bg-[#3a0f16]">
                         <User className="h-3.5 w-3.5 text-[#f3f0ed]/50" />
                       </span>
                     )}
                   </button>
 
                   {menuOpen && (
-                    <div className="absolute right-0 top-full mt-2 hidden w-56 overflow-hidden rounded-xl bg-[#1a2123] shadow-2xl backdrop-blur-md sm:block">
+                    <div className="absolute right-0 top-full mt-2 hidden w-56 overflow-hidden rounded-xl bg-[#111113] shadow-2xl backdrop-blur-md sm:block">
                       <div className="px-3 py-2.5">
                         <div className="flex items-center gap-2">
                           <p className="truncate text-[11px] font-medium text-[#f3f0ed]/80">{user?.name || t('defaultUser')}</p>
@@ -253,7 +253,7 @@ export function TopNavbar() {
                             <span
                               className={`shrink-0 rounded-full px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide ${isFreePlan
                                 ? 'bg-[#f3f0ed]/5 text-[#f3f0ed]/50'
-                                : 'bg-[#f5409d]/10 text-[#f5409d]'
+                                : 'bg-[#e11d2a]/10 text-[#e11d2a]'
                                 }`}
                             >
                               {planName}
@@ -281,7 +281,7 @@ export function TopNavbar() {
             ) : (
               <button
                 onClick={() => openLoginModal()}
-                className="flex h-7 items-center gap-1.5 rounded-full bg-[#f5409d] px-3 text-[11px] font-bold text-[#1a2123] transition-all hover:brightness-110"
+                className="flex h-7 items-center gap-1.5 rounded-full bg-[#e11d2a] px-3 text-[11px] font-bold text-[#111113] transition-all hover:brightness-110"
               >
                 <LogIn className="h-3 w-3" />
                 {t('signIn')}
@@ -310,7 +310,7 @@ export function TopNavbar() {
             {t('home')}
           </Link>
           <Image
-            src="/logo_2.svg"
+            src="/logo-red.jpg"
             alt={t('logoAlt')}
             width={32}
             height={32}
@@ -334,7 +334,7 @@ export function TopNavbar() {
             <div className="navbar-fade-in flex items-center gap-1.5 sm:gap-2">
               {/* Credit badge */}
               <div className="flex items-center gap-1.5 rounded-full bg-white/[0.05] ring-1 ring-inset ring-white/[0.07] backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_4px_12px_-4px_rgba(0,0,0,0.4)] px-2 py-1.5 sm:px-3">
-                <Coins className="h-3.5 w-3.5 text-[#f5409d]" />
+                <Coins className="h-3.5 w-3.5 text-[#e11d2a]" />
                 {creditsLoading ? (
                   <div className="h-3 w-10 animate-pulse rounded-full bg-[#f3f0ed]/10" />
                 ) : (
@@ -345,7 +345,7 @@ export function TopNavbar() {
               {/* Buy button — accent lime (icon-only on mobile) */}
               <button
                 onClick={() => setPlansModalOpen(true)}
-                className="flex items-center gap-1.5 rounded-full bg-[#f5409d] p-2 text-xs font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95 sm:px-4 sm:py-1.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_4px_14px_-4px_rgba(245,64,157,0.55)]"
+                className="flex items-center gap-1.5 rounded-full bg-[#e11d2a] p-2 text-xs font-bold text-[#111113] transition-all hover:brightness-110 active:scale-95 sm:px-4 sm:py-1.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_4px_14px_-4px_rgba(225,29,42,0.55)]"
               >
                 <Plus className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">{t('buyCredits')}</span>
@@ -370,10 +370,10 @@ export function TopNavbar() {
                 </button>
 
                 {affiliateMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] shadow-2xl">
+                  <div className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl border border-[#f3f0ed]/8 bg-[#111113] shadow-2xl">
                     {!affiliateFetched || affiliateLoading ? (
                       <div className="flex items-center justify-center gap-2 px-4 py-8">
-                        <Loader2 className="h-3.5 w-3.5 animate-spin text-[#f5409d]" />
+                        <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e11d2a]" />
                         <span className="text-xs text-[#f3f0ed]/50">{t('affiliateLoading')}</span>
                       </div>
                     ) : affiliateData ? (
@@ -381,18 +381,18 @@ export function TopNavbar() {
                         <div className="flex items-center justify-between border-b border-[#f3f0ed]/6 px-4 py-3">
                           <div>
                             <p className="text-xs font-semibold text-[#f3f0ed]">{t('affiliateMenuTitle')}</p>
-                            <p className="mt-0.5 font-mono text-[10px] tracking-wide text-[#f5409d]">
+                            <p className="mt-0.5 font-mono text-[10px] tracking-wide text-[#e11d2a]">
                               {affiliateData.affiliate.code}
                             </p>
                           </div>
-                          <span className="rounded-full border border-[#f5409d]/30 bg-[#f5409d]/10 px-2 py-0.5 text-[10px] font-semibold text-[#f5409d]">
+                          <span className="rounded-full border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-2 py-0.5 text-[10px] font-semibold text-[#e11d2a]">
                             {affiliateData.affiliate.commissionPercent}%
                           </span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 p-3">
                           <div className="flex flex-col gap-1 rounded-lg border border-[#f3f0ed]/6 bg-[#f3f0ed]/3 p-3">
                             <div className="flex items-center gap-1.5">
-                              <Wallet className="h-3 w-3 text-pink-400" />
+                              <Wallet className="h-3 w-3 text-red-400" />
                               <span className="text-[9px] font-bold uppercase tracking-wide text-[#f3f0ed]/40">
                                 {t('affiliateAvailable')}
                               </span>
@@ -418,7 +418,7 @@ export function TopNavbar() {
                             setAffiliateMenuOpen(false);
                             router.push('/painel-afiliado');
                           }}
-                          className="flex w-full items-center justify-center gap-1.5 border-t border-[#f3f0ed]/6 px-4 py-2.5 text-xs font-semibold text-[#f5409d] transition-colors hover:bg-[#f5409d]/5"
+                          className="flex w-full items-center justify-center gap-1.5 border-t border-[#f3f0ed]/6 px-4 py-2.5 text-xs font-semibold text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/5"
                         >
                           {t('affiliateViewPanel')}
                           <ArrowRight className="h-3 w-3" />
@@ -433,12 +433,12 @@ export function TopNavbar() {
               {showFeedbackReward && (
                 <button
                   onClick={() => router.push('/feedback')}
-                  className="group relative hidden items-center gap-1.5 overflow-hidden rounded-full bg-[#f5409d]/15 ring-1 ring-inset ring-[#f5409d]/30 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_14px_-4px_rgba(245,64,157,0.30)] px-3 py-1.5 text-xs font-semibold text-[#f5409d] transition-all hover:bg-[#f5409d]/20 hover:ring-[#f5409d]/45 sm:flex"
+                  className="group relative hidden items-center gap-1.5 overflow-hidden rounded-full bg-[#e11d2a]/15 ring-1 ring-inset ring-[#e11d2a]/30 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_14px_-4px_rgba(225,29,42,0.30)] px-3 py-1.5 text-xs font-semibold text-[#e11d2a] transition-all hover:bg-[#e11d2a]/20 hover:ring-[#e11d2a]/45 sm:flex"
                 >
-                  <span className="pointer-events-none absolute -inset-x-6 -inset-y-2 bg-[radial-gradient(ellipse_at_center,rgba(245,64,157,0.25),transparent_70%)] opacity-60 blur-md transition-opacity group-hover:opacity-100" />
+                  <span className="pointer-events-none absolute -inset-x-6 -inset-y-2 bg-[radial-gradient(ellipse_at_center,rgba(225,29,42,0.25),transparent_70%)] opacity-60 blur-md transition-opacity group-hover:opacity-100" />
                   <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-                    <span className="absolute h-full w-full animate-ping rounded-full bg-[#f5409d]/60" />
-                    <span className="relative h-1.5 w-1.5 rounded-full bg-[#f5409d]" />
+                    <span className="absolute h-full w-full animate-ping rounded-full bg-[#e11d2a]/60" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-[#e11d2a]" />
                   </span>
                   <Gift className="relative h-3.5 w-3.5" />
                   <span className="relative tabular-nums">
@@ -455,7 +455,7 @@ export function TopNavbar() {
             <div ref={menuRef} className="relative">
               <button
                 onClick={() => setMenuOpen((v) => !v)}
-                className="flex items-center gap-2 rounded-full bg-[#f5409d] px-3 py-1.5 text-xs font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95"
+                className="flex items-center gap-2 rounded-full bg-[#e11d2a] px-3 py-1.5 text-xs font-bold text-[#111113] transition-all hover:brightness-110 active:scale-95"
               >
                 <LogIn className="h-3.5 w-3.5" />
                 <span>{t('signIn')}</span>
@@ -463,7 +463,7 @@ export function TopNavbar() {
 
               {menuOpen && (
                 /* Desktop dropdown only */
-                <div className="absolute right-0 top-full mt-2 hidden w-64 overflow-hidden rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] shadow-2xl sm:block">
+                <div className="absolute right-0 top-full mt-2 hidden w-64 overflow-hidden rounded-xl border border-[#f3f0ed]/8 bg-[#111113] shadow-2xl sm:block">
                   <div className="px-4 py-3 border-b border-[#f3f0ed]/6">
                     <p className="text-xs font-semibold text-[#f3f0ed]">{t('loginTitle')}</p>
                     <p className="mt-0.5 text-[11px] text-[#f3f0ed]/40">{t('loginSubtitle')}</p>
@@ -505,7 +505,7 @@ export function TopNavbar() {
               onClick={toggleStudioMode}
               aria-pressed={studioMode}
               title="Studio Mode"
-              className="hidden h-8 items-center gap-1.5 rounded-full bg-[#f5409d]/15 ring-1 ring-inset ring-[#f5409d]/25 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_12px_-4px_rgba(245,64,157,0.25)] px-3 text-xs font-semibold text-[#f5409d] transition-all hover:bg-[#f5409d]/20 hover:ring-[#f5409d]/40 md:flex"
+              className="hidden h-8 items-center gap-1.5 rounded-full bg-[#e11d2a]/15 ring-1 ring-inset ring-[#e11d2a]/25 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_12px_-4px_rgba(225,29,42,0.25)] px-3 text-xs font-semibold text-[#e11d2a] transition-all hover:bg-[#e11d2a]/20 hover:ring-[#e11d2a]/40 md:flex"
             >
               <Clapperboard className="h-3.5 w-3.5" />
               Studio
@@ -526,7 +526,7 @@ export function TopNavbar() {
                 const R = 17;
                 const C = 2 * Math.PI * R;
                 const offset = C * (1 - fraction);
-                const ringColor = fraction > 0.25 ? '#f5409d' : fraction > 0.1 ? '#f59e0b' : '#ef4444';
+                const ringColor = fraction > 0.25 ? '#e11d2a' : fraction > 0.1 ? '#f59e0b' : '#ef4444';
                 return (
                   <svg className="pointer-events-none absolute -inset-[3px] h-[38px] w-[38px]" viewBox="0 0 38 38">
                     <circle cx="19" cy="19" r={R} fill="none" stroke="rgba(243,240,237,0.08)" strokeWidth="2" />
@@ -534,12 +534,12 @@ export function TopNavbar() {
                   </svg>
                 );
               })()}
-              <span className="pointer-events-none absolute inset-0 rounded-full bg-[#f5409d]/0 transition-colors group-hover:bg-[#f5409d]/10" />
+              <span className="pointer-events-none absolute inset-0 rounded-full bg-[#e11d2a]/0 transition-colors group-hover:bg-[#e11d2a]/10" />
               <span className="flex h-8 w-8 overflow-hidden rounded-full border border-transparent transition-all">
                 {user?.avatarUrl ? (
                   <img src={user.avatarUrl} alt={user.name} width={32} height={32} className="h-full w-full object-cover" />
                 ) : (
-                  <span className="flex h-full w-full items-center justify-center bg-[#4b1e3a]">
+                  <span className="flex h-full w-full items-center justify-center bg-[#3a0f16]">
                     <User className="h-4 w-4 text-[#f3f0ed]/40" />
                   </span>
                 )}
@@ -548,7 +548,7 @@ export function TopNavbar() {
 
             {menuOpen && (
               /* Desktop dropdown only */
-              <div className="absolute right-0 top-full mt-2 hidden w-56 overflow-hidden rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] shadow-2xl sm:block">
+              <div className="absolute right-0 top-full mt-2 hidden w-56 overflow-hidden rounded-xl border border-[#f3f0ed]/8 bg-[#111113] shadow-2xl sm:block">
                 <div className="border-b border-landing-text/6 px-4 py-3">
                   <div className="flex items-center gap-2">
                     <p className="truncate text-xs font-semibold text-landing-text">{user?.name || t('defaultUser')}</p>
@@ -556,7 +556,7 @@ export function TopNavbar() {
                       <span
                         className={`shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ${isFreePlan
                           ? 'border border-[#f3f0ed]/15 bg-[#f3f0ed]/5 text-[#f3f0ed]/60'
-                          : 'border border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]'
+                          : 'border border-[#e11d2a]/30 bg-[#e11d2a]/10 text-[#e11d2a]'
                           }`}
                       >
                         {planName}
@@ -588,7 +588,7 @@ export function TopNavbar() {
       {!user && menuOpen && (
         <div className="fixed inset-0 z-200 sm:hidden">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMenuOpen(false)} />
-          <aside ref={asideRef} className="absolute right-0 top-0 flex h-full w-72 flex-col border-l border-[#f3f0ed]/8 bg-[#1a2123]">
+          <aside ref={asideRef} className="absolute right-0 top-0 flex h-full w-72 flex-col border-l border-[#f3f0ed]/8 bg-[#111113]">
             <div className="flex items-center justify-between border-b border-[#f3f0ed]/6 px-4 py-4">
               <div>
                 <p className="text-sm font-semibold text-[#f3f0ed]">{t('loginTitle')}</p>
@@ -632,7 +632,7 @@ export function TopNavbar() {
       {user && menuOpen && (
         <div className="fixed inset-0 z-200 sm:hidden">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMenuOpen(false)} />
-          <aside ref={asideRef} className="absolute right-0 top-0 flex h-full w-72 flex-col border-l border-[#f3f0ed]/8 bg-[#1a2123]">
+          <aside ref={asideRef} className="absolute right-0 top-0 flex h-full w-72 flex-col border-l border-[#f3f0ed]/8 bg-[#111113]">
             <div className="flex items-center justify-between border-b border-landing-text/6 px-4 py-4">
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
@@ -641,7 +641,7 @@ export function TopNavbar() {
                     <span
                       className={`shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ${isFreePlan
                         ? 'border border-[#f3f0ed]/15 bg-[#f3f0ed]/5 text-[#f3f0ed]/60'
-                        : 'border border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]'
+                        : 'border border-[#e11d2a]/30 bg-[#e11d2a]/10 text-[#e11d2a]'
                         }`}
                     >
                       {planName}

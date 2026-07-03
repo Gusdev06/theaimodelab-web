@@ -291,8 +291,8 @@ function ImageOptionGrid({
             disabled={disabled}
             className="group relative aspect-square overflow-hidden rounded-xl transition-all active:scale-95"
             style={{
-              border: `2px solid ${active ? 'rgba(245,64,157,0.6)' : 'rgba(243,240,237,0.06)'}`,
-              boxShadow: active ? '0 0 12px rgba(245,64,157,0.15)' : 'none',
+              border: `2px solid ${active ? 'rgba(225,29,42,0.6)' : 'rgba(243,240,237,0.06)'}`,
+              boxShadow: active ? '0 0 12px rgba(225,29,42,0.15)' : 'none',
             }}
           >
             <Image
@@ -310,7 +310,7 @@ function ImageOptionGrid({
             </span>
 
             {active && (
-              <div className="absolute top-1.5 right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#f5409d] shadow-md">
+              <div className="absolute top-1.5 right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#e11d2a] shadow-md">
                 <svg className="h-3 w-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
@@ -348,9 +348,9 @@ function OptionPills({
             disabled={disabled}
             className="rounded-lg px-2.5 py-1.5 text-[10px] font-semibold transition-all active:scale-95"
             style={{
-              background: active ? 'rgba(245,64,157,0.1)' : 'rgba(30,73,75,0.15)',
-              color: active ? '#f5409d' : 'rgba(243,240,237,0.4)',
-              border: `1px solid ${active ? 'rgba(245,64,157,0.28)' : 'rgba(243,240,237,0.06)'}`,
+              background: active ? 'rgba(225,29,42,0.1)' : 'rgba(30,73,75,0.15)',
+              color: active ? '#e11d2a' : 'rgba(243,240,237,0.4)',
+              border: `1px solid ${active ? 'rgba(225,29,42,0.28)' : 'rgba(243,240,237,0.06)'}`,
             }}
           >
             {t(opt.labelKey)}
@@ -379,7 +379,7 @@ function AdvancedTabCard({
       onClick={onClick}
       className="group relative flex flex-1 flex-col items-center gap-2 overflow-hidden rounded-xl p-3 transition-all active:scale-95"
       style={{
-        border: `1px solid ${active ? 'rgba(245,64,157,0.28)' : 'rgba(243,240,237,0.06)'}`,
+        border: `1px solid ${active ? 'rgba(225,29,42,0.28)' : 'rgba(243,240,237,0.06)'}`,
       }}
     >
       <div className="absolute inset-0">
@@ -394,7 +394,7 @@ function AdvancedTabCard({
       </div>
       <span
         className="relative z-10 mt-4 text-[9px] font-bold tracking-wider"
-        style={{ color: active ? '#f5409d' : 'rgba(243,240,237,0.5)' }}
+        style={{ color: active ? '#e11d2a' : 'rgba(243,240,237,0.5)' }}
       >
         {label}
       </span>
@@ -455,8 +455,8 @@ export function InfluencerSidebar() {
             onClick={() => setTab('builder')}
             className="rounded-md px-3 py-1.5 text-[10px] font-bold tracking-wider transition-all"
             style={{
-              background: tab === 'builder' ? 'rgba(245,64,157,0.12)' : 'transparent',
-              color: tab === 'builder' ? '#f5409d' : 'rgba(243,240,237,0.35)',
+              background: tab === 'builder' ? 'rgba(225,29,42,0.12)' : 'transparent',
+              color: tab === 'builder' ? '#e11d2a' : 'rgba(243,240,237,0.35)',
             }}
           >
             {t('tabBuilder')}
@@ -465,8 +465,8 @@ export function InfluencerSidebar() {
             onClick={() => setTab('prompt')}
             className="rounded-md px-3 py-1.5 text-[10px] font-bold tracking-wider transition-all"
             style={{
-              background: tab === 'prompt' ? 'rgba(245,64,157,0.12)' : 'transparent',
-              color: tab === 'prompt' ? '#f5409d' : 'rgba(243,240,237,0.35)',
+              background: tab === 'prompt' ? 'rgba(225,29,42,0.12)' : 'transparent',
+              color: tab === 'prompt' ? '#e11d2a' : 'rgba(243,240,237,0.35)',
             }}
           >
             {t('tabPrompt')}
@@ -492,7 +492,7 @@ export function InfluencerSidebar() {
               rows={10}
               readOnly
               value={prompt}
-              className="w-full resize-none rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 py-2.5 text-xs leading-relaxed text-[#f3f0ed]/70 placeholder-[#f3f0ed]/25 outline-none"
+              className="w-full resize-none rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 py-2.5 text-xs leading-relaxed text-[#f3f0ed]/70 placeholder-[#f3f0ed]/25 outline-none"
             />
             <p className="text-[9px] text-[#f3f0ed]/20">
               {t('promptHint')}
@@ -503,8 +503,8 @@ export function InfluencerSidebar() {
             {/* ── Imagem de Referência ─────────────────────────────────── */}
             <div className="border-b border-[#f3f0ed]/[0.05] px-4 py-4">
               <div className="mb-3 flex items-center gap-2">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10">
-                  <Upload className="h-3.5 w-3.5 text-[#f5409d]" />
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10">
+                  <Upload className="h-3.5 w-3.5 text-[#e11d2a]" />
                 </div>
                 <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/55">
                   {t('referenceTitle')}
@@ -520,7 +520,7 @@ export function InfluencerSidebar() {
               />
 
               {hasReference ? (
-                <div className="relative overflow-hidden rounded-xl border border-[#f5409d]/20">
+                <div className="relative overflow-hidden rounded-xl border border-[#e11d2a]/20">
                   <img
                     src={referenceImage.preview}
                     alt={t('referenceAlt')}
@@ -533,7 +533,7 @@ export function InfluencerSidebar() {
                     <X className="h-3.5 w-3.5" />
                   </button>
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2">
-                    <p className="text-[10px] font-semibold text-[#f5409d]">
+                    <p className="text-[10px] font-semibold text-[#e11d2a]">
                       {t('referenceActive')}
                     </p>
                     <p className="text-[9px] text-[#f3f0ed]/40">
@@ -544,7 +544,7 @@ export function InfluencerSidebar() {
               ) : (
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="flex w-full flex-col items-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#4b1e3a]/10 px-4 py-6 transition-all hover:border-[#f5409d]/20 hover:bg-[#4b1e3a]/20"
+                  className="flex w-full flex-col items-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#3a0f16]/10 px-4 py-6 transition-all hover:border-[#e11d2a]/20 hover:bg-[#3a0f16]/20"
                 >
                   <Upload className="h-5 w-5 text-[#f3f0ed]/25" />
                   <div className="text-center">
@@ -632,8 +632,8 @@ export function InfluencerSidebar() {
             {/* ── Configurações avançadas ──────────────────────────────── */}
             <div className="border-b border-[#f3f0ed]/[0.05] px-4 py-4">
               <div className="mb-3 flex items-center gap-2">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10">
-                  <Sparkles className="h-3.5 w-3.5 text-[#f5409d]" />
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10">
+                  <Sparkles className="h-3.5 w-3.5 text-[#e11d2a]" />
                 </div>
                 <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/55">
                   {tSections('advancedConfig')}
@@ -781,9 +781,9 @@ export function InfluencerSidebar() {
                           disabled={hasReference}
                           className="rounded-lg px-2.5 py-1.5 text-[10px] font-semibold transition-all active:scale-95"
                           style={{
-                            background: active ? 'rgba(245,64,157,0.1)' : 'rgba(30,73,75,0.15)',
-                            color: active ? '#f5409d' : 'rgba(243,240,237,0.4)',
-                            border: `1px solid ${active ? 'rgba(245,64,157,0.28)' : 'rgba(243,240,237,0.06)'}`,
+                            background: active ? 'rgba(225,29,42,0.1)' : 'rgba(30,73,75,0.15)',
+                            color: active ? '#e11d2a' : 'rgba(243,240,237,0.4)',
+                            border: `1px solid ${active ? 'rgba(225,29,42,0.28)' : 'rgba(243,240,237,0.06)'}`,
                           }}
                         >
                           {t(opt.labelKey)}

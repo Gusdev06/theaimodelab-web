@@ -25,24 +25,24 @@ export default function TermosDeUsoPage() {
       {/* Header */}
       <header className="sticky top-0 z-20 border-b border-white/[0.06] bg-[#111518]/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
-          <Link href="/login" className="flex items-center gap-2 text-xs text-white/40 hover:text-white/70 transition-colors">
+          <Link href="/login" className="flex items-center gap-2 text-xs text-white/40 hover:text-white/70 transition-colors app-ease app-press">
             <ArrowLeft className="h-3.5 w-3.5" />
             {t('common.back')}
           </Link>
-          <Image src="/full_logo.svg" alt={t('common.logoAlt')} width={100} height={32} className="mix-blend-lighten" />
+          <Image src="/logo-red.jpg" alt={t('common.logoAlt')} width={100} height={32} className="mix-blend-lighten" />
           <div className="w-16" />
         </div>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 py-12">
         {/* Title */}
-        <div className="mb-10">
-          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[#f5409d]/30 bg-[#f5409d]/10 px-3 py-1 text-[10px] font-semibold tracking-widest uppercase text-[#f5409d]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#f5409d]" />
+        <div className="mb-10 app-reveal">
+          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-3 py-1 text-[10px] font-semibold tracking-widest uppercase text-[#e11d2a]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#e11d2a]" />
             {t('common.tag')}
           </div>
           <h1 className="text-3xl font-bold text-white">{t('terms.title')}</h1>
-          <p className="mt-2 text-sm text-white/40">{t('common.lastUpdated')}</p>
+          <p className="mt-2 text-sm text-white/40" style={{ animationDelay: '0.08s' }}>{t('common.lastUpdated')}</p>
         </div>
 
         {/* Sections */}
@@ -55,7 +55,7 @@ export default function TermosDeUsoPage() {
                 <div className="flex flex-col gap-5">
                   {section.subsections.map((sub) => (
                     <div key={sub.title}>
-                      <h3 className="mb-2 text-sm font-medium text-[#f5409d]/80">{sub.title}</h3>
+                      <h3 className="mb-2 text-sm font-medium text-[#e11d2a]/80">{sub.title}</h3>
                       {sub.content.map((p, i) => (
                         <p key={i} className="text-sm leading-relaxed text-white/60 mb-2 last:mb-0">{p}</p>
                       ))}
@@ -71,7 +71,7 @@ export default function TermosDeUsoPage() {
                     <ul className="mb-3 flex flex-col gap-2">
                       {section.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-2.5 text-sm text-white/60">
-                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#f5409d]/60" />
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#e11d2a]/60" />
                           {item}
                         </li>
                       ))}
@@ -89,7 +89,7 @@ export default function TermosDeUsoPage() {
         {/* Footer */}
         <div className="mt-10 flex flex-col items-center gap-3 border-t border-white/[0.06] pt-8 text-center">
           <p className="text-xs text-white/25">{t('common.rights')}</p>
-          <Link href="/politica-de-privacidade" className="text-xs text-[#f5409d]/50 hover:text-[#f5409d]/80 transition-colors">
+          <Link href="/politica-de-privacidade" className="text-xs text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors app-ease">
             {t('common.seePrivacy')}
           </Link>
         </div>

@@ -265,7 +265,7 @@ export function ImageGeneratorView() {
           type="button"
           aria-label={t('image.newTab')}
           onClick={addTab}
-          className="mb-1.5 flex size-7 shrink-0 items-center justify-center rounded-lg text-app-muted transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
+          className="app-press mb-1.5 flex size-7 shrink-0 items-center justify-center rounded-lg text-app-muted transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
         >
           <Plus className="size-4" strokeWidth={1.8} />
         </button>

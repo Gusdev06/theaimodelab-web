@@ -187,11 +187,11 @@ export function VoicePickerModal({ selected, closing, onSelect, onClose }: Voice
                       type="button"
                       onClick={() => onSelect(voice)}
                       className={cn(
-                        'flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition-colors duration-150 ease-app hover:bg-app-surface',
+                        'flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition-colors duration-150 ease-app app-press hover:bg-app-surface',
                         isSelected && 'bg-app-surface ring-1 ring-inset ring-app-hairline-2',
                       )}
                     >
-                      <span className="flex size-[34px] shrink-0 items-center justify-center rounded-[10px] border border-[rgba(245,64,157,0.2)] bg-[rgba(245,64,157,0.07)]">
+                      <span className="flex size-[34px] shrink-0 items-center justify-center rounded-[10px] border border-[rgba(225,29,42,0.2)] bg-[rgba(225,29,42,0.07)]">
                         {voice.cloned ? (
                           <MicVocal className="size-[16px] text-app-lime" strokeWidth={1.8} />
                         ) : (
@@ -230,7 +230,7 @@ export function VoicePickerModal({ selected, closing, onSelect, onClose }: Voice
                           className={cn(
                             'flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors duration-200 ease-app',
                             playingId === voice.id || loadingId === voice.id
-                              ? 'border-[rgba(245,64,157,0.5)] text-app-lime'
+                              ? 'border-[rgba(225,29,42,0.5)] text-app-lime'
                               : 'border-app-hairline-2 text-app-text-2 hover:text-app-text',
                           )}
                         >

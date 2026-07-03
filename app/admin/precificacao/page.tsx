@@ -126,7 +126,7 @@ export default function PrecificacaoPage() {
   if (isLoading || !data) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -181,7 +181,7 @@ export default function PrecificacaoPage() {
 
       {/* Header */}
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-2xl font-bold text-[#f3f0ed]">Precificação</h1>
           <p className="mt-1 text-sm text-[#f3f0ed]/40">
             Custos, métricas e unit economics — atualizado em {new Date(r.generatedAt).toLocaleString('pt-BR')}
@@ -197,7 +197,7 @@ export default function PrecificacaoPage() {
               <button onClick={handleRefresh} disabled={refreshing} className="flex h-9 items-center gap-2 rounded-xl border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 px-3.5 text-sm font-semibold text-[#f3f0ed]/80 transition-colors hover:bg-[#f3f0ed]/10 disabled:opacity-40">
                 {refreshing ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />} Atualizar
               </button>
-              <button onClick={() => window.print()} className="flex h-9 items-center gap-2 rounded-xl border border-[#f5409d]/30 bg-[#f5409d]/10 px-3.5 text-sm font-semibold text-[#f5409d] transition-colors hover:bg-[#f5409d]/20">
+              <button onClick={() => window.print()} className="flex h-9 items-center gap-2 rounded-xl border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-3.5 text-sm font-semibold text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/20">
                 <FileDown className="h-4 w-4" /> Gerar PDF
               </button>
             </>
@@ -206,7 +206,7 @@ export default function PrecificacaoPage() {
               <button onClick={cancelEdit} className="flex h-9 items-center gap-2 rounded-xl border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 px-3.5 text-sm font-semibold text-[#f3f0ed]/80 transition-colors hover:bg-[#f3f0ed]/10">
                 <X className="h-4 w-4" /> Cancelar
               </button>
-              <button onClick={handleSave} disabled={saving} className="flex h-9 items-center gap-2 rounded-xl border border-[#f5409d]/30 bg-[#f5409d]/10 px-3.5 text-sm font-semibold text-[#f5409d] transition-colors hover:bg-[#f5409d]/20 disabled:opacity-40">
+              <button onClick={handleSave} disabled={saving} className="app-press app-ease flex h-9 items-center gap-2 rounded-xl border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-3.5 text-sm font-semibold text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/20 disabled:opacity-40">
                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Salvar
               </button>
             </>
@@ -237,7 +237,7 @@ export default function PrecificacaoPage() {
             return (
               <div key={t.delivery} className="rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] p-4">
                 <p className="flex items-center gap-2 text-sm font-bold text-[#f3f0ed]">
-                  <Icon className="h-4 w-4 text-[#f5409d]" /> {t.delivery}
+                  <Icon className="h-4 w-4 text-[#e11d2a]" /> {t.delivery}
                 </p>
                 <ul className="mt-2 space-y-1">
                   {t.tools.map((tool) => <li key={tool} className="text-xs text-[#f3f0ed]/50">• {tool}</li>)}
@@ -255,7 +255,7 @@ export default function PrecificacaoPage() {
         right={<div className="flex items-center gap-1.5 rounded-lg bg-[#f3f0ed]/5 px-2.5 py-1 text-[10px] font-semibold text-[#f3f0ed]/40"><Coins className="h-3 w-3" /> 1 crédito KIE = {usd(cfg.kieCreditUsd)}</div>}
       >
         {editMode && draft && (
-          <div className="no-print mb-4 grid grid-cols-2 gap-3 rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/5 p-4 md:grid-cols-4">
+          <div className="no-print mb-4 grid grid-cols-2 gap-3 rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/5 p-4 md:grid-cols-4">
             <EditNum label="Câmbio R$/US$" value={draft.exchangeRate} onChange={(v) => setCfg({ exchangeRate: v })} step={0.01} />
             <EditNum label="Custo blended/crédito" value={draft.blendedCostPerCreditBRL} onChange={(v) => setCfg({ blendedCostPerCreditBRL: v })} step={0.0001} />
             <EditNum label="Vídeo (s)" value={draft.videoSeconds} onChange={(v) => setCfg({ videoSeconds: v })} step={1} />
@@ -290,7 +290,7 @@ export default function PrecificacaoPage() {
                     {editMode && draft
                       ? <input type="number" step={0.0001} value={draft.aiCosts[i]?.usd ?? row.usd}
                           onChange={(e) => { const v = parseFloat(e.target.value) || 0; setDraft((d) => { if (!d) return d; const a = [...d.aiCosts]; a[i] = { ...a[i], usd: v }; return { ...d, aiCosts: a }; }); }}
-                          className="w-20 rounded-md border border-[#f3f0ed]/10 bg-[#0d1011] px-2 py-1 text-right text-xs text-[#f3f0ed]" />
+                          className="w-20 rounded-md border border-[#f3f0ed]/10 bg-[#050506] px-2 py-1 text-right text-xs text-[#f3f0ed]" />
                       : usd(row.usd)}
                   </Td>
                   <Td className="text-right tabular-nums text-[#f3f0ed]/60">{brl(row.brl)}</Td>
@@ -301,7 +301,7 @@ export default function PrecificacaoPage() {
           </table>
         </div>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <MiniList title="Mais baratas" icon={TrendingDown} iconClass="text-[#f5409d]" items={r.costs.cheapest.map((x) => ({ k: `${x.model} ${x.variant}`, v: brl(x.exampleBRL ?? x.brl) }))} />
+          <MiniList title="Mais baratas" icon={TrendingDown} iconClass="text-[#e11d2a]" items={r.costs.cheapest.map((x) => ({ k: `${x.model} ${x.variant}`, v: brl(x.exampleBRL ?? x.brl) }))} />
           <MiniList title="Mais caras" icon={TrendingUp} iconClass="text-[#ef4444]" items={r.costs.mostExpensive.map((x) => ({ k: `${x.model} ${x.variant}`, v: brl(x.exampleBRL ?? x.brl) }))} />
         </div>
       </Section>
@@ -318,12 +318,12 @@ export default function PrecificacaoPage() {
                     {editMode && draft
                       ? <input type="number" step={0.01} value={draft.infra[i]?.monthlyBRL ?? row.monthlyBRL}
                           onChange={(e) => { const v = parseFloat(e.target.value) || 0; setDraft((d) => { if (!d) return d; const a = [...d.infra]; a[i] = { ...a[i], monthlyBRL: v }; return { ...d, infra: a }; }); }}
-                          className="w-24 rounded-md border border-[#f3f0ed]/10 bg-[#0d1011] px-2 py-1 text-right text-xs text-[#f3f0ed]" />
+                          className="w-24 rounded-md border border-[#f3f0ed]/10 bg-[#050506] px-2 py-1 text-right text-xs text-[#f3f0ed]" />
                       : brl(row.monthlyBRL)}
                   </Td>
                 </tr>
               ))}
-              <tr><Td className="font-bold text-[#f3f0ed]">Total</Td><Td className="text-right font-bold tabular-nums text-[#f5409d]">{brl(r.costs.infraTotalBRL)}</Td></tr>
+              <tr><Td className="font-bold text-[#f3f0ed]">Total</Td><Td className="text-right font-bold tabular-nums text-[#e11d2a]">{brl(r.costs.infraTotalBRL)}</Td></tr>
             </tbody>
           </table>
         </Section>
@@ -404,9 +404,9 @@ export default function PrecificacaoPage() {
 function EditNum({ label, value, onChange, step }: { label: string; value: number; onChange: (v: number) => void; step: number }) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-[#f5409d]/60">{label}</span>
+      <span className="text-[10px] font-bold uppercase tracking-wider text-[#e11d2a]/60">{label}</span>
       <input type="number" step={step} value={value} onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
-        className="rounded-md border border-[#f3f0ed]/10 bg-[#0d1011] px-2 py-1.5 text-sm text-[#f3f0ed]" />
+        className="rounded-md border border-[#f3f0ed]/10 bg-[#050506] px-2 py-1.5 text-sm text-[#f3f0ed]" />
     </label>
   );
 }
@@ -422,9 +422,9 @@ function Row({ icon: Icon, k, v }: { icon: React.ElementType; k: string; v: stri
 
 function Mini({ k, v, accent }: { k: string; v: string; accent?: boolean }) {
   return (
-    <div className={`rounded-xl border p-3 ${accent ? 'border-[#f5409d]/20 bg-[#f5409d]/5' : 'border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02]'}`}>
+    <div className={`rounded-xl border p-3 ${accent ? 'border-[#e11d2a]/20 bg-[#e11d2a]/5' : 'border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02]'}`}>
       <p className="text-[10px] font-bold uppercase tracking-wider text-[#f3f0ed]/30">{k}</p>
-      <p className={`mt-1 text-lg font-bold tabular-nums ${accent ? 'text-[#f5409d]' : 'text-[#f3f0ed]'}`}>{v}</p>
+      <p className={`mt-1 text-lg font-bold tabular-nums ${accent ? 'text-[#e11d2a]' : 'text-[#f3f0ed]'}`}>{v}</p>
     </div>
   );
 }

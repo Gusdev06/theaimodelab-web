@@ -46,7 +46,7 @@ export function AdminAreaChart({
   data,
   dataKey,
   xAxisKey,
-  color = '#f5409d',
+  color = '#e11d2a',
   formatValue,
   formatXAxis,
   height = 280,

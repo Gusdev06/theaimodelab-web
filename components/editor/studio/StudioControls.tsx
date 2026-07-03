@@ -31,7 +31,7 @@ export function StudioPill({
       style={active && accent ? activeStyle : undefined}
       className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium transition-all disabled:cursor-not-allowed disabled:opacity-40 ${
         active && !accent
-          ? 'bg-[#f5409d]/10 text-[#f5409d]'
+          ? 'bg-[#e11d2a]/10 text-[#e11d2a]'
           : !active
             ? 'bg-[#f3f0ed]/[0.04] text-[#f3f0ed]/75 hover:text-[#f3f0ed]'
             : ''
@@ -114,7 +114,7 @@ export function StudioSelectPill({
         disabled={disabled}
         className={`relative inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium transition-all disabled:cursor-not-allowed disabled:opacity-40 ${
           open
-            ? 'bg-[#f5409d]/10 text-[#f5409d]'
+            ? 'bg-[#e11d2a]/10 text-[#e11d2a]'
             : 'bg-[#f3f0ed]/[0.04] text-[#f3f0ed]/75 hover:text-[#f3f0ed]'
         }`}
       >
@@ -124,7 +124,7 @@ export function StudioSelectPill({
         {hasNewOption && !open && (
           <span
             aria-hidden
-            className="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-[#f5409d] shadow-[0_0_6px_rgba(245,64,157,0.8)] animate-pulse"
+            className="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-[#e11d2a] shadow-[0_0_6px_rgba(225,29,42,0.8)] animate-pulse"
           />
         )}
       </button>
@@ -132,7 +132,7 @@ export function StudioSelectPill({
         <div
           ref={menuRef}
           style={{ position: 'fixed', left: pos.left, bottom: pos.bottom, zIndex: 9999 }}
-          className="flex min-w-[160px] flex-col gap-0.5 rounded-xl bg-[#1a2123] p-1 shadow-2xl"
+          className="flex min-w-[160px] flex-col gap-0.5 rounded-xl bg-[#111113] p-1 shadow-2xl"
         >
           {options.map((opt) => (
             <button
@@ -142,14 +142,14 @@ export function StudioSelectPill({
               onClick={() => { if (opt.disabled) return; onChange(opt.value); setOpen(false); }}
               className={`flex items-center justify-between gap-3 rounded-lg px-2.5 py-1.5 text-[11px] font-medium transition-all disabled:cursor-not-allowed disabled:opacity-40 ${
                 opt.value === value
-                  ? 'bg-[#f5409d]/15 text-[#f5409d]'
+                  ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
                   : 'text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]'
               }`}
             >
               <span className="flex min-w-0 items-center gap-1.5 truncate">
                 <span className="truncate">{opt.label}</span>
                 {opt.isNew && (
-                  <span className="shrink-0 rounded-full bg-[#f5409d]/15 px-1.5 py-px text-[8px] font-bold uppercase tracking-[0.1em] text-[#f5409d]">
+                  <span className="shrink-0 rounded-full bg-[#e11d2a]/15 px-1.5 py-px text-[8px] font-bold uppercase tracking-[0.1em] text-[#e11d2a]">
                     {newLabel}
                   </span>
                 )}

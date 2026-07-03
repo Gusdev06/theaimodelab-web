@@ -101,7 +101,7 @@ export function MediaFileTile({
         }}
       />
       {value ? (
-        <div className="group relative flex h-full min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl border border-[rgba(245,64,157,0.3)] bg-app-surface px-2">
+        <div className="group relative flex h-full min-h-[76px] flex-col items-center justify-center gap-1 rounded-xl border border-[rgba(225,29,42,0.3)] bg-app-surface px-2">
           <Icon className="size-[18px] text-app-lime" strokeWidth={1.8} />
           <span className="w-full truncate text-center text-[10.5px] font-semibold text-app-text">
             {value.filename}
@@ -120,7 +120,7 @@ export function MediaFileTile({
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="flex h-full min-h-[76px] w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text"
+          className="flex h-full min-h-[76px] w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(225,29,42,0.4)] hover:text-app-text"
         >
           <Icon className="size-[19px]" strokeWidth={1.8} />
           <span className="px-1 text-center text-[12px] font-semibold leading-tight">{label}</span>

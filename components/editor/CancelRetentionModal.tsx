@@ -191,7 +191,7 @@ export function CancelRetentionModal({
         if (e.target === e.currentTarget && !isLoading) onClose();
       }}
     >
-      <div className="relative mx-4 flex w-full max-w-md flex-col rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#1a2123] shadow-2xl">
+      <div className="relative mx-4 flex w-full max-w-md flex-col rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#111113] shadow-2xl">
         {/* Close */}
         <button
           onClick={onClose}
@@ -205,8 +205,8 @@ export function CancelRetentionModal({
         {step === 'achievements' && hasStats && (
           <div className="flex flex-col gap-5 p-6">
             <div className="flex flex-col items-center gap-3 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f5409d]/15">
-                <Trophy className="h-6 w-6 text-[#f5409d]" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e11d2a]/15">
+                <Trophy className="h-6 w-6 text-[#e11d2a]" />
               </div>
               <h3 className="text-lg font-bold text-[#f3f0ed]">
                 {t('achievements.title')}
@@ -221,19 +221,19 @@ export function CancelRetentionModal({
             {/* Stats grid */}
             <div className="grid grid-cols-2 gap-3">
               {totalImages > 0 && (
-                <div className="flex flex-col items-center gap-1 rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/8 p-4">
-                  <span className="text-2xl font-bold text-[#f5409d]">
+                <div className="flex flex-col items-center gap-1 rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/8 p-4">
+                  <span className="text-2xl font-bold text-[#e11d2a]">
                     {totalImages.toLocaleString('pt-BR')}
                   </span>
-                  <span className="text-[11px] text-[#f5409d]/60">{t('achievements.imagesLabel')}</span>
+                  <span className="text-[11px] text-[#e11d2a]/60">{t('achievements.imagesLabel')}</span>
                 </div>
               )}
               {totalVideos > 0 && (
-                <div className="flex flex-col items-center gap-1 rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/8 p-4">
-                  <span className="text-2xl font-bold text-[#f5409d]">
+                <div className="flex flex-col items-center gap-1 rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/8 p-4">
+                  <span className="text-2xl font-bold text-[#e11d2a]">
                     {totalVideos.toLocaleString('pt-BR')}
                   </span>
-                  <span className="text-[11px] text-[#f5409d]/60">{t('achievements.videosLabel')}</span>
+                  <span className="text-[11px] text-[#e11d2a]/60">{t('achievements.videosLabel')}</span>
                 </div>
               )}
             </div>
@@ -245,7 +245,7 @@ export function CancelRetentionModal({
             <div className="flex flex-col gap-2">
               <button
                 onClick={onClose}
-                className="flex h-11 w-full items-center justify-center rounded-xl bg-[#f5409d] text-sm font-bold text-[#1a2123] transition-colors hover:bg-[#f75fae]"
+                className="flex h-11 w-full items-center justify-center rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
               >
                 {t('achievements.keep')}
               </button>
@@ -293,7 +293,7 @@ export function CancelRetentionModal({
             {/* Downgrade visual indicator */}
             {!isCancel && currentPlanName && targetPlanName && (
               <div className="flex items-center justify-center gap-3 text-xs">
-                <span className="rounded-full border border-[#f5409d]/20 bg-[#f5409d]/8 px-3 py-1 font-bold text-[#f5409d]">
+                <span className="rounded-full border border-[#e11d2a]/20 bg-[#e11d2a]/8 px-3 py-1 font-bold text-[#e11d2a]">
                   {currentPlanName}
                 </span>
                 <ArrowDown className="h-4 w-4 text-red-400/60" />
@@ -314,7 +314,7 @@ export function CancelRetentionModal({
             <div className="flex flex-col gap-2">
               <button
                 onClick={onClose}
-                className="flex h-11 w-full items-center justify-center rounded-xl bg-[#f5409d] text-sm font-bold text-[#1a2123] transition-colors hover:bg-[#f75fae]"
+                className="flex h-11 w-full items-center justify-center rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
               >
                 {t('loss.keep')}
               </button>
@@ -350,14 +350,14 @@ export function CancelRetentionModal({
                   key={reasonId}
                   onClick={() => setSelectedReason(reasonId)}
                   className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all ${selectedReason === reasonId
-                    ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]'
+                    ? 'border-[#e11d2a]/40 bg-[#e11d2a]/8 text-[#f3f0ed]'
                     : 'border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-[#f3f0ed]/60 hover:border-[#f3f0ed]/15 hover:bg-[#f3f0ed]/5'
                     }`}
                 >
                   <span className="text-base">{REASON_ICONS[reasonId]}</span>
                   <span className="flex-1">{t(`reasons.${REASON_I18N_KEYS[reasonId]}`)}</span>
                   {selectedReason === reasonId && (
-                    <span className="h-2 w-2 rounded-full bg-[#f5409d]" />
+                    <span className="h-2 w-2 rounded-full bg-[#e11d2a]" />
                   )}
                 </button>
               ))}
@@ -394,8 +394,8 @@ export function CancelRetentionModal({
         {step === 'offer' && offer && (
           <div className="flex flex-col gap-5 p-6">
             <div className="flex flex-col items-center gap-3 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f5409d]/15">
-                <OfferIcon className="h-6 w-6 text-[#f5409d]" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e11d2a]/15">
+                <OfferIcon className="h-6 w-6 text-[#e11d2a]" />
               </div>
               <h3 className="text-lg font-bold text-[#f3f0ed]">
                 {offer.title}
@@ -406,11 +406,11 @@ export function CancelRetentionModal({
             </div>
 
             {/* Offer highlight */}
-            <div className="flex flex-col items-center gap-1.5 rounded-xl border border-[#f5409d]/25 bg-[#f5409d]/8 p-5">
-              <span className="text-3xl font-bold text-[#f5409d]">
+            <div className="flex flex-col items-center gap-1.5 rounded-xl border border-[#e11d2a]/25 bg-[#e11d2a]/8 p-5">
+              <span className="text-3xl font-bold text-[#e11d2a]">
                 {offer.highlight}
               </span>
-              <span className="text-xs text-[#f5409d]/60">
+              <span className="text-xs text-[#e11d2a]/60">
                 {offer.highlightSub}
               </span>
             </div>
@@ -425,7 +425,7 @@ export function CancelRetentionModal({
                   }
                 }}
                 disabled={isAcceptingOffer}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#f5409d] text-sm font-bold text-[#1a2123] transition-colors hover:bg-[#f75fae] disabled:opacity-60"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae] disabled:opacity-60"
               >
                 {isAcceptingOffer ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -505,7 +505,7 @@ export function CancelRetentionModal({
               <button
                 onClick={onClose}
                 disabled={isLoading}
-                className="flex h-12 w-full items-center justify-center rounded-xl bg-[#f5409d] text-sm font-bold text-[#1a2123] transition-colors hover:bg-[#f75fae] disabled:opacity-50"
+                className="flex h-12 w-full items-center justify-center rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae] disabled:opacity-50"
               >
                 {t('final.keep')}
               </button>

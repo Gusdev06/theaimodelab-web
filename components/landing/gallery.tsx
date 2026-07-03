@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { useScrollReveal } from "./use-scroll-reveal";
 import { useAuth } from "@/lib/auth-context";
+import { useLoginModal } from "@/lib/login-modal-context";
 
 const ITEMS: { src: string; type: "image" | "video" }[] = [
   { src: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/generations/cmnb5y9jy002ili0166936754/155ad5c2-f554-475b-b8b8-c5c64a639a6b/output_3.mp4", type: "video" },
@@ -59,6 +60,7 @@ export function Gallery() {
   const t = useTranslations("gallery");
   const { user } = useAuth();
   const isLoggedIn = !!user;
+  const { openLoginModal } = useLoginModal();
   const { ref, isVisible } = useScrollReveal();
 
   return (
@@ -67,7 +69,7 @@ export function Gallery() {
         {/* Header */}
         <div
           ref={ref}
-          className="mx-auto max-w-2xl text-center transition-all duration-700"
+          className="landing-ease mx-auto max-w-2xl text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(24px)",
@@ -76,10 +78,10 @@ export function Gallery() {
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-landing-accent">
             {t("tag")}
           </span>
-          <h2 className="mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
+          <h2 className="landing-reveal mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
             {t("title")}
           </h2>
-          <p className="mt-3.5 text-[15px] leading-relaxed text-landing-text-secondary sm:mt-5 sm:text-[17px]">
+          <p className="landing-reveal mt-3.5 text-[15px] leading-relaxed text-landing-text-secondary sm:mt-5 sm:text-[17px]" style={{ animationDelay: "0.08s" }}>
             {t("subtitle")}
           </p>
         </div>
@@ -89,7 +91,7 @@ export function Gallery() {
           {ITEMS.map((item, i) => (
             <div
               key={i}
-              className="group mb-3 overflow-hidden rounded-xl sm:mb-4 border border-[#f3f0ed]/[0.04] bg-landing-card break-inside-avoid transition-all duration-400 hover:border-landing-accent/15 lg:mb-5"
+              className="group landing-ease mb-3 overflow-hidden rounded-xl sm:mb-4 border border-[#f3f0ed]/[0.04] bg-landing-card break-inside-avoid transition-all duration-400 hover:border-landing-accent/15 lg:mb-5"
             >
               {item.type === "video" ? (
                 <LazyVideo src={item.src} />
@@ -110,13 +112,24 @@ export function Gallery() {
 
         {/* CTA */}
         <div className="mt-10 flex justify-center sm:mt-14">
-          <a
-            href="/workspace"
-            className="group inline-flex items-center gap-2.5 rounded-xl bg-landing-accent px-6 py-3 text-[13px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-colors duration-200 hover:bg-[#f75fae] active:scale-[0.98] sm:px-7 sm:py-3.5 sm:text-[14px]"
-          >
-            {isLoggedIn ? t("ctaLoggedIn") : t("cta")}
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
+          {isLoggedIn ? (
+            <a
+              href="/home"
+              className="group landing-btn inline-flex items-center gap-2.5 bg-landing-accent px-6 py-3 text-[13px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)] sm:px-7 sm:py-3.5 sm:text-[14px]"
+            >
+              {t("ctaLoggedIn")}
+              <ArrowRight className="landing-ease h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => openLoginModal({ mode: "register" })}
+              className="group landing-btn inline-flex items-center gap-2.5 bg-landing-accent px-6 py-3 text-[13px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)] sm:px-7 sm:py-3.5 sm:text-[14px]"
+            >
+              {t("cta")}
+              <ArrowRight className="landing-ease h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+          )}
         </div>
       </div>
     </section>

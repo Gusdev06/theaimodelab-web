@@ -3,7 +3,7 @@
 import { Handle, Position } from '@xyflow/react';
 import { Image as ImageIcon, Type } from 'lucide-react';
 
-const HANDLE_BASE = '!h-7 !w-7 !rounded-full !border-0 !bg-[#1a2123] !shadow-md transition-colors hover:!bg-[#4b1e3a]';
+const HANDLE_BASE = '!h-7 !w-7 !rounded-full !border-0 !bg-[#111113] !shadow-md transition-colors hover:!bg-[#3a0f16]';
 
 export function StudioImageInputHandle() {
   return (

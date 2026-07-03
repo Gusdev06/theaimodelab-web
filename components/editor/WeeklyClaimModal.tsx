@@ -109,35 +109,35 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
         </button>
 
         {/* ── Hero ── */}
-        <div className="relative overflow-hidden border-b border-[#f3f0ed]/[0.05] bg-gradient-to-br from-[#1a2123] via-[#15191b] to-[#0e1213] px-6 pb-7 pt-9 text-center">
+        <div className="relative overflow-hidden border-b border-[#f3f0ed]/[0.05] bg-gradient-to-br from-[#111113] via-[#15191b] to-[#0e1213] px-6 pb-7 pt-9 text-center">
           {/* Decorative gradient mesh */}
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,64,157,0.18),transparent_60%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(225,29,42,0.18),transparent_60%)]"
           />
           <span
             aria-hidden
-            className="pointer-events-none absolute -top-20 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-[#f5409d]/30 blur-[60px]"
+            className="pointer-events-none absolute -top-20 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-[#e11d2a]/30 blur-[60px]"
           />
 
           <div className="relative flex flex-col items-center gap-4">
             <div className="relative">
-              <span className="pointer-events-none absolute -inset-3 rounded-3xl bg-[#f5409d]/40 opacity-60 blur-xl animate-pulse" />
-              <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff85c2] via-[#f5409d] to-[#bf327a] shadow-[0_8px_28px_-6px_rgba(245,64,157,0.7)] ring-1 ring-[#ff85c2]/70">
+              <span className="pointer-events-none absolute -inset-3 rounded-3xl bg-[#e11d2a]/40 opacity-60 blur-xl animate-pulse" />
+              <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff5964] via-[#e11d2a] to-[#bf327a] shadow-[0_8px_28px_-6px_rgba(225,29,42,0.7)] ring-1 ring-[#ff5964]/70">
                 <Gift className="h-8 w-8 text-[#0e1213]" strokeWidth={1.8} />
               </div>
             </div>
 
             <div className="flex flex-col items-center gap-1">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-5xl font-black tabular-nums leading-none text-[#f5409d] drop-shadow-[0_0_18px_rgba(245,64,157,0.35)]">
+                <span className="text-5xl font-black tabular-nums leading-none text-[#e11d2a] drop-shadow-[0_0_18px_rgba(225,29,42,0.35)]">
                   +{amount}
                 </span>
                 <span className="text-sm font-bold uppercase tracking-[0.18em] text-[#f3f0ed]/70">
                   {t('videosLabel')}
                 </span>
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#f5409d]/80">
+              <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#e11d2a]/80">
                 {t('modelName')}
               </span>
             </div>
@@ -145,7 +145,7 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
             <h2 className="max-w-sm text-base font-semibold leading-snug text-[#f3f0ed]">
               {t.rich('headline', {
                 amount,
-                accent: (chunks) => <span className="text-[#f5409d]">{chunks}</span>,
+                accent: (chunks) => <span className="text-[#e11d2a]">{chunks}</span>,
               })}
             </h2>
           </div>
@@ -162,10 +162,10 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
               return (
                 <div
                   key={i}
-                  className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/[0.05] bg-[#f3f0ed]/[0.02] px-3.5 py-3 transition-colors hover:border-[#f5409d]/20 hover:bg-[#f5409d]/[0.03]"
+                  className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/[0.05] bg-[#f3f0ed]/[0.02] px-3.5 py-3 transition-colors hover:border-[#e11d2a]/20 hover:bg-[#e11d2a]/[0.03]"
                 >
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#f5409d]/15 to-[#f5409d]/5 ring-1 ring-[#f5409d]/20">
-                    <Icon className="h-4 w-4 text-[#f5409d]" />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#e11d2a]/15 to-[#e11d2a]/5 ring-1 ring-[#e11d2a]/20">
+                    <Icon className="h-4 w-4 text-[#e11d2a]" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-xs font-semibold text-[#f3f0ed]">{step.title}</span>
@@ -196,7 +196,7 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
             <div className="group relative w-full">
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-xl bg-[#f5409d] opacity-30 blur-[6px] animate-pulse"
+                className="pointer-events-none absolute inset-0 rounded-xl bg-[#e11d2a] opacity-30 blur-[6px] animate-pulse"
               />
               <button
                 onClick={() => {
@@ -204,7 +204,7 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
                 }}
                 disabled={claimMutation.isPending || celebrating}
                 style={celebrating ? { animation: 'claim-shake 500ms ease-in-out' } : undefined}
-                className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-[#ff85c2] via-[#f5409d] to-[#bf327a] px-4 py-3 text-sm font-black text-[#0e1213] shadow-[0_0_8px_-2px_rgba(245,64,157,0.4)] ring-1 ring-[#ff85c2]/60 transition-all hover:shadow-[0_0_12px_-2px_rgba(245,64,157,0.6)] hover:ring-[#ff85c2]/90 disabled:cursor-not-allowed"
+                className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-[#ff5964] via-[#e11d2a] to-[#bf327a] px-4 py-3 text-sm font-black text-[#0e1213] shadow-[0_0_8px_-2px_rgba(225,29,42,0.4)] ring-1 ring-[#ff5964]/60 transition-all hover:shadow-[0_0_12px_-2px_rgba(225,29,42,0.6)] hover:ring-[#ff5964]/90 disabled:cursor-not-allowed"
               >
                 {/* Shine sweep */}
                 {!celebrating && (
@@ -239,7 +239,7 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
                       const distance = 60 + (i % 3) * 14;
                       const dx = Math.cos(angle) * distance;
                       const dy = Math.sin(angle) * distance;
-                      const colors = ['#fbbf24', '#f5409d', '#ffffff', '#ff85c2'];
+                      const colors = ['#fbbf24', '#e11d2a', '#ffffff', '#ff5964'];
                       const color = colors[i % colors.length];
                       return (
                         <span
@@ -277,7 +277,7 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
           )}
 
           {showCountdown && countdown && (
-            <div className="flex w-full flex-col items-center gap-2.5 rounded-xl border border-[#f3f0ed]/[0.06] bg-gradient-to-b from-[#0e1213] to-[#15191b] px-4 py-4 ring-1 ring-inset ring-[#f5409d]/10">
+            <div className="flex w-full flex-col items-center gap-2.5 rounded-xl border border-[#f3f0ed]/[0.06] bg-gradient-to-b from-[#0e1213] to-[#15191b] px-4 py-4 ring-1 ring-inset ring-[#e11d2a]/10">
               <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3f0ed]/40">
                 {t('nextClaimIn')}
               </span>
@@ -290,7 +290,7 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
                 ].map((unit, i, arr) => (
                   <div key={unit.label} className="flex items-center gap-1.5">
                     <div className="flex flex-col items-center">
-                      <span className="font-mono text-2xl font-black tabular-nums leading-none text-[#f5409d] drop-shadow-[0_0_12px_rgba(245,64,157,0.5)]">
+                      <span className="font-mono text-2xl font-black tabular-nums leading-none text-[#e11d2a] drop-shadow-[0_0_12px_rgba(225,29,42,0.5)]">
                         {String(unit.value).padStart(2, '0')}
                       </span>
                       <span className="mt-1 text-[8px] font-bold uppercase tracking-[0.18em] text-[#f3f0ed]/35">
@@ -298,7 +298,7 @@ export function WeeklyClaimModal({ onClose, onRequireUpgrade }: WeeklyClaimModal
                       </span>
                     </div>
                     {i < arr.length - 1 && (
-                      <span className="font-mono text-xl font-black leading-none text-[#f5409d]/30">:</span>
+                      <span className="font-mono text-xl font-black leading-none text-[#e11d2a]/30">:</span>
                     )}
                   </div>
                 ))}

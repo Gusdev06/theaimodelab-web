@@ -11,10 +11,10 @@ import { useAuth } from '@/lib/auth-context';
 
 /** Gradientes levemente variados para os cards sem imagem, mantendo o tom teal+lime. */
 const THUMB_TINTS = [
-  'radial-gradient(circle at 80% 20%, rgba(245,64,157,0.16), transparent 60%)',
-  'radial-gradient(circle at 20% 80%, rgba(245,64,157,0.12), transparent 55%)',
-  'radial-gradient(circle at 75% 75%, rgba(245,64,157,0.14), transparent 60%)',
-  'radial-gradient(circle at 25% 25%, rgba(245,64,157,0.1), transparent 55%)',
+  'radial-gradient(circle at 80% 20%, rgba(225,29,42,0.16), transparent 60%)',
+  'radial-gradient(circle at 20% 80%, rgba(225,29,42,0.12), transparent 55%)',
+  'radial-gradient(circle at 75% 75%, rgba(225,29,42,0.14), transparent 60%)',
+  'radial-gradient(circle at 25% 25%, rgba(225,29,42,0.1), transparent 55%)',
 ];
 
 /** Destino de navegação para cada ação de CTA suportada fora do workspace. */
@@ -77,7 +77,7 @@ function NewsCard({ item, tintIndex }: { item: Announcement; tintIndex: number }
         </div>
 
         {href ? (
-          <span className="rounded-lg bg-white px-4 py-2 text-[13px] font-semibold text-[#11181a] transition-transform duration-200 ease-app group-hover:scale-[1.03]">
+          <span className="rounded-lg bg-white px-4 py-2 text-[13px] font-semibold text-[#0a0a0b] transition-transform duration-200 ease-app group-hover:scale-[1.03]">
             {item.ctaLabel || t('news.cta')}
           </span>
         ) : (

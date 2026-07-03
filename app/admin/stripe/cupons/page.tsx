@@ -109,20 +109,20 @@ export default function CuponsPage() {
         <div className="flex gap-1">
           <button
             onClick={() => onTabChange('coupons')}
-            className={`rounded-lg px-3 py-1.5 text-[12px] font-medium ${tab === 'coupons' ? 'bg-[#f5409d]/10 text-[#f5409d]' : 'text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80'}`}
+            className={`rounded-lg px-3 py-1.5 text-[12px] font-medium ${tab === 'coupons' ? 'bg-[#e11d2a]/10 text-[#e11d2a]' : 'text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80'}`}
           >
             Cupons
           </button>
           <button
             onClick={() => onTabChange('promo')}
-            className={`rounded-lg px-3 py-1.5 text-[12px] font-medium ${tab === 'promo' ? 'bg-[#f5409d]/10 text-[#f5409d]' : 'text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80'}`}
+            className={`rounded-lg px-3 py-1.5 text-[12px] font-medium ${tab === 'promo' ? 'bg-[#e11d2a]/10 text-[#e11d2a]' : 'text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80'}`}
           >
             Promotion Codes
           </button>
         </div>
         <button
           onClick={() => (tab === 'coupons' ? setShowCoupon(true) : setShowPromo(true))}
-          className="flex items-center gap-1.5 rounded-xl bg-[#f5409d]/10 px-3 py-2 text-[12px] font-semibold text-[#f5409d] hover:bg-[#f5409d]/15"
+          className="flex items-center gap-1.5 rounded-xl bg-[#e11d2a]/10 px-3 py-2 text-[12px] font-semibold text-[#e11d2a] hover:bg-[#e11d2a]/15"
         >
           <Plus className="h-3.5 w-3.5" /> Novo
         </button>
@@ -151,7 +151,7 @@ export default function CuponsPage() {
           </div>
           <div className="flex justify-end gap-2">
             <button onClick={() => setShowCoupon(false)} className="rounded-lg px-3 py-1.5 text-[12px] text-[#f3f0ed]/50 hover:text-[#f3f0ed]">Cancelar</button>
-            <button onClick={() => createCouponMut.mutate()} disabled={(!couponForm.percentOff && !couponForm.amountOff) || createCouponMut.isPending} className="flex items-center gap-1.5 rounded-lg bg-[#f5409d] px-3 py-1.5 text-[12px] font-semibold text-black hover:bg-[#ff6ab5] disabled:opacity-40">
+            <button onClick={() => createCouponMut.mutate()} disabled={(!couponForm.percentOff && !couponForm.amountOff) || createCouponMut.isPending} className="app-btn flex items-center gap-1.5 bg-[#e11d2a] px-3 py-1.5 text-[12px] font-semibold text-black disabled:opacity-40">
               {createCouponMut.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
               Criar
             </button>
@@ -172,7 +172,7 @@ export default function CuponsPage() {
           </div>
           <div className="flex justify-end gap-2">
             <button onClick={() => setShowPromo(false)} className="rounded-lg px-3 py-1.5 text-[12px] text-[#f3f0ed]/50 hover:text-[#f3f0ed]">Cancelar</button>
-            <button onClick={() => createPromoMut.mutate()} disabled={!promoForm.coupon || createPromoMut.isPending} className="flex items-center gap-1.5 rounded-lg bg-[#f5409d] px-3 py-1.5 text-[12px] font-semibold text-black hover:bg-[#ff6ab5] disabled:opacity-40">
+            <button onClick={() => createPromoMut.mutate()} disabled={!promoForm.coupon || createPromoMut.isPending} className="app-btn flex items-center gap-1.5 bg-[#e11d2a] px-3 py-1.5 text-[12px] font-semibold text-black disabled:opacity-40">
               {createPromoMut.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
               Criar
             </button>
@@ -202,7 +202,7 @@ export default function CuponsPage() {
 
       {loading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : items.length === 0 ? (
         <p className="py-10 text-center text-sm text-[#f3f0ed]/30">Nenhum registro</p>
@@ -269,7 +269,7 @@ export default function CuponsPage() {
                       {p.coupon.name ?? p.coupon.id} · {p.coupon.percent_off ? `${p.coupon.percent_off}%` : p.coupon.amount_off ? fmtCurrency(p.coupon.amount_off, p.coupon.currency ?? 'brl') : '—'}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline" className={p.active ? 'border-pink-500/30 bg-pink-500/10 text-pink-400' : 'border-[#f3f0ed]/10 text-[#f3f0ed]/40'}>
+                      <Badge variant="outline" className={p.active ? 'border-red-500/30 bg-red-500/10 text-red-400' : 'border-[#f3f0ed]/10 text-[#f3f0ed]/40'}>
                         {p.active ? 'Ativo' : 'Desativado'}
                       </Badge>
                     </TableCell>

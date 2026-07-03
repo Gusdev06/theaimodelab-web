@@ -86,11 +86,11 @@ export function ImageToPromptDialog({ open, onOpenChange }: Props) {
 
   return (
     <aside
-      className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col ${studioMode ? 'bg-[#0d1011]' : 'bg-[#171f21]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0 border-r border-white/[0.06]`}
+      className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col ${studioMode ? 'bg-[#050506]' : 'bg-[#171f21]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0 border-r border-white/[0.06]`}
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
         <div className="flex items-center gap-2.5">
-          <ImageIcon className="h-4 w-4 text-[#f5409d]" />
+          <ImageIcon className="h-4 w-4 text-[#e11d2a]" />
           <span className="text-sm font-semibold tracking-tight text-white/85">{t('title')}</span>
         </div>
         <button
@@ -111,7 +111,7 @@ export function ImageToPromptDialog({ open, onOpenChange }: Props) {
           onDragLeave={() => setDragOver(false)}
           onDrop={onDrop}
           onClick={() => inputRef.current?.click()}
-          className={`cursor-pointer rounded-lg border-2 border-dashed transition-colors ${dragOver ? 'border-[#f5409d] bg-[#f5409d]/5' : 'border-white/15 hover:border-white/30'} flex items-center justify-center min-h-[200px] overflow-hidden`}
+          className={`cursor-pointer rounded-lg border-2 border-dashed transition-colors ${dragOver ? 'border-[#e11d2a] bg-[#e11d2a]/5' : 'border-white/15 hover:border-white/30'} flex items-center justify-center min-h-[200px] overflow-hidden`}
         >
           {previewUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -136,7 +136,7 @@ export function ImageToPromptDialog({ open, onOpenChange }: Props) {
           <button
             onClick={analyze}
             disabled={!imageData || loading}
-            className="flex-1 h-9 rounded-lg bg-[#f5409d] text-black text-xs font-bold tracking-wide hover:bg-[#fa4da6] disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            className="flex-1 h-9 rounded-lg bg-[#e11d2a] text-black text-xs font-bold tracking-wide hover:bg-[#ff5964] disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
           >
             {loading ? (<><Loader2 className="h-3.5 w-3.5 animate-spin" /> {t('analyzing')}</>) : !user ? (<><Lock className="h-3.5 w-3.5" /> {t('loginToAnalyze')}</>) : t('analyze')}
           </button>
@@ -172,7 +172,7 @@ export function ImageToPromptDialog({ open, onOpenChange }: Props) {
                 <div className="flex justify-end mb-2">
                   <button
                     onClick={() => copy(result.compiledPrompt, 'Prompt')}
-                    className="flex items-center gap-1.5 h-7 px-2.5 rounded-md bg-[#f5409d]/15 text-[#f5409d] text-[10px] font-bold hover:bg-[#f5409d]/25 transition-colors"
+                    className="flex items-center gap-1.5 h-7 px-2.5 rounded-md bg-[#e11d2a]/15 text-[#e11d2a] text-[10px] font-bold hover:bg-[#e11d2a]/25 transition-colors"
                   >
                     <Copy className="h-3 w-3" /> {t('copyPrompt')}
                   </button>
@@ -186,7 +186,7 @@ export function ImageToPromptDialog({ open, onOpenChange }: Props) {
                 <div className="flex justify-end mb-2">
                   <button
                     onClick={() => copy(JSON.stringify(result.json, null, 2), 'JSON')}
-                    className="flex items-center gap-1.5 h-7 px-2.5 rounded-md bg-[#f5409d]/15 text-[#f5409d] text-[10px] font-bold hover:bg-[#f5409d]/25 transition-colors"
+                    className="flex items-center gap-1.5 h-7 px-2.5 rounded-md bg-[#e11d2a]/15 text-[#e11d2a] text-[10px] font-bold hover:bg-[#e11d2a]/25 transition-colors"
                   >
                     <Copy className="h-3 w-3" /> {t('copyJson')}
                   </button>

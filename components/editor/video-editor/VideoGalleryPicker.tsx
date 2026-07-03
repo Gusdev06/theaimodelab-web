@@ -84,7 +84,7 @@ export function VideoGalleryPicker({
                   <button
                     key={item.id}
                     onClick={() => onSelect(item)}
-                    className="relative aspect-video rounded-lg overflow-hidden ring-2 ring-transparent transition-all opacity-80 hover:opacity-100 hover:ring-[#f5409d]/50"
+                    className="relative aspect-video rounded-lg overflow-hidden ring-2 ring-transparent transition-all opacity-80 hover:opacity-100 hover:ring-[#e11d2a]/50"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={thumb} alt="" className="h-full w-full object-cover" loading="lazy" />
@@ -101,7 +101,7 @@ export function VideoGalleryPicker({
             <div ref={sentinelRef} className="h-2" />
             {isFetchingNextPage && (
               <div className="flex justify-center py-2">
-                <Loader2 className="h-3 w-3 animate-spin text-[#f5409d]/50" />
+                <Loader2 className="h-3 w-3 animate-spin text-[#e11d2a]/50" />
               </div>
             )}
           </>

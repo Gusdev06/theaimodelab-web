@@ -16,7 +16,7 @@ export function QuickActions() {
           href={href}
           className="group flex items-center gap-3.5 rounded-[14px] border border-app-hairline bg-app-card p-3.5 transition-all duration-200 ease-app hover:-translate-y-px hover:border-app-hairline-2 hover:bg-app-card-hover"
         >
-          <span className="flex size-[42px] shrink-0 items-center justify-center rounded-xl border border-app-hairline bg-app-bg transition-colors duration-200 ease-app group-hover:border-[rgba(245,64,157,0.45)] group-hover:bg-[rgba(245,64,157,0.06)]">
+          <span className="flex size-[42px] shrink-0 items-center justify-center rounded-xl border border-app-hairline bg-app-bg transition-colors duration-200 ease-app group-hover:border-[rgba(225,29,42,0.45)] group-hover:bg-[rgba(225,29,42,0.06)]">
             <Icon className="size-[21px] text-app-text-2 transition-colors duration-200 ease-app group-hover:text-app-lime" strokeWidth={1.8} />
           </span>
           <span className="min-w-0">

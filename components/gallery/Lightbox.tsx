@@ -105,7 +105,7 @@ export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite }: Li
               !loaded && 'hidden',
             )}
           >
-            <span className="flex size-16 items-center justify-center rounded-full border border-[rgba(245,64,157,0.3)] bg-[rgba(245,64,157,0.08)]">
+            <span className="flex size-16 items-center justify-center rounded-full border border-[rgba(225,29,42,0.3)] bg-[rgba(225,29,42,0.08)]">
               <AudioLines className="size-7 text-app-lime" strokeWidth={1.8} />
             </span>
             {src && (
@@ -175,7 +175,7 @@ export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite }: Li
               aria-label={t('gallery.download')}
               title={t('gallery.download')}
               onClick={() => downloadMedia(src, kind)}
-              className="flex size-9 shrink-0 items-center justify-center rounded-[10px] border border-app-hairline bg-app-surface text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
+              className="app-press flex size-9 shrink-0 items-center justify-center rounded-[10px] border border-app-hairline bg-app-surface text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
             >
               <Download className="size-4" strokeWidth={2} />
             </button>
@@ -187,7 +187,7 @@ export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite }: Li
               title={item.isFavorited ? t('gallery.unfavorite') : t('gallery.favorite')}
               onClick={() => onToggleFavorite(item)}
               className={cn(
-                'flex size-9 shrink-0 items-center justify-center rounded-[10px] border border-app-hairline bg-app-surface transition-colors duration-200 ease-app hover:bg-app-card-hover',
+                'app-press flex size-9 shrink-0 items-center justify-center rounded-[10px] border border-app-hairline bg-app-surface transition-colors duration-200 ease-app hover:bg-app-card-hover',
                 item.isFavorited ? 'text-app-lime' : 'text-app-text',
               )}
             >
@@ -209,7 +209,7 @@ export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite }: Li
         type="button"
         aria-label={t('palette.close')}
         onClick={onClose}
-        className="absolute right-5 top-5 flex size-10 items-center justify-center rounded-full border border-app-hairline-2 bg-app-card text-app-text-2 transition-colors duration-200 ease-app hover:text-app-text"
+        className="app-press absolute right-5 top-5 flex size-10 items-center justify-center rounded-full border border-app-hairline-2 bg-app-card text-app-text-2 transition-colors duration-200 ease-app hover:text-app-text"
       >
         <X className="size-5" strokeWidth={1.8} />
       </button>

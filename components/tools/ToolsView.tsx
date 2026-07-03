@@ -6,20 +6,14 @@ import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import {
   ArrowUpRight,
-  AudioLines,
   Eraser,
-  Flame,
   Image as ImageIcon,
   LayoutGrid,
-  Mic,
-  MicVocal,
   PersonStanding,
   Replace,
-  ScanFace,
   Search,
   Shirt,
   SquarePlay,
-  Volume2,
   Wand2,
   type LucideIcon,
 } from 'lucide-react';
@@ -59,23 +53,6 @@ const TOOL_SECTIONS: ToolSection[] = [
       { id: 'gerarVideos', icon: SquarePlay, href: '/video' },
       { id: 'copiarMovimentos', icon: PersonStanding, href: '/video?tool=motion-control' },
     ],
-  },
-  {
-    id: 'audio',
-    tools: [
-      { id: 'textoParaVoz', icon: Mic, href: '/voice' },
-      { id: 'clonarVoz', icon: MicVocal, href: '/voice?tool=clone' },
-      { id: 'musica', icon: AudioLines, soon: true },
-      { id: 'efeitosSonoros', icon: Volume2, soon: true },
-    ],
-  },
-  {
-    id: 'avatars',
-    tools: [{ id: 'avatares', icon: ScanFace, href: '/avatar' }],
-  },
-  {
-    id: 'commerce',
-    tools: [{ id: 'tiktokShop', icon: Flame, href: '/tiktok-shop' }],
   },
 ];
 
@@ -118,7 +95,7 @@ function ToolCard({ tool }: { tool: Tool }) {
 
   if (tool.soon || !tool.href) {
     return (
-      <button type="button" onClick={() => toast.info(t('soon'))} className="block h-full w-full text-left">
+      <button type="button" onClick={() => toast.info(t('soon'))} className="app-press block h-full w-full text-left">
         {card}
       </button>
     );

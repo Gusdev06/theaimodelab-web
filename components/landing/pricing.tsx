@@ -97,8 +97,8 @@ function PlanCard({
       className={cn(
         "group relative flex flex-col rounded-[20px] border transition-all duration-600",
         isPopular
-          ? "border-landing-accent/30 bg-[#1a2523]"
-          : "border-[#f3f0ed]/[0.05] bg-[#171e20] hover:border-[#f3f0ed]/[0.1]",
+          ? "border-landing-accent/30 bg-[#1c1518]"
+          : "border-[#f3f0ed]/[0.05] bg-[#16161a] hover:border-[#f3f0ed]/[0.1]",
       )}
       style={{
         opacity: isVisible ? 1 : 0,
@@ -113,14 +113,14 @@ function PlanCard({
             className="pointer-events-none absolute -inset-px rounded-[20px] opacity-60"
             style={{
               background:
-                "linear-gradient(180deg, rgba(245,64,157,0.12) 0%, rgba(245,64,157,0) 40%)",
+                "linear-gradient(180deg, rgba(225,29,42,0.12) 0%, rgba(225,29,42,0) 40%)",
             }}
           />
           <div
             className="pointer-events-none absolute -top-[1px] left-6 right-6 h-[1px]"
             style={{
               background:
-                "linear-gradient(90deg, transparent, rgba(245,64,157,0.5), transparent)",
+                "linear-gradient(90deg, transparent, rgba(225,29,42,0.5), transparent)",
             }}
           />
         </>
@@ -129,9 +129,9 @@ function PlanCard({
       {/* Popular badge */}
       {isPopular && (
         <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">
-          <div className="flex items-center gap-1.5 rounded-full bg-landing-accent px-2.5 py-1 shadow-[0_0_20px_rgba(245,64,157,0.3)]">
-            <Sparkles className="h-3 w-3 text-[#141a1c]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#141a1c]">
+          <div className="flex items-center gap-1.5 rounded-full bg-landing-accent px-2.5 py-1 shadow-[0_0_20px_rgba(225,29,42,0.3)]">
+            <Sparkles className="h-3 w-3 text-[#0a0a0b]" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#0a0a0b]">
               {t("mostPopular")}
             </span>
           </div>
@@ -270,20 +270,34 @@ function PlanCard({
 
         {/* CTA */}
         {isFree ? (
-          <a
-            href="/workspace"
-            className={cn(
-              "mt-7 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[13px] font-bold transition-all duration-300",
-              "bg-[#f3f0ed]/[0.06] text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/[0.1] hover:text-[#f3f0ed]",
-            )}
-          >
-            {t("startFree")}
-            <ArrowRight className="h-3.5 w-3.5" />
-          </a>
+          isLoggedIn ? (
+            <a
+              href="/home"
+              className={cn(
+                "mt-7 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[13px] font-bold transition-all duration-300 landing-ease",
+                "bg-[#f3f0ed]/[0.06] text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/[0.1] hover:text-[#f3f0ed]",
+              )}
+            >
+              {t("startFree")}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => openLoginModal({ mode: "register" })}
+              className={cn(
+                "mt-7 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[13px] font-bold transition-all duration-300 landing-ease",
+                "bg-[#f3f0ed]/[0.06] text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/[0.1] hover:text-[#f3f0ed]",
+              )}
+            >
+              {t("startFree")}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </button>
+          )
         ) : isCurrentPlan ? (
           <button
             disabled
-            className="mt-7 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-landing-accent/30 bg-landing-accent/10 py-3.5 text-[13px] font-bold text-landing-accent/80"
+            className="mt-7 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border border-landing-accent/30 bg-landing-accent/10 py-3.5 text-[13px] font-bold text-landing-accent/80"
           >
             <Check className="h-3.5 w-3.5" />
             {t("currentPlan")}
@@ -291,7 +305,7 @@ function PlanCard({
         ) : isLowerPlan ? (
           <button
             disabled
-            className="mt-7 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-[#f3f0ed]/[0.05] py-3.5 text-[13px] font-bold text-[#f3f0ed]/25"
+            className="mt-7 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border border-[#f3f0ed]/[0.05] py-3.5 text-[13px] font-bold text-[#f3f0ed]/25"
           >
             {t("downgradeBlocked")}
           </button>
@@ -299,10 +313,10 @@ function PlanCard({
           <a
             href={`/checkout?plan=${plan.slug}`}
             className={cn(
-              "mt-7 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[13px] font-bold transition-all duration-300",
+              "mt-7 flex w-full items-center justify-center gap-2 py-3.5 text-[13px] font-bold",
               isPopular
-                ? "bg-landing-accent text-[#141a1c] shadow-[0_0_0_1px_rgba(245,64,157,0.3)] hover:shadow-[0_0_28px_rgba(245,64,157,0.25)] hover:brightness-110"
-                : "border border-[#f3f0ed]/[0.08] text-[#f3f0ed]/70 hover:border-[#f3f0ed]/[0.15] hover:bg-[#f3f0ed]/[0.03] hover:text-[#f3f0ed]",
+                ? "landing-btn bg-landing-accent text-[#0a0a0b] shadow-[0_0_0_1px_rgba(225,29,42,0.3)] hover:shadow-[0_0_28px_rgba(225,29,42,0.25)]"
+                : "rounded-full border border-[#f3f0ed]/[0.08] text-[#f3f0ed]/70 transition-all duration-300 landing-ease hover:border-[#f3f0ed]/[0.15] hover:bg-[#f3f0ed]/[0.03] hover:text-[#f3f0ed]",
             )}
           >
             {t("subscribe", { plan: plan.name })}
@@ -312,10 +326,10 @@ function PlanCard({
           <button
             onClick={() => openLoginModal({ plan: plan.slug })}
             className={cn(
-              "mt-7 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-[13px] font-bold transition-all duration-300",
+              "mt-7 flex w-full items-center justify-center gap-2 py-3.5 text-[13px] font-bold",
               isPopular
-                ? "bg-landing-accent text-[#141a1c] shadow-[0_0_0_1px_rgba(245,64,157,0.3)] hover:shadow-[0_0_28px_rgba(245,64,157,0.25)] hover:brightness-110"
-                : "border border-[#f3f0ed]/[0.08] text-[#f3f0ed]/70 hover:border-[#f3f0ed]/[0.15] hover:bg-[#f3f0ed]/[0.03] hover:text-[#f3f0ed]",
+                ? "landing-btn bg-landing-accent text-[#0a0a0b] shadow-[0_0_0_1px_rgba(225,29,42,0.3)] hover:shadow-[0_0_28px_rgba(225,29,42,0.25)]"
+                : "rounded-full border border-[#f3f0ed]/[0.08] text-[#f3f0ed]/70 transition-all duration-300 landing-ease hover:border-[#f3f0ed]/[0.15] hover:bg-[#f3f0ed]/[0.03] hover:text-[#f3f0ed]",
             )}
           >
             {t("subscribe", { plan: plan.name })}
@@ -378,7 +392,7 @@ export function Pricing() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 60% 40% at 50% 30%, rgba(245,64,157,0.03) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 40% at 50% 30%, rgba(225,29,42,0.03) 0%, transparent 70%)",
         }}
       />
 
@@ -386,7 +400,7 @@ export function Pricing() {
         {/* Header */}
         <div
           ref={ref}
-          className="mx-auto max-w-2xl text-center transition-all duration-700"
+          className="landing-reveal mx-auto max-w-2xl text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(24px)",
@@ -473,7 +487,7 @@ export function Pricing() {
 
         {/* Guarantee */}
         <div className="mx-auto mt-12 max-w-2xl sm:mt-16 lg:mt-20">
-          <div className="rounded-[20px] border border-[#f3f0ed]/[0.05] bg-[#171e20] p-5 text-center sm:p-8">
+          <div className="rounded-[20px] border border-[#f3f0ed]/[0.05] bg-[#16161a] p-5 text-center sm:p-8">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl border border-landing-accent/15 bg-landing-accent/[0.06]">
               <Shield className="h-5 w-5 text-landing-accent" />
             </div>

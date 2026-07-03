@@ -78,16 +78,16 @@ export default async function RootLayout({
                     gap: '8px',
                   },
                   actionButtonStyle: {
-                    background: '#f5409d',
+                    background: '#e11d2a',
                     color: '#1c1917',
                     borderRadius: '8px',
                     fontWeight: 600,
                   },
                 }}
                 icons={{
-                  success: <div style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(245,64,157,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#f5409d' }} /></div>,
+                  success: <div style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(225,29,42,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#e11d2a' }} /></div>,
                   error: <div style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(248,113,113,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#f87171' }} /></div>,
-                  info: <div style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(245,64,157,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#f5409d' }} /></div>,
+                  info: <div style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(225,29,42,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ width: 8, height: 8, borderRadius: '50%', background: '#e11d2a' }} /></div>,
                 }}
               />
             </TooltipProvider>

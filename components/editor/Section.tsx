@@ -20,7 +20,7 @@ export function Section({
     <div
       className="border-b border-[#f3f0ed]/[0.05] transition-all duration-200"
       style={{
-        borderLeft: `2px solid ${open ? 'rgba(245,64,157,0.22)' : 'transparent'}`,
+        borderLeft: `2px solid ${open ? 'rgba(225,29,42,0.22)' : 'transparent'}`,
       }}
     >
       <button
@@ -28,8 +28,8 @@ export function Section({
         className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-[#f3f0ed]/[0.02]"
       >
         {/* Icon badge */}
-        <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10">
-          <Icon className="h-3.5 w-3.5 text-[#f5409d]" />
+        <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10">
+          <Icon className="h-3.5 w-3.5 text-[#e11d2a]" />
         </div>
 
         <span className="flex-1 text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/55">
@@ -37,7 +37,7 @@ export function Section({
         </span>
 
         {/* Done indicator */}
-        {done && <div className="h-1.5 w-1.5 rounded-full bg-[#f5409d] shadow-[0_0_6px_rgba(245,64,157,0.6)]" />}
+        {done && <div className="h-1.5 w-1.5 rounded-full bg-[#e11d2a] shadow-[0_0_6px_rgba(225,29,42,0.6)]" />}
 
         <ChevronDown
           className={`h-3.5 w-3.5 text-[#f3f0ed]/20 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}

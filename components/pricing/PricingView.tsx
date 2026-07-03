@@ -22,7 +22,7 @@ function TrustBar({ items }: { items: { icon: LucideIcon; label: string }[] }) {
     <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-3 rounded-[14px] border border-app-hairline bg-app-surface/50 px-6 py-4">
       {items.map(({ icon: Icon, label }) => (
         <span key={label} className="flex items-center gap-2.5 text-[13px] text-app-text-2">
-          <span className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[rgba(245,64,157,0.2)] bg-[rgba(245,64,157,0.07)]">
+          <span className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[rgba(225,29,42,0.2)] bg-[rgba(225,29,42,0.07)]">
             <Icon className="size-3.5 text-app-lime" strokeWidth={2} />
           </span>
           {label}
@@ -150,16 +150,16 @@ export function PricingView() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-5 px-6 pb-16 pt-8 lg:px-11">
         {/* cabeçalho */}
         <div className="flex flex-col items-start gap-2.5">
-          <div className="flex items-center gap-1.5 rounded-full border border-[rgba(245,64,157,0.25)] bg-[rgba(245,64,157,0.08)] px-3 py-1">
+          <div className="flex items-center gap-1.5 rounded-full border border-[rgba(225,29,42,0.25)] bg-[rgba(225,29,42,0.08)] px-3 py-1">
             <Flame className="size-3 text-app-lime" strokeWidth={2} />
             <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-app-lime">
               {t('plansModal.limitedOffer')}
             </span>
           </div>
-          <h2 className="text-[26px] font-bold tracking-[-0.3px] text-app-text">
+          <h2 className="app-reveal text-[26px] font-bold tracking-[-0.3px] text-app-text">
             {activeTab === 'plans' ? t('plansModal.titlePlans') : t('plansModal.titleCredits')}
           </h2>
-          <p className="max-w-xl text-[14px] leading-relaxed text-app-text-2">
+          <p className="app-reveal max-w-xl text-[14px] leading-relaxed text-app-text-2" style={{ animationDelay: '0.08s' }}>
             {activeTab === 'plans'
               ? t('plansModal.plansSubtitle', { count: t('plansModal.creatorsCount') })
               : t('plansModal.creditsSubtitle')}

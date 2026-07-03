@@ -32,12 +32,12 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#1a2123] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#111113] px-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <Image
-            src="/full_logo.svg"
+            src="/logo-red.jpg"
             alt="The AI Model Lab"
             width={140}
             height={140}
@@ -55,8 +55,8 @@ export default function ForgotPasswordPage() {
               {tCommon('backToLogin')}
             </button>
 
-            <h1 className="mb-2 text-lg font-bold text-white">{t('title')}</h1>
-            <p className="mb-6 text-xs text-white/40">
+            <h1 className="app-reveal mb-2 text-lg font-bold text-white">{t('title')}</h1>
+            <p className="app-reveal mb-6 text-xs text-white/40" style={{ animationDelay: '0.08s' }}>
               {t('description')}
             </p>
 
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={tCommon('placeholders.email')}
-                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] pl-10 pr-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#f5409d]/40 focus:bg-white/[0.06]"
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] pl-10 pr-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors focus:border-[#e11d2a]/40 focus:bg-white/[0.06]"
                   />
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-[#f5409d] font-bold text-[#1a2123] text-sm transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60"
+                className="app-btn mt-1 flex h-11 items-center justify-center gap-2 bg-[#e11d2a] font-bold text-[#111113] text-sm disabled:opacity-60"
               >
                 {loading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -99,8 +99,8 @@ export default function ForgotPasswordPage() {
           </>
         ) : (
           <div className="flex flex-col items-center gap-4 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f5409d]/15">
-              <CheckCircle className="h-8 w-8 text-[#f5409d]" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e11d2a]/15">
+              <CheckCircle className="h-8 w-8 text-[#e11d2a]" />
             </div>
             <h1 className="text-xl font-bold text-white">{t('sentTitle')}</h1>
             <p className="text-sm text-white/50">
@@ -112,7 +112,7 @@ export default function ForgotPasswordPage() {
             <p className="text-xs text-white/30">{t('checkSpam')}</p>
             <button
               onClick={() => router.push('/login')}
-              className="mt-2 flex items-center gap-1.5 text-xs text-[#f5409d]/60 hover:text-[#f5409d]/90 transition-colors"
+              className="mt-2 flex items-center gap-1.5 text-xs text-[#e11d2a]/60 hover:text-[#e11d2a]/90 transition-colors"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               {tCommon('backToLogin')}

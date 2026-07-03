@@ -76,7 +76,7 @@ function PromptCard({ item, isCopied, isAdmin, onCopy, onDelete }: {
   onDelete: () => void;
 }) {
   return (
-    <div className="group relative rounded-xl overflow-hidden ring-1 ring-white/[0.06] hover:ring-[#f5409d]/25 transition-all duration-300">
+    <div className="group relative rounded-xl overflow-hidden ring-1 ring-white/[0.06] hover:ring-[#e11d2a]/25 transition-all duration-300">
       <div className="relative aspect-[4/5] overflow-hidden">
         {item.image ? (
           <img
@@ -96,7 +96,7 @@ function PromptCard({ item, isCopied, isAdmin, onCopy, onDelete }: {
 
         {/* Type badge */}
         <div className="absolute top-2 left-2">
-          <span className="inline-block text-[8px] font-bold uppercase tracking-widest text-[#f5409d] bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-full ring-1 ring-[#f5409d]/20">
+          <span className="inline-block text-[8px] font-bold uppercase tracking-widest text-[#e11d2a] bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-full ring-1 ring-[#e11d2a]/20">
             {item.type}
           </span>
         </div>
@@ -115,7 +115,7 @@ function PromptCard({ item, isCopied, isAdmin, onCopy, onDelete }: {
             onClick={(e) => { e.stopPropagation(); onCopy(); }}
             className="flex h-6 w-6 items-center justify-center rounded-lg bg-black/40 backdrop-blur-md text-white/50 ring-1 ring-white/[0.08] hover:bg-black/60 hover:text-white/80 active:scale-[0.95] transition-all"
           >
-            {isCopied ? <Check className="h-3 w-3 text-[#f5409d]" /> : <Copy className="h-3 w-3" />}
+            {isCopied ? <Check className="h-3 w-3 text-[#e11d2a]" /> : <Copy className="h-3 w-3" />}
           </button>
         </div>
 
@@ -230,18 +230,18 @@ function AddPromptModal({ categoryId, accessToken, onClose, onAdded }: {
           placeholder={t('titlePlaceholder')}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full rounded-lg bg-white/[0.04] px-3 py-2 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#f5409d]/30"
+          className="w-full rounded-lg bg-white/[0.04] px-3 py-2 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#e11d2a]/30"
         />
 
         <Select value={type} onValueChange={setType}>
-          <SelectTrigger className="h-9 w-full rounded-xl border border-white/6 bg-white/4 px-3 text-xs text-white/80 outline-none transition-all focus:border-[#f5409d]/40 focus:ring-0 data-placeholder:text-white/30 [&>svg]:text-white/30">
+          <SelectTrigger className="h-9 w-full rounded-xl border border-white/6 bg-white/4 px-3 text-xs text-white/80 outline-none transition-all focus:border-[#e11d2a]/40 focus:ring-0 data-placeholder:text-white/30 [&>svg]:text-white/30">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="z-70 rounded-xl border border-white/8 bg-[#1a2225] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
-            <SelectItem value="json" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-white/70 transition-all focus:bg-white/6 focus:text-white data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]">
+            <SelectItem value="json" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-white/70 transition-all focus:bg-white/6 focus:text-white data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]">
               JSON
             </SelectItem>
-            <SelectItem value="text" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-white/70 transition-all focus:bg-white/6 focus:text-white data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]">
+            <SelectItem value="text" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-white/70 transition-all focus:bg-white/6 focus:text-white data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]">
               Text
             </SelectItem>
           </SelectContent>
@@ -252,7 +252,7 @@ function AddPromptModal({ categoryId, accessToken, onClose, onAdded }: {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           rows={6}
-          className="w-full rounded-lg bg-white/[0.04] px-3 py-2 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#f5409d]/30 resize-none"
+          className="w-full rounded-lg bg-white/[0.04] px-3 py-2 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#e11d2a]/30 resize-none"
         />
 
         <input
@@ -260,13 +260,13 @@ function AddPromptModal({ categoryId, accessToken, onClose, onAdded }: {
           placeholder={t('imageUrlPlaceholder')}
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
-          className="w-full rounded-lg bg-white/[0.04] px-3 py-2 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#f5409d]/30"
+          className="w-full rounded-lg bg-white/[0.04] px-3 py-2 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#e11d2a]/30"
         />
 
         <button
           type="submit"
           disabled={saving}
-          className="mt-1 w-full rounded-lg bg-[#f5409d]/20 py-2.5 text-xs font-bold text-[#f5409d] ring-1 ring-[#f5409d]/25 hover:bg-[#f5409d]/30 disabled:opacity-50 transition-all"
+          className="mt-1 w-full rounded-lg bg-[#e11d2a]/20 py-2.5 text-xs font-bold text-[#e11d2a] ring-1 ring-[#e11d2a]/25 hover:bg-[#e11d2a]/30 disabled:opacity-50 transition-all"
         >
           {saving ? t('saving') : t('submit')}
         </button>
@@ -457,14 +457,14 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
   return (
     <>
       <aside
-        className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col ${studioMode ? 'bg-[#0d1011]' : 'bg-[#171f21]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0 border-r border-white/[0.06]`}
+        className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col ${studioMode ? 'bg-[#050506]' : 'bg-[#171f21]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0 border-r border-white/[0.06]`}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2.5">
             <span className="text-sm font-semibold tracking-tight text-white/85">{t('title')}</span>
             {!loading && (
-              <span className="text-[10px] font-bold text-[#f5409d]/80 bg-[#f5409d]/[0.08] px-2 py-0.5 rounded-full tabular-nums">
+              <span className="text-[10px] font-bold text-[#e11d2a]/80 bg-[#e11d2a]/[0.08] px-2 py-0.5 rounded-full tabular-nums">
                 {visiblePrompts.length}
               </span>
             )}
@@ -473,7 +473,7 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
             {isAdmin && activeCategoryId && (
               <button
                 onClick={() => setShowAddModal(true)}
-                className="flex h-7 items-center gap-1 rounded-lg bg-[#f5409d]/15 px-2 text-[10px] font-bold text-[#f5409d] ring-1 ring-[#f5409d]/25 hover:bg-[#f5409d]/25 transition-colors"
+                className="flex h-7 items-center gap-1 rounded-lg bg-[#e11d2a]/15 px-2 text-[10px] font-bold text-[#e11d2a] ring-1 ring-[#e11d2a]/25 hover:bg-[#e11d2a]/25 transition-colors"
               >
                 <Plus className="h-3 w-3" />
                 {t('add')}
@@ -497,7 +497,7 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
               placeholder={t('searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg bg-white/[0.04] py-2 pl-8 pr-8 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#f5409d]/30 transition-shadow"
+              className="w-full rounded-lg bg-white/[0.04] py-2 pl-8 pr-8 text-xs text-white/80 placeholder:text-white/20 ring-1 ring-white/[0.06] focus:outline-none focus:ring-[#e11d2a]/30 transition-shadow"
             />
             {searchQuery && (
               <button
@@ -519,7 +519,7 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
                 className={`shrink-0 flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold transition-all ${activeSection === section.id
-                  ? 'bg-[#f5409d]/15 text-[#f5409d] ring-[#f5409d]/25'
+                  ? 'bg-[#e11d2a]/15 text-[#e11d2a] ring-[#e11d2a]/25'
                   : 'text-white/30 hover:text-white/55 hover:bg-white/[0.04]'
                   }`}
               >
@@ -551,7 +551,7 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
               <p className="text-xs text-white/30">{t('loadError')}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="text-[10px] text-[#f5409d]/70 hover:text-[#f5409d] transition-colors"
+                className="text-[10px] text-[#e11d2a]/70 hover:text-[#e11d2a] transition-colors"
               >
                 {t('tryAgain')}
               </button>
@@ -582,7 +582,7 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
               <p className="text-xs text-white/25">{t('noneFound')}</p>
               <button
                 onClick={() => setSearchQuery('')}
-                className="text-[10px] text-[#f5409d]/60 hover:text-[#f5409d] transition-colors"
+                className="text-[10px] text-[#e11d2a]/60 hover:text-[#e11d2a] transition-colors"
               >
                 {t('clearSearch')}
               </button>
@@ -594,8 +594,8 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
         {/* Auth overlay */}
         {!user && !loading && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 px-6 text-center bg-[#171f21]/70 backdrop-blur-[2px]">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f5409d]/10 ring-1 ring-[#f5409d]/20">
-              <Lock className="h-6 w-6 text-[#f5409d]" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e11d2a]/10 ring-1 ring-[#e11d2a]/20">
+              <Lock className="h-6 w-6 text-[#e11d2a]" />
             </div>
             <div className="space-y-1">
               <p className="text-sm font-bold text-white/80">{t('loginTitle')}</p>
@@ -605,7 +605,7 @@ export function PromptsDialog({ open, onOpenChange }: PromptsDialogProps) {
             </div>
             <button
               onClick={() => openLoginModal()}
-              className="rounded-xl bg-[#f5409d] px-5 py-2 text-xs font-black text-black hover:bg-[#fa4da6] transition-colors"
+              className="rounded-xl bg-[#e11d2a] px-5 py-2 text-xs font-black text-black hover:bg-[#ff5964] transition-colors"
             >
               {t('signIn')}
             </button>

@@ -442,7 +442,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
     const map: Record<string, { label: string; cls: string }> = {
       DRAFT: { label: t('status.draft'), cls: 'bg-[#f3f0ed]/10 text-[#f3f0ed]/50' },
       PROCESSING: { label: t('status.processing'), cls: 'bg-yellow-500/15 text-yellow-400' },
-      COMPLETED: { label: t('status.completed'), cls: 'bg-[#f5409d]/15 text-[#f5409d]' },
+      COMPLETED: { label: t('status.completed'), cls: 'bg-[#e11d2a]/15 text-[#e11d2a]' },
       FAILED: { label: t('status.failed'), cls: 'bg-red-500/15 text-red-400' },
     };
     const s = map[status] ?? map.DRAFT;
@@ -456,23 +456,23 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
   if (!open) return null;
 
   return (
-    <aside className={`aside-in-left fixed inset-0 z-50 flex flex-col border-r border-[#f3f0ed]/[0.07] ${studioMode ? 'bg-[#0d1011]' : 'bg-[#1a2123]'} text-[#f3f0ed] overflow-hidden relative sm:static sm:h-full sm:w-xl sm:shrink-0`}>
+    <aside className={`aside-in-left fixed inset-0 z-50 flex flex-col border-r border-[#f3f0ed]/[0.07] ${studioMode ? 'bg-[#050506]' : 'bg-[#111113]'} text-[#f3f0ed] overflow-hidden relative sm:static sm:h-full sm:w-xl sm:shrink-0`}>
       {/* Under construction overlay */}
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 backdrop-blur-sm bg-[#1a2123]/80 pointer-events-auto">
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 backdrop-blur-sm bg-[#111113]/80 pointer-events-auto">
         <div className="flex flex-col items-center gap-3 px-6 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f5409d]/10 border border-[#f5409d]/20">
-            <Construction className="h-6 w-6 text-[#f5409d]" />
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e11d2a]/10 border border-[#e11d2a]/20">
+            <Construction className="h-6 w-6 text-[#e11d2a]" />
           </div>
           <h3 className="text-base font-bold text-[#f3f0ed]/90">{t('construction.title')}</h3>
           <p className="text-sm text-[#f3f0ed]/40 leading-relaxed max-w-[220px]">
             {t('construction.description')}
           </p>
-          <div className="mt-1 flex items-center gap-2 rounded-full border border-[#f5409d]/30 bg-[#f5409d]/5 px-3 py-1">
-            <span className="text-[11px] font-medium text-[#f5409d]/70">{t('construction.badge')}</span>
+          <div className="mt-1 flex items-center gap-2 rounded-full border border-[#e11d2a]/30 bg-[#e11d2a]/5 px-3 py-1">
+            <span className="text-[11px] font-medium text-[#e11d2a]/70">{t('construction.badge')}</span>
             <div className="flex items-center gap-0.5">
-              <span className="h-1 w-1 rounded-full bg-[#f5409d]/70 animate-bounce [animation-delay:0ms]" />
-              <span className="h-1 w-1 rounded-full bg-[#f5409d]/70 animate-bounce [animation-delay:150ms]" />
-              <span className="h-1 w-1 rounded-full bg-[#f5409d]/70 animate-bounce [animation-delay:300ms]" />
+              <span className="h-1 w-1 rounded-full bg-[#e11d2a]/70 animate-bounce [animation-delay:0ms]" />
+              <span className="h-1 w-1 rounded-full bg-[#e11d2a]/70 animate-bounce [animation-delay:150ms]" />
+              <span className="h-1 w-1 rounded-full bg-[#e11d2a]/70 animate-bounce [animation-delay:300ms]" />
             </div>
           </div>
         </div>
@@ -489,15 +489,15 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
           {activeProjectId ? (
             <button
               onClick={() => { setActiveProjectId(null); setSelectedClipId(null); setRenderStatus('idle'); setIsPlaying(false); setActiveClipIndex(0); setGlobalTimeMs(0); }}
-              className="flex items-center gap-1.5 text-sm font-medium text-[#f5409d] hover:text-[#f5409d]/80 transition-colors"
+              className="flex items-center gap-1.5 text-sm font-medium text-[#e11d2a] hover:text-[#e11d2a]/80 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               {t('header.projectsBack')}
             </button>
           ) : (
             <>
-              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#f5409d]/10">
-                <Film className="h-3.5 w-3.5 text-[#f5409d]" />
+              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#e11d2a]/10">
+                <Film className="h-3.5 w-3.5 text-[#e11d2a]" />
               </div>
               <div>
                 <h2 className="text-sm font-bold text-[#f3f0ed]/60">{t('header.title')}</h2>
@@ -531,14 +531,14 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                   }
                 }}
                 placeholder={t('projects.placeholder')}
-                className="flex-1 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 py-2.5 text-sm text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:border-[#f5409d]/40"
+                className="flex-1 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 py-2.5 text-sm text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:border-[#e11d2a]/40"
               />
               <button
                 onClick={() => {
                   if (newProjectName.trim()) createProjectMutation.mutate(newProjectName.trim());
                 }}
                 disabled={!newProjectName.trim() || createProjectMutation.isPending}
-                className="flex items-center gap-1.5 rounded-xl bg-[#f5409d] px-4 py-2.5 text-xs font-bold text-[#1a2123] transition-all hover:bg-[#f5409d]/90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-1.5 rounded-xl bg-[#e11d2a] px-4 py-2.5 text-xs font-bold text-[#111113] transition-all hover:bg-[#e11d2a]/90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {createProjectMutation.isPending ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -567,7 +567,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                   <div
                     key={p.id}
                     onClick={() => setActiveProjectId(p.id)}
-                    className="group relative flex flex-col gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/10 p-3 cursor-pointer transition-all hover:border-[#f5409d]/30 hover:bg-[#4b1e3a]/20"
+                    className="group relative flex flex-col gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/10 p-3 cursor-pointer transition-all hover:border-[#e11d2a]/30 hover:bg-[#3a0f16]/20"
                   >
                     <div className="aspect-video rounded-lg bg-black/30 flex items-center justify-center overflow-hidden">
                       {p.outputThumbnailUrl ? (
@@ -598,7 +598,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                           }}
                           onClick={(e) => e.stopPropagation()}
                           autoFocus
-                          className="text-xs font-semibold text-[#f3f0ed]/90 bg-transparent border-b border-[#f5409d]/40 outline-none"
+                          className="text-xs font-semibold text-[#f3f0ed]/90 bg-transparent border-b border-[#e11d2a]/40 outline-none"
                         />
                       ) : (
                         <span className="text-xs font-semibold text-[#f3f0ed]/90 truncate">{p.name}</span>
@@ -617,7 +617,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                           setEditingProjectId(p.id);
                           setEditingName(p.name);
                         }}
-                        className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1a2123]/80 text-[#f3f0ed]/50 hover:text-[#f5409d] transition-colors"
+                        className="flex h-6 w-6 items-center justify-center rounded-md bg-[#111113]/80 text-[#f3f0ed]/50 hover:text-[#e11d2a] transition-colors"
                       >
                         <Pencil className="h-3 w-3" />
                       </button>
@@ -626,7 +626,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                           e.stopPropagation();
                           deleteProjectMutation.mutate(p.id);
                         }}
-                        className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1a2123]/80 text-[#f3f0ed]/50 hover:text-red-400 transition-colors"
+                        className="flex h-6 w-6 items-center justify-center rounded-md bg-[#111113]/80 text-[#f3f0ed]/50 hover:text-red-400 transition-colors"
                       >
                         <Trash2 className="h-3 w-3" />
                       </button>
@@ -673,7 +673,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                     </button>
                     <button
                       onClick={togglePlay}
-                      className="flex h-7 w-7 items-center justify-center rounded-full bg-[#f5409d] text-[#1a2123] hover:bg-[#f5409d]/90 transition-colors"
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e11d2a] text-[#111113] hover:bg-[#e11d2a]/90 transition-colors"
                     >
                       {isPlaying ? (
                         <Pause className="h-3.5 w-3.5" />
@@ -700,7 +700,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                       }}
                     >
                       <div
-                        className="absolute top-0 left-0 h-full rounded-full bg-[#f5409d]"
+                        className="absolute top-0 left-0 h-full rounded-full bg-[#e11d2a]"
                         style={{ width: totalMs > 0 ? `${(globalTimeMs / totalMs) * 100}%` : '0%' }}
                       />
                     </div>
@@ -748,9 +748,9 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                         setSelectedClipId(range.clip.id === selectedClipId ? null : range.clip.id);
                       }}
                       className={`group relative h-full overflow-hidden cursor-pointer transition-all ${isSelected
-                        ? 'ring-2 ring-[#f5409d] ring-inset z-[5]'
+                        ? 'ring-2 ring-[#e11d2a] ring-inset z-[5]'
                         : isActive
-                          ? 'ring-1 ring-[#f5409d]/40 ring-inset'
+                          ? 'ring-1 ring-[#e11d2a]/40 ring-inset'
                           : ''
                         }`}
                       style={{
@@ -833,7 +833,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                     e.stopPropagation();
                     setShowGalleryPicker(true);
                   }}
-                  className="flex-shrink-0 w-10 h-full flex flex-col items-center justify-center gap-0.5 bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/25 transition-all hover:bg-[#f3f0ed]/[0.07] hover:text-[#f5409d]/60 border-l border-[#f3f0ed]/[0.07]"
+                  className="flex-shrink-0 w-10 h-full flex flex-col items-center justify-center gap-0.5 bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/25 transition-all hover:bg-[#f3f0ed]/[0.07] hover:text-[#e11d2a]/60 border-l border-[#f3f0ed]/[0.07]"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
@@ -872,7 +872,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
             )}
 
             {/* Footer */}
-            <div className="shrink-0 flex items-center justify-between rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/10 px-4 py-3">
+            <div className="shrink-0 flex items-center justify-between rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/10 px-4 py-3">
               <div className="flex items-center gap-2">
                 <Clock className="h-3.5 w-3.5 text-[#f3f0ed]/30" />
                 <span className="text-xs text-[#f3f0ed]/50">
@@ -903,7 +903,7 @@ export function VideoEditorDialog({ open, onOpenChange }: VideoEditorDialogProps
                 <button
                   onClick={() => renderMutation.mutate()}
                   disabled={renderStatus === 'rendering' || clips.length === 0}
-                  className="flex items-center gap-1.5 rounded-lg bg-[#f5409d] px-4 py-2 text-xs font-bold text-[#1a2123] transition-all hover:bg-[#f5409d]/90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-1.5 rounded-lg bg-[#e11d2a] px-4 py-2 text-xs font-bold text-[#111113] transition-all hover:bg-[#e11d2a]/90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {renderStatus === 'rendering' ? (
                     <>
@@ -997,7 +997,7 @@ function ClipFrames({ sourceUrl }: { sourceUrl: string }) {
 
   if (failed || frames.length === 0) {
     return (
-      <div className="absolute inset-0 bg-gradient-to-r from-[#4b1e3a]/50 via-[#4b1e3a]/30 to-[#4b1e3a]/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#3a0f16]/50 via-[#3a0f16]/30 to-[#3a0f16]/50" />
     );
   }
 
@@ -1098,7 +1098,7 @@ function TrimHandle({
         style={previewPct != null ? { left: side === 'left' ? `calc(${pct}% - 12px)` : undefined, right: side === 'right' ? `calc(${100 - pct}% - 12px)` : undefined } : undefined}
         onPointerDown={handlePointerDown}
       >
-        <div className={`w-1.5 h-10 rounded-full bg-[#f5409d] shadow-[0_0_8px_rgba(245,64,157,0.6)] transition-all ${dragging ? 'h-full w-2 bg-[#f5409d]' : 'group-hover:h-12 group-hover:w-2'}`} />
+        <div className={`w-1.5 h-10 rounded-full bg-[#e11d2a] shadow-[0_0_8px_rgba(225,29,42,0.6)] transition-all ${dragging ? 'h-full w-2 bg-[#e11d2a]' : 'group-hover:h-12 group-hover:w-2'}`} />
       </div>
     </>
   );
@@ -1184,7 +1184,7 @@ function VideoGalleryPicker({
                   <button
                     key={item.id}
                     onClick={() => onSelect(item)}
-                    className="relative aspect-video rounded-lg overflow-hidden ring-2 ring-transparent transition-all opacity-80 hover:opacity-100 hover:ring-[#f5409d]/50"
+                    className="relative aspect-video rounded-lg overflow-hidden ring-2 ring-transparent transition-all opacity-80 hover:opacity-100 hover:ring-[#e11d2a]/50"
                   >
                     {item.durationSeconds ? (
                       <video
@@ -1210,7 +1210,7 @@ function VideoGalleryPicker({
             <div ref={sentinelRef} className="h-2" />
             {isFetchingNextPage && (
               <div className="flex justify-center py-2">
-                <Loader2 className="h-3 w-3 animate-spin text-[#f5409d]/50" />
+                <Loader2 className="h-3 w-3 animate-spin text-[#e11d2a]/50" />
               </div>
             )}
           </>

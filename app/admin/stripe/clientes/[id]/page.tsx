@@ -23,7 +23,7 @@ export default function ClienteDetailPage() {
   if (isLoading || !data) {
     return (
       <div className="flex h-[40vh] items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -34,7 +34,7 @@ export default function ClienteDetailPage() {
     <div className="flex flex-col gap-6">
       <button
         onClick={() => router.back()}
-        className="flex w-fit items-center gap-1.5 text-[13px] text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80"
+        className="flex w-fit items-center gap-1.5 text-[13px] text-[#f3f0ed]/50 transition-colors app-ease app-press hover:text-[#f3f0ed]/80"
       >
         <ArrowLeft className="h-3.5 w-3.5" /> voltar
       </button>

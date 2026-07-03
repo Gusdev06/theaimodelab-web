@@ -185,7 +185,7 @@ function AvatarCard({
             type="button"
             onClick={() => setConfirming(true)}
             title={t('delete')}
-            className="absolute right-2 top-2 z-10 flex size-7 items-center justify-center rounded-full bg-black/55 text-white/70 backdrop-blur-md transition-all hover:bg-red-500/45 hover:text-red-200 sm:opacity-0 group-hover:opacity-100"
+            className="app-press absolute right-2 top-2 z-10 flex size-7 items-center justify-center rounded-full bg-black/55 text-white/70 backdrop-blur-md transition-all hover:bg-red-500/45 hover:text-red-200 sm:opacity-0 group-hover:opacity-100"
           >
             <Trash2 className="size-3.5" />
           </button>
@@ -462,7 +462,7 @@ export function AvatarView() {
         )}
       >
         <div className="flex shrink-0 items-center justify-between gap-3 border-b border-app-hairline px-6 py-4">
-          <h2 className="text-[16px] font-bold text-app-text">{t('sectionTitle')}</h2>
+          <h2 className="app-reveal text-[16px] font-bold text-app-text">{t('sectionTitle')}</h2>
           {quota && quota.enabled && (
             <span className="rounded-full border border-app-hairline bg-app-surface px-3 py-1 text-[12px] font-semibold text-app-text-2">
               {quota.used} / {quota.limit}

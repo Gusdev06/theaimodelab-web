@@ -66,7 +66,7 @@ export function PromptSourcePanel({ nodeId, onClose, onDuplicate }: PromptSource
             onChange={(e) => setText(e.target.value)}
             placeholder="Escreva um prompt para enviar a outros painéis..."
             rows={5}
-            className="min-h-[100px] w-full resize-none rounded-xl bg-[#0d1011] px-3 py-2.5 text-[12px] text-[#f3f0ed]/85 placeholder-[#f3f0ed]/30 outline-none"
+            className="min-h-[100px] w-full resize-none rounded-xl bg-[#050506] px-3 py-2.5 text-[12px] text-[#f3f0ed]/85 placeholder-[#f3f0ed]/30 outline-none"
           />
         </div>
       </div>

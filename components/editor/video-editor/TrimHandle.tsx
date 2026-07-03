@@ -96,7 +96,7 @@ export function TrimHandle({
           className="absolute -top-7 z-30 pointer-events-none transform -translate-x-1/2"
           style={{ left: `${pct}%` }}
         >
-          <div className="rounded-md bg-[#f5409d] px-1.5 py-0.5 text-[9px] font-bold text-[#1a2123] whitespace-nowrap shadow-lg">
+          <div className="rounded-md bg-[#e11d2a] px-1.5 py-0.5 text-[9px] font-bold text-[#111113] whitespace-nowrap shadow-lg">
             {formatTrimTime(previewMs)}
           </div>
         </div>
@@ -121,11 +121,11 @@ export function TrimHandle({
         <div
           className={`flex items-center justify-center rounded-md transition-all ${
             dragging
-              ? 'w-2.5 h-full bg-[#f5409d] shadow-[0_0_12px_rgba(245,64,157,0.7)]'
-              : 'w-2 h-10 bg-[#f5409d] shadow-[0_0_8px_rgba(245,64,157,0.5)] group-hover:h-12 group-hover:w-2.5 group-hover:shadow-[0_0_12px_rgba(245,64,157,0.7)]'
+              ? 'w-2.5 h-full bg-[#e11d2a] shadow-[0_0_12px_rgba(225,29,42,0.7)]'
+              : 'w-2 h-10 bg-[#e11d2a] shadow-[0_0_8px_rgba(225,29,42,0.5)] group-hover:h-12 group-hover:w-2.5 group-hover:shadow-[0_0_12px_rgba(225,29,42,0.7)]'
           }`}
         >
-          <GripVertical className={`text-[#1a2123]/60 transition-opacity ${dragging ? 'h-3 w-3 opacity-100' : 'h-2.5 w-2.5 opacity-0 group-hover:opacity-100'}`} />
+          <GripVertical className={`text-[#111113]/60 transition-opacity ${dragging ? 'h-3 w-3 opacity-100' : 'h-2.5 w-2.5 opacity-0 group-hover:opacity-100'}`} />
         </div>
       </div>
     </>

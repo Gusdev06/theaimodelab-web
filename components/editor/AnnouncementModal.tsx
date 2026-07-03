@@ -76,23 +76,23 @@ interface VariantPalette {
 }
 
 const PALETTE_GREEN: VariantPalette = {
-  accent: '#f5409d',
-  containerBorder: 'rgba(245,64,157,0.2)',
-  containerBgGradient: 'linear-gradient(135deg, #1f2a1c 0%, #1a2123 50%, #1a2123 100%)',
-  blobStrong: 'rgba(245,64,157,0.20)',
-  blobFaint: 'rgba(245,64,157,0.10)',
-  iconRingPanel: 'rgba(245,64,157,0.30)',
-  iconRingBg: 'rgba(245,64,157,0.15)',
-  iconText: '#f5409d',
-  badgeBorder: 'rgba(245,64,157,0.30)',
-  badgeBg: 'rgba(245,64,157,0.10)',
-  badgeText: '#f5409d',
-  ctaBg: '#f5409d',
-  ctaBgHover: '#fa4da6',
-  ctaShadow: '0 0 24px rgba(245,64,157,0.35)',
-  ctaShadowHover: '0 0 32px rgba(245,64,157,0.5)',
+  accent: '#e11d2a',
+  containerBorder: 'rgba(225,29,42,0.2)',
+  containerBgGradient: 'linear-gradient(135deg, #1f2a1c 0%, #111113 50%, #111113 100%)',
+  blobStrong: 'rgba(225,29,42,0.20)',
+  blobFaint: 'rgba(225,29,42,0.10)',
+  iconRingPanel: 'rgba(225,29,42,0.30)',
+  iconRingBg: 'rgba(225,29,42,0.15)',
+  iconText: '#e11d2a',
+  badgeBorder: 'rgba(225,29,42,0.30)',
+  badgeBg: 'rgba(225,29,42,0.10)',
+  badgeText: '#e11d2a',
+  ctaBg: '#e11d2a',
+  ctaBgHover: '#ff5964',
+  ctaShadow: '0 0 24px rgba(225,29,42,0.35)',
+  ctaShadowHover: '0 0 32px rgba(225,29,42,0.5)',
   ctaText: '#1c1917',
-  dotActive: '#f5409d',
+  dotActive: '#e11d2a',
 };
 
 const PALETTE_VIOLET: VariantPalette = {
@@ -169,7 +169,7 @@ export function AnnouncementModal({
                 alt=""
                 className="h-full w-full object-cover"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#1a2123]/20 to-[#1a2123]" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#111113]/20 to-[#111113]" />
             </div>
           )}
 
@@ -185,7 +185,7 @@ export function AnnouncementModal({
           <div className="relative z-10 flex flex-col items-center p-8 text-center">
             {announcement.imageUrl ? (
               <div
-                className="-mt-16 mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1a2123] shadow-lg ring-1"
+                className="-mt-16 mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#111113] shadow-lg ring-1"
                 style={{ boxShadow: `0 0 0 1px ${palette.iconRingPanel}` }}
               >
                 <Icon className="h-6 w-6" style={{ color: palette.iconText }} />
@@ -226,7 +226,7 @@ export function AnnouncementModal({
             <div className="flex w-full flex-col gap-2">
               <Button
                 onClick={handleCta}
-                className="group h-11 w-full font-semibold transition-all hover:brightness-110"
+                className="app-btn group h-11 w-full font-semibold"
                 style={{
                   background: palette.ctaBg,
                   color: palette.ctaText,

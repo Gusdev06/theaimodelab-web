@@ -61,9 +61,9 @@ export default function AssinaturasPage() {
               setCursors([]);
               setCurrentCursor(undefined);
             }}
-            className={`rounded-lg px-3 py-1.5 text-[12px] font-medium transition-colors ${
+            className={`rounded-lg px-3 py-1.5 text-[12px] font-medium transition-colors app-ease app-press ${
               status === opt.value
-                ? 'bg-[#f5409d]/10 text-[#f5409d]'
+                ? 'bg-[#e11d2a]/10 text-[#e11d2a]'
                 : 'text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/80'
             }`}
           >
@@ -94,7 +94,7 @@ export default function AssinaturasPage() {
 
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : subs.length === 0 ? (
         <p className="py-10 text-center text-sm text-[#f3f0ed]/30">Nenhuma assinatura</p>
@@ -151,7 +151,7 @@ export default function AssinaturasPage() {
                           <button
                             onClick={() => reactivateMut.mutate(s.id)}
                             disabled={reactivateMut.isPending}
-                            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#f5409d]/80 hover:bg-[#f5409d]/10 hover:text-[#f5409d] disabled:opacity-40"
+                            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#e11d2a]/80 hover:bg-[#e11d2a]/10 hover:text-[#e11d2a] disabled:opacity-40"
                             title="Reativar"
                           >
                             <RotateCcw className="h-3.5 w-3.5" />

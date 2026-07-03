@@ -109,7 +109,7 @@ export default async function PromptPostPage({
           >
             <ChevronLeft className="h-6 w-6" strokeWidth={2.25} />
           </Link>
-          <h1 className="text-base font-semibold tracking-tight">Post</h1>
+          <h1 className="app-reveal text-base font-semibold tracking-tight">Post</h1>
           <span className="w-8" aria-hidden />
         </div>
 
@@ -118,12 +118,12 @@ export default async function PromptPostPage({
           <div className="flex items-center gap-2.5">
             <Link
               href="/"
-              className="block w-8 h-8 rounded-full bg-[#ff6ab5] p-[2px]"
+              className="block w-8 h-8 rounded-full bg-[#ff5964] p-[2px]"
               aria-label="theaimodelab"
             >
               <span className="flex w-full h-full rounded-full bg-black items-center justify-center overflow-hidden">
                 <Image
-                  src="/logo_2.svg"
+                  src="/logo-red.jpg"
                   alt="The AI Model Lab"
                   width={20}
                   height={20}
@@ -170,7 +170,7 @@ export default async function PromptPostPage({
           <p className="text-[11px] text-white/40">Crie imagens assim em</p>
           <Link
             href="/"
-            className="text-sm font-semibold text-[#ff6ab5] hover:underline"
+            className="text-sm font-semibold text-[#ff5964] hover:underline"
           >
             theaimodelab.ai
           </Link>

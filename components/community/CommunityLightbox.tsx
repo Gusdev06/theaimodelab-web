@@ -300,7 +300,7 @@ export function CommunityLightbox({
             <button
               type="button"
               onClick={() => goWithPrompt('/image')}
-              className="flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
+              className="app-press flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
             >
               <RefreshCw className="size-4" strokeWidth={1.8} />
               {t('community.recreate')}
@@ -308,7 +308,7 @@ export function CommunityLightbox({
             <button
               type="button"
               onClick={() => goWithPrompt('/video')}
-              className="flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
+              className="app-press flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
             >
               <SquarePlay className="size-4" strokeWidth={1.8} />
               {t('community.createVideo')}
@@ -316,7 +316,7 @@ export function CommunityLightbox({
             <button
               type="button"
               onClick={() => toast.info(t('soon'))}
-              className="flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
+              className="app-press flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
             >
               <ImageIcon className="size-4" strokeWidth={1.8} />
               {t('community.useAsReference')}

@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 
 function providerBadge(provider: AiModelAdmin['provider']) {
   const colors: Record<string, string> = {
-    THEAIMODELAB: 'border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]',
+    THEAIMODELAB: 'border-[#e11d2a]/30 bg-[#e11d2a]/10 text-[#e11d2a]',
     KIE: 'border-violet-500/30 bg-violet-500/10 text-violet-400',
   };
   return (
@@ -71,11 +71,11 @@ function ModelCard({ model, onToggle, isPending }: CardProps) {
         <div className="flex items-start gap-3">
           <div
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-              model.isActive ? 'bg-[#f5409d]/15' : 'bg-amber-500/15'
+              model.isActive ? 'bg-[#e11d2a]/15' : 'bg-amber-500/15'
             }`}
           >
             {model.isActive ? (
-              <Sparkles className="h-4 w-4 text-[#f5409d]" />
+              <Sparkles className="h-4 w-4 text-[#e11d2a]" />
             ) : (
               <TriangleAlert className="h-4 w-4 text-amber-400" />
             )}
@@ -101,7 +101,7 @@ function ModelCard({ model, onToggle, isPending }: CardProps) {
           aria-checked={model.isActive}
           className={`group relative h-7 w-12 shrink-0 rounded-full border transition-all duration-300 ease-out disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0f10] ${
             model.isActive
-              ? 'border-[#f5409d]/40 bg-[#f5409d] shadow-[0_0_0_1px_rgba(245,64,157,0.15),0_0_20px_-4px_rgba(245,64,157,0.6),inset_0_1px_0_rgba(255,255,255,0.25)] focus-visible:ring-[#f5409d]/60'
+              ? 'border-[#e11d2a]/40 bg-[#e11d2a] shadow-[0_0_0_1px_rgba(225,29,42,0.15),0_0_20px_-4px_rgba(225,29,42,0.6),inset_0_1px_0_rgba(255,255,255,0.25)] focus-visible:ring-[#e11d2a]/60'
               : 'border-[#f3f0ed]/10 bg-[#f3f0ed]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.35)] hover:bg-[#f3f0ed]/15 focus-visible:ring-[#f3f0ed]/30'
           }`}
           title={model.isActive ? 'Desativar modelo' : 'Ativar modelo'}
@@ -173,7 +173,7 @@ export default function AdminModelsPage() {
   return (
     <div className="flex flex-col gap-4 md:gap-6">
       <div className="flex items-start justify-between">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">Modelos</h1>
           <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
             {total} modelos cadastrados · {activeCount} ativos
@@ -182,7 +182,7 @@ export default function AdminModelsPage() {
         <button
           onClick={() => refetch()}
           disabled={isFetching}
-          className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
+          className="app-press app-ease flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
         >
           <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
         </button>
@@ -195,7 +195,7 @@ export default function AdminModelsPage() {
 
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : (
         <div className="grid gap-3">

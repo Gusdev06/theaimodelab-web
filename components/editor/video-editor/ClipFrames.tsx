@@ -71,7 +71,7 @@ export function ClipFrames({ sourceUrl }: { sourceUrl: string }) {
 
   if (failed || frames.length === 0) {
     return (
-      <div className="absolute inset-0 bg-gradient-to-r from-[#4b1e3a]/50 via-[#4b1e3a]/30 to-[#4b1e3a]/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#3a0f16]/50 via-[#3a0f16]/30 to-[#3a0f16]/50" />
     );
   }
 

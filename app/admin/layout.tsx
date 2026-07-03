@@ -102,13 +102,13 @@ function NavLink({ item, active }: { item: NavItem; active: boolean }) {
     <Link
       href={item.href}
       title={item.label}
-      className={`group/nav relative flex items-center justify-center rounded-lg p-2.5 text-[13px] transition-all duration-200 md:justify-start md:gap-2.5 md:px-2.5 md:py-[7px] ${active
-        ? 'bg-[#f5409d]/[0.1] font-semibold text-[#f5409d]'
+      className={`app-ease group/nav relative flex items-center justify-center rounded-lg p-2.5 text-[13px] transition-all duration-200 md:justify-start md:gap-2.5 md:px-2.5 md:py-[7px] ${active
+        ? 'bg-[#e11d2a]/[0.1] font-semibold text-[#e11d2a]'
         : 'font-medium text-[#f3f0ed]/55 hover:bg-[#f3f0ed]/[0.04] hover:text-[#f3f0ed]'
         }`}
     >
       <Icon
-        className={`h-5 w-5 shrink-0 transition-colors md:h-4 md:w-4 ${active ? 'text-[#f5409d]' : 'text-[#f3f0ed]/40 group-hover/nav:text-[#f3f0ed]/75'
+        className={`h-5 w-5 shrink-0 transition-colors md:h-4 md:w-4 ${active ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/40 group-hover/nav:text-[#f3f0ed]/75'
           }`}
       />
       <span className="hidden truncate md:block">{item.label}</span>
@@ -149,7 +149,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#111618]">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -162,8 +162,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <aside className="fixed left-0 top-0 z-30 flex h-screen w-14 flex-col border-r border-[#f3f0ed]/[0.06] bg-gradient-to-b from-[#161d1f] to-[#12181a] md:w-56">
         {/* Logo */}
         <div className="flex h-16 shrink-0 items-center justify-center border-b border-[#f3f0ed]/[0.06] md:justify-start md:gap-3 md:px-5">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#f5409d]/25 to-[#f5409d]/[0.08] ring-1 ring-inset ring-[#f5409d]/25">
-            <Shield className="h-4 w-4 text-[#f5409d]" />
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#e11d2a]/25 to-[#e11d2a]/[0.08] ring-1 ring-inset ring-[#e11d2a]/25">
+            <Shield className="h-4 w-4 text-[#e11d2a]" />
           </div>
           <div className="hidden leading-none md:block">
             <p className="text-[15px] font-bold tracking-tight text-[#f3f0ed]">The AI Model Lab</p>
@@ -185,11 +185,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   type="button"
                   onClick={() => setOpenGroups((p) => ({ ...p, [group.id]: !p[group.id] }))}
                   title={group.label}
-                  className="group/sec flex items-center justify-center rounded-lg p-2.5 transition-colors hover:bg-[#f3f0ed]/[0.03] md:justify-between md:gap-2 md:px-2.5 md:py-1.5"
+                  className="app-press app-ease group/sec flex items-center justify-center rounded-lg p-2.5 transition-colors hover:bg-[#f3f0ed]/[0.03] md:justify-between md:gap-2 md:px-2.5 md:py-1.5"
                 >
                   <span className="flex items-center gap-2.5 md:gap-2">
                     <GroupIcon
-                      className={`h-5 w-5 shrink-0 transition-colors md:h-3.5 md:w-3.5 ${hasActive ? 'text-[#f5409d]/80' : 'text-[#f3f0ed]/35 group-hover/sec:text-[#f3f0ed]/60'
+                      className={`h-5 w-5 shrink-0 transition-colors md:h-3.5 md:w-3.5 ${hasActive ? 'text-[#e11d2a]/80' : 'text-[#f3f0ed]/35 group-hover/sec:text-[#f3f0ed]/60'
                         }`}
                     />
                     <span
@@ -222,7 +222,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link
             href="/workspace"
             title="Voltar ao app"
-            className="group/back flex items-center justify-center rounded-lg p-2.5 text-[13px] font-medium text-[#f3f0ed]/45 transition-colors hover:bg-[#f3f0ed]/[0.04] hover:text-[#f3f0ed]/80 md:justify-start md:gap-2.5 md:px-2.5 md:py-2"
+            className="app-ease group/back flex items-center justify-center rounded-lg p-2.5 text-[13px] font-medium text-[#f3f0ed]/45 transition-colors hover:bg-[#f3f0ed]/[0.04] hover:text-[#f3f0ed]/80 md:justify-start md:gap-2.5 md:px-2.5 md:py-2"
           >
             <ArrowLeft className="h-5 w-5 shrink-0 transition-transform duration-200 group-hover/back:-translate-x-0.5 md:h-4 md:w-4" />
             <span className="hidden md:block">Voltar ao app</span>

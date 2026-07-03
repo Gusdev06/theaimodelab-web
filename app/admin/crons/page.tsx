@@ -17,7 +17,7 @@ import { api } from '@/lib/api';
 import type { AdminCronExecutionItem, AdminCronSummary } from '@/lib/api';
 
 const STATUS_STYLE: Record<string, { label: string; bg: string; text: string; Icon: typeof CheckCircle2 }> = {
-  SUCCESS: { label: 'Sucesso', bg: 'bg-pink-500/15', text: 'text-pink-400', Icon: CheckCircle2 },
+  SUCCESS: { label: 'Sucesso', bg: 'bg-red-500/15', text: 'text-red-400', Icon: CheckCircle2 },
   ERROR: { label: 'Erro', bg: 'bg-red-500/15', text: 'text-red-400', Icon: AlertCircle },
   RUNNING: { label: 'Executando', bg: 'bg-amber-500/15', text: 'text-amber-400', Icon: Loader2 },
 };
@@ -114,9 +114,9 @@ export default function AdminCronsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="app-reveal">
           <h1 className="flex items-center gap-2 text-2xl font-bold text-[#f3f0ed]">
-            <Clock className="h-6 w-6 text-[#f5409d]" />
+            <Clock className="h-6 w-6 text-[#e11d2a]" />
             Cron Jobs
           </h1>
           <p className="mt-1 text-sm text-[#f3f0ed]/50">
@@ -126,7 +126,7 @@ export default function AdminCronsPage() {
         <button
           onClick={() => refetch()}
           disabled={isFetching}
-          className="flex h-9 items-center gap-2 rounded-lg border border-[#f3f0ed]/10 bg-[#1a2123] px-3 text-sm text-[#f3f0ed]/70 transition hover:bg-[#212a2c] disabled:opacity-50"
+          className="flex h-9 items-center gap-2 rounded-lg border border-[#f3f0ed]/10 bg-[#111113] px-3 text-sm text-[#f3f0ed]/70 transition hover:bg-[#212a2c] disabled:opacity-50"
         >
           <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
           Atualizar
@@ -149,14 +149,14 @@ export default function AdminCronsPage() {
 
       {/* Loading state */}
       {isLoading && (
-        <div className="flex h-40 items-center justify-center rounded-xl border border-[#f3f0ed]/10 bg-[#1a2123]">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        <div className="flex h-40 items-center justify-center rounded-xl border border-[#f3f0ed]/10 bg-[#111113]">
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       )}
 
       {/* Empty state */}
       {!isLoading && crons && crons.length === 0 && (
-        <div className="rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#1a2123] p-12 text-center">
+        <div className="rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#111113] p-12 text-center">
           <Clock className="mx-auto h-8 w-8 text-[#f3f0ed]/30" />
           <p className="mt-3 text-sm text-[#f3f0ed]/60">
             Nenhuma execução registrada ainda. Os crons aparecem aqui após a primeira rodada.
@@ -195,7 +195,7 @@ function SummaryCard({
   const accentClass =
     accent === 'amber' ? 'text-amber-400' : accent === 'red' ? 'text-red-400' : 'text-[#f3f0ed]';
   return (
-    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#1a2123] p-4">
+    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#111113] p-4">
       <p className="text-[11px] uppercase tracking-wider text-[#f3f0ed]/40">{label}</p>
       <p className={`mt-2 font-bold ${accentClass} ${small ? 'text-sm truncate' : 'text-2xl'}`}>{value}</p>
     </div>
@@ -209,7 +209,7 @@ function CronCard({ cron, onOpen }: { cron: AdminCronSummary; onOpen: () => void
     : 0;
 
   return (
-    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#1a2123] p-5 transition hover:border-[#f3f0ed]/12">
+    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#111113] p-5 transition hover:border-[#f3f0ed]/12">
       <div className="flex flex-wrap items-start justify-between gap-4">
         {/* Esquerda — nome + descrição */}
         <div className="min-w-0 flex-1">
@@ -223,7 +223,7 @@ function CronCard({ cron, onOpen }: { cron: AdminCronSummary; onOpen: () => void
             {shortCronName(cron.cronName)}
           </h3>
           <p className="mt-1.5 flex items-center gap-2 text-xs text-[#f3f0ed]/60">
-            <Clock className="h-3 w-3 text-[#f5409d]" />
+            <Clock className="h-3 w-3 text-[#e11d2a]" />
             <span>{cron.scheduleHuman}</span>
             <span className="rounded bg-[#0e1416] px-1.5 py-0.5 font-mono text-[10px] text-[#f3f0ed]/40">
               {cron.schedule}
@@ -270,7 +270,7 @@ function CronCard({ cron, onOpen }: { cron: AdminCronSummary; onOpen: () => void
           {Object.entries(last.metadata as Record<string, unknown>).map(([k, v]) => (
             <span key={k} className="rounded-md bg-[#0e1416] px-2 py-1 text-[11px] text-[#f3f0ed]/60">
               <span className="text-[#f3f0ed]/40">{k}:</span>{' '}
-              <span className="font-mono font-semibold text-[#f5409d]">{safeStr(v)}</span>
+              <span className="font-mono font-semibold text-[#e11d2a]">{safeStr(v)}</span>
             </span>
           ))}
         </div>
@@ -318,7 +318,7 @@ function ExecutionsDrawer({ cronName, onClose }: { cronName: string; onClose: ()
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
       {/* Drawer */}
-      <div className="relative ml-auto flex h-full w-full max-w-2xl flex-col bg-[#141a1c] shadow-2xl">
+      <div className="relative ml-auto flex h-full w-full max-w-2xl flex-col bg-[#0a0a0b] shadow-2xl">
         {/* Header */}
         <div className="flex items-start justify-between gap-4 border-b border-[#f3f0ed]/6 px-6 py-4">
           <div className="min-w-0">
@@ -328,7 +328,7 @@ function ExecutionsDrawer({ cronName, onClose }: { cronName: string; onClose: ()
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/60 transition hover:bg-[#1a2123] hover:text-[#f3f0ed]"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/60 transition hover:bg-[#111113] hover:text-[#f3f0ed]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -338,7 +338,7 @@ function ExecutionsDrawer({ cronName, onClose }: { cronName: string; onClose: ()
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {isLoading && (
             <div className="flex h-40 items-center justify-center">
-              <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+              <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
             </div>
           )}
           {data && data.items.length === 0 && (
@@ -359,7 +359,7 @@ function ExecutionsDrawer({ cronName, onClose }: { cronName: string; onClose: ()
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="rounded-lg border border-[#f3f0ed]/10 px-3 py-1.5 text-xs text-[#f3f0ed]/70 transition hover:bg-[#1a2123] disabled:opacity-40"
+              className="rounded-lg border border-[#f3f0ed]/10 px-3 py-1.5 text-xs text-[#f3f0ed]/70 transition hover:bg-[#111113] disabled:opacity-40"
             >
               Anterior
             </button>
@@ -369,7 +369,7 @@ function ExecutionsDrawer({ cronName, onClose }: { cronName: string; onClose: ()
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              className="rounded-lg border border-[#f3f0ed]/10 px-3 py-1.5 text-xs text-[#f3f0ed]/70 transition hover:bg-[#1a2123] disabled:opacity-40"
+              className="rounded-lg border border-[#f3f0ed]/10 px-3 py-1.5 text-xs text-[#f3f0ed]/70 transition hover:bg-[#111113] disabled:opacity-40"
             >
               Próxima
             </button>
@@ -388,7 +388,7 @@ function ExecutionRow({ item }: { item: AdminCronExecutionItem }) {
   );
 
   return (
-    <div className="rounded-lg border border-[#f3f0ed]/6 bg-[#1a2123]">
+    <div className="rounded-lg border border-[#f3f0ed]/6 bg-[#111113]">
       <button
         onClick={() => setExpanded((e) => !e)}
         className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
@@ -415,7 +415,7 @@ function ExecutionRow({ item }: { item: AdminCronExecutionItem }) {
               {Object.entries(item.metadata as Record<string, unknown>).map(([k, v]) => (
                 <span key={k} className="rounded-md bg-[#0e1416] px-2 py-1 text-[11px] text-[#f3f0ed]/60">
                   <span className="text-[#f3f0ed]/40">{k}:</span>{' '}
-                  <span className="font-mono font-semibold text-[#f5409d]">{safeStr(v)}</span>
+                  <span className="font-mono font-semibold text-[#e11d2a]">{safeStr(v)}</span>
                 </span>
               ))}
             </div>

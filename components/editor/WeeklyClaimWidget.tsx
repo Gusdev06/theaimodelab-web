@@ -74,20 +74,20 @@ export function WeeklyClaimWidget() {
         className={`group relative hidden items-center gap-1.5 overflow-hidden rounded-full border px-3 py-1.5 text-xs font-semibold transition-all sm:flex ${isLocked
           ? 'border-yellow-400/40 bg-yellow-400/10 text-yellow-300 hover:border-yellow-400/70 hover:bg-yellow-400/15'
           : showClaimButton
-            ? 'border-[#f5409d]/50 bg-[#f5409d]/15 text-[#f5409d] hover:border-[#f5409d]/80 hover:bg-[#f5409d]/20'
+            ? 'border-[#e11d2a]/50 bg-[#e11d2a]/15 text-[#e11d2a] hover:border-[#e11d2a]/80 hover:bg-[#e11d2a]/20'
             : 'border-[#f3f0ed]/10 bg-[#f3f0ed]/5 text-[#f3f0ed]/60 hover:border-[#f3f0ed]/20 hover:text-[#f3f0ed]/80'
           }`}
       >
         {/* Radial glow background — claim state only */}
         {showClaimButton && (
-          <span className="pointer-events-none absolute -inset-x-6 -inset-y-2 bg-[radial-gradient(ellipse_at_center,rgba(245,64,157,0.35),transparent_70%)] opacity-70 blur-md transition-opacity group-hover:opacity-100" />
+          <span className="pointer-events-none absolute -inset-x-6 -inset-y-2 bg-[radial-gradient(ellipse_at_center,rgba(225,29,42,0.35),transparent_70%)] opacity-70 blur-md transition-opacity group-hover:opacity-100" />
         )}
 
         {/* Pulsing dot — claim state only */}
         {showClaimButton && (
           <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-            <span className="absolute h-full w-full animate-ping rounded-full bg-[#f5409d]/60" />
-            <span className="relative h-1.5 w-1.5 rounded-full bg-[#f5409d]" />
+            <span className="absolute h-full w-full animate-ping rounded-full bg-[#e11d2a]/60" />
+            <span className="relative h-1.5 w-1.5 rounded-full bg-[#e11d2a]" />
           </span>
         )}
 

@@ -43,7 +43,7 @@ export default function AdminDashboardPage() {
   if (isLoading || !stats) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -51,7 +51,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="flex flex-col gap-5 md:gap-8">
       {/* Header */}
-      <div>
+      <div className="app-reveal">
         <h1 className="text-2xl font-bold text-[#f3f0ed]">Dashboard</h1>
         <p className="mt-1 text-sm text-[#f3f0ed]/40">Painel de controle do sistema</p>
       </div>
@@ -62,7 +62,7 @@ export default function AdminDashboardPage() {
             <TabsTrigger
               key={tab.value}
               value={tab.value}
-              className="rounded-lg px-3 py-1.5 text-xs font-medium text-[#f3f0ed]/40 hover:text-[#f3f0ed]/60 data-[state=active]:bg-[#f5409d]/5 data-[state=active]:text-[#f5409d] data-[state=active]:after:bg-[#f5409d]"
+              className="rounded-lg px-3 py-1.5 text-xs font-medium text-[#f3f0ed]/40 hover:text-[#f3f0ed]/60 data-[state=active]:bg-[#e11d2a]/5 data-[state=active]:text-[#e11d2a] data-[state=active]:after:bg-[#e11d2a]"
             >
               {tab.label}
             </TabsTrigger>

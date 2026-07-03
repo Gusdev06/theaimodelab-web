@@ -47,7 +47,7 @@ export function CheckGenerationStatusButton({
     <button
       onClick={handleCheck}
       disabled={isChecking || !generationId}
-      className="mt-1 flex items-center gap-1.5 animate-pulse border border-white/15 rounded-lg px-3 py-1.5 text-[10px] font-bold tracking-[0.12em] text-[#f3f0ed]/30 transition-all hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/60 disabled:opacity-40"
+      className="app-press app-ease mt-1 flex items-center gap-1.5 animate-pulse border border-white/15 rounded-lg px-3 py-1.5 text-[10px] font-bold tracking-[0.12em] text-[#f3f0ed]/30 transition-all hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/60 disabled:opacity-40"
     >
       <RefreshCw className={`h-3 w-3 ${isChecking ? 'animate-spin' : ''}`} />
       {isChecking ? t('checking') : t('checkGeneration')}

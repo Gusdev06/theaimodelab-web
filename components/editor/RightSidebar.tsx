@@ -21,9 +21,9 @@ import { InfluencerSidebar } from './InfluencerSidebar';
 function WipOverlay() {
   const t = useTranslations('editorChrome.rightSidebar');
   return (
-    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-xl backdrop-blur-[2px] bg-[#1a2123]/60">
-      <div className="flex items-center gap-2 rounded-full border border-[#f3f0ed]/10 bg-[#1a2123]/80 px-3 py-1.5">
-        <Construction className="h-3.5 w-3.5 text-[#f5409d]" />
+    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-xl backdrop-blur-[2px] bg-[#111113]/60">
+      <div className="flex items-center gap-2 rounded-full border border-[#f3f0ed]/10 bg-[#111113]/80 px-3 py-1.5">
+        <Construction className="h-3.5 w-3.5 text-[#e11d2a]" />
         <span className="text-[10px] font-bold tracking-widest text-[#f3f0ed]/60 uppercase">{t('wipBadge')}</span>
       </div>
       <p className="text-[9px] text-[#f3f0ed]/30">{t('wipSubtitle')}</p>
@@ -76,12 +76,12 @@ function UpscaleSection({ generatedImage, nodeId }: { generatedImage: string; no
           }}
         />
         {/* Bottom gradient */}
-        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#1a2123]/80 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#111113]/80 to-transparent" />
 
         {upscaleState === 'done' && (
-          <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-[#f5409d] px-2 py-0.5">
-            <CheckCircle2 className="h-2.5 w-2.5 text-[#1a2123]" />
-            <span className="text-[8px] font-black tracking-wide text-[#1a2123]">
+          <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-[#e11d2a] px-2 py-0.5">
+            <CheckCircle2 className="h-2.5 w-2.5 text-[#111113]" />
+            <span className="text-[8px] font-black tracking-wide text-[#111113]">
               {t('applied')}
             </span>
           </div>
@@ -100,9 +100,9 @@ function UpscaleSection({ generatedImage, nodeId }: { generatedImage: string; no
                 onClick={() => { setModel(m.value); resetIfDone(); }}
                 className="flex flex-col gap-1 rounded-xl p-2.5 text-left transition-all active:scale-[0.97]"
                 style={{
-                  background: active ? 'rgba(245,64,157,0.07)' : 'rgba(30,73,75,0.15)',
-                  border: `1px solid ${active ? 'rgba(245,64,157,0.28)' : 'rgba(243,240,237,0.06)'}`,
-                  boxShadow: active ? '0 0 0 1px rgba(245,64,157,0.06) inset' : 'none',
+                  background: active ? 'rgba(225,29,42,0.07)' : 'rgba(30,73,75,0.15)',
+                  border: `1px solid ${active ? 'rgba(225,29,42,0.28)' : 'rgba(243,240,237,0.06)'}`,
+                  boxShadow: active ? '0 0 0 1px rgba(225,29,42,0.06) inset' : 'none',
                 }}
               >
                 <div className="flex items-center justify-between">
@@ -112,8 +112,8 @@ function UpscaleSection({ generatedImage, nodeId }: { generatedImage: string; no
                   <span
                     className="rounded-md px-1 py-0.5 text-[8px] font-black leading-none"
                     style={{
-                      background: active ? 'rgba(245,64,157,0.18)' : 'rgba(243,240,237,0.06)',
-                      color: active ? '#f5409d' : 'rgba(243,240,237,0.3)',
+                      background: active ? 'rgba(225,29,42,0.18)' : 'rgba(243,240,237,0.06)',
+                      color: active ? '#e11d2a' : 'rgba(243,240,237,0.3)',
                     }}
                   >
                     {m.tag}
@@ -140,10 +140,10 @@ function UpscaleSection({ generatedImage, nodeId }: { generatedImage: string; no
                 onClick={() => { setScale(s); resetIfDone(); }}
                 className="flex-1 rounded-xl py-2.5 text-sm font-bold transition-all active:scale-95"
                 style={{
-                  background: active ? 'rgba(245,64,157,0.1)' : 'rgba(30,73,75,0.15)',
-                  color: active ? '#f5409d' : 'rgba(243,240,237,0.3)',
-                  border: `1px solid ${active ? 'rgba(245,64,157,0.28)' : 'rgba(243,240,237,0.06)'}`,
-                  boxShadow: active ? '0 0 12px rgba(245,64,157,0.08)' : 'none',
+                  background: active ? 'rgba(225,29,42,0.1)' : 'rgba(30,73,75,0.15)',
+                  color: active ? '#e11d2a' : 'rgba(243,240,237,0.3)',
+                  border: `1px solid ${active ? 'rgba(225,29,42,0.28)' : 'rgba(243,240,237,0.06)'}`,
+                  boxShadow: active ? '0 0 12px rgba(225,29,42,0.08)' : 'none',
                 }}
               >
                 {s}
@@ -157,18 +157,18 @@ function UpscaleSection({ generatedImage, nodeId }: { generatedImage: string; no
       <button
         onClick={handleApply}
         disabled={upscaleState === 'upscaling'}
-        className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-[11px] font-bold tracking-[0.08em] transition-all active:scale-[0.98] disabled:cursor-not-allowed"
+        className="app-btn flex w-full items-center justify-center gap-2 py-3 text-[11px] font-bold tracking-[0.08em] disabled:cursor-not-allowed"
         style={
           upscaleState === 'idle'
             ? {
-              background: 'linear-gradient(135deg, #f5409d 0%, #c6347f 100%)',
-              color: '#1a2123',
-              boxShadow: '0 4px 16px rgba(245,64,157,0.22)',
+              background: 'linear-gradient(135deg, #e11d2a 0%, #c6347f 100%)',
+              color: '#111113',
+              boxShadow: '0 4px 16px rgba(225,29,42,0.22)',
             }
             : {
-              background: 'rgba(245,64,157,0.07)',
-              color: 'rgba(245,64,157,0.55)',
-              border: '1px solid rgba(245,64,157,0.14)',
+              background: 'rgba(225,29,42,0.07)',
+              color: 'rgba(225,29,42,0.55)',
+              border: '1px solid rgba(225,29,42,0.14)',
             }
         }
       >
@@ -202,7 +202,7 @@ function FaceSwapSection({ generatedImage }: { generatedImage: string }) {
       {/* Split panel */}
       <div className="grid grid-cols-2 gap-1.5">
         {/* Left — target image */}
-        <div className="flex flex-col gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/10 p-2.5">
+        <div className="flex flex-col gap-2 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/10 p-2.5">
           <span className="text-[9px] font-bold tracking-[0.1em] text-[#f3f0ed]/35">
             {t('targetLabel')}
           </span>
@@ -231,8 +231,8 @@ function FaceSwapSection({ generatedImage }: { generatedImage: string }) {
               : 'rgba(243,240,237,0.07)',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(245,64,157,0.25)';
-            e.currentTarget.style.background = 'rgba(245,64,157,0.03)';
+            e.currentTarget.style.borderColor = 'rgba(225,29,42,0.25)';
+            e.currentTarget.style.background = 'rgba(225,29,42,0.03)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.borderColor = facePhoto
@@ -256,8 +256,8 @@ function FaceSwapSection({ generatedImage }: { generatedImage: string }) {
               />
             </div>
           ) : (
-            <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-[#f3f0ed]/[0.1] py-5 transition-all group-hover:border-[#f5409d]/25">
-              <ScanFace className="h-5 w-5 text-[#f3f0ed]/15 transition-colors group-hover:text-[#f5409d]/40" />
+            <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-[#f3f0ed]/[0.1] py-5 transition-all group-hover:border-[#e11d2a]/25">
+              <ScanFace className="h-5 w-5 text-[#f3f0ed]/15 transition-colors group-hover:text-[#e11d2a]/40" />
               <span className="text-center text-[8px] leading-snug text-[#f3f0ed]/20 transition-colors group-hover:text-[#f3f0ed]/35">
                 {t('uploadHint')}
               </span>
@@ -280,18 +280,18 @@ function FaceSwapSection({ generatedImage }: { generatedImage: string }) {
 
       {/* Apply button */}
       <button
-        className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-[11px] font-bold tracking-[0.08em] transition-all active:scale-[0.98]"
+        className="app-btn flex w-full items-center justify-center gap-2 py-3 text-[11px] font-bold tracking-[0.08em]"
         style={
           facePhoto
             ? {
-              background: 'linear-gradient(135deg, #f5409d 0%, #c6347f 100%)',
-              color: '#1a2123',
-              boxShadow: '0 4px 16px rgba(245,64,157,0.22)',
+              background: 'linear-gradient(135deg, #e11d2a 0%, #c6347f 100%)',
+              color: '#111113',
+              boxShadow: '0 4px 16px rgba(225,29,42,0.22)',
             }
             : {
-              background: 'rgba(245,64,157,0.07)',
-              color: 'rgba(245,64,157,0.4)',
-              border: '1px solid rgba(245,64,157,0.12)',
+              background: 'rgba(225,29,42,0.07)',
+              color: 'rgba(225,29,42,0.4)',
+              border: '1px solid rgba(225,29,42,0.12)',
             }
         }
       >
@@ -316,7 +316,7 @@ export function RightSidebar() {
   // Influencer builder sidebar
   if (panelType === 'create-influencer') {
     return (
-      <aside className={`aside-in fixed inset-0 z-50 flex flex-col border-l border-[#f3f0ed]/[0.07] sm:static sm:h-full sm:w-96 sm:shrink-0 ${studioMode ? 'bg-[#0d1011]' : 'bg-[#1a2123]'}`}>
+      <aside className={`aside-in fixed inset-0 z-50 flex flex-col border-l border-[#f3f0ed]/[0.07] sm:static sm:h-full sm:w-96 sm:shrink-0 ${studioMode ? 'bg-[#050506]' : 'bg-[#111113]'}`}>
         {/* Header */}
         <div className="flex items-center gap-2.5 border-b border-[#f3f0ed]/[0.05] bg-gradient-to-b from-[#f3f0ed]/[0.02] to-transparent px-4 py-3.5">
           <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#f3f0ed]/[0.05]">

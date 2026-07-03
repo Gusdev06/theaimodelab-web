@@ -133,7 +133,7 @@ function durationToSeconds(d: string): number {
 
 
 const selectTriggerClass =
-  'w-full shrink-0 !h-11 rounded-[10px] border-app-hairline bg-app-surface px-3.5 text-[14px] font-semibold text-app-text shadow-none transition-colors duration-200 ease-app hover:border-app-hairline-2 focus-visible:border-[rgba(245,64,157,0.4)] focus-visible:ring-0 dark:bg-app-surface dark:hover:bg-app-surface [&_svg:not([class*=\'text-\'])]:text-app-muted';
+  'w-full shrink-0 !h-11 rounded-[10px] border-app-hairline bg-app-surface px-3.5 text-[14px] font-semibold text-app-text shadow-none transition-colors duration-200 ease-app hover:border-app-hairline-2 focus-visible:border-[rgba(225,29,42,0.4)] focus-visible:ring-0 dark:bg-app-surface dark:hover:bg-app-surface [&_svg:not([class*=\'text-\'])]:text-app-muted';
 
 const selectContentClass =
   'rounded-xl border-app-hairline-2 bg-app-card text-app-text shadow-[0_12px_30px_rgba(0,0,0,0.45)]';
@@ -680,7 +680,7 @@ export function VideoConfigPanel({
       }}
     >
       {dragDepth > 0 && (
-        <div className="pointer-events-none absolute inset-2 z-10 flex items-center justify-center rounded-[14px] border-2 border-dashed border-[rgba(245,64,157,0.6)] bg-[rgba(245,64,157,0.07)] backdrop-blur-[2px]">
+        <div className="pointer-events-none absolute inset-2 z-10 flex items-center justify-center rounded-[14px] border-2 border-dashed border-[rgba(225,29,42,0.6)] bg-[rgba(225,29,42,0.07)] backdrop-blur-[2px]">
           <p className="text-[14px] font-semibold text-app-lime">{t('image.dropHint')}</p>
         </div>
       )}
@@ -889,7 +889,7 @@ export function VideoConfigPanel({
               </>
             )}
             {refLoading ? (
-              <div className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-[rgba(245,64,157,0.4)] bg-[rgba(245,64,157,0.05)] text-app-text-2">
+              <div className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-[rgba(225,29,42,0.4)] bg-[rgba(225,29,42,0.05)] text-app-text-2">
                 <Loader2 className="size-[19px] animate-spin text-app-lime" strokeWidth={2} />
               </div>
             ) : (
@@ -897,7 +897,7 @@ export function VideoConfigPanel({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text"
+                  className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app app-press hover:border-[rgba(225,29,42,0.4)] hover:text-app-text"
                 >
                   <ImageIcon className="size-[19px]" strokeWidth={1.8} />
                   <span className="text-[12px] font-semibold">{t('image.addReference')}</span>
@@ -911,7 +911,7 @@ export function VideoConfigPanel({
         {/* prompt */}
         <div className="flex flex-col gap-2">
           <FieldLabel>{t('image.prompt')}</FieldLabel>
-          <div className="flex flex-col rounded-xl border border-app-hairline bg-app-surface transition-colors duration-200 ease-app focus-within:border-[rgba(245,64,157,0.4)]">
+          <div className="flex flex-col rounded-xl border border-app-hairline bg-app-surface transition-colors duration-200 ease-app focus-within:border-[rgba(225,29,42,0.4)]">
             <textarea
               ref={promptRef}
               value={prompt}
@@ -1020,7 +1020,7 @@ export function VideoConfigPanel({
             className={cn(
               'flex h-10 items-center gap-2 rounded-[10px] border px-3.5 text-[13px] font-semibold transition-colors duration-200 ease-app',
               effectiveAudio
-                ? 'border-[rgba(245,64,157,0.5)] text-app-lime'
+                ? 'border-[rgba(225,29,42,0.5)] text-app-lime'
                 : 'border-app-hairline bg-app-surface text-app-text-2 hover:text-app-text',
               audioLocked && 'cursor-not-allowed opacity-70',
             )}
@@ -1073,7 +1073,7 @@ export function VideoConfigPanel({
           type="button"
           onClick={generate}
           disabled={!canGenerate || submitting}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-app-lime text-[14.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-11 w-full items-center justify-center gap-2 app-btn bg-app-lime text-[14.5px] font-semibold text-app-lime-ink disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? (
             <>

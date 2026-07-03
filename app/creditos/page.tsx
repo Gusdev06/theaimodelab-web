@@ -189,8 +189,8 @@ function CreditosPageContent() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#1a2123]">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#111113]">
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
         {loadingMsg && <p className="text-sm text-[#f3f0ed]/40">{loadingMsg}</p>}
       </div>
     );
@@ -233,11 +233,11 @@ function CreditosPageContent() {
   const showZeroCreditsModal = !isFreeUser && balance && balance.totalCreditsAvailable === 0;
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#1a2123] overflow-y-auto sidebar-scroll">
+    <div className="flex min-h-screen flex-col bg-[#111113] overflow-y-auto sidebar-scroll">
       {/* Zero credits modal */}
       {showZeroCreditsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="mx-4 flex w-full max-w-sm flex-col items-center gap-5 rounded-2xl border border-[#f3f0ed]/10 bg-[#1c2527] p-8">
+          <div className="mx-4 flex w-full max-w-sm flex-col items-center gap-5 rounded-2xl border border-[#f3f0ed]/10 bg-[#1a1a1e] p-8">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15">
               <AlertTriangle className="h-7 w-7 text-red-400" />
             </div>
@@ -253,7 +253,7 @@ function CreditosPageContent() {
                   const plansSection = document.getElementById('plans-section');
                   plansSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#f5409d] text-sm font-bold text-[#1a2123] transition-colors hover:bg-[#f75fae]"
+                className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
               >
                 {t('renewNow')}
               </button>
@@ -262,7 +262,7 @@ function CreditosPageContent() {
                   const boostSection = document.getElementById('boost-section');
                   boostSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#f3f0ed]/15 text-sm font-medium text-[#f3f0ed]/70 transition-colors hover:bg-[#f3f0ed]/5"
+                className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#f3f0ed]/15 text-sm font-medium text-[#f3f0ed]/70 transition-colors hover:bg-[#f3f0ed]/5"
               >
                 {t('buyExtraCredits')}
               </button>
@@ -307,7 +307,7 @@ function CreditosPageContent() {
                   const plansSection = document.getElementById('plans-section');
                   plansSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="text-xs font-bold text-[#f5409d] transition-colors hover:text-[#f75fae]"
+                className="text-xs font-bold text-[#e11d2a] transition-colors hover:text-[#f75fae]"
               >
                 {t('renewPlan')}
               </button>
@@ -332,27 +332,27 @@ function CreditosPageContent() {
             { label: 'Upscale', count: fg.UPSCALE ?? 0 },
           ].filter((i) => i.count > 0);
           return (
-            <div className="flex flex-col gap-4 rounded-2xl border border-pink-500/20 bg-pink-500/6 p-5">
+            <div className="flex flex-col gap-4 rounded-2xl border border-red-500/20 bg-red-500/6 p-5">
               <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-pink-500/15">
-                  <Sparkles className="h-5 w-5 text-pink-400" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/15">
+                  <Sparkles className="h-5 w-5 text-red-400" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-bold text-pink-400">Gerações grátis disponíveis</span>
+                  <span className="text-sm font-bold text-red-400">Gerações grátis disponíveis</span>
                   <span className="text-xs text-[#f3f0ed]/50">
                     Você tem {total} {total === 1 ? 'geração' : 'gerações'} grátis pra usar sem gastar créditos.
                   </span>
                 </div>
-                <span className="ml-auto text-2xl font-bold tabular-nums text-pink-400">{total}</span>
+                <span className="ml-auto text-2xl font-bold tabular-nums text-red-400">{total}</span>
               </div>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
                 {items.map((item) => (
                   <div
                     key={item.label}
-                    className="flex items-center justify-between rounded-lg border border-pink-500/10 bg-pink-500/5 px-3 py-2"
+                    className="flex items-center justify-between rounded-lg border border-red-500/10 bg-red-500/5 px-3 py-2"
                   >
                     <span className="text-xs text-[#f3f0ed]/70">{item.label}</span>
-                    <span className="text-sm font-bold text-pink-400">{item.count}</span>
+                    <span className="text-sm font-bold text-red-400">{item.count}</span>
                   </div>
                 ))}
               </div>
@@ -364,20 +364,20 @@ function CreditosPageContent() {
         {balance && (
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <Coins className="h-5 w-5 text-[#f5409d]" />
+              <Coins className="h-5 w-5 text-[#e11d2a]" />
               <h1 className="text-lg font-bold text-[#f3f0ed]">{t('yourCredits')}</h1>
             </div>
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="col-span-2 flex flex-col justify-between rounded-2xl border border-[#f5409d]/25 bg-[#f5409d]/6 p-5">
-                <div className="flex items-center gap-2 text-[#f5409d]/60">
+              <div className="col-span-2 flex flex-col justify-between rounded-2xl border border-[#e11d2a]/25 bg-[#e11d2a]/6 p-5">
+                <div className="flex items-center gap-2 text-[#e11d2a]/60">
                   <Sparkles className="h-3.5 w-3.5" />
                   <span className="text-[10px] font-bold tracking-[0.15em]">{t('available')}</span>
                 </div>
-                <p className="mt-3 text-3xl font-bold tabular-nums text-[#f5409d] sm:text-4xl">
+                <p className="mt-3 text-3xl font-bold tabular-nums text-[#e11d2a] sm:text-4xl">
                   {numFmt.format(balance.totalCreditsAvailable)}
                 </p>
-                <div className="mt-4 flex gap-4 text-xs text-[#f5409d]/50">
+                <div className="mt-4 flex gap-4 text-xs text-[#e11d2a]/50">
                   <span>{t('fromPlan', { count: numFmt.format(balance.planCreditsRemaining) })}</span>
                   <span>{t('bonus', { count: numFmt.format(balance.bonusCreditsRemaining) })}</span>
                 </div>
@@ -419,7 +419,7 @@ function CreditosPageContent() {
               </div>
               <div className="mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-[#f3f0ed]/8">
                 <div
-                  className="h-full rounded-full bg-[#f5409d] transition-all duration-700"
+                  className="h-full rounded-full bg-[#e11d2a] transition-all duration-700"
                   style={{ width: `${Math.min(usagePercent, 100)}%` }}
                 />
               </div>
@@ -433,14 +433,14 @@ function CreditosPageContent() {
 
             {/* Heading */}
             <div className="flex flex-col items-center gap-3 text-center">
-              <div className="flex items-center gap-2 rounded-full border border-[#f5409d]/20 bg-[#f5409d]/8 px-4 py-1.5">
-                <Flame className="h-3.5 w-3.5 text-[#f5409d]" />
-                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#f5409d]">{t('limitedOffer')}</span>
+              <div className="flex items-center gap-2 rounded-full border border-[#e11d2a]/20 bg-[#e11d2a]/8 px-4 py-1.5">
+                <Flame className="h-3.5 w-3.5 text-[#e11d2a]" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#e11d2a]">{t('limitedOffer')}</span>
               </div>
-              <h2 className="text-2xl font-bold text-[#f3f0ed] sm:text-3xl">
+              <h2 className="app-reveal text-2xl font-bold text-[#f3f0ed] sm:text-3xl">
                 {activeTab === 'plans' ? t('plansHeading') : t('packagesHeading')}
               </h2>
-              <p className="max-w-md text-sm text-[#f3f0ed]/45">
+              <p className="app-reveal max-w-md text-sm text-[#f3f0ed]/45" style={{ animationDelay: '0.08s' }}>
                 {activeTab === 'plans'
                   ? <><span className="font-semibold text-[#f3f0ed]/70">{t('plansSubheadingCount')}</span>{t('plansSubheadingRest')}</>
                   : t('packagesSubheading')}
@@ -494,8 +494,8 @@ function CreditosPageContent() {
                   onSubscribePix={(plan) => setPixAutoPlan(plan)}
                 />
                 <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-[#f3f0ed]/25">
-                  <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#f5409d]/50" />{t('noCancelFee')}</span>
-                  <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#f5409d]/50" />{t('monthlyRenewal')}</span>
+                  <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('noCancelFee')}</span>
+                  <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('monthlyRenewal')}</span>
                 </div>
               </>
             )}

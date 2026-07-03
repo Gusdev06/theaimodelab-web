@@ -29,7 +29,7 @@ export function fmtUnix(ts: number | null | undefined, withTime = true): string 
 
 export function statusColor(status: string): string {
   const map: Record<string, string> = {
-    active: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
+    active: 'border-red-500/30 bg-red-500/10 text-red-400',
     trialing: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
     past_due: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
     unpaid: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
@@ -37,8 +37,8 @@ export function statusColor(status: string): string {
     paused: 'border-zinc-500/30 bg-zinc-500/10 text-zinc-400',
     incomplete: 'border-zinc-500/30 bg-zinc-500/10 text-zinc-400',
     incomplete_expired: 'border-zinc-500/30 bg-zinc-500/10 text-zinc-400',
-    succeeded: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
-    paid: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
+    succeeded: 'border-red-500/30 bg-red-500/10 text-red-400',
+    paid: 'border-red-500/30 bg-red-500/10 text-red-400',
     failed: 'border-red-500/30 bg-red-500/10 text-red-400',
     refunded: 'border-zinc-500/30 bg-zinc-500/10 text-zinc-400',
     open: 'border-blue-500/30 bg-blue-500/10 text-blue-400',

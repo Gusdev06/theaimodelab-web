@@ -30,14 +30,14 @@ function Item({
     <div className="border-b border-[#f3f0ed]/[0.05]">
       <button
         onClick={onToggle}
-        className="group flex w-full items-center justify-between py-5 text-left sm:py-6"
+        className="landing-ease group flex w-full items-center justify-between py-5 text-left sm:py-6"
       >
-        <span className="pr-6 text-[14px] font-medium text-landing-text sm:text-[15px] transition-colors group-hover:text-landing-accent">
+        <span className="landing-ease pr-6 text-[14px] font-medium text-landing-text sm:text-[15px] transition-colors group-hover:text-landing-accent">
           {question}
         </span>
         <div
           className={cn(
-            "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-400",
+            "landing-ease flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-400",
             open
               ? "border-landing-accent/30 bg-landing-accent/10"
               : "border-[#f3f0ed]/[0.08] bg-transparent",
@@ -76,7 +76,7 @@ export function Faq() {
         {/* Header */}
         <div
           ref={ref}
-          className="text-center transition-all duration-700"
+          className="landing-reveal text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(24px)",
@@ -88,7 +88,10 @@ export function Faq() {
           <h2 className="mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
             {t("title")}
           </h2>
-          <p className="mt-3.5 text-[15px] leading-relaxed text-landing-text-secondary sm:mt-5 sm:text-[17px]">
+          <p
+            className="landing-reveal mt-3.5 text-[15px] leading-relaxed text-landing-text-secondary sm:mt-5 sm:text-[17px]"
+            style={{ animationDelay: "0.08s" }}
+          >
             {t("subtitle")}
           </p>
         </div>

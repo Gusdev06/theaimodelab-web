@@ -28,7 +28,7 @@ function CardContent({ card }: { card: typeof HERO_CARDS[number] }) {
           preload="metadata"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#141a1c]/60 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0b]/60 via-transparent to-transparent" />
       </>
     );
   }
@@ -42,7 +42,7 @@ function CardContent({ card }: { card: typeof HERO_CARDS[number] }) {
           className="object-cover"
           sizes="170px"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#141a1c]/60 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0b]/60 via-transparent to-transparent" />
       </>
     );
   }
@@ -113,7 +113,7 @@ function HeroCarousel() {
       {/* Glow behind carousel */}
       <div
         className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[200px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-[80px]"
-        style={{ background: "rgba(245,64,157,0.08)" }}
+        style={{ background: "rgba(225,29,42,0.08)" }}
       />
     </div>
   );
@@ -133,7 +133,7 @@ export function HeroSection() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% -5%, rgba(245,64,157,0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 50% at 50% -5%, rgba(225,29,42,0.12) 0%, transparent 70%)",
         }}
       />
       {/* Secondary glow — softer, wider */}
@@ -142,37 +142,46 @@ export function HeroSection() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 100% 80% at 50% 20%, rgba(245,64,157,0.04) 0%, transparent 60%)",
+            "radial-gradient(ellipse 100% 80% at 50% 20%, rgba(225,29,42,0.04) 0%, transparent 60%)",
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
         <div className="mx-auto flex max-w-[820px] flex-col items-center text-center">
           {/* Badge */}
-          <div className="landing-shimmer mb-6 inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.07] px-4 py-1.5 sm:mb-8">
+          <div className="landing-shimmer landing-reveal mb-6 inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.07] px-4 py-1.5 sm:mb-8">
             <span className="text-[13px] font-medium text-landing-accent">
               {t("badge")}
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="font-sora text-[32px] leading-[1.1] font-extrabold tracking-tight text-landing-text sm:text-[56px] lg:text-[68px]">
+          <h1
+            className="landing-reveal font-sora text-[32px] leading-[1.05] font-extrabold tracking-[-0.02em] text-landing-text sm:text-[56px] lg:text-[68px]"
+            style={{ animationDelay: "0.08s" }}
+          >
             {t("title")}
           </h1>
 
           {/* Sub-headline */}
-          <p className="mt-5 max-w-[620px] text-[15px] leading-relaxed text-landing-text-secondary sm:mt-7 sm:text-[17px] lg:text-[19px]">
+          <p
+            className="landing-reveal mt-5 max-w-[620px] text-[15px] leading-relaxed text-landing-text-secondary sm:mt-7 sm:text-[17px] lg:text-[19px]"
+            style={{ animationDelay: "0.16s" }}
+          >
             {t("subtitle")}
           </p>
 
           {/* CTA */}
-          <div className="mt-8 flex flex-col items-center gap-4 sm:mt-10 sm:flex-row sm:gap-5">
+          <div
+            className="landing-reveal mt-8 flex flex-col items-center gap-4 sm:mt-10 sm:flex-row sm:gap-5"
+            style={{ animationDelay: "0.24s" }}
+          >
             {loading ? (
-              <div className="h-12 w-44 animate-pulse rounded-xl bg-landing-text/8 sm:h-[52px] sm:w-48" />
+              <div className="h-12 w-44 animate-pulse rounded-full bg-landing-text/8 sm:h-[52px] sm:w-48" />
             ) : (
               <a
                 href="#precos"
-                className="group inline-flex items-center gap-2.5 rounded-xl bg-landing-accent px-7 py-3.5 text-[14px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-colors duration-200 hover:bg-[#f75fae] active:scale-[0.98] sm:px-8 sm:py-4 sm:text-[15px]"
+                className="landing-btn group inline-flex items-center gap-2.5 bg-landing-accent px-7 py-3.5 text-[14px] font-bold text-landing-bg-secondary shadow-[0_8px_24px_rgba(225,29,42,0.24)] sm:px-8 sm:py-4 sm:text-[15px]"
               >
                 {isLoggedIn ? tNav("tryFree") : t("cta")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -181,7 +190,10 @@ export function HeroSection() {
           </div>
 
           {/* Microcopy */}
-          <p className="mt-5 text-[13px] tracking-wide text-landing-text-muted">
+          <p
+            className="landing-reveal mt-5 text-[13px] tracking-wide text-landing-text-muted"
+            style={{ animationDelay: "0.32s" }}
+          >
             {t("microcopy")}
           </p>
         </div>
@@ -209,7 +221,7 @@ export function HeroSection() {
           {/* Glow behind cards */}
           <div
             className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-[100px]"
-            style={{ background: "rgba(245,64,157,0.08)" }}
+            style={{ background: "rgba(225,29,42,0.08)" }}
           />
         </div>
       </div>

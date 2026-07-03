@@ -105,12 +105,12 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
   return (
     <div
       className={`group relative flex flex-col border transition-all duration-300 ${radius} ${isDowngrade
-        ? 'border-[#f3f0ed]/5 bg-[#1c2527]/60 opacity-40 pointer-events-none'
+        ? 'border-[#f3f0ed]/5 bg-[#1a1a1e]/60 opacity-40 pointer-events-none'
         : isCurrent
-          ? 'border-[#f3f0ed]/25 bg-[#1e2325] ring-1 ring-[#f3f0ed]/10'
+          ? 'border-[#f3f0ed]/25 bg-[#1e1e22] ring-1 ring-[#f3f0ed]/10'
           : isRecommended
-            ? 'border-[#f5409d]/30 bg-gradient-to-b from-[#1f2d20] to-[#1a2523] ring-1 ring-[#f5409d]/15 shadow-[0_0_40px_rgba(245,64,157,0.08)] hover:shadow-[0_0_60px_rgba(245,64,157,0.12)]'
-            : 'border-[#f3f0ed]/[0.06] bg-[#171e20] hover:border-[#f3f0ed]/[0.12] hover:bg-[#1a1f21]'
+            ? 'border-[#e11d2a]/30 bg-gradient-to-b from-[#2a1519] to-[#1c1518] ring-1 ring-[#e11d2a]/15 shadow-[0_0_40px_rgba(225,29,42,0.08)] hover:shadow-[0_0_60px_rgba(225,29,42,0.12)]'
+            : 'border-[#f3f0ed]/[0.06] bg-[#16161a] hover:border-[#f3f0ed]/[0.12] hover:bg-[#1e1e22]'
         }`}
     >
       {/* Creator top glow */}
@@ -118,11 +118,11 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
         <>
           <div
             className={`pointer-events-none absolute -inset-px ${radius}`}
-            style={{ background: 'linear-gradient(180deg, rgba(245,64,157,0.15) 0%, rgba(245,64,157,0) 50%)' }}
+            style={{ background: 'linear-gradient(180deg, rgba(225,29,42,0.15) 0%, rgba(225,29,42,0) 50%)' }}
           />
           <div
             className={`pointer-events-none absolute -top-[1px] h-[2px] ${compact ? 'left-6 right-6' : 'left-8 right-8'}`}
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(245,64,157,0.6), transparent)' }}
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(225,29,42,0.6), transparent)' }}
           />
         </>
       )}
@@ -139,8 +139,8 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
       {isCurrent && (
         <div className={`absolute left-1/2 z-10 -translate-x-1/2 ${compact ? '-top-2.5' : '-top-3'}`}>
           <div className={`flex items-center gap-1 rounded-full bg-[#f3f0ed] shadow-[0_0_16px_rgba(243,240,237,0.15)] ${compact ? 'px-3 py-0.5' : 'px-4 py-1'}`}>
-            <Check className={`${compact ? 'h-2.5 w-2.5' : 'h-3 w-3'} text-[#1a2123]`} />
-            <span className={`font-bold uppercase tracking-[0.08em] text-[#1a2123] ${compact ? 'text-[9px]' : 'text-[10px]'}`}>{t('badges.yourPlan')}</span>
+            <Check className={`${compact ? 'h-2.5 w-2.5' : 'h-3 w-3'} text-[#111113]`} />
+            <span className={`font-bold uppercase tracking-[0.08em] text-[#111113] ${compact ? 'text-[9px]' : 'text-[10px]'}`}>{t('badges.yourPlan')}</span>
           </div>
         </div>
       )}
@@ -148,9 +148,9 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
       {/* Badge — popular */}
       {isRecommended && !isCurrent && (
         <div className={`absolute left-1/2 z-10 -translate-x-1/2 ${compact ? '-top-2.5' : '-top-3.5'}`}>
-          <div className={`flex items-center gap-1 rounded-full bg-[#f5409d] shadow-[0_0_30px_rgba(245,64,157,0.4)] ${compact ? 'px-3 py-1' : 'px-3.5 py-1.5'}`}>
-            <Flame className={`${compact ? 'h-2.5 w-2.5' : 'h-3.5 w-3.5'} text-[#141a1c]`} />
-            <span className={`font-extrabold uppercase tracking-[0.08em] text-[#141a1c] ${compact ? 'text-[8px]' : 'text-[9px]'}`}>{t('badges.mostPopular')}</span>
+          <div className={`flex items-center gap-1 rounded-full bg-[#e11d2a] shadow-[0_0_30px_rgba(225,29,42,0.4)] ${compact ? 'px-3 py-1' : 'px-3.5 py-1.5'}`}>
+            <Flame className={`${compact ? 'h-2.5 w-2.5' : 'h-3.5 w-3.5'} text-[#0a0a0b]`} />
+            <span className={`font-extrabold uppercase tracking-[0.08em] text-[#0a0a0b] ${compact ? 'text-[8px]' : 'text-[9px]'}`}>{t('badges.mostPopular')}</span>
           </div>
         </div>
       )}
@@ -158,9 +158,9 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
       <div className={`relative flex flex-1 flex-col ${compact ? 'p-3' : 'p-5 sm:p-6'}`}>
         {/* Icon + name */}
         <div className={`flex items-center ${compact ? 'gap-1.5' : 'gap-2.5'}`}>
-          <div className={`flex items-center justify-center rounded-lg ${compact ? 'h-6 w-6' : 'h-8 w-8'} ${isRecommended ? 'bg-[#f5409d]/15' : isCurrent ? 'bg-[#f3f0ed]/10' : 'bg-[#f3f0ed]/[0.05]'
+          <div className={`flex items-center justify-center rounded-lg ${compact ? 'h-6 w-6' : 'h-8 w-8'} ${isRecommended ? 'bg-[#e11d2a]/15' : isCurrent ? 'bg-[#f3f0ed]/10' : 'bg-[#f3f0ed]/[0.05]'
             }`}>
-            <PlanIcon className={`${compact ? 'h-3.5 w-3.5' : 'h-4 w-4'} ${isRecommended ? 'text-[#f5409d]' : isCurrent ? 'text-[#f3f0ed]/70' : 'text-[#f3f0ed]/40'
+            <PlanIcon className={`${compact ? 'h-3.5 w-3.5' : 'h-4 w-4'} ${isRecommended ? 'text-[#e11d2a]' : isCurrent ? 'text-[#f3f0ed]/70' : 'text-[#f3f0ed]/40'
               }`} />
           </div>
           <div>
@@ -179,7 +179,7 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
                 {formatCurrency(originalPrice, plan.currency || 'BRL', locale)}
               </span>
               {discountLabel && (
-                <span className={`rounded bg-[#f5409d]/15 font-bold text-[#f5409d] ${compact ? 'px-1 py-0.5 text-[10px]' : 'px-1.5 py-0.5 text-[9px]'}`}>
+                <span className={`rounded bg-[#e11d2a]/15 font-bold text-[#e11d2a] ${compact ? 'px-1 py-0.5 text-[10px]' : 'px-1.5 py-0.5 text-[9px]'}`}>
                   {discountLabel}
                 </span>
               )}
@@ -190,7 +190,7 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
             </div>
           )}
           <div className="flex items-baseline gap-0.5">
-            <span className={`text-[22px] font-extrabold leading-none tracking-tight ${isFree ? 'text-[#f5409d]' : isRecommended ? 'text-[#f5409d]' : 'text-[#f3f0ed]'
+            <span className={`text-[22px] font-extrabold leading-none tracking-tight ${isFree ? 'text-[#e11d2a]' : isRecommended ? 'text-[#e11d2a]' : 'text-[#f3f0ed]'
               }`}>
               {mainPrice}
             </span>
@@ -199,11 +199,11 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
         </div>
 
         {/* Credits */}
-        <div className={`flex items-center gap-1.5 rounded-lg border ${compact ? 'mt-2 px-2.5 py-1.5' : 'mt-4 rounded-xl px-3.5 py-2.5'} ${isRecommended ? 'bg-[#f5409d]/10 border-[#f5409d]/15' : 'bg-[#f3f0ed]/[0.03] border-[#f3f0ed]/[0.05]'
+        <div className={`flex items-center gap-1.5 rounded-lg border ${compact ? 'mt-2 px-2.5 py-1.5' : 'mt-4 rounded-xl px-3.5 py-2.5'} ${isRecommended ? 'bg-[#e11d2a]/10 border-[#e11d2a]/15' : 'bg-[#f3f0ed]/[0.03] border-[#f3f0ed]/[0.05]'
           }`}>
-          <Coins className={`${compact ? 'h-3 w-3' : 'h-4 w-4'} ${isRecommended ? 'text-[#f5409d]' : 'text-[#f3f0ed]/40'}`} />
+          <Coins className={`${compact ? 'h-3 w-3' : 'h-4 w-4'} ${isRecommended ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/40'}`} />
           <div>
-            <span className={`font-extrabold tabular-nums ${compact ? 'text-[15px]' : 'text-[16px]'} ${isRecommended ? 'text-[#f5409d]' : 'text-[#f3f0ed]'
+            <span className={`font-extrabold tabular-nums ${compact ? 'text-[15px]' : 'text-[16px]'} ${isRecommended ? 'text-[#e11d2a]' : 'text-[#f3f0ed]'
               }`}>
               {plan.creditsPerMonth.toLocaleString(locale)}
             </span>
@@ -216,7 +216,7 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
 
         {/* Social proof */}
         {SocialProofIcon && !isDowngrade && (
-          <p className={`flex items-center gap-1.5 font-medium text-[#f5409d]/70 ${compact ? 'mt-1.5 text-[12px]' : 'mt-3 text-[11px]'}`}>
+          <p className={`flex items-center gap-1.5 font-medium text-[#e11d2a]/70 ${compact ? 'mt-1.5 text-[12px]' : 'mt-3 text-[11px]'}`}>
             <SocialProofIcon className={compact ? 'h-3 w-3' : 'h-3.5 w-3.5'} />
             {socialProofText}
           </p>
@@ -235,9 +235,9 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
             return (
               <li key={entry.key} className={`flex items-start ${compact ? 'gap-1.5' : 'gap-2.5'}`}>
                 <div className={`shrink-0 flex items-center justify-center rounded-full ${compact ? 'mt-[1px] h-[12px] w-[12px]' : 'mt-[2px] h-[16px] w-[16px]'
-                  } ${isRecommended ? 'bg-[#f5409d]/20' : isCurrent ? 'bg-[#f3f0ed]/10' : 'bg-[#f3f0ed]/[0.06]'
+                  } ${isRecommended ? 'bg-[#e11d2a]/20' : isCurrent ? 'bg-[#f3f0ed]/10' : 'bg-[#f3f0ed]/[0.06]'
                   }`}>
-                  <Check className={`${compact ? 'h-1.5 w-1.5' : 'h-2.5 w-2.5'} ${isRecommended ? 'text-[#f5409d]' : isCurrent ? 'text-[#f3f0ed]/60' : 'text-[#f3f0ed]/45'
+                  <Check className={`${compact ? 'h-1.5 w-1.5' : 'h-2.5 w-2.5'} ${isRecommended ? 'text-[#e11d2a]' : isCurrent ? 'text-[#f3f0ed]/60' : 'text-[#f3f0ed]/45'
                     }`} />
                 </div>
                 <span className="text-[12px] leading-snug text-[#f3f0ed]/55">{label}</span>
@@ -283,11 +283,11 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
           <button
             disabled={isCurrent || !!subscribingSlug}
             onClick={() => onSubscribe(plan.slug)}
-            className={`flex w-full items-center justify-center gap-1.5 rounded-xl font-bold transition-all duration-300 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40 ${compact ? 'mt-3 h-8 text-[13px]' : 'mt-6 h-11 text-[13px]'
+            className={`app-ease flex w-full items-center justify-center gap-1.5 rounded-xl font-bold transition-all duration-300 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40 ${compact ? 'mt-3 h-8 text-[13px]' : 'mt-6 h-11 text-[13px]'
               } ${isCurrent
                 ? 'bg-[#f3f0ed]/10 text-[#f3f0ed]/60'
                 : isRecommended
-                  ? 'bg-[#f5409d] text-[#141a1c] shadow-[0_4px_20px_rgba(245,64,157,0.3)] hover:shadow-[0_4px_30px_rgba(245,64,157,0.4)] hover:brightness-110'
+                  ? 'bg-[#e11d2a] text-[#0a0a0b] shadow-[0_4px_20px_rgba(225,29,42,0.3)] hover:shadow-[0_4px_30px_rgba(225,29,42,0.4)] hover:brightness-110'
                   : 'border border-[#f3f0ed]/[0.1] bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/80 hover:border-[#f3f0ed]/[0.2] hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]'
               }`}
           >
@@ -327,7 +327,7 @@ function SkeletonCard({ compact }: { compact: boolean }) {
   const radius = compact ? 'rounded-[16px]' : 'rounded-[22px]';
   const padding = compact ? 'p-3' : 'p-5';
   return (
-    <div className={`animate-pulse border border-[#f3f0ed]/[0.06] bg-[#171e20] ${radius} ${padding}`}>
+    <div className={`animate-pulse border border-[#f3f0ed]/[0.06] bg-[#16161a] ${radius} ${padding}`}>
       <div className={`flex items-center ${compact ? 'gap-1.5' : 'gap-2.5'}`}>
         <div className={`${compact ? 'h-6 w-6 rounded-md' : 'h-8 w-8 rounded-lg'} bg-[#f3f0ed]/[0.06]`} />
         <div className={`${compact ? 'h-4 w-16' : 'h-5 w-24'} rounded bg-[#f3f0ed]/[0.06]`} />

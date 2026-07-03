@@ -93,14 +93,14 @@ export default async function PromptsPage() {
 
       <main className="pt-[88px] sm:pt-[96px]">
         <div className="mx-auto w-full max-w-7xl px-4 py-10 md:px-6 md:py-14">
-          <header className="mb-8 flex flex-col gap-3">
-            <span className="w-fit rounded-full border border-[#f5409d]/20 bg-[#f5409d]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#f5409d]">
+          <header className="app-reveal mb-8 flex flex-col gap-3">
+            <span className="w-fit rounded-full border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#e11d2a]">
               {t('badge')}
             </span>
             <h1 className="text-3xl font-bold md:text-5xl">
               {t('title')}
             </h1>
-            <p className="max-w-2xl text-sm text-[#f3f0ed]/50 md:text-base">
+            <p className="app-reveal max-w-2xl text-sm text-[#f3f0ed]/50 md:text-base" style={{ animationDelay: '0.08s' }}>
               {total > 0
                 ? t('descriptionWithTotal', { total })
                 : t('descriptionEmpty')}

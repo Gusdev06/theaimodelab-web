@@ -209,8 +209,8 @@ function PaletteDialog({ closing }: { closing: boolean }) {
                         className={cn(
                           'flex size-[38px] shrink-0 items-center justify-center rounded-[10px] border transition-colors duration-150 ease-app',
                           isSelected
-                            ? 'border-[rgba(245,64,157,0.4)] bg-[rgba(245,64,157,0.16)]'
-                            : 'border-[rgba(245,64,157,0.18)] bg-[rgba(245,64,157,0.07)]',
+                            ? 'border-[rgba(225,29,42,0.4)] bg-[rgba(225,29,42,0.16)]'
+                            : 'border-[rgba(225,29,42,0.18)] bg-[rgba(225,29,42,0.07)]',
                         )}
                       >
                         <Icon className="size-[18px] text-app-lime" strokeWidth={1.8} />

@@ -592,7 +592,7 @@ export function AvatarVideoPanel({ avatar, videoDisabled, videoDisabledMessage }
                   type="button"
                   onClick={() => audioInputRef.current?.click()}
                   disabled={isGenerating}
-                  className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text disabled:cursor-not-allowed disabled:opacity-50"
+                  className="app-press flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <Upload className="size-[19px]" strokeWidth={1.8} />
                   <span className="text-[12px] font-semibold">{t('audioUpload')}</span>
@@ -601,7 +601,7 @@ export function AvatarVideoPanel({ avatar, videoDisabled, videoDisabledMessage }
                   type="button"
                   onClick={startCustomAudioRecording}
                   disabled={isGenerating}
-                  className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text disabled:cursor-not-allowed disabled:opacity-50"
+                  className="app-press flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <Mic className="size-[19px]" strokeWidth={1.8} />
                   <span className="text-[12px] font-semibold">{t('audioStartRecording')}</span>
@@ -763,7 +763,7 @@ export function AvatarVideoPanel({ avatar, videoDisabled, videoDisabledMessage }
             type="button"
             onClick={handleSubmit}
             disabled={!canSubmit}
-            className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-app-lime text-[14.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover disabled:cursor-not-allowed disabled:opacity-50"
+            className="app-btn flex h-11 w-full items-center justify-center gap-2 bg-app-lime text-[14.5px] font-semibold text-app-lime-ink disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isGenerating ? (
               <>
@@ -821,7 +821,7 @@ function VoicePickerButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex h-11 w-full items-center gap-2 rounded-[10px] border border-app-hairline bg-app-surface px-3.5 text-[14px] text-app-text transition-colors duration-200 ease-app hover:border-app-hairline-2 disabled:cursor-not-allowed disabled:opacity-50"
+      className="app-press flex h-11 w-full items-center gap-2 rounded-[10px] border border-app-hairline bg-app-surface px-3.5 text-[14px] text-app-text transition-colors duration-200 ease-app hover:border-app-hairline-2 disabled:cursor-not-allowed disabled:opacity-50"
     >
       <MicVocal className="size-[15px] shrink-0 text-app-lime" strokeWidth={1.8} />
       <span className="flex-1 truncate text-left font-semibold">{label}</span>
@@ -846,7 +846,7 @@ function ActionButton({
     <button
       onClick={onClick}
       title={title}
-      className="flex size-7 items-center justify-center rounded-full bg-black/55 text-white/80 backdrop-blur-md transition-colors duration-200 ease-app hover:bg-black/70 hover:text-app-lime"
+      className="app-press flex size-7 items-center justify-center rounded-full bg-black/55 text-white/80 backdrop-blur-md transition-colors duration-200 ease-app hover:bg-black/70 hover:text-app-lime"
     >
       {children}
     </button>

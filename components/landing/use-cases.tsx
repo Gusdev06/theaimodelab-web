@@ -27,7 +27,7 @@ function Card({
   return (
     <div
       ref={ref}
-      className="group rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(245,64,157,0.06)] sm:p-8"
+      className="group landing-ease rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(225,29,42,0.06)] sm:p-8"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(28px)",
@@ -57,7 +57,7 @@ export function UseCases() {
         {/* Header */}
         <div
           ref={ref}
-          className="mx-auto max-w-2xl text-center transition-all duration-700"
+          className="landing-ease mx-auto max-w-2xl text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(24px)",
@@ -66,7 +66,7 @@ export function UseCases() {
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-landing-accent">
             {t("tag")}
           </span>
-          <h2 className="mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
+          <h2 className="landing-reveal mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
             {t("title")}
           </h2>
         </div>

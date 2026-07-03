@@ -29,7 +29,7 @@ import {
 } from 'recharts';
 import { Target, Layers, TrendingUp, Star, Calendar, Crown } from 'lucide-react';
 
-const LIME = '#f5409d';
+const LIME = '#e11d2a';
 const AMBER = '#f59e0b';
 const RED = '#ef4444';
 const NPS_COLORS: Record<string, string> = {
@@ -52,9 +52,9 @@ function ChartTooltip({
   if (!active || !payload?.length) return null;
   const title = payload[0]?.payload?.label ?? label;
   return (
-    <div className="rounded-lg border border-[#f3f0ed]/10 bg-[#1a2123] px-3 py-2 text-xs shadow-xl">
+    <div className="rounded-lg border border-[#f3f0ed]/10 bg-[#111113] px-3 py-2 text-xs shadow-xl">
       {title && <div className="font-semibold text-[#f3f0ed]">{title}</div>}
-      <div className="text-[#f5409d]">
+      <div className="text-[#e11d2a]">
         {payload[0].value} {suffix ?? ''}
       </div>
     </div>
@@ -115,7 +115,7 @@ export default function FeedbackDashboard({ items }: { items: AdminFeedback[] })
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* Objetivos */}
         <ChartCard
-          icon={<Target className="h-4 w-4 text-[#f5409d]" />}
+          icon={<Target className="h-4 w-4 text-[#e11d2a]" />}
           title="Objetivo dos usuários"
           subtitle="Para que vieram usar a AI Model Lab"
         >
@@ -124,7 +124,7 @@ export default function FeedbackDashboard({ items }: { items: AdminFeedback[] })
 
         {/* Funcionalidades */}
         <ChartCard
-          icon={<Layers className="h-4 w-4 text-[#f5409d]" />}
+          icon={<Layers className="h-4 w-4 text-[#e11d2a]" />}
           title="Funcionalidades mais citadas"
           subtitle="O que mais interessa ao público"
         >
@@ -133,7 +133,7 @@ export default function FeedbackDashboard({ items }: { items: AdminFeedback[] })
 
         {/* NPS donut */}
         <ChartCard
-          icon={<TrendingUp className="h-4 w-4 text-[#f5409d]" />}
+          icon={<TrendingUp className="h-4 w-4 text-[#e11d2a]" />}
           title="Distribuição de NPS"
           subtitle="Promotores · Neutros · Detratores"
         >
@@ -185,7 +185,7 @@ export default function FeedbackDashboard({ items }: { items: AdminFeedback[] })
 
         {/* Rating */}
         <ChartCard
-          icon={<Star className="h-4 w-4 text-[#f5409d]" />}
+          icon={<Star className="h-4 w-4 text-[#e11d2a]" />}
           title="Distribuição de rating"
           subtitle="Notas de 1 a 5 estrelas"
         >
@@ -218,7 +218,7 @@ export default function FeedbackDashboard({ items }: { items: AdminFeedback[] })
 
       {/* Evolução no tempo */}
       <ChartCard
-        icon={<Calendar className="h-4 w-4 text-[#f5409d]" />}
+        icon={<Calendar className="h-4 w-4 text-[#e11d2a]" />}
         title="Feedbacks ao longo do tempo"
         subtitle="Volume diário de respostas"
       >
@@ -261,7 +261,7 @@ export default function FeedbackDashboard({ items }: { items: AdminFeedback[] })
       {/* Planos */}
       {plans.length > 0 && (
         <ChartCard
-          icon={<Crown className="h-4 w-4 text-[#f5409d]" />}
+          icon={<Crown className="h-4 w-4 text-[#e11d2a]" />}
           title="Feedbacks por plano"
           subtitle="De quais planos vêm as respostas"
         >
@@ -286,7 +286,7 @@ function HorizontalBars({ data, suffix }: { data: CountItem[]; suffix?: string }
           </span>
           <div className="relative h-6 flex-1 overflow-hidden rounded-md bg-[#f3f0ed]/[0.04]">
             <div
-              className="absolute inset-y-0 left-0 rounded-md bg-gradient-to-r from-[#f5409d]/40 to-[#f5409d]/80"
+              className="absolute inset-y-0 left-0 rounded-md bg-gradient-to-r from-[#e11d2a]/40 to-[#e11d2a]/80"
               style={{ width: `${(d.value / max) * 100}%` }}
             />
           </div>
@@ -314,7 +314,7 @@ function InsightCard({
   return (
     <div className="rounded-2xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.02] p-4">
       <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-[#f3f0ed]/40">
-        <span className="text-[#f5409d]">{icon}</span>
+        <span className="text-[#e11d2a]">{icon}</span>
         {label}
       </div>
       <div className="mt-2 truncate text-lg font-bold text-[#f3f0ed]" title={value}>

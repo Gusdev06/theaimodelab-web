@@ -312,7 +312,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
   // Hover dos botões de upload (referências, frames) — violeta em modo ilimitado.
   const refHoverClass = unlimited
     ? 'hover:border-[#a855f7]/40 hover:text-[#a855f7]/60'
-    : 'hover:border-[#f5409d]/40 hover:text-[#f5409d]/60';
+    : 'hover:border-[#e11d2a]/40 hover:text-[#e11d2a]/60';
   const videoType = videoMode === 'image'
     ? 'IMAGE_TO_VIDEO' as const
     : refImages.length > 0
@@ -591,7 +591,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
       const totalGap = barGap * (barCount - 1);
       const barWidth = (rect.width - totalGap) / barCount;
 
-      ctx.fillStyle = '#f5409d';
+      ctx.fillStyle = '#e11d2a';
       for (let i = 0; i < barCount; i++) {
         const idx = Math.floor((i / barCount) * buffer.length);
         const value = buffer[idx] / 255;
@@ -1414,7 +1414,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
             <StudioTextInputHandle />
           <div
             ref={panelRef}
-            className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#f5409d]/30' : ''}`}
+            className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#e11d2a]/30' : ''}`}
             style={{ width: studioWidth, transition: 'width 0.4s ease' }}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -1441,7 +1441,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
 
               {genState === 'idle' && !hasMedia && (
                 <div
-                  className="rounded-xl bg-[#0d1011]"
+                  className="rounded-xl bg-[#050506]"
                   style={{ aspectRatio: proportion.replace('-', ' / '), transition: 'aspect-ratio 0.4s ease' }}
                 />
               )}
@@ -1513,12 +1513,12 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                   type="button"
                   onClick={() => omniVideoInputRef.current?.click()}
                   disabled={isGenerating}
-                  className="mt-1 flex w-full items-center justify-between gap-2 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#0d1011] px-3 py-2 text-left text-[11px] text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f3f0ed]/80 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="mt-1 flex w-full items-center justify-between gap-2 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#050506] px-3 py-2 text-left text-[11px] text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#f3f0ed]/80 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {omniVideoFile ? (
                     <>
                       <span className="flex min-w-0 items-center gap-2">
-                        <Video className="h-3.5 w-3.5 shrink-0 text-[#f5409d]" />
+                        <Video className="h-3.5 w-3.5 shrink-0 text-[#e11d2a]" />
                         <span className="truncate">{omniVideoFile.filename}</span>
                         <span className="shrink-0 text-[10px] text-[#f3f0ed]/40">
                           {omniVideoFile.duration.toFixed(1)}s
@@ -1549,12 +1549,12 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                   type="button"
                   onClick={() => seedanceVideoInputRef.current?.click()}
                   disabled={isGenerating}
-                  className="mt-1 flex w-full items-center justify-between gap-2 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#0d1011] px-3 py-2 text-left text-[11px] text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f3f0ed]/80 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="mt-1 flex w-full items-center justify-between gap-2 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#050506] px-3 py-2 text-left text-[11px] text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#f3f0ed]/80 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {seedanceVideoFile ? (
                     <>
                       <span className="flex min-w-0 items-center gap-2">
-                        <Video className="h-3.5 w-3.5 shrink-0 text-[#f5409d]" />
+                        <Video className="h-3.5 w-3.5 shrink-0 text-[#e11d2a]" />
                         <span className="truncate">{seedanceVideoFile.filename}</span>
                         <span className="shrink-0 text-[10px] text-[#f3f0ed]/40">
                           {seedanceVideoFile.duration.toFixed(1)}s
@@ -1617,7 +1617,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                       type="button"
                       onClick={() => seedanceAudioInputRef.current?.click()}
                       disabled={isGenerating}
-                      className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#0d1011] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                      className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#050506] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <Upload className="h-3.5 w-3.5" />
                       <span>{t('buttons.upload')}</span>
@@ -1626,7 +1626,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                       type="button"
                       onClick={startSeedanceRecording}
                       disabled={isGenerating}
-                      className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#0d1011] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#f5409d]/40 hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                      className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-dashed border-[#f3f0ed]/10 bg-[#050506] px-3 py-2 text-[11px] font-medium text-[#f3f0ed]/50 transition-all hover:border-[#e11d2a]/40 hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <Mic className="h-3.5 w-3.5" />
                       <span>{t('buttons.record')}</span>
@@ -1643,7 +1643,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                         <button
                           onClick={() => fileInputRef.current?.click()}
                           disabled={isGenerating || refImages.length >= 3}
-                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                         >
                           <Plus className="h-3.5 w-3.5" />
                         </button>
@@ -1655,7 +1655,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                         <button
                           onClick={() => openGalleryPicker({ nodeId, remaining: 3 - refImages.length, onSelect: (url) => { addImageFromUrl(url); } })}
                           disabled={isGenerating || refImages.length >= 3}
-                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f3f0ed]/5 text-[#f3f0ed]/50 transition-all hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
                         >
                           <FolderOpen className="h-3.5 w-3.5" />
                         </button>
@@ -1720,7 +1720,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                       options={modelSelectOptions}
                       onChange={setModel}
                       disabled={isGenerating}
-                      icon={<Sparkles className="h-3 w-3 text-[#f5409d]" />}
+                      icon={<Sparkles className="h-3 w-3 text-[#e11d2a]" />}
                       newLabel={tCommon('newBadge')}
                     />
                     <StudioSelectPill
@@ -1760,7 +1760,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                           value={durationToSeconds(duration)}
                           disabled={isGenerating}
                           onChange={(e) => setDuration(`${e.target.value}s`)}
-                          className="h-1 w-24 cursor-pointer appearance-none rounded-full bg-white/10 accent-[#f5409d] disabled:cursor-not-allowed disabled:opacity-50"
+                          className="h-1 w-24 cursor-pointer appearance-none rounded-full bg-white/10 accent-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-50"
                         />
                       </div>
                     )}
@@ -1806,7 +1806,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                       onClick={handleGenerate}
                       disabled={isGenerating || !prompt.trim() || (videoMode === 'image' && !firstFrame)}
                       title={tCommon('generate')}
-                      className={`ml-auto inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 ${unlimited ? 'bg-[#a855f7] text-white' : 'bg-[#f5409d] text-[#1a2123]'}`}
+                      className={`ml-auto inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 ${unlimited ? 'bg-[#a855f7] text-white' : 'bg-[#e11d2a] text-[#111113]'}`}
                     >
                       {isGenerating ? (
                         <Loader2 className="h-3 w-3 animate-spin" />
@@ -1844,11 +1844,11 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
       <TooltipProvider>
         <div
           ref={panelRef}
-          className={`w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border bg-[#1a2123] shadow-2xl shadow-black/50 transition-colors sm:w-[320px] ${
+          className={`w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border bg-[#111113] shadow-2xl shadow-black/50 transition-colors sm:w-[320px] ${
             unlimited
               ? 'unlimited-shimmer-border border-[#a855f7]/25'
               : isDraggingOver
-                ? 'border-[#f5409d]/50 ring-2 ring-[#f5409d]/30'
+                ? 'border-[#e11d2a]/50 ring-2 ring-[#e11d2a]/30'
                 : 'border-[#f3f0ed]/8'
           }`}
           onDragOver={handleDragOver}
@@ -1858,7 +1858,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
           {/* Header — drag handle */}
           <div className="panel-drag-handle flex cursor-grab items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3 active:cursor-grabbing">
             <div className="flex items-center gap-2">
-              <Video className={`h-4 w-4 ${unlimited ? 'text-[#a855f7]' : 'text-[#f5409d]'}`} />
+              <Video className={`h-4 w-4 ${unlimited ? 'text-[#a855f7]' : 'text-[#e11d2a]'}`} />
               <span className="text-xs font-bold tracking-[0.15em] text-[#f3f0ed]/90">
                 {t('header')}
               </span>
@@ -1892,15 +1892,15 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                       background: active
                         ? unlimited
                           ? 'rgba(168,85,247,0.10)'
-                          : 'rgba(245,64,157,0.08)'
+                          : 'rgba(225,29,42,0.08)'
                         : 'rgba(30,73,75,0.15)',
                       border: `1px solid ${active
                         ? unlimited
                           ? 'rgba(168,85,247,0.35)'
-                          : 'rgba(245,64,157,0.3)'
+                          : 'rgba(225,29,42,0.3)'
                         : 'rgba(243,240,237,0.06)'
                         }`,
-                      boxShadow: active && !unlimited ? '0 0 14px rgba(245,64,157,0.07)' : 'none',
+                      boxShadow: active && !unlimited ? '0 0 14px rgba(225,29,42,0.07)' : 'none',
                     }}
                   >
                     <Icon
@@ -1909,7 +1909,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                         color: active
                           ? unlimited
                             ? '#a855f7'
-                            : '#f5409d'
+                            : '#e11d2a'
                           : 'rgba(243,240,237,0.3)',
                       }}
                     />
@@ -1919,7 +1919,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                         color: active
                           ? unlimited
                             ? '#a855f7'
-                            : '#f5409d'
+                            : '#e11d2a'
                           : 'rgba(243,240,237,0.4)',
                       }}
                     >
@@ -1972,7 +1972,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                 className={
                   editingNegative && caps.supportsNegativePrompt
                     ? 'w-full resize-none rounded-xl border border-red-500/35 bg-red-500/8 px-3 py-2.5 text-sm text-red-100/95 placeholder-red-300/35 outline-none transition-all focus:border-red-500/60 focus:bg-red-500/10'
-                    : `w-full resize-none rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 py-2.5 text-sm text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:bg-[#4b1e3a]/30 ${unlimited ? 'focus:border-[#a855f7]/40' : 'focus:border-[#f5409d]/40'}`
+                    : `w-full resize-none rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 py-2.5 text-sm text-[#f3f0ed]/90 placeholder-[#f3f0ed]/25 outline-none transition-all focus:bg-[#3a0f16]/30 ${unlimited ? 'focus:border-[#a855f7]/40' : 'focus:border-[#e11d2a]/40'}`
                 }
                 style={editingNegative && caps.supportsNegativePrompt ? { caretColor: '#ef4444' } : undefined}
               />
@@ -2135,8 +2135,8 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                   {t('labels.videoReference')} <span className="text-[#f3f0ed]/20">{t('labels.videoReferenceMax', { maxSeconds: 15 })}</span>
                 </label>
                 {seedanceVideoFile ? (
-                  <div className="group relative flex h-14 w-full items-center gap-3 overflow-hidden rounded-xl border border-[#f3f0ed]/10 bg-[#0d1011] px-3">
-                    <Video className="h-4 w-4 shrink-0 text-[#f5409d]" />
+                  <div className="group relative flex h-14 w-full items-center gap-3 overflow-hidden rounded-xl border border-[#f3f0ed]/10 bg-[#050506] px-3">
+                    <Video className="h-4 w-4 shrink-0 text-[#e11d2a]" />
                     <div className="flex min-w-0 flex-1 flex-col">
                       <span className="truncate text-[11px] text-[#f3f0ed]/80">{seedanceVideoFile.filename}</span>
                       <span className="text-[10px] text-[#f3f0ed]/40">
@@ -2242,8 +2242,8 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                   {t('labels.videoReference')} <span className="text-[#f3f0ed]/20">{t('labels.videoReferenceMax', { maxSeconds: 30 })}</span>
                 </label>
                 {omniVideoFile ? (
-                  <div className="group relative flex h-14 w-full items-center gap-3 overflow-hidden rounded-xl border border-[#f3f0ed]/10 bg-[#0d1011] px-3">
-                    <Video className="h-4 w-4 shrink-0 text-[#f5409d]" />
+                  <div className="group relative flex h-14 w-full items-center gap-3 overflow-hidden rounded-xl border border-[#f3f0ed]/10 bg-[#050506] px-3">
+                    <Video className="h-4 w-4 shrink-0 text-[#e11d2a]" />
                     <div className="flex min-w-0 flex-1 flex-col">
                       <span className="truncate text-[11px] text-[#f3f0ed]/80">{omniVideoFile.filename}</span>
                       <span className="text-[10px] text-[#f3f0ed]/40">
@@ -2326,7 +2326,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                     onClick={() => setSelectedVideoIdx(i)}
                     className="group/thumb relative aspect-video overflow-hidden rounded-lg bg-black transition-all"
                     style={{
-                      outline: i === selectedVideoIdx ? '2px solid #f5409d' : '2px solid transparent',
+                      outline: i === selectedVideoIdx ? '2px solid #e11d2a' : '2px solid transparent',
                       outlineOffset: '1px',
                     }}
                   >
@@ -2353,7 +2353,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                     onClick={() => setOptionsOpen((o) => !o)}
                     className={`flex h-6 w-6 items-center justify-center rounded-full transition-all ${unlimited
                       ? 'text-[#a855f7]/60 hover:bg-[#a855f7]/10 hover:text-[#a855f7]'
-                      : 'text-[#f5409d]/60 hover:bg-[#f5409d]/10 hover:text-[#f5409d]'
+                      : 'text-[#e11d2a]/60 hover:bg-[#e11d2a]/10 hover:text-[#e11d2a]'
                       }`}
                   >
                     <Settings
@@ -2379,24 +2379,24 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
 
                 {/* Audio toggle — só aparece quando o modelo permite alternar */}
                 {caps.audio === 'toggle' && (
-                  <div className="flex items-center justify-between rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/10 px-3 py-2.5" style={{ opacity: isGenerating ? 0.4 : 1, pointerEvents: isGenerating ? 'none' : undefined }}>
+                  <div className="flex items-center justify-between rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/10 px-3 py-2.5" style={{ opacity: isGenerating ? 0.4 : 1, pointerEvents: isGenerating ? 'none' : undefined }}>
                     <div className="flex items-center gap-1.5">
                       <span className="text-[11px] font-bold text-[#f3f0ed]/60">{t('labels.audio')}</span>
                     </div>
                     <ToggleSwitch
                       checked={audio}
                       onChange={setAudio}
-                      accent={unlimited ? '#a855f7' : '#f5409d'}
+                      accent={unlimited ? '#a855f7' : '#e11d2a'}
                     />
                   </div>
                 )}
                 {caps.audio === 'always-on' && (
-                  <div className="flex items-center justify-between rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/10 px-3 py-2.5 opacity-60">
+                  <div className="flex items-center justify-between rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/10 px-3 py-2.5 opacity-60">
                     <div className="flex items-center gap-1.5">
                       <span className="text-[11px] font-bold text-[#f3f0ed]/60">{t('labels.audio')}</span>
-                      <span className="text-[11px] text-[#f5409d]/60">{t('labels.audioAlwaysOn')}</span>
+                      <span className="text-[11px] text-[#e11d2a]/60">{t('labels.audioAlwaysOn')}</span>
                     </div>
-                    <ToggleSwitch checked onChange={() => { }} accent="#f5409d" />
+                    <ToggleSwitch checked onChange={() => { }} accent="#e11d2a" />
                   </div>
                 )}
 
@@ -2406,7 +2406,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                     <label className="flex items-center gap-1.5 text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/35">
                       {t('labels.model')}
                       {videoModelOptions.some((o) => o.isNew) && (
-                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#f5409d] shadow-[0_0_6px_rgba(245,64,157,0.8)] animate-pulse" />
+                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#e11d2a] shadow-[0_0_6px_rgba(225,29,42,0.8)] animate-pulse" />
                       )}
                     </label>
                     <PanelSelect
@@ -2447,20 +2447,20 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                               background: active
                                 ? unlimited
                                   ? 'rgba(168,85,247,0.12)'
-                                  : 'rgba(245,64,157,0.1)'
+                                  : 'rgba(225,29,42,0.1)'
                                 : 'rgba(30,73,75,0.15)',
                               color: active
                                 ? unlimited
                                   ? '#a855f7'
-                                  : '#f5409d'
+                                  : '#e11d2a'
                                 : 'rgba(243,240,237,0.3)',
                               border: `1px solid ${active
                                 ? unlimited
                                   ? 'rgba(168,85,247,0.35)'
-                                  : 'rgba(245,64,157,0.28)'
+                                  : 'rgba(225,29,42,0.28)'
                                 : 'rgba(243,240,237,0.06)'
                                 }`,
-                              boxShadow: active && !unlimited ? '0 0 12px rgba(245,64,157,0.08)' : 'none',
+                              boxShadow: active && !unlimited ? '0 0 12px rgba(225,29,42,0.08)' : 'none',
                             }}
                           >
                             {d}
@@ -2500,20 +2500,20 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                                 background: active
                                   ? unlimited
                                     ? 'rgba(168,85,247,0.12)'
-                                    : 'rgba(245,64,157,0.1)'
+                                    : 'rgba(225,29,42,0.1)'
                                   : 'rgba(30,73,75,0.15)',
                                 color: active
                                   ? unlimited
                                     ? '#a855f7'
-                                    : '#f5409d'
+                                    : '#e11d2a'
                                   : 'rgba(243,240,237,0.3)',
                                 border: `1px solid ${active
                                   ? unlimited
                                     ? 'rgba(168,85,247,0.35)'
-                                    : 'rgba(245,64,157,0.28)'
+                                    : 'rgba(225,29,42,0.28)'
                                   : 'rgba(243,240,237,0.06)'
                                   }`,
-                                boxShadow: active && !unlimited ? '0 0 12px rgba(245,64,157,0.08)' : 'none',
+                                boxShadow: active && !unlimited ? '0 0 12px rgba(225,29,42,0.08)' : 'none',
                               }}
                             >
                               {d}
@@ -2548,24 +2548,24 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                                 : active
                                   ? unlimited
                                     ? 'rgba(168,85,247,0.12)'
-                                    : 'rgba(245,64,157,0.1)'
+                                    : 'rgba(225,29,42,0.1)'
                                   : 'rgba(30,73,75,0.15)',
                               color: disabled
                                 ? 'rgba(243,240,237,0.15)'
                                 : active
                                   ? unlimited
                                     ? '#a855f7'
-                                    : '#f5409d'
+                                    : '#e11d2a'
                                   : 'rgba(243,240,237,0.3)',
                               border: `1px solid ${disabled
                                 ? 'rgba(243,240,237,0.03)'
                                 : active
                                   ? unlimited
                                     ? 'rgba(168,85,247,0.35)'
-                                    : 'rgba(245,64,157,0.28)'
+                                    : 'rgba(225,29,42,0.28)'
                                   : 'rgba(243,240,237,0.06)'
                                 }`,
-                              boxShadow: active && !unlimited && !disabled ? '0 0 12px rgba(245,64,157,0.08)' : 'none',
+                              boxShadow: active && !unlimited && !disabled ? '0 0 12px rgba(225,29,42,0.08)' : 'none',
                             }}
                           >
                             {label}
@@ -2590,7 +2590,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                     <label className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/35">
                       {t('labels.duration')}
                     </label>
-                    <div className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/15 px-3 py-2.5">
+                    <div className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/15 px-3 py-2.5">
                       <input
                         type="range"
                         min={caps.duration.min}
@@ -2599,11 +2599,11 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                         value={durationToSeconds(duration)}
                         disabled={isGenerating}
                         onChange={(e) => setDuration(`${e.target.value}s`)}
-                        className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-white/10 accent-[#f5409d] disabled:cursor-not-allowed disabled:opacity-50"
+                        className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-white/10 accent-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-50"
                       />
                       <span
                         className="min-w-[40px] text-right text-[12px] font-bold"
-                        style={{ color: unlimited ? '#a855f7' : '#f5409d' }}
+                        style={{ color: unlimited ? '#a855f7' : '#e11d2a' }}
                       >
                         {durationToSeconds(duration)}s
                       </span>
@@ -2640,20 +2640,20 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                               background: active
                                 ? unlimited
                                   ? 'rgba(168,85,247,0.12)'
-                                  : 'rgba(245,64,157,0.1)'
+                                  : 'rgba(225,29,42,0.1)'
                                 : 'rgba(30,73,75,0.15)',
                               color: active
                                 ? unlimited
                                   ? '#a855f7'
-                                  : '#f5409d'
+                                  : '#e11d2a'
                                 : 'rgba(243,240,237,0.3)',
                               border: `1px solid ${active
                                 ? unlimited
                                   ? 'rgba(168,85,247,0.35)'
-                                  : 'rgba(245,64,157,0.28)'
+                                  : 'rgba(225,29,42,0.28)'
                                 : 'rgba(243,240,237,0.06)'
                                 }`,
-                              boxShadow: active && !unlimited ? '0 0 12px rgba(245,64,157,0.08)' : 'none',
+                              boxShadow: active && !unlimited ? '0 0 12px rgba(225,29,42,0.08)' : 'none',
                               opacity: locked ? 0.3 : 1,
                             }}
                           >
@@ -2729,9 +2729,9 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                 {genState !== 'generating' && (
                   <div className="space-y-1.5">
                     {estimate?.canUseFreeGeneration && (
-                      <div className="flex items-center gap-2 rounded-xl border border-pink-500/20 bg-pink-500/8 px-3 py-2">
-                        <Sparkles className="h-3 w-3 text-pink-400" />
-                        <span className="text-[11px] font-bold text-pink-400">
+                      <div className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/8 px-3 py-2">
+                        <Sparkles className="h-3 w-3 text-red-400" />
+                        <span className="text-[11px] font-bold text-red-400">
                           {t('freeGeneration')} {t('freeGenerationRemaining', { count: estimate.freeGenerationsRemainingForType, plural: estimate.freeGenerationsRemainingForType !== 1 ? 's' : '' })}
                         </span>
                       </div>
@@ -2747,7 +2747,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                         {unlimited ? (
                           <InfinityIcon className="h-3 w-3 text-[#a855f7]" />
                         ) : (
-                          <Coins className="h-3 w-3 text-[#f5409d]" />
+                          <Coins className="h-3 w-3 text-[#e11d2a]" />
                         )}
                         <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/40 uppercase">{tCommon('cost')}</span>
                       </div>
@@ -2758,11 +2758,11 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                       ) : estimate ? (
                         <div className="flex items-center gap-2">
                           {estimate.canUseFreeGeneration ? (
-                            <span className="text-xs font-bold text-pink-400">{t('free')}</span>
+                            <span className="text-xs font-bold text-red-400">{t('free')}</span>
                           ) : (
                             <span className="text-xs font-bold text-[#f3f0ed]/70">{estimate.creditsRequired} {tCommon('credits')}</span>
                           )}
-                          <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#f5409d]' : 'bg-red-400'}`} />
+                          <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#e11d2a]' : 'bg-red-400'}`} />
                         </div>
                       ) : null}
                     </div>
@@ -2779,23 +2779,23 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                       genState === 'generating'
                         ? unlimited
                           ? 'rgba(168,85,247,0.12)'
-                          : 'rgba(245,64,157,0.12)'
+                          : 'rgba(225,29,42,0.12)'
                         : unlimited
                           ? '#a855f7'
-                          : '#f5409d',
+                          : '#e11d2a',
                     color:
                       genState === 'generating'
                         ? unlimited
                           ? '#a855f7'
-                          : '#f5409d'
+                          : '#e11d2a'
                         : unlimited
                           ? '#ffffff'
-                          : '#1a2123',
+                          : '#111113',
                     border:
                       genState === 'generating'
                         ? unlimited
                           ? '1px solid rgba(168,85,247,0.25)'
-                          : '1px solid rgba(245,64,157,0.2)'
+                          : '1px solid rgba(225,29,42,0.2)'
                         : 'none',
                   }}
                 >
@@ -2856,7 +2856,7 @@ function ActionButton({
       <TooltipTrigger asChild>
         <button
           onClick={onClick}
-          className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1a2123]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#4b1e3a] hover:text-[#f5409d]"
+          className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111113]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#3a0f16] hover:text-[#e11d2a]"
         >
           {children}
         </button>
@@ -2871,7 +2871,7 @@ function ActionButton({
 function ToggleSwitch({
   checked,
   onChange,
-  accent = '#f5409d',
+  accent = '#e11d2a',
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;
@@ -2917,27 +2917,27 @@ function PanelSelect({
   const isViolet = accent === 'violet';
   const triggerFocus = isViolet
     ? 'focus:border-[#a855f7]/40'
-    : 'focus:border-[#f5409d]/40';
+    : 'focus:border-[#e11d2a]/40';
   const checkedColor = isViolet
     ? 'data-[state=checked]:text-[#a855f7] [&>span:last-child>svg]:text-[#a855f7]'
-    : 'data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]';
+    : 'data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]';
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className={`h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:ring-0 data-placeholder:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30 ${triggerFocus}`}>
+      <SelectTrigger className={`h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:ring-0 data-placeholder:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30 ${triggerFocus}`}>
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
+      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#111113] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
         {options.map((opt) => (
           <SelectItem
             key={opt.value}
             value={opt.value}
             disabled={opt.disabled}
-            className={`cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#4b1e3a]/40 focus:text-[#f3f0ed] data-disabled:cursor-not-allowed data-disabled:opacity-50 ${checkedColor}`}
+            className={`cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#3a0f16]/40 focus:text-[#f3f0ed] data-disabled:cursor-not-allowed data-disabled:opacity-50 ${checkedColor}`}
           >
             <span className="flex items-center gap-1.5">
               {opt.label}
               {opt.isNew && (
-                <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-px text-[8px] font-bold uppercase tracking-[0.1em] text-[#f5409d] [[data-slot=select-trigger]_&]:hidden">
+                <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-px text-[8px] font-bold uppercase tracking-[0.1em] text-[#e11d2a] [[data-slot=select-trigger]_&]:hidden">
                   {newLabel}
                 </span>
               )}
@@ -2993,7 +2993,7 @@ function VideoStudioSlot({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="group/slot flex aspect-square min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-xl bg-[#0d1011] text-[#f3f0ed]/40 transition-all hover:bg-[#0f1416] hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+      className="group/slot flex aspect-square min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-xl bg-[#050506] text-[#f3f0ed]/40 transition-all hover:bg-[#0f1416] hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
     >
       <Plus className="h-4 w-4 opacity-70 transition-opacity group-hover/slot:opacity-100" />
       <span className="max-w-full truncate px-1 text-[10px] font-medium">{label}</span>

@@ -153,13 +153,13 @@ export function PlansModal({ onClose }: PlansModalProps) {
       className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm"
       onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="relative mx-4 flex max-h-[88vh] w-full max-w-6xl flex-col gap-3 overflow-y-auto sidebar-scroll rounded-[20px] border border-[#f3f0ed]/[0.06] bg-[#1a2123] p-4 shadow-2xl sm:p-5">
+      <div className="relative mx-4 flex max-h-[88vh] w-full max-w-6xl flex-col gap-3 overflow-y-auto sidebar-scroll rounded-[20px] border border-[#f3f0ed]/[0.06] bg-[#111113] p-4 shadow-2xl sm:p-5">
 
         {/* Close */}
         <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-landing-text/30 transition-all hover:bg-landing-text/8 hover:text-landing-text/80"
+            className="app-press app-ease flex h-8 w-8 items-center justify-center rounded-full text-landing-text/30 transition-all hover:bg-landing-text/8 hover:text-landing-text/80"
           >
             <X className="h-4 w-4" />
           </button>
@@ -167,11 +167,11 @@ export function PlansModal({ onClose }: PlansModalProps) {
 
         {/* Heading */}
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className="flex items-center gap-1.5 rounded-full border border-[#f5409d]/20 bg-[#f5409d]/8 px-3 py-1">
-            <Flame className="h-3 w-3 text-[#f5409d]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f5409d]">{t('plansModal.limitedOffer')}</span>
+          <div className="flex items-center gap-1.5 rounded-full border border-[#e11d2a]/20 bg-[#e11d2a]/8 px-3 py-1">
+            <Flame className="h-3 w-3 text-[#e11d2a]" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#e11d2a]">{t('plansModal.limitedOffer')}</span>
           </div>
-          <h2 className="text-lg font-bold text-[#f3f0ed] sm:text-xl">
+          <h2 className="app-reveal text-lg font-bold text-[#f3f0ed] sm:text-xl">
             {activeTab === 'plans' ? t('plansModal.titlePlans') : t('plansModal.titleCredits')}
           </h2>
           <p className="max-w-md text-[12px] text-[#f3f0ed]/45">
@@ -251,11 +251,11 @@ export function PlansModal({ onClose }: PlansModalProps) {
             {!isLoading && (
               <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[10px] text-[#f3f0ed]/25">
                 <span className="flex items-center gap-1">
-                  <Check className="h-2.5 w-2.5 text-[#f5409d]/50" />
+                  <Check className="h-2.5 w-2.5 text-[#e11d2a]/50" />
                   {t('plansModal.noCancelFee')}
                 </span>
                 <span className="flex items-center gap-1">
-                  <Check className="h-2.5 w-2.5 text-[#f5409d]/50" />
+                  <Check className="h-2.5 w-2.5 text-[#e11d2a]/50" />
                   {t('plansModal.creditsRenew')}
                 </span>
               </div>

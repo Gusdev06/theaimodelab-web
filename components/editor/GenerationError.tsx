@@ -121,8 +121,8 @@ export function GenerationErrorBanner({ msg }: GenerationErrorBannerProps) {
 
           {credits > 0 ? (
             <div className="flex items-center gap-1.5">
-              <Coins className="h-3 w-3 shrink-0 text-[#f5409d]/60" />
-              <span className="text-[11px] font-semibold leading-none text-[#f5409d]/60">
+              <Coins className="h-3 w-3 shrink-0 text-[#e11d2a]/60" />
+              <span className="text-[11px] font-semibold leading-none text-[#e11d2a]/60">
                 {t('refundedBanner', { count: credits })}
               </span>
             </div>

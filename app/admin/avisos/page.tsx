@@ -206,11 +206,11 @@ function buildPreviewAnnouncement(f: FormState): Announcement {
 function variantBadge(variant: string | null) {
   if (!variant) return <span className="text-xs text-[#f3f0ed]/30">—</span>;
   const colors: Record<string, string> = {
-    feature: 'border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]',
+    feature: 'border-[#e11d2a]/30 bg-[#e11d2a]/10 text-[#e11d2a]',
     maintenance: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
-    promo: 'border-rose-500/30 bg-rose-500/10 text-rose-400',
+    promo: 'border-red-500/30 bg-red-500/10 text-red-400',
     openai: 'border-violet-500/30 bg-violet-500/10 text-violet-400',
-    gift: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
+    gift: 'border-red-500/30 bg-red-500/10 text-red-400',
     unlimited: 'border-[#a855f7]/40 bg-[#a855f7]/15 text-[#a855f7]',
   };
   return (
@@ -260,10 +260,10 @@ export default function AdminAnnouncementsPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5409d]/15">
-            <Megaphone className="h-5 w-5 text-[#f5409d]" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e11d2a]/15">
+            <Megaphone className="h-5 w-5 text-[#e11d2a]" />
           </div>
-          <div>
+          <div className="app-reveal">
             <h1 className="text-2xl font-bold text-[#f3f0ed]">Avisos</h1>
             <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
               Pop-ups exibidos no workspace dos usuários · {announcements?.length ?? 0} aviso(s)
@@ -274,13 +274,13 @@ export default function AdminAnnouncementsPage() {
           <button
             onClick={() => refetch()}
             disabled={isFetching}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
+            className="app-press app-ease flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
           >
             <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
           </button>
           <button
             onClick={() => setEditorState({ mode: 'create', id: null })}
-            className="flex h-9 items-center gap-1.5 rounded-xl bg-[#f5409d] px-4 text-xs font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95"
+            className="app-btn flex h-9 items-center gap-1.5 bg-[#e11d2a] px-4 text-xs font-bold text-[#111113]"
           >
             <Plus className="h-3.5 w-3.5" />
             Novo aviso
@@ -291,7 +291,7 @@ export default function AdminAnnouncementsPage() {
       {/* Table */}
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : (
         <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02]">
@@ -315,10 +315,10 @@ export default function AdminAnnouncementsPage() {
                       disabled={toggleMutation.isPending}
                       role="switch"
                       aria-checked={a.isActive}
-                      className={`relative h-5 w-9 rounded-full transition-colors ${a.isActive ? 'bg-[#f5409d]' : 'bg-[#f3f0ed]/10'}`}
+                      className={`relative h-5 w-9 rounded-full transition-colors ${a.isActive ? 'bg-[#e11d2a]' : 'bg-[#f3f0ed]/10'}`}
                     >
                       <span
-                        className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-[#1a2123] transition-transform ${a.isActive ? 'translate-x-4' : ''}`}
+                        className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-[#111113] transition-transform ${a.isActive ? 'translate-x-4' : ''}`}
                       />
                     </button>
                   </TableCell>
@@ -347,7 +347,7 @@ export default function AdminAnnouncementsPage() {
                       <button
                         onClick={() => setPreviewItem(a)}
                         title="Visualizar"
-                        className="flex h-7 w-7 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#f5409d]/10 hover:text-[#f5409d]"
+                        className="flex h-7 w-7 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#e11d2a]/10 hover:text-[#e11d2a]"
                       >
                         <Eye className="h-3.5 w-3.5" />
                       </button>
@@ -361,7 +361,7 @@ export default function AdminAnnouncementsPage() {
                       <button
                         onClick={() => setConfirmDelete({ id: a.id, title: a.title })}
                         title="Remover"
-                        className="flex h-7 w-7 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-rose-500/10 hover:text-rose-400"
+                        className="flex h-7 w-7 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-red-500/10 hover:text-red-400"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
@@ -442,8 +442,8 @@ function ConfirmDeleteDialog({
     >
       <div className="relative mx-4 flex w-full max-w-sm flex-col gap-5 rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#15191b] p-6 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.6)]">
         <div className="flex items-start gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/15 ring-1 ring-rose-500/20">
-            <Trash2 className="h-4 w-4 text-rose-400" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/15 ring-1 ring-red-500/20">
+            <Trash2 className="h-4 w-4 text-red-400" />
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="text-sm font-bold text-[#f3f0ed]">Remover aviso?</h3>
@@ -465,7 +465,7 @@ function ConfirmDeleteDialog({
           <button
             onClick={onConfirm}
             disabled={isPending}
-            className="flex items-center gap-1.5 rounded-lg bg-rose-500 px-4 py-2 text-xs font-bold text-white transition-all hover:brightness-110 active:scale-95 disabled:opacity-50"
+            className="flex items-center gap-1.5 rounded-lg bg-red-500 px-4 py-2 text-xs font-bold text-white transition-all hover:brightness-110 active:scale-95 disabled:opacity-50"
           >
             {isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
             Sim, remover
@@ -519,7 +519,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
   }
 
   const inputClass =
-    'h-10 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0e1213] px-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 transition-colors focus:border-[#f5409d]/50 focus:outline-none focus:ring-2 focus:ring-[#f5409d]/15';
+    'h-10 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0e1213] px-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 transition-colors focus:border-[#e11d2a]/50 focus:outline-none focus:ring-2 focus:ring-[#e11d2a]/15';
 
   return (
     <>
@@ -529,10 +529,10 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
     >
       <div className="relative mx-4 flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#15191b] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.6)]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.06] bg-gradient-to-b from-[#1a2123] to-[#15191b] px-6 py-4">
+        <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.06] bg-gradient-to-b from-[#111113] to-[#15191b] px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f5409d]/15 ring-1 ring-[#f5409d]/20">
-              <Megaphone className="h-4 w-4 text-[#f5409d]" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#e11d2a]/15 ring-1 ring-[#e11d2a]/20">
+              <Megaphone className="h-4 w-4 text-[#e11d2a]" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-[#f3f0ed]">
@@ -611,7 +611,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
                   maxLength={40}
                 />
                 {form.badge && (
-                  <span className="shrink-0 rounded-full border border-[#f5409d]/30 bg-[#f5409d]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#f5409d]">
+                  <span className="shrink-0 rounded-full border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#e11d2a]">
                     {form.badge}
                   </span>
                 )}
@@ -639,7 +639,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
                 placeholder="Texto explicativo do aviso. Pode usar 2-3 frases."
                 rows={4}
                 maxLength={600}
-                className="w-full resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#0e1213] px-3 py-2.5 text-sm leading-relaxed text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 transition-colors focus:border-[#f5409d]/50 focus:outline-none focus:ring-2 focus:ring-[#f5409d]/15"
+                className="w-full resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#0e1213] px-3 py-2.5 text-sm leading-relaxed text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 transition-colors focus:border-[#e11d2a]/50 focus:outline-none focus:ring-2 focus:ring-[#e11d2a]/15"
               />
             </Field>
           </Section>
@@ -656,7 +656,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
                   `${lng}${suffix}` as keyof FormState;
                 return (
                   <div key={lng} className="flex flex-col gap-3 rounded-xl border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.02] p-4">
-                    <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#f5409d]">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#e11d2a]">
                       {labelLng}
                     </span>
                     <Field label="Badge">
@@ -684,7 +684,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
                         placeholder={form.description || 'Announcement description...'}
                         rows={3}
                         maxLength={600}
-                        className="w-full resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#0e1213] px-3 py-2.5 text-sm leading-relaxed text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 transition-colors focus:border-[#f5409d]/50 focus:outline-none focus:ring-2 focus:ring-[#f5409d]/15"
+                        className="w-full resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#0e1213] px-3 py-2.5 text-sm leading-relaxed text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 transition-colors focus:border-[#e11d2a]/50 focus:outline-none focus:ring-2 focus:ring-[#e11d2a]/15"
                       />
                     </Field>
                     <Field label="Texto do botão">
@@ -760,7 +760,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
               type="button"
               onClick={() => update('isActive', !form.isActive)}
               className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 transition-all ${form.isActive
-                ? 'border-[#f5409d]/30 bg-[#f5409d]/[0.06]'
+                ? 'border-[#e11d2a]/30 bg-[#e11d2a]/[0.06]'
                 : 'border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.02]'
                 }`}
             >
@@ -774,7 +774,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
                     : 'Não aparece para nenhum usuário'}
                 </span>
               </div>
-              <div className={`relative h-5 w-9 rounded-full transition-colors ${form.isActive ? 'bg-[#f5409d]' : 'bg-[#f3f0ed]/15'}`}>
+              <div className={`relative h-5 w-9 rounded-full transition-colors ${form.isActive ? 'bg-[#e11d2a]' : 'bg-[#f3f0ed]/15'}`}>
                 <span className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-[#0e1213] transition-transform ${form.isActive ? 'translate-x-4' : ''}`} />
               </div>
             </button>
@@ -787,7 +787,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
             type="button"
             onClick={() => setPreviewOpen(true)}
             disabled={!form.title.trim() || !form.description.trim()}
-            className="flex items-center gap-1.5 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-xs font-semibold text-[#f3f0ed]/70 transition-all hover:border-[#f5409d]/40 hover:bg-[#f5409d]/[0.06] hover:text-[#f3f0ed] disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex items-center gap-1.5 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-2 text-xs font-semibold text-[#f3f0ed]/70 transition-all hover:border-[#e11d2a]/40 hover:bg-[#e11d2a]/[0.06] hover:text-[#f3f0ed] disabled:cursor-not-allowed disabled:opacity-40"
             title={
               !form.title.trim() || !form.description.trim()
                 ? 'Preencha título e descrição para visualizar'
@@ -807,7 +807,7 @@ function AnnouncementEditor({ mode, announcement, accessToken, onClose, onSaved 
             <button
               onClick={() => saveMutation.mutate()}
               disabled={saveMutation.isPending}
-              className="flex items-center gap-1.5 rounded-lg bg-[#f5409d] px-5 py-2 text-xs font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95 disabled:opacity-50"
+              className="app-btn flex items-center gap-1.5 bg-[#e11d2a] px-5 py-2 text-xs font-bold text-[#111113] disabled:opacity-50"
             >
               {saveMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               {mode === 'create' ? 'Criar aviso' : 'Salvar alterações'}
@@ -870,7 +870,7 @@ function Field({
       <div className="flex items-baseline justify-between">
         <label className="text-[11px] font-bold text-[#f3f0ed]">
           {label}
-          {required && <span className="ml-1 text-rose-400">*</span>}
+          {required && <span className="ml-1 text-red-400">*</span>}
         </label>
         {meta && <span className="font-mono text-[10px] tabular-nums text-[#f3f0ed]/30">{meta}</span>}
       </div>
@@ -927,7 +927,7 @@ function ImageField({
             <button
               type="button"
               onClick={() => onChange(null)}
-              className="flex items-center gap-1 rounded-lg bg-rose-500/20 px-2.5 py-1.5 text-[11px] font-semibold text-rose-200 backdrop-blur-md transition-colors hover:bg-rose-500/30"
+              className="flex items-center gap-1 rounded-lg bg-red-500/20 px-2.5 py-1.5 text-[11px] font-semibold text-red-200 backdrop-blur-md transition-colors hover:bg-red-500/30"
             >
               <Trash2 className="h-3 w-3" />
               Remover
@@ -939,12 +939,12 @@ function ImageField({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="group flex h-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#f3f0ed]/10 bg-[#0e1213] transition-all hover:border-[#f5409d]/40 hover:bg-[#f5409d]/[0.03] disabled:opacity-50"
+          className="group flex h-32 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#f3f0ed]/10 bg-[#0e1213] transition-all hover:border-[#e11d2a]/40 hover:bg-[#e11d2a]/[0.03] disabled:opacity-50"
         >
           {uploading ? (
-            <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+            <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
           ) : (
-            <ImagePlus className="h-5 w-5 text-[#f3f0ed]/30 transition-colors group-hover:text-[#f5409d]" />
+            <ImagePlus className="h-5 w-5 text-[#f3f0ed]/30 transition-colors group-hover:text-[#e11d2a]" />
           )}
           <span className="text-xs font-semibold text-[#f3f0ed]/50 transition-colors group-hover:text-[#f3f0ed]">
             {uploading ? 'Enviando...' : 'Clique para enviar uma imagem'}

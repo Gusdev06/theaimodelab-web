@@ -57,7 +57,7 @@ function UserRow({
           onClick={() => mutation.mutate()}
           disabled={mutation.isPending}
           className={cn(
-            'shrink-0 rounded-full px-4 py-1.5 text-[12.5px] font-semibold transition-colors duration-200 ease-app disabled:opacity-60',
+            'app-press shrink-0 rounded-full px-4 py-1.5 text-[12.5px] font-semibold transition-colors duration-200 ease-app disabled:opacity-60',
             following
               ? 'border border-app-hairline-2 text-app-text-2 hover:text-app-text'
               : 'bg-app-text text-app-lime-ink hover:opacity-90',
@@ -138,7 +138,7 @@ export function FollowListModal({
             type="button"
             aria-label={t('palette.close')}
             onClick={close}
-            className="flex size-8 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
+            className="app-press flex size-8 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
           >
             <X className="size-[18px]" strokeWidth={1.8} />
           </button>

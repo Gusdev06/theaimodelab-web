@@ -18,7 +18,7 @@ export function StripePager({ hasMore, hasPrev, onNext, onPrev, onRefresh, loadi
       <button
         onClick={onRefresh}
         disabled={loading}
-        className="flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
+        className="app-press app-ease flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
       >
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
       </button>
@@ -27,14 +27,14 @@ export function StripePager({ hasMore, hasPrev, onNext, onPrev, onRefresh, loadi
         <button
           onClick={onPrev}
           disabled={!hasPrev || loading}
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:cursor-not-allowed disabled:opacity-30"
+          className="app-press app-ease flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:cursor-not-allowed disabled:opacity-30"
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
         <button
           onClick={onNext}
           disabled={!hasMore || loading}
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:cursor-not-allowed disabled:opacity-30"
+          className="app-press app-ease flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:cursor-not-allowed disabled:opacity-30"
         >
           <ChevronRight className="h-4 w-4" />
         </button>

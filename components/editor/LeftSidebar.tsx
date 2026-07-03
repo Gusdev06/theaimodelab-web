@@ -140,7 +140,7 @@ export function LeftSidebar() {
   return (
     <>
       <aside
-        className={`shrink-0 md:h-full md:w-0 ${studioMode ? 'bg-transparent' : 'border-b border-[#f3f0ed]/[0.07] md:border-b-0 bg-[#1a2123] md:bg-transparent'}`}
+        className={`shrink-0 md:h-full md:w-0 ${studioMode ? 'bg-transparent' : 'border-b border-[#f3f0ed]/[0.07] md:border-b-0 bg-[#111113] md:bg-transparent'}`}
       >
         {studioMode && (
           <div className="pointer-events-none fixed left-2 top-1/2 z-40 hidden -translate-y-1/2 md:block">
@@ -162,23 +162,23 @@ export function LeftSidebar() {
                         id={id === 'tutorial' ? 'tour-tutorial-btn' : undefined}
                         onClick={() => handleNavClick(id)}
                         disabled={comingSoon}
-                        className={`relative flex h-9 w-9 items-center justify-center rounded-xl transition-all ${comingSoon
+                        className={`app-press app-ease relative flex h-9 w-9 items-center justify-center rounded-xl transition-all ${comingSoon
                           ? 'text-[#f3f0ed]/15'
                           : isActive
-                            ? 'bg-[#f5409d]/12 text-[#f5409d]'
+                            ? 'bg-[#e11d2a]/12 text-[#e11d2a]'
                             : 'text-[#f3f0ed]/40 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]'
                           }`}
                       >
                         <Icon className="h-4 w-4" />
                         {isActive && (
-                          <span className="absolute -right-1.5 top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-[#f5409d]" />
+                          <span className="absolute -right-1.5 top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-[#e11d2a]" />
                         )}
                       </button>
                     </TooltipTrigger>
                     <TooltipContent
                       side="right"
                       sideOffset={12}
-                      className="bg-[#1a2123]/95 px-2.5 py-1 text-[10px] font-medium tracking-wide text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md"
+                      className="bg-[#111113]/95 px-2.5 py-1 text-[10px] font-medium tracking-wide text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md"
                     >
                       {comingSoon
                         ? `${tooltip ?? label} · ${t('comingSoonSuffix')}`
@@ -194,12 +194,12 @@ export function LeftSidebar() {
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => addPanel('image-source')}
-                    className="flex h-9 w-9 items-center justify-center rounded-xl text-[#f3f0ed]/40 transition-all hover:bg-[#f3f0ed]/5 hover:text-[#f5409d]"
+                    className="app-press app-ease flex h-9 w-9 items-center justify-center rounded-xl text-[#f3f0ed]/40 transition-all hover:bg-[#f3f0ed]/5 hover:text-[#e11d2a]"
                   >
                     <ImageIcon className="h-4 w-4" />
                   </button>
                 </TooltipTrigger>
-                <TooltipContent side="right" sideOffset={12} className="bg-[#1a2123]/95 px-2.5 py-1 text-[10px] font-medium tracking-wide text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md">
+                <TooltipContent side="right" sideOffset={12} className="bg-[#111113]/95 px-2.5 py-1 text-[10px] font-medium tracking-wide text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md">
                   Input Image
                 </TooltipContent>
               </Tooltip>
@@ -208,12 +208,12 @@ export function LeftSidebar() {
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => addPanel('prompt-source')}
-                    className="flex h-9 w-9 items-center justify-center rounded-xl text-[#f3f0ed]/40 transition-all hover:bg-[#f3f0ed]/5 hover:text-[#f5409d]"
+                    className="app-press app-ease flex h-9 w-9 items-center justify-center rounded-xl text-[#f3f0ed]/40 transition-all hover:bg-[#f3f0ed]/5 hover:text-[#e11d2a]"
                   >
                     <Type className="h-4 w-4" />
                   </button>
                 </TooltipTrigger>
-                <TooltipContent side="right" sideOffset={12} className="bg-[#1a2123]/95 px-2.5 py-1 text-[10px] font-medium tracking-wide text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md">
+                <TooltipContent side="right" sideOffset={12} className="bg-[#111113]/95 px-2.5 py-1 text-[10px] font-medium tracking-wide text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md">
                   Input Text
                 </TooltipContent>
               </Tooltip>
@@ -233,7 +233,7 @@ export function LeftSidebar() {
                 }
               }}
               className={`flex h-10 w-full items-center gap-2 px-3 transition-colors ${anyOpen || mobileMenuOpen
-                ? 'text-[#f5409d]'
+                ? 'text-[#e11d2a]'
                 : 'text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80'
                 }`}
             >
@@ -255,7 +255,7 @@ export function LeftSidebar() {
 
             {/* Dropdown */}
             {mobileMenuOpen && (
-              <div className="absolute left-0 top-full z-[100] w-52 overflow-hidden rounded-b-xl border border-t-0 border-[#f3f0ed]/[0.08] bg-[#1a2123]/95 shadow-2xl backdrop-blur-md">
+              <div className="absolute left-0 top-full z-[100] w-52 overflow-hidden rounded-b-xl border border-t-0 border-[#f3f0ed]/[0.08] bg-[#111113]/95 shadow-2xl backdrop-blur-md">
                 {navItems.map(({ id, icon: Icon, label, isNew, comingSoon }) => {
                   const isActive =
                     (id === 'gallery' && galleryOpen) ||
@@ -274,14 +274,14 @@ export function LeftSidebar() {
                       className={`relative flex w-full items-center gap-3 px-4 py-3 text-left transition-colors ${comingSoon
                         ? 'opacity-50 text-[#f3f0ed]/40'
                         : isActive
-                          ? 'bg-[#f5409d]/10 text-[#f5409d]'
+                          ? 'bg-[#e11d2a]/10 text-[#e11d2a]'
                           : 'text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/[0.04] hover:text-[#f3f0ed]'
                         }`}
                     >
                       <Icon className="h-4 w-4 shrink-0" />
                       <span className="text-xs font-semibold">{label}</span>
                       {comingSoon ? (
-                        <span className="ml-auto flex h-4 w-4 items-center justify-center rounded-full bg-[#f5409d]/15 text-[#f5409d]">
+                        <span className="ml-auto flex h-4 w-4 items-center justify-center rounded-full bg-[#e11d2a]/15 text-[#e11d2a]">
                           <Clock className="h-2.5 w-2.5" />
                         </span>
                       ) : isNew ? (
@@ -328,17 +328,17 @@ export function LeftSidebar() {
                       className={`group pointer-events-auto relative flex h-11 w-11 items-center justify-center rounded-2xl ring-1 ring-inset backdrop-blur-xl backdrop-saturate-150 transition-all duration-200 active:scale-95 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_8px_24px_-8px_rgba(0,0,0,0.55)] ${comingSoon
                         ? 'opacity-50 bg-white/[0.02] text-[#f3f0ed]/30 ring-white/[0.04]'
                         : isActive
-                          ? 'bg-[#f5409d]/15 text-[#f5409d] ring-[#f5409d]/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_8px_24px_-6px_rgba(245,64,157,0.30)]'
+                          ? 'bg-[#e11d2a]/15 text-[#e11d2a] ring-[#e11d2a]/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_8px_24px_-6px_rgba(225,29,42,0.30)]'
                           : 'bg-white/[0.05] text-[#f3f0ed]/70 ring-white/[0.07] hover:bg-white/[0.09] hover:text-[#f3f0ed] hover:ring-white/[0.12]'
                         }`}
                     >
                       <Icon className="h-5 w-5 shrink-0" />
                       {comingSoon ? (
-                        <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#f5409d]/25 ring-2 ring-[#1a2123] text-[#f5409d] select-none">
+                        <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#e11d2a]/25 ring-2 ring-[#111113] text-[#e11d2a] select-none">
                           <Clock className="h-2.5 w-2.5" />
                         </span>
                       ) : isNew ? (
-                        <span className="absolute group-hover:animate-pulse -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-yellow-400 ring-2 ring-[#1a2123] text-black select-none">
+                        <span className="absolute group-hover:animate-pulse -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-yellow-400 ring-2 ring-[#111113] text-black select-none">
                           <Star className="h-2.5 w-2.5" />
                         </span>
                       ) : null}
@@ -347,7 +347,7 @@ export function LeftSidebar() {
                   <TooltipContent
                     side="right"
                     sideOffset={10}
-                    className="border border-[#f3f0ed]/8 bg-[#1a2123] px-2.5 py-1.5 text-[10px] font-bold tracking-widest text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md"
+                    className="border border-[#f3f0ed]/8 bg-[#111113] px-2.5 py-1.5 text-[10px] font-bold tracking-widest text-[#f3f0ed]/90 shadow-2xl backdrop-blur-md"
                   >
                     {comingSoon
                       ? `${(tooltip ?? label).toUpperCase()} — ${t('comingSoonSuffix')}`

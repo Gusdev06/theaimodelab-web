@@ -27,7 +27,7 @@ export function CreditsTab({ active }: { active: boolean }) {
   if (isLoading || !data) {
     return (
       <div className="flex h-[40vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -66,14 +66,14 @@ export function CreditsTab({ active }: { active: boolean }) {
           <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] p-5">
             <div className="mb-3 flex items-center justify-between">
               <span className="text-xs text-[#f3f0ed]/50">Taxa de utilização</span>
-              <span className="text-lg font-bold tabular-nums text-[#f5409d]">{(data.allocationVsUsage?.usagePercent ?? 0).toFixed(1)}%</span>
+              <span className="text-lg font-bold tabular-nums text-[#e11d2a]">{(data.allocationVsUsage?.usagePercent ?? 0).toFixed(1)}%</span>
             </div>
             <div className="h-4 w-full overflow-hidden rounded-full bg-[#f3f0ed]/5">
               <div
                 className="h-full rounded-full transition-all duration-700"
                 style={{
                   width: `${Math.min(data.allocationVsUsage?.usagePercent ?? 0, 100)}%`,
-                  backgroundColor: (data.allocationVsUsage?.usagePercent ?? 0) > 80 ? '#f87171' : (data.allocationVsUsage?.usagePercent ?? 0) > 50 ? '#fbbf24' : '#f5409d',
+                  backgroundColor: (data.allocationVsUsage?.usagePercent ?? 0) > 80 ? '#f87171' : (data.allocationVsUsage?.usagePercent ?? 0) > 50 ? '#fbbf24' : '#e11d2a',
                 }}
               />
             </div>

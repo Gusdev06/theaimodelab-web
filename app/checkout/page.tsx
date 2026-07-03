@@ -56,14 +56,14 @@ function CheckoutRedirectContent() {
 
   if (errorMsg) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-5 bg-[#1a2123] px-6">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-5 bg-[#111113] px-6">
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15">
           <AlertTriangle className="h-7 w-7 text-red-400" />
         </div>
         <p className="max-w-sm text-center text-sm text-[#f3f0ed]/60">{errorMsg}</p>
         <button
           onClick={() => router.replace('/creditos')}
-          className="flex h-11 items-center justify-center rounded-xl bg-[#f5409d] px-6 text-sm font-bold text-[#1a2123] transition-colors hover:bg-[#f75fae]"
+          className="app-press app-ease flex h-11 items-center justify-center rounded-xl bg-[#e11d2a] px-6 text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
         >
           Ver planos
         </button>
@@ -72,8 +72,8 @@ function CheckoutRedirectContent() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#1a2123]">
-      <Loader2 className="h-7 w-7 animate-spin text-[#f5409d]" />
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#111113]">
+      <Loader2 className="h-7 w-7 animate-spin text-[#e11d2a]" />
       <p className="text-sm text-[#f3f0ed]/50">Preparando seu checkout...</p>
     </div>
   );
@@ -83,8 +83,8 @@ export default function CheckoutRedirectPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#1a2123]">
-          <Loader2 className="h-7 w-7 animate-spin text-[#f5409d]" />
+        <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#111113]">
+          <Loader2 className="h-7 w-7 animate-spin text-[#e11d2a]" />
         </div>
       }
     >

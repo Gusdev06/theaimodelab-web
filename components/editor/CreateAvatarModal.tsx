@@ -255,17 +255,17 @@ export function CreateAvatarModal({ open, onClose, onCreated, embedded = false }
       className={
         embedded
           ? 'relative flex h-full min-h-0 w-full flex-col overflow-hidden'
-          : 'relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[#f5409d]/25 bg-gradient-to-b from-[#f5409d]/[0.06] via-[#171f21] to-[#171f21] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(245,64,157,0.05),0_0_48px_-12px_rgba(245,64,157,0.18)]'
+          : 'relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[#e11d2a]/25 bg-gradient-to-b from-[#e11d2a]/[0.06] via-[#171f21] to-[#171f21] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(225,29,42,0.05),0_0_48px_-12px_rgba(225,29,42,0.18)]'
       }
     >
       {/* Header — só no modal */}
       {!embedded && (
-        <div className="flex shrink-0 items-center justify-between border-b border-[#f5409d]/15 bg-[#f5409d]/[0.06] px-4 py-3">
+        <div className="flex shrink-0 items-center justify-between border-b border-[#e11d2a]/15 bg-[#e11d2a]/[0.06] px-4 py-3">
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#f5409d]/20 ring-1 ring-[#f5409d]/30">
-              <Wand2 className="h-3 w-3 text-[#f5409d]" />
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#e11d2a]/20 ring-1 ring-[#e11d2a]/30">
+              <Wand2 className="h-3 w-3 text-[#e11d2a]" />
             </span>
-            <span className="text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#f5409d]">
+            <span className="text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#e11d2a]">
               {t('title')}
             </span>
           </div>
@@ -318,7 +318,7 @@ export function CreateAvatarModal({ open, onClose, onCreated, embedded = false }
               placeholder={t('namePlaceholder')}
               maxLength={60}
               disabled={submitting}
-              className="w-full rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2.5 text-[13px] text-white/90 placeholder:text-white/25 transition-all focus:border-[#f5409d]/40 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-[#f5409d]/15 disabled:opacity-60"
+              className="w-full rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2.5 text-[13px] text-white/90 placeholder:text-white/25 transition-all focus:border-[#e11d2a]/40 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-[#e11d2a]/15 disabled:opacity-60"
             />
           </div>
 
@@ -486,26 +486,26 @@ function TypeCard({
       disabled={disabled}
       onClick={onClick}
       className={`relative flex flex-col items-start gap-1 overflow-hidden rounded-lg border p-3 text-left transition-all disabled:opacity-50 ${selected
-        ? 'border-[#f5409d]/50 bg-[#f5409d]/10 shadow-[inset_0_0_0_1px_rgba(245,64,157,0.2)]'
+        ? 'border-[#e11d2a]/50 bg-[#e11d2a]/10 shadow-[inset_0_0_0_1px_rgba(225,29,42,0.2)]'
         : 'border-white/[0.06] bg-white/[0.02] hover:border-white/[0.14] hover:bg-white/[0.04]'
         }`}
     >
       <div className="flex w-full items-center justify-between">
         <span
-          className={`flex h-8 w-8 items-center justify-center rounded-md transition-colors ${selected ? 'bg-[#f5409d]/20 text-[#f5409d]' : 'bg-white/[0.05] text-white/55'
+          className={`flex h-8 w-8 items-center justify-center rounded-md transition-colors ${selected ? 'bg-[#e11d2a]/20 text-[#e11d2a]' : 'bg-white/[0.05] text-white/55'
             }`}
         >
           <Icon className="h-4 w-4" />
         </span>
         <span
-          className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] ${selected ? 'bg-[#f5409d]/20 text-[#f5409d]' : 'bg-white/[0.05] text-white/45'
+          className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] ${selected ? 'bg-[#e11d2a]/20 text-[#e11d2a]' : 'bg-white/[0.05] text-white/45'
             }`}
         >
           {badge}
         </span>
       </div>
       <span
-        className={`text-[13px] font-bold ${selected ? 'text-[#f5409d]' : 'text-white/90'}`}
+        className={`text-[13px] font-bold ${selected ? 'text-[#e11d2a]' : 'text-white/90'}`}
       >
         {title}
       </span>
@@ -530,8 +530,8 @@ function ConsentBox({ consent, expanded, onToggleConsent, onToggleExpand }: Cons
     <div
       className={`overflow-hidden rounded-xl border transition-all ${
         consent
-          ? 'border-[#f5409d]/40 bg-[#f5409d]/[0.06]'
-          : 'border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/15'
+          ? 'border-[#e11d2a]/40 bg-[#e11d2a]/[0.06]'
+          : 'border-[#f3f0ed]/[0.07] bg-[#3a0f16]/15'
       }`}
     >
       <div className="flex items-center gap-2 px-2.5 py-2">
@@ -543,14 +543,14 @@ function ConsentBox({ consent, expanded, onToggleConsent, onToggleExpand }: Cons
           <span
             className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border transition-all ${
               consent
-                ? 'border-[#f5409d] bg-[#f5409d]'
+                ? 'border-[#e11d2a] bg-[#e11d2a]'
                 : 'border-[#f3f0ed]/30 bg-transparent'
             }`}
           >
             {consent && (
               <svg
                 viewBox="0 0 12 12"
-                className="h-2.5 w-2.5 text-[#1a2123]"
+                className="h-2.5 w-2.5 text-[#111113]"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
@@ -590,8 +590,8 @@ function ConsentBox({ consent, expanded, onToggleConsent, onToggleExpand }: Cons
 function TipList({ kind }: { kind: AvatarKind }) {
   const t = useTranslations('editorDialogs.avatars.create');
   return (
-    <div className="mt-2.5 flex items-start gap-2 rounded-lg border border-[#f5409d]/15 bg-[#f5409d]/[0.04] p-2.5">
-      <Lightbulb className="mt-0.5 size-3.5 shrink-0 text-[#f5409d]" strokeWidth={1.8} />
+    <div className="mt-2.5 flex items-start gap-2 rounded-lg border border-[#e11d2a]/15 bg-[#e11d2a]/[0.04] p-2.5">
+      <Lightbulb className="mt-0.5 size-3.5 shrink-0 text-[#e11d2a]" strokeWidth={1.8} />
       <p className="text-[10.5px] leading-relaxed text-white/55">
         {kind === 'photo' ? t('tipPhoto') : t('tipVideo')}
       </p>
@@ -603,38 +603,38 @@ function StageProgress({ progress }: { progress: number }) {
   const t = useTranslations('editorDialogs.avatars.create');
   const inUpload = progress < 100;
   return (
-    <div className="rounded-lg border border-[#f5409d]/15 bg-[#f5409d]/[0.03] p-3">
+    <div className="rounded-lg border border-[#e11d2a]/15 bg-[#e11d2a]/[0.03] p-3">
       <div className="mb-2 flex items-center justify-between">
         <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/55">
           {inUpload ? t('stageUpload') : t('stageTraining')}
         </span>
-        <span className="text-[10.5px] font-extrabold tabular-nums text-[#f5409d]">
+        <span className="text-[10.5px] font-extrabold tabular-nums text-[#e11d2a]">
           {progress}%
         </span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[#f5409d] to-[#ff85c2] transition-all duration-200"
+          className="h-full rounded-full bg-gradient-to-r from-[#e11d2a] to-[#ff5964] transition-all duration-200"
           style={{ width: `${progress}%` }}
         />
       </div>
       <div className="mt-2 flex items-center gap-2 text-[10px] font-semibold">
         <span
-          className={`flex items-center gap-1 ${inUpload ? 'text-[#f5409d]/85' : 'text-white/40'
+          className={`flex items-center gap-1 ${inUpload ? 'text-[#e11d2a]/85' : 'text-white/40'
             }`}
         >
           <span
-            className={`h-1 w-1 rounded-full ${inUpload ? 'bg-[#f5409d]/85' : 'bg-white/30'}`}
+            className={`h-1 w-1 rounded-full ${inUpload ? 'bg-[#e11d2a]/85' : 'bg-white/30'}`}
           />
           {t('stageStepUpload')}
         </span>
         <span className="h-px w-3 bg-white/10" />
         <span
-          className={`flex items-center gap-1 ${!inUpload ? 'text-[#f5409d]/85' : 'text-white/25'
+          className={`flex items-center gap-1 ${!inUpload ? 'text-[#e11d2a]/85' : 'text-white/25'
             }`}
         >
           <span
-            className={`h-1 w-1 rounded-full ${!inUpload ? 'bg-[#f5409d]/85' : 'bg-white/15'}`}
+            className={`h-1 w-1 rounded-full ${!inUpload ? 'bg-[#e11d2a]/85' : 'bg-white/15'}`}
           />
           {t('stageStepTrain')}
         </span>
@@ -713,7 +713,7 @@ function UploadDropzone({
       className={`group/drop relative flex cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-dashed px-6 py-7 transition-all ${hasError
         ? 'border-red-400/40 bg-red-400/[0.04]'
         : isDragging
-          ? 'scale-[1.01] border-[#f5409d]/70 bg-[#f5409d]/[0.08] shadow-[0_0_28px_-6px_rgba(245,64,157,0.45)]'
+          ? 'scale-[1.01] border-[#e11d2a]/70 bg-[#e11d2a]/[0.08] shadow-[0_0_28px_-6px_rgba(225,29,42,0.45)]'
           : 'border-white/[0.08] bg-white/[0.015] hover:border-white/[0.18] hover:bg-white/[0.03]'
         } ${submitting ? 'pointer-events-none opacity-60' : ''}`}
     >
@@ -726,7 +726,7 @@ function UploadDropzone({
       />
       <span
         className={`flex h-12 w-12 items-center justify-center rounded-full transition-all ${isDragging
-          ? 'bg-[#f5409d]/20 text-[#f5409d]'
+          ? 'bg-[#e11d2a]/20 text-[#e11d2a]'
           : 'bg-white/[0.04] text-white/40 group-hover/drop:bg-white/[0.06] group-hover/drop:text-white/55'
           }`}
       >
@@ -955,7 +955,7 @@ function WebcamCapture({ kind, disabled, onFileReady }: WebcamCaptureProps) {
             type="button"
             disabled={disabled || !streamReady}
             onClick={handleCapturePhoto}
-            className="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-[#f5409d] text-[11.5px] font-extrabold text-black shadow-[0_2px_10px_-2px_rgba(245,64,157,0.4)] transition-all hover:bg-[#f75fae] hover:shadow-[0_4px_14px_-2px_rgba(245,64,157,0.55)] disabled:cursor-not-allowed disabled:bg-white/[0.06] disabled:text-white/35 disabled:shadow-none"
+            className="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-[#e11d2a] text-[11.5px] font-extrabold text-black shadow-[0_2px_10px_-2px_rgba(225,29,42,0.4)] transition-all hover:bg-[#f75fae] hover:shadow-[0_4px_14px_-2px_rgba(225,29,42,0.55)] disabled:cursor-not-allowed disabled:bg-white/[0.06] disabled:text-white/35 disabled:shadow-none"
           >
             <Camera className="h-3.5 w-3.5" />
             {t('webcamCapturePhoto')}
@@ -1017,7 +1017,7 @@ function FilePreview({
   const t = useTranslations('editorDialogs.avatars.create');
   const isVideo = kind === 'digital_twin';
   return (
-    <div className="overflow-hidden rounded-xl border border-[#f5409d]/35 bg-[#f5409d]/[0.04]">
+    <div className="overflow-hidden rounded-xl border border-[#e11d2a]/35 bg-[#e11d2a]/[0.04]">
       {/* Big media preview */}
       <div className="relative aspect-video w-full bg-black">
         {filePreview ? (
@@ -1040,13 +1040,13 @@ function FilePreview({
           )
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <CheckCircle2 className="h-10 w-10 text-[#f5409d]/80" />
+            <CheckCircle2 className="h-10 w-10 text-[#e11d2a]/80" />
           </div>
         )}
       </div>
 
       {/* File info bar */}
-      <div className="flex items-center gap-2 border-t border-[#f5409d]/15 bg-white/[0.015] px-3 py-2.5">
+      <div className="flex items-center gap-2 border-t border-[#e11d2a]/15 bg-white/[0.015] px-3 py-2.5">
         <div className="min-w-0 flex-1">
           <div className="truncate text-[12px] font-bold text-white/90">{file.name}</div>
           <div className="mt-0.5 text-[10.5px] text-white/45 tabular-nums">

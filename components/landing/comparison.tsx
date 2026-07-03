@@ -66,7 +66,7 @@ export function Comparison() {
         {/* Header */}
         <div
           ref={ref}
-          className="mx-auto max-w-2xl text-center transition-all duration-700"
+          className="landing-ease mx-auto max-w-2xl text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(24px)",
@@ -75,7 +75,7 @@ export function Comparison() {
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-landing-accent">
             {t("tag")}
           </span>
-          <h2 className="mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
+          <h2 className="landing-reveal mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
             {t("title")}
           </h2>
         </div>
@@ -83,7 +83,7 @@ export function Comparison() {
         {/* Platform list card */}
         <div
           ref={refList}
-          className="mx-auto mt-10 max-w-3xl rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-1.5 transition-all duration-700 sm:mt-16 sm:p-2 lg:mt-20"
+          className="landing-ease mx-auto mt-10 max-w-3xl rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-1.5 transition-all duration-700 sm:mt-16 sm:p-2 lg:mt-20"
           style={{
             opacity: listVisible ? 1 : 0,
             transform: listVisible ? "translateY(0)" : "translateY(28px)",
@@ -118,7 +118,7 @@ export function Comparison() {
         {/* Total card */}
         <div
           ref={refTotal}
-          className="mx-auto mt-3 max-w-3xl rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 text-center transition-all duration-700 sm:mt-4 sm:p-7"
+          className="landing-ease mx-auto mt-3 max-w-3xl rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 text-center transition-all duration-700 sm:mt-4 sm:p-7"
           style={{
             opacity: totalVisible ? 1 : 0,
             transform: totalVisible ? "translateY(0)" : "translateY(28px)",

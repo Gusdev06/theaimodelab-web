@@ -92,7 +92,7 @@ function modelLabel(model: string | null) {
 function statusBadge(status: string) {
   const upper = status.toUpperCase();
   const config: Record<string, { color: string; icon: React.ElementType; label: string }> = {
-    COMPLETED: { color: 'border-pink-500/30 bg-pink-500/10 text-pink-400', icon: CheckCircle2, label: 'Concluída' },
+    COMPLETED: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: CheckCircle2, label: 'Concluída' },
     PROCESSING: { color: 'border-blue-500/30 bg-blue-500/10 text-blue-400', icon: Cog, label: 'Processando' },
     PENDING: { color: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400', icon: Clock, label: 'Pendente' },
     FAILED: { color: 'border-red-500/30 bg-red-500/10 text-red-400', icon: XCircle, label: 'Falha' },
@@ -258,7 +258,7 @@ export default function AdminGenerationsPage() {
     <div className="flex flex-col gap-6">
       {/* Header */}
       <div className="flex items-start justify-between">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-2xl font-bold text-[#f3f0ed]">Gerações</h1>
           <p className="mt-1 text-sm text-[#f3f0ed]/40">
             Monitoramento em tempo real · {total.toLocaleString('pt-BR')}{' '}
@@ -284,7 +284,7 @@ export default function AdminGenerationsPage() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Nome ou email…"
-                className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 outline-none transition-colors focus:border-[#f5409d]/50"
+                className="h-9 w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 outline-none transition-colors focus:border-[#e11d2a]/50"
               />
             </div>
           </FilterField>
@@ -328,7 +328,7 @@ export default function AdminGenerationsPage() {
       {/* Table */}
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : (
         <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02]">
@@ -357,7 +357,7 @@ export default function AdminGenerationsPage() {
                   <TableCell>
                     <button
                       onClick={() => router.push(`/admin/usuarios/${gen.user.id}`)}
-                      className="flex items-center gap-2 text-left transition-colors hover:text-[#f5409d]"
+                      className="flex items-center gap-2 text-left transition-colors hover:text-[#e11d2a]"
                     >
                       <UserCircle className="h-4 w-4 text-[#f3f0ed]/30" />
                       <div className="flex flex-col">
@@ -387,7 +387,7 @@ export default function AdminGenerationsPage() {
                     </span>
                   </TableCell>
                   <TableCell>
-                    <span className="text-xs tabular-nums text-[#f5409d]">{gen.creditsConsumed}</span>
+                    <span className="text-xs tabular-nums text-[#e11d2a]">{gen.creditsConsumed}</span>
                   </TableCell>
                   <TableCell>
                     <span className="text-xs tabular-nums text-[#f3f0ed]/40">
@@ -410,7 +410,7 @@ export default function AdminGenerationsPage() {
                         <span>Nenhuma geração corresponde aos filtros.</span>
                         <button
                           onClick={resetFilters}
-                          className="text-xs font-medium text-[#f5409d]/80 transition-colors hover:text-[#f5409d]"
+                          className="text-xs font-medium text-[#e11d2a]/80 transition-colors hover:text-[#e11d2a]"
                         >
                           Limpar filtros
                         </button>

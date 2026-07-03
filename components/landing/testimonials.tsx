@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Star, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "./use-scroll-reveal";
 import { useAuth } from "@/lib/auth-context";
+import { useLoginModal } from "@/lib/login-modal-context";
 
 interface TestimonialItem {
   name: string;
@@ -19,7 +20,7 @@ function Card({ item, i }: { item: TestimonialItem; i: number }) {
   return (
     <div
       ref={ref}
-      className="rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 sm:p-8"
+      className="landing-glass-hover rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 sm:p-8"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(28px)",
@@ -63,6 +64,7 @@ export function Testimonials() {
   const t = useTranslations("testimonials");
   const { user } = useAuth();
   const isLoggedIn = !!user;
+  const { openLoginModal } = useLoginModal();
   const { ref, isVisible } = useScrollReveal();
 
   const items = t.raw("items") as TestimonialItem[];
@@ -73,7 +75,7 @@ export function Testimonials() {
         {/* Header */}
         <div
           ref={ref}
-          className="mx-auto max-w-2xl text-center transition-all duration-700"
+          className="landing-reveal mx-auto max-w-2xl text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(24px)",
@@ -96,13 +98,24 @@ export function Testimonials() {
 
         {/* CTA */}
         <div className="mt-10 flex justify-center sm:mt-14">
-          <a
-            href="/workspace"
-            className="group inline-flex items-center gap-2.5 rounded-xl bg-landing-accent px-7 py-3.5 text-[14px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-colors duration-200 hover:bg-[#f75fae] active:scale-[0.98]"
-          >
-            {isLoggedIn ? t("ctaLoggedIn") : t("cta")}
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
+          {isLoggedIn ? (
+            <a
+              href="/home"
+              className="landing-btn group inline-flex items-center gap-2.5 bg-landing-accent px-7 py-3.5 text-[14px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)]"
+            >
+              {t("ctaLoggedIn")}
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => openLoginModal({ mode: "register" })}
+              className="landing-btn group inline-flex items-center gap-2.5 bg-landing-accent px-7 py-3.5 text-[14px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)]"
+            >
+              {t("cta")}
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
+          )}
         </div>
       </div>
     </section>

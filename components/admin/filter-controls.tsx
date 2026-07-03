@@ -25,19 +25,19 @@ export function FilterSelect({
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger
         size="default"
-        className="h-9 w-full rounded-lg border-[#f3f0ed]/10 bg-[#141a1c] text-[#f3f0ed]/85 shadow-none transition-colors hover:border-[#f3f0ed]/20 hover:bg-[#f3f0ed]/[0.03] focus-visible:border-[#f5409d]/50 focus-visible:ring-[3px] focus-visible:ring-[#f5409d]/20 data-[placeholder]:text-[#f3f0ed]/40 [&_svg]:text-[#f3f0ed]/40"
+        className="h-9 w-full rounded-lg border-[#f3f0ed]/10 bg-[#0a0a0b] text-[#f3f0ed]/85 shadow-none transition-colors hover:border-[#f3f0ed]/20 hover:bg-[#f3f0ed]/[0.03] focus-visible:border-[#e11d2a]/50 focus-visible:ring-[3px] focus-visible:ring-[#e11d2a]/20 data-[placeholder]:text-[#f3f0ed]/40 [&_svg]:text-[#f3f0ed]/40"
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent
         position="popper"
-        className="max-h-72 rounded-xl border-[#f3f0ed]/10 bg-[#1a2123] text-[#f3f0ed] shadow-xl"
+        className="max-h-72 rounded-xl border-[#f3f0ed]/10 bg-[#111113] text-[#f3f0ed] shadow-xl"
       >
         {options.map((o) => (
           <SelectItem
             key={o.value}
             value={o.value}
-            className="rounded-lg text-[#f3f0ed]/80 focus:bg-[#f5409d]/15 focus:text-[#f5409d] data-[state=checked]:font-medium data-[state=checked]:text-[#f5409d] [&_svg]:text-[#f5409d]"
+            className="rounded-lg text-[#f3f0ed]/80 focus:bg-[#e11d2a]/15 focus:text-[#e11d2a] data-[state=checked]:font-medium data-[state=checked]:text-[#e11d2a] [&_svg]:text-[#e11d2a]"
           >
             {o.label}
           </SelectItem>

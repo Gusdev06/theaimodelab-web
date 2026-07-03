@@ -107,8 +107,8 @@ function formatDateLong(iso: string) {
 }
 
 // Brand colors (RGB)
-const LIME: [number, number, number] = [245, 64, 157]; // #f5409d
-const DARK: [number, number, number] = [20, 26, 28]; // #141a1c
+const LIME: [number, number, number] = [225, 29, 42]; // #e11d2a
+const DARK: [number, number, number] = [20, 26, 28]; // #0a0a0b
 const MUTED: [number, number, number] = [110, 110, 110];
 
 interface ExportOptions {

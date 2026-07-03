@@ -235,7 +235,7 @@ function ProductCard({
         <button
           type="button"
           onClick={() => onUse(item)}
-          className="mt-1 w-full rounded-lg bg-[#f5409d]/10 py-2 text-[12px] font-black text-[#f5409d] ring-1 ring-[#f5409d]/25 transition-all duration-200 hover:bg-[#f5409d]/20"
+          className="app-press mt-1 w-full rounded-lg bg-[#f5409d]/10 py-2 text-[12px] font-black text-[#f5409d] ring-1 ring-[#f5409d]/25 transition-all duration-200 hover:bg-[#f5409d]/20"
         >
           {t('useProduct')}
         </button>
@@ -385,7 +385,7 @@ export function TikTokShopView() {
               <button
                 type="button"
                 onClick={() => router.push('/pricing')}
-                className="rounded-[10px] bg-app-lime px-5 py-2.5 text-[13px] font-semibold text-app-lime-ink transition-colors hover:bg-app-lime-hover"
+                className="app-btn bg-app-lime px-5 py-2.5 text-[13px] font-semibold text-app-lime-ink"
               >
                 {t('viewPlans')}
               </button>

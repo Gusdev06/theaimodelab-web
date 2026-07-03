@@ -77,7 +77,7 @@ const EMOTIONS: { id: string; icon: LucideIcon }[] = [
 ];
 
 const selectTriggerClass =
-  'w-full shrink-0 !h-11 rounded-[10px] border-app-hairline bg-app-surface px-3.5 text-[14px] font-semibold text-app-text shadow-none transition-colors duration-200 ease-app hover:border-app-hairline-2 focus-visible:border-[rgba(245,64,157,0.4)] focus-visible:ring-0 dark:bg-app-surface dark:hover:bg-app-surface [&_svg:not([class*=\'text-\'])]:text-app-muted';
+  'w-full shrink-0 !h-11 rounded-[10px] border-app-hairline bg-app-surface px-3.5 text-[14px] font-semibold text-app-text shadow-none transition-colors duration-200 ease-app hover:border-app-hairline-2 focus-visible:border-[rgba(225,29,42,0.4)] focus-visible:ring-0 dark:bg-app-surface dark:hover:bg-app-surface [&_svg:not([class*=\'text-\'])]:text-app-muted';
 
 const selectContentClass =
   'rounded-xl border-app-hairline-2 bg-app-card text-app-text shadow-[0_12px_30px_rgba(0,0,0,0.45)]';
@@ -349,7 +349,7 @@ export function VoiceConfigPanel({
                   <button
                     type="button"
                     onClick={() => setPickerOpen(true)}
-                    className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-[rgba(245,64,157,0.3)] bg-app-surface px-2 text-app-text transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.5)]"
+                    className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-[rgba(225,29,42,0.3)] bg-app-surface px-2 text-app-text transition-colors duration-200 ease-app hover:border-[rgba(225,29,42,0.5)]"
                   >
                     {voice.cloned ? (
                       <MicVocal className="size-[19px] text-app-lime" strokeWidth={1.8} />
@@ -362,7 +362,7 @@ export function VoiceConfigPanel({
                 <button
                   type="button"
                   onClick={() => setPickerOpen(true)}
-                  className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text"
+                  className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app app-press hover:border-[rgba(225,29,42,0.4)] hover:text-app-text"
                 >
                   <AudioLines className="size-[19px]" strokeWidth={1.8} />
                   <span className="text-[12px] font-semibold">
@@ -399,9 +399,9 @@ export function VoiceConfigPanel({
               </div>
             ) : referenceAudio ? (
               /* áudio capturado — card em largura total com player para ouvir */
-              <div className="flex flex-col gap-3 rounded-xl border border-[rgba(245,64,157,0.3)] bg-app-surface p-3.5">
+              <div className="flex flex-col gap-3 rounded-xl border border-[rgba(225,29,42,0.3)] bg-app-surface p-3.5">
                 <div className="flex items-center gap-2.5">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border border-[rgba(245,64,157,0.25)] bg-[rgba(245,64,157,0.08)]">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border border-[rgba(225,29,42,0.25)] bg-[rgba(225,29,42,0.08)]">
                     <AudioLines className="size-4 text-app-lime" strokeWidth={1.8} />
                   </span>
                   <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-app-text">
@@ -439,7 +439,7 @@ export function VoiceConfigPanel({
                 <button
                   type="button"
                   onClick={startRecording}
-                  className="flex h-full min-h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app hover:border-[rgba(245,64,157,0.4)] hover:text-app-text"
+                  className="flex h-full min-h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-app-hairline-2 text-app-text-2 transition-colors duration-200 ease-app app-press hover:border-[rgba(225,29,42,0.4)] hover:text-app-text"
                 >
                   <Mic className="size-[19px]" strokeWidth={1.8} />
                   <span className="text-[12px] font-semibold">{t('voice.record')}</span>
@@ -554,7 +554,7 @@ export function VoiceConfigPanel({
           >
             {t('voice.script')}
           </FieldLabel>
-          <div className="flex flex-col rounded-xl border border-app-hairline bg-app-surface transition-colors duration-200 ease-app focus-within:border-[rgba(245,64,157,0.4)]">
+          <div className="flex flex-col rounded-xl border border-app-hairline bg-app-surface transition-colors duration-200 ease-app focus-within:border-[rgba(225,29,42,0.4)]">
             <textarea
               ref={textRef}
               value={text}
@@ -587,7 +587,7 @@ export function VoiceConfigPanel({
           type="button"
           onClick={generate}
           disabled={!canGenerate || submitting}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-app-lime text-[14.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-11 w-full items-center justify-center gap-2 app-btn bg-app-lime text-[14.5px] font-semibold text-app-lime-ink disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? (
             <>

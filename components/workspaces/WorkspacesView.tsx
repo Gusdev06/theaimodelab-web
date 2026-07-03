@@ -180,7 +180,7 @@ function WorkspaceCard({ item, onOpen, onRename, onToggleFavorite, onDelete }: C
               e.currentTarget.blur();
             }
           }}
-          className="mt-2 w-full rounded-md border border-[rgba(245,64,157,0.4)] bg-app-surface px-2 py-1 text-[14px] font-semibold text-app-text outline-none"
+          className="mt-2 w-full rounded-md border border-[rgba(225,29,42,0.4)] bg-app-surface px-2 py-1 text-[14px] font-semibold text-app-text outline-none"
         />
       ) : (
         <button
@@ -286,10 +286,10 @@ export function WorkspacesView() {
     <div className="min-h-0 flex-1 overflow-y-auto scrollbar-app">
       <div className="mx-auto flex w-full max-w-[1600px] flex-col px-6 pb-16 pt-7 lg:px-11">
         {/* cabeçalho */}
-        <h1 className="text-[28px] font-bold tracking-[-0.6px] text-app-text sm:text-4xl">
+        <h1 className="app-reveal text-[28px] font-bold tracking-[-0.6px] text-app-text sm:text-4xl">
           {t('workspaces.title')}
         </h1>
-        <p className="mt-1.5 text-[14px] text-app-text-2 sm:text-[15px]">{t('workspaces.subtitle')}</p>
+        <p className="app-reveal mt-1.5 text-[14px] text-app-text-2 sm:text-[15px]" style={{ animationDelay: '0.08s' }}>{t('workspaces.subtitle')}</p>
 
         {/* abas + ações */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -319,7 +319,7 @@ export function WorkspacesView() {
               onClick={() => createMutation.mutate()}
               disabled={createMutation.isPending}
               aria-label={t('workspaces.new')}
-              className="flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[10px] border border-app-hairline-2 px-4 text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-surface disabled:opacity-60 max-sm:w-10 max-sm:px-0"
+              className="app-press flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[10px] border border-app-hairline-2 px-4 text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-surface disabled:opacity-60 max-sm:w-10 max-sm:px-0"
             >
               {createMutation.isPending ? (
                 <Loader2 className="size-4 animate-spin" strokeWidth={1.8} />
@@ -334,7 +334,7 @@ export function WorkspacesView() {
               aria-pressed={favOnly}
               onClick={() => setFavOnly((v) => !v)}
               className={cn(
-                'flex size-10 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-app hover:bg-app-surface',
+                'app-press flex size-10 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ease-app hover:bg-app-surface',
                 favOnly ? 'text-app-lime' : 'text-app-text-2 hover:text-app-text',
               )}
             >
@@ -355,7 +355,7 @@ export function WorkspacesView() {
               <SlidersHorizontal className="size-[18px]" strokeWidth={1.8} />
             </button>
             {searchOpen ? (
-              <div className="flex h-10 w-[200px] items-center gap-2 rounded-full border border-app-hairline bg-app-surface px-3.5 transition-colors duration-200 ease-app focus-within:border-[rgba(245,64,157,0.4)] sm:w-[260px]">
+              <div className="flex h-10 w-[200px] items-center gap-2 rounded-full border border-app-hairline bg-app-surface px-3.5 transition-colors duration-200 ease-app focus-within:border-[rgba(225,29,42,0.4)] sm:w-[260px]">
                 <Search className="size-4 shrink-0 text-app-muted" strokeWidth={1.8} />
                 <input
                   autoFocus
@@ -381,7 +381,7 @@ export function WorkspacesView() {
                 type="button"
                 aria-label={t('workspaces.searchPlaceholder')}
                 onClick={() => setSearchOpen(true)}
-                className="flex size-10 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
+                className="app-press flex size-10 items-center justify-center rounded-full text-app-text-2 transition-colors duration-200 ease-app hover:bg-app-surface hover:text-app-text"
               >
                 <Search className="size-[18px]" strokeWidth={1.8} />
               </button>

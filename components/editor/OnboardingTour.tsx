@@ -40,9 +40,9 @@ const steps: Step[] = [
 ];
 
 const stepIcons: Record<string, React.ReactNode> = {
-  welcome: <Smile className="h-5 w-5 text-[#f5409d]" />,
-  tutorials: <GraduationCap className="h-5 w-5 text-[#f5409d]" />,
-  finish: <SquareMousePointer className="h-5 w-5 text-[#f5409d]" />,
+  welcome: <Smile className="h-5 w-5 text-[#e11d2a]" />,
+  tutorials: <GraduationCap className="h-5 w-5 text-[#e11d2a]" />,
+  finish: <SquareMousePointer className="h-5 w-5 text-[#e11d2a]" />,
 };
 
 function TourTooltip({
@@ -64,7 +64,7 @@ function TourTooltip({
   return (
     <div
       {...tooltipProps}
-      className="relative w-[320px] rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#1a2123] p-5 shadow-2xl"
+      className="relative w-[320px] rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#111113] p-5 shadow-2xl"
       style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
     >
       {/* Close */}
@@ -77,7 +77,7 @@ function TourTooltip({
 
       {/* Icon + heading */}
       <div className="flex items-center gap-2.5 pr-8">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10 ring-1 ring-[#f5409d]/20">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10 ring-1 ring-[#e11d2a]/20">
           {icon}
         </div>
         <h3 className="text-sm font-semibold text-[#f3f0ed] leading-tight">{heading}</h3>
@@ -94,9 +94,9 @@ function TourTooltip({
             <div
               key={i}
               className={`h-1.5 rounded-full transition-all ${i === index
-                ? 'w-4 bg-[#f5409d]'
+                ? 'w-4 bg-[#e11d2a]'
                 : i < index
-                  ? 'w-1.5 bg-[#f5409d]/30'
+                  ? 'w-1.5 bg-[#e11d2a]/30'
                   : 'w-1.5 bg-[#f3f0ed]/10'
                 }`}
             />
@@ -115,7 +115,7 @@ function TourTooltip({
           )}
           <button
             {...primaryProps}
-            className="rounded-lg bg-[#f5409d] px-3.5 py-1.5 text-[11px] font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95"
+            className="rounded-lg bg-[#e11d2a] px-3.5 py-1.5 text-[11px] font-bold text-[#111113] transition-all hover:brightness-110 active:scale-95"
           >
             {isLastStep ? t('actions.finish') : t('actions.next')}
           </button>
@@ -178,7 +178,7 @@ export function OnboardingTour() {
           },
           spotlight: {
             borderRadius: 10,
-            boxShadow: '0 0 0 2px rgba(245, 64, 157, 0.3)',
+            boxShadow: '0 0 0 2px rgba(225,29,42, 0.3)',
           },
         }}
       />

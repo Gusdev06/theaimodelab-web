@@ -51,9 +51,9 @@ export default function AdminVertexPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="app-reveal">
           <h1 className="flex items-center gap-2 text-2xl font-bold text-[#f3f0ed]">
-            <Cloud className="h-6 w-6 text-[#f5409d]" />
+            <Cloud className="h-6 w-6 text-[#e11d2a]" />
             Vertex
           </h1>
           <p className="mt-1 text-sm text-[#f3f0ed]/50">
@@ -64,14 +64,14 @@ export default function AdminVertexPage() {
           <button
             onClick={() => refetch()}
             disabled={isFetching}
-            className="flex h-9 items-center gap-2 rounded-lg border border-[#f3f0ed]/10 bg-[#1a2123] px-3 text-sm text-[#f3f0ed]/70 transition hover:bg-[#212a2c] disabled:opacity-50"
+            className="app-press app-ease flex h-9 items-center gap-2 rounded-lg border border-[#f3f0ed]/10 bg-[#111113] px-3 text-sm text-[#f3f0ed]/70 transition hover:bg-[#212a2c] disabled:opacity-50"
           >
             <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
             Atualizar
           </button>
           <button
             onClick={() => setShowCreate(true)}
-            className="flex h-9 items-center gap-2 rounded-lg bg-[#f5409d] px-3 text-sm font-semibold text-[#111618] transition hover:bg-[#fa4da6]"
+            className="app-btn flex h-9 items-center gap-2 bg-[#e11d2a] px-3 text-sm font-semibold text-[#111618]"
           >
             <Plus className="h-4 w-4" />
             Adicionar conta
@@ -100,7 +100,7 @@ export default function AdminVertexPage() {
 
       {/* Filtro */}
       {credentials && credentials.length > 0 && (
-        <div className="flex items-center gap-1 rounded-lg border border-[#f3f0ed]/10 bg-[#1a2123] p-1 w-fit">
+        <div className="flex items-center gap-1 rounded-lg border border-[#f3f0ed]/10 bg-[#111113] p-1 w-fit">
           <FilterTab label="Todas" count={credentials.length} active={filter === 'all'} onClick={() => setFilter('all')} />
           <FilterTab label="Ativas" count={activeCount} active={filter === 'active'} onClick={() => setFilter('active')} />
           <FilterTab label="Inativas" count={inactiveCount} active={filter === 'inactive'} onClick={() => setFilter('inactive')} />
@@ -109,21 +109,21 @@ export default function AdminVertexPage() {
 
       {/* Loading */}
       {isLoading && (
-        <div className="flex h-40 items-center justify-center rounded-xl border border-[#f3f0ed]/10 bg-[#1a2123]">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        <div className="flex h-40 items-center justify-center rounded-xl border border-[#f3f0ed]/10 bg-[#111113]">
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       )}
 
       {/* Empty */}
       {!isLoading && credentials && credentials.length === 0 && (
-        <div className="rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#1a2123] p-12 text-center">
+        <div className="rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#111113] p-12 text-center">
           <Cloud className="mx-auto h-8 w-8 text-[#f3f0ed]/30" />
           <p className="mt-3 text-sm text-[#f3f0ed]/60">
             Nenhuma conta Vertex configurada ainda.
           </p>
           <button
             onClick={() => setShowCreate(true)}
-            className="mt-4 inline-flex h-9 items-center gap-2 rounded-lg bg-[#f5409d] px-3 text-sm font-semibold text-[#111618] transition hover:bg-[#fa4da6]"
+            className="mt-4 inline-flex h-9 items-center gap-2 rounded-lg bg-[#e11d2a] px-3 text-sm font-semibold text-[#111618] transition hover:bg-[#ff5964]"
           >
             <Plus className="h-4 w-4" />
             Adicionar primeira conta
@@ -133,7 +133,7 @@ export default function AdminVertexPage() {
 
       {/* Filtro sem resultados */}
       {!isLoading && credentials && credentials.length > 0 && filtered.length === 0 && (
-        <div className="rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#1a2123] p-10 text-center">
+        <div className="rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#111113] p-10 text-center">
           <p className="text-sm text-[#f3f0ed]/50">
             Nenhuma conta {filter === 'active' ? 'ativa' : 'inativa'} no momento.
           </p>
@@ -164,9 +164,9 @@ function SummaryCard({
   value: number | string;
   accent?: 'green';
 }) {
-  const accentClass = accent === 'green' ? 'text-[#f5409d]' : 'text-[#f3f0ed]';
+  const accentClass = accent === 'green' ? 'text-[#e11d2a]' : 'text-[#f3f0ed]';
   return (
-    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#1a2123] p-4">
+    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#111113] p-4">
       <p className="text-[11px] uppercase tracking-wider text-[#f3f0ed]/40">{label}</p>
       <p className={`mt-2 text-2xl font-bold ${accentClass}`}>{value}</p>
     </div>
@@ -189,14 +189,14 @@ function FilterTab({
       onClick={onClick}
       className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition ${
         active
-          ? 'bg-[#f5409d]/15 text-[#f5409d]'
+          ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
           : 'text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/80'
       }`}
     >
       {label}
       <span
         className={`rounded px-1.5 py-0.5 text-[10px] tabular-nums ${
-          active ? 'bg-[#f5409d]/20' : 'bg-[#f3f0ed]/10 text-[#f3f0ed]/40'
+          active ? 'bg-[#e11d2a]/20' : 'bg-[#f3f0ed]/10 text-[#f3f0ed]/40'
         }`}
       >
         {count}
@@ -207,11 +207,11 @@ function FilterTab({
 
 function CredentialCard({ cred, onDelete }: { cred: VertexCredential; onDelete: () => void }) {
   return (
-    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#1a2123] p-5 transition hover:border-[#f3f0ed]/12">
+    <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#111113] p-5 transition hover:border-[#f3f0ed]/12">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <KeyRound className="h-4 w-4 text-[#f5409d]" />
+            <KeyRound className="h-4 w-4 text-[#e11d2a]" />
             <h3 className="truncate text-sm font-semibold text-[#f3f0ed]">{cred.name}</h3>
             <StatusBadge active={cred.active} />
           </div>
@@ -243,8 +243,8 @@ function CredentialCard({ cred, onDelete }: { cred: VertexCredential; onDelete: 
 
 function StatusBadge({ active }: { active: boolean }) {
   return active ? (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-pink-500/15 px-2.5 py-1 text-[11px] font-medium text-pink-400">
-      <span className="h-1.5 w-1.5 rounded-full bg-pink-400" />
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-red-500/15 px-2.5 py-1 text-[11px] font-medium text-red-400">
+      <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
       Ativa
     </span>
   ) : (
@@ -292,11 +292,11 @@ function CreateModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative flex w-full max-w-lg flex-col rounded-2xl border border-[#f3f0ed]/10 bg-[#141a1c] shadow-2xl">
+      <div className="relative flex w-full max-w-lg flex-col rounded-2xl border border-[#f3f0ed]/10 bg-[#0a0a0b] shadow-2xl">
         <div className="flex items-start justify-between gap-4 border-b border-[#f3f0ed]/6 px-6 py-4">
           <div>
             <h2 className="flex items-center gap-2 text-sm font-semibold text-[#f3f0ed]">
-              <Plus className="h-4 w-4 text-[#f5409d]" />
+              <Plus className="h-4 w-4 text-[#e11d2a]" />
               Adicionar conta Vertex
             </h2>
             <p className="mt-1 text-xs text-[#f3f0ed]/50">
@@ -305,7 +305,7 @@ function CreateModal({ onClose }: { onClose: () => void }) {
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/60 transition hover:bg-[#1a2123] hover:text-[#f3f0ed]"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#f3f0ed]/60 transition hover:bg-[#111113] hover:text-[#f3f0ed]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -331,14 +331,14 @@ function CreateModal({ onClose }: { onClose: () => void }) {
         <div className="flex items-center justify-end gap-2 border-t border-[#f3f0ed]/6 px-6 py-4">
           <button
             onClick={onClose}
-            className="rounded-lg border border-[#f3f0ed]/10 px-4 py-2 text-sm text-[#f3f0ed]/70 transition hover:bg-[#1a2123]"
+            className="rounded-lg border border-[#f3f0ed]/10 px-4 py-2 text-sm text-[#f3f0ed]/70 transition hover:bg-[#111113]"
           >
             Cancelar
           </button>
           <button
             onClick={() => mutation.mutate()}
             disabled={!canSubmit}
-            className="flex items-center gap-2 rounded-lg bg-[#f5409d] px-4 py-2 text-sm font-semibold text-[#111618] transition hover:bg-[#fa4da6] disabled:opacity-40"
+            className="flex items-center gap-2 rounded-lg bg-[#e11d2a] px-4 py-2 text-sm font-semibold text-[#111618] transition hover:bg-[#ff5964] disabled:opacity-40"
           >
             {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             Adicionar
@@ -375,7 +375,7 @@ function Field({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0e1416] px-3 py-2 text-sm text-[#f3f0ed] outline-none transition placeholder:text-[#f3f0ed]/25 focus:border-[#f5409d]/50 ${mono ? 'font-mono text-[13px]' : ''}`}
+        className={`w-full rounded-lg border border-[#f3f0ed]/10 bg-[#0e1416] px-3 py-2 text-sm text-[#f3f0ed] outline-none transition placeholder:text-[#f3f0ed]/25 focus:border-[#e11d2a]/50 ${mono ? 'font-mono text-[13px]' : ''}`}
       />
     </div>
   );
@@ -398,7 +398,7 @@ function DeleteModal({ cred, onClose }: { cred: VertexCredential; onClose: () =>
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative flex w-full max-w-md flex-col rounded-2xl border border-red-500/20 bg-[#141a1c] shadow-2xl">
+      <div className="relative flex w-full max-w-md flex-col rounded-2xl border border-red-500/20 bg-[#0a0a0b] shadow-2xl">
         <div className="px-6 py-5">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-500/15">
@@ -427,7 +427,7 @@ function DeleteModal({ cred, onClose }: { cred: VertexCredential; onClose: () =>
           <button
             onClick={onClose}
             disabled={mutation.isPending}
-            className="rounded-lg border border-[#f3f0ed]/10 px-4 py-2 text-sm text-[#f3f0ed]/70 transition hover:bg-[#1a2123] disabled:opacity-50"
+            className="rounded-lg border border-[#f3f0ed]/10 px-4 py-2 text-sm text-[#f3f0ed]/70 transition hover:bg-[#111113] disabled:opacity-50"
           >
             Cancelar
           </button>

@@ -232,7 +232,7 @@ export function PostInteractive({
             className="relative flex h-10 w-10 items-center justify-center text-white active:scale-90 transition-transform"
           >
             {copied ? (
-              <Check className="h-7 w-7 text-[#ff6ab5]" strokeWidth={2} />
+              <Check className="h-7 w-7 text-[#ff5964]" strokeWidth={2} />
             ) : (
               <Copy className="h-[26px] w-[26px]" strokeWidth={1.75} />
             )}
@@ -282,7 +282,7 @@ export function PostInteractive({
         <button
           type="button"
           onClick={handleUse}
-          className="flex w-full items-center justify-center gap-2 h-10 rounded-lg bg-[#ff6ab5] hover:bg-[#e93c95] active:bg-[#d43889] text-sm font-semibold text-black transition-colors"
+          className="app-press flex w-full items-center justify-center gap-2 h-10 rounded-lg bg-[#ff5964] hover:bg-[#e11d2a] active:bg-[#b3121a] text-sm font-semibold text-black transition-colors"
         >
           <Sparkles className="h-4 w-4" />
           <span>Usar prompt deste slide</span>

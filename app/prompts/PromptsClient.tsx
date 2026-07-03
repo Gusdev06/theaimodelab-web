@@ -39,7 +39,7 @@ function PromptCard({ p }: { p: CardPrompt }) {
   };
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/2 transition-colors hover:border-[#f3f0ed]/15">
+    <div className="app-glass-hover group flex flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/2 transition-colors hover:border-[#f3f0ed]/15">
       <div className="relative aspect-square w-full overflow-hidden bg-[#111618]">
         {p.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -64,23 +64,23 @@ function PromptCard({ p }: { p: CardPrompt }) {
           <h3 className="line-clamp-2 text-sm font-semibold text-[#f3f0ed]">{p.title}</h3>
           <button
             onClick={copy}
-            className="shrink-0 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 p-1.5 text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/10 hover:text-[#f3f0ed]"
+            className="app-press app-ease shrink-0 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/5 p-1.5 text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/10 hover:text-[#f3f0ed]"
             title={t('copyPrompt')}
           >
-            {copied ? <Check className="h-3.5 w-3.5 text-[#f5409d]" /> : <Copy className="h-3.5 w-3.5" />}
+            {copied ? <Check className="h-3.5 w-3.5 text-[#e11d2a]" /> : <Copy className="h-3.5 w-3.5" />}
           </button>
         </div>
         <p className="line-clamp-3 whitespace-pre-wrap text-xs leading-relaxed text-[#f3f0ed]/50">
           {p.prompt}
         </p>
         {p.aiModel && (
-          <span className="inline-block w-fit rounded bg-[#f5409d]/10 px-1.5 py-0.5 font-mono text-[10px] text-[#f5409d]">
+          <span className="inline-block w-fit rounded bg-[#e11d2a]/10 px-1.5 py-0.5 font-mono text-[10px] text-[#e11d2a]">
             {p.aiModel}
           </span>
         )}
         <a
           href={buildWorkspaceHref(p.prompt, p.type)}
-          className="mt-2 flex items-center justify-center gap-1.5 rounded-lg bg-[#f5409d] px-3 py-2 text-xs font-semibold text-[#111618] transition-all hover:brightness-110 hover:shadow-[0_0_20px_rgba(245,64,157,0.25)]"
+          className="app-press app-ease mt-2 flex items-center justify-center gap-1.5 rounded-lg bg-[#e11d2a] px-3 py-2 text-xs font-semibold text-[#111618] transition-all hover:brightness-110 hover:shadow-[0_0_20px_rgba(225,29,42,0.25)]"
         >
           <Wand2 className="h-3.5 w-3.5" />
           {t('usePrompt')}
@@ -150,7 +150,7 @@ export function PromptsClient({ sections }: { sections: ApiPromptSection[] }) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t('searchPlaceholder')}
-            className="h-10 w-full rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#f5409d]/40 focus:outline-none"
+            className="h-10 w-full rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 pl-9 pr-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#e11d2a]/40 focus:outline-none"
           />
         </div>
 
@@ -159,7 +159,7 @@ export function PromptsClient({ sections }: { sections: ApiPromptSection[] }) {
             onClick={() => setActiveType(null)}
             className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
               activeType === null
-                ? 'bg-[#f5409d] text-[#111618]'
+                ? 'bg-[#e11d2a] text-[#111618]'
                 : 'border border-[#f3f0ed]/10 bg-[#f3f0ed]/3 text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/8'
             }`}
           >
@@ -171,7 +171,7 @@ export function PromptsClient({ sections }: { sections: ApiPromptSection[] }) {
               onClick={() => setActiveType(type)}
               className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
                 activeType === type
-                  ? 'bg-[#f5409d] text-[#111618]'
+                  ? 'bg-[#e11d2a] text-[#111618]'
                   : 'border border-[#f3f0ed]/10 bg-[#f3f0ed]/3 text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/8'
               }`}
             >
@@ -188,7 +188,7 @@ export function PromptsClient({ sections }: { sections: ApiPromptSection[] }) {
               onClick={() => setActiveSection(null)}
               className={`shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
                 activeSection === null
-                  ? 'border-[#f5409d]/40 bg-[#f5409d]/10 text-[#f5409d]'
+                  ? 'border-[#e11d2a]/40 bg-[#e11d2a]/10 text-[#e11d2a]'
                   : 'border-[#f3f0ed]/10 bg-[#f3f0ed]/3 text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/8'
               }`}
             >
@@ -200,7 +200,7 @@ export function PromptsClient({ sections }: { sections: ApiPromptSection[] }) {
                 onClick={() => setActiveSection(s.id)}
                 className={`shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
                   activeSection === s.id
-                    ? 'border-[#f5409d]/40 bg-[#f5409d]/10 text-[#f5409d]'
+                    ? 'border-[#e11d2a]/40 bg-[#e11d2a]/10 text-[#e11d2a]'
                     : 'border-[#f3f0ed]/10 bg-[#f3f0ed]/3 text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/8'
                 }`}
               >

@@ -33,7 +33,7 @@ const PARTICLE_POSITIONS = [8, 15, 22, 30, 37, 44, 51, 58, 65, 72, 79, 86, 93, 2
 function FloatingParticle({ delay, x }: { delay: number; x: number }) {
   return (
     <div
-      className="absolute w-1 h-1 rounded-full bg-[#f5409d]/40"
+      className="absolute w-1 h-1 rounded-full bg-[#e11d2a]/40"
       style={{
         left: `${x}%`,
         bottom: "-5%",
@@ -83,9 +83,9 @@ export default function NotFound() {
     PIXEL_ART_404.some(([r, c]) => r === row && c === col);
 
   return (
-    <div className="min-h-screen bg-[#141a1c] flex flex-col items-center justify-center px-4 relative overflow-hidden select-none">
+    <div className="min-h-screen bg-[#0a0a0b] flex flex-col items-center justify-center px-4 relative overflow-hidden select-none">
       {/* Background glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#f5409d]/[0.03] blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#e11d2a]/[0.03] blur-[120px] pointer-events-none" />
 
       {/* Floating particles */}
       {PARTICLE_POSITIONS.map((x, i) => (
@@ -93,7 +93,7 @@ export default function NotFound() {
       ))}
 
       {/* Interactive pixel grid */}
-      <div className="relative mb-8">
+      <div className="app-reveal relative mb-8">
         <div
           className="grid gap-[3px]"
           style={{ gridTemplateColumns: `repeat(13, 1fr)` }}
@@ -111,11 +111,11 @@ export default function NotFound() {
                     ${
                       is404
                         ? isLit
-                          ? "bg-[#141a1c] border-[#f5409d]/10"
-                          : "bg-[#f5409d] border-[#f5409d]/60 shadow-[0_0_12px_rgba(245,64,157,0.3)]"
+                          ? "bg-[#0a0a0b] border-[#e11d2a]/10"
+                          : "bg-[#e11d2a] border-[#e11d2a]/60 shadow-[0_0_12px_rgba(225,29,42,0.3)]"
                         : isLit
-                          ? "bg-[#f5409d] border-[#f5409d]/60 shadow-[0_0_12px_rgba(245,64,157,0.3)]"
-                          : "bg-[#1e2829] border-[#f5409d]/5 hover:bg-[#2a3536] hover:border-[#f5409d]/20"
+                          ? "bg-[#e11d2a] border-[#e11d2a]/60 shadow-[0_0_12px_rgba(225,29,42,0.3)]"
+                          : "bg-[#16161a] border-[#e11d2a]/5 hover:bg-[#2a3536] hover:border-[#e11d2a]/20"
                     }
                   `}
                   aria-label={`pixel ${row}-${col}`}
@@ -129,7 +129,7 @@ export default function NotFound() {
         {isGlitching && (
           <div className="absolute inset-0 pointer-events-none">
             <div
-              className="absolute inset-0 bg-[#f5409d]/5"
+              className="absolute inset-0 bg-[#e11d2a]/5"
               style={{
                 clipPath: `inset(${30 + Math.random() * 20}% 0 ${30 + Math.random() * 20}% 0)`,
               }}
@@ -140,7 +140,7 @@ export default function NotFound() {
 
       {/* Face */}
       <div
-        className={`text-5xl sm:text-6xl font-mono font-bold text-[#f5409d] mb-6 transition-all duration-150 ${
+        className={`text-5xl sm:text-6xl font-mono font-bold text-[#e11d2a] mb-6 transition-all duration-150 ${
           isGlitching ? "translate-x-1 opacity-70 skew-x-2" : ""
         }`}
       >
@@ -153,7 +153,7 @@ export default function NotFound() {
       </p>
 
       {clicks >= 10 && (
-        <p className="text-[#f5409d]/50 text-xs font-mono mb-4 animate-pulse">
+        <p className="text-[#e11d2a]/50 text-xs font-mono mb-4 animate-pulse">
           {clicks} pixels clicados... você realmente não tem o que fazer, né?
         </p>
       )}
@@ -162,7 +162,7 @@ export default function NotFound() {
       <div className="flex items-center gap-3 mt-8">
         <Link
           href="/"
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#f5409d] text-[#141a1c] font-semibold rounded-xl hover:brightness-110 transition-all duration-200 text-sm"
+          className="app-btn flex items-center gap-2 px-5 py-2.5 bg-[#e11d2a] text-[#0a0a0b] font-semibold text-sm"
         >
           <Home className="w-4 h-4" />
           Voltar ao início
@@ -170,7 +170,7 @@ export default function NotFound() {
 
         <button
           onClick={randomize}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#1e2829] text-[#f3f0ed]/80 font-medium rounded-xl border border-[#f5409d]/10 hover:border-[#f5409d]/30 hover:text-[#f3f0ed] transition-all duration-200 text-sm cursor-pointer"
+          className="app-press app-ease flex items-center gap-2 px-5 py-2.5 bg-[#16161a] text-[#f3f0ed]/80 font-medium rounded-xl border border-[#e11d2a]/10 hover:border-[#e11d2a]/30 hover:text-[#f3f0ed] transition-all duration-200 text-sm cursor-pointer"
         >
           <RotateCcw className="w-4 h-4" />
           Outra desculpa
@@ -180,7 +180,7 @@ export default function NotFound() {
       {/* Easter egg hint */}
       <p className="text-[#f3f0ed]/20 text-[11px] mt-12 font-mono">
         dica: clique nos pixels {" "}
-        <Sparkles className="w-3 h-3 inline text-[#f5409d]/30" />
+        <Sparkles className="w-3 h-3 inline text-[#e11d2a]/30" />
       </p>
 
       <style jsx>{`

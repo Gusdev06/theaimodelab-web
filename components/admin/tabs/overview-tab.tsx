@@ -30,7 +30,7 @@ function StatusBar({ stats }: { stats: AdminStats }) {
   if (total === 0) return null;
 
   const segments = [
-    { key: 'completed', value: stats.generationsByStatus.completed, color: '#f5409d', label: 'Concluídas', icon: CheckCircle2 },
+    { key: 'completed', value: stats.generationsByStatus.completed, color: '#e11d2a', label: 'Concluídas', icon: CheckCircle2 },
     { key: 'processing', value: stats.generationsByStatus.processing, color: '#60a5fa', label: 'Processando', icon: Cog },
     { key: 'pending', value: stats.generationsByStatus.pending, color: '#fbbf24', label: 'Pendentes', icon: Clock },
     { key: 'failed', value: stats.generationsByStatus.failed, color: '#f87171', label: 'Falhas', icon: XCircle },
@@ -73,7 +73,7 @@ function ProviderBreakdown({ stats }: { stats: AdminStats }) {
   if (total === 0) return null;
 
   const segments = [
-    { key: 'theaimodelab', label: 'The AI Model Lab Provider', value: bp.theaimodelab, color: '#f5409d' },
+    { key: 'theaimodelab', label: 'The AI Model Lab Provider', value: bp.theaimodelab, color: '#e11d2a' },
     { key: 'kie', label: 'KIE API', value: bp.kie, color: '#f59e0b' },
   ];
 
@@ -139,7 +139,7 @@ function ProviderBreakdown({ stats }: { stats: AdminStats }) {
   );
 }
 
-const PROVIDER_COLORS: Record<string, string> = { theaimodelab: '#f5409d', 'nano-banana': '#f59e0b', 'nano-banana-2': '#f59e0b', 'nano-banana-pro': '#fb923c', unknown: '#6b7280' };
+const PROVIDER_COLORS: Record<string, string> = { theaimodelab: '#e11d2a', 'nano-banana': '#f59e0b', 'nano-banana-2': '#f59e0b', 'nano-banana-pro': '#fb923c', unknown: '#6b7280' };
 const PROVIDER_LABELS: Record<string, string> = { theaimodelab: 'The AI Model Lab', 'nano-banana': 'Nano Banana', 'nano-banana-2': 'Nano Banana 2', 'nano-banana-pro': 'Nano Banana Pro', unknown: 'Desconhecido' };
 
 function ProviderCard({ stat, total }: { stat: ProviderStat; total: number }) {

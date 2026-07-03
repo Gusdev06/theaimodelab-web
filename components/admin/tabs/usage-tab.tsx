@@ -10,12 +10,12 @@ import { AdminBarChart } from '@/components/admin/charts/bar-chart';
 import { AdminDonutChart } from '@/components/admin/charts/donut-chart';
 
 const TYPE_COLORS: Record<string, string> = {
-  TEXT_TO_IMAGE: '#f5409d',
+  TEXT_TO_IMAGE: '#e11d2a',
   IMAGE_TO_IMAGE: '#60a5fa',
   TEXT_TO_VIDEO: '#f59e0b',
   IMAGE_TO_VIDEO: '#fb923c',
   MOTION_CONTROL: '#a78bfa',
-  REFERENCE_VIDEO: '#f472b6',
+  REFERENCE_VIDEO: '#ff5964',
 };
 
 const TYPE_LABELS: Record<string, string> = {
@@ -52,7 +52,7 @@ export function UsageTab({ active }: { active: boolean }) {
   if (isLoading || !data) {
     return (
       <div className="flex h-[40vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -75,7 +75,7 @@ export function UsageTab({ active }: { active: boolean }) {
     const intensity = d.count / maxPeakCount;
     if (intensity > 0.7) return '#f87171';
     if (intensity > 0.4) return '#fbbf24';
-    return '#f5409d';
+    return '#e11d2a';
   });
 
   return (
@@ -146,7 +146,7 @@ export function UsageTab({ active }: { active: boolean }) {
             ) : (
               <div className="flex flex-col gap-3">
                 {data.errorRateByModel.map((m) => {
-                  const color = m.errorRate > 5 ? '#f87171' : m.errorRate > 2 ? '#fbbf24' : '#f5409d';
+                  const color = m.errorRate > 5 ? '#f87171' : m.errorRate > 2 ? '#fbbf24' : '#e11d2a';
                   return (
                     <div key={m.modelUsed}>
                       <div className="flex items-center justify-between">

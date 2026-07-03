@@ -152,8 +152,8 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
         className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm"
         onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
-        <div className="relative mx-4 flex w-full max-w-lg flex-col items-center gap-4 rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#1a2123] p-8 shadow-2xl">
-          <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <div className="relative mx-4 flex w-full max-w-lg flex-col items-center gap-4 rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#111113] p-8 shadow-2xl">
+          <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
         </div>
       </div>
     );
@@ -296,7 +296,7 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
         className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm"
         onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
-        <div className="relative mx-4 flex w-full max-w-lg flex-col gap-5 rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#1a2123] p-5 shadow-2xl sm:p-6">
+        <div className="relative mx-4 flex w-full max-w-lg flex-col gap-5 rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#111113] p-5 shadow-2xl sm:p-6">
 
           {/* Close */}
           <button
@@ -308,8 +308,8 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
 
           {/* Header */}
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f5409d]/10">
-              <Settings className="h-5 w-5 text-[#f5409d]" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e11d2a]/10">
+              <Settings className="h-5 w-5 text-[#e11d2a]" />
             </div>
             <div>
               <h2 className="text-base font-bold text-[#f3f0ed]">{t('manage.title')}</h2>
@@ -321,12 +321,12 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
           <div className="flex flex-col gap-2.5">
             {/* Plano */}
             <div className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.03] px-4 py-3">
-              <Crown className="h-4 w-4 shrink-0 text-[#f5409d]/60" />
+              <Crown className="h-4 w-4 shrink-0 text-[#e11d2a]/60" />
               <span className="flex-1 text-xs text-[#f3f0ed]/40">{t('manage.plan')}</span>
               <span className="flex items-center gap-1.5 text-xs font-medium text-[#f3f0ed]">
                 {planName}
                 {isActive && !cancelAtPeriodEnd && (
-                  <span className="rounded-full bg-pink-400/10 px-1.5 py-0.5 text-[10px] font-bold text-pink-400">{t('manage.active')}</span>
+                  <span className="rounded-full bg-red-400/10 px-1.5 py-0.5 text-[10px] font-bold text-red-400">{t('manage.active')}</span>
                 )}
                 {cancelAtPeriodEnd && (
                   <span className="rounded-full bg-red-400/10 px-1.5 py-0.5 text-[10px] font-bold text-red-400">{t('manage.canceling')}</span>
@@ -359,7 +359,7 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
 
             {/* Créditos restantes */}
             <div className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.03] px-4 py-3">
-              <Coins className="h-4 w-4 shrink-0 text-[#f5409d]/60" />
+              <Coins className="h-4 w-4 shrink-0 text-[#e11d2a]/60" />
               <span className="flex-1 text-xs text-[#f3f0ed]/40">{t('manage.remainingCredits')}</span>
               <span className="text-xs font-medium text-[#f3f0ed]">
                 {creditsRemaining.toLocaleString(locale)}
@@ -368,14 +368,14 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
 
             {/* Custo do plano */}
             <div className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.03] px-4 py-3">
-              <CreditCard className="h-4 w-4 shrink-0 text-[#f5409d]/60" />
+              <CreditCard className="h-4 w-4 shrink-0 text-[#e11d2a]/60" />
               <span className="flex-1 text-xs text-[#f3f0ed]/40">{t('manage.planCost')}</span>
               <div className="flex items-center gap-2">
                 {hasDiscount ? (
                   <>
                     <span className="text-[10px] text-[#f3f0ed]/30 line-through">{priceMain}</span>
-                    <span className="text-xs font-medium text-[#f5409d]">{discountedPriceMain}</span>
-                    <span className="rounded-full bg-[#f5409d]/10 px-1.5 py-0.5 text-[9px] font-bold text-[#f5409d]">
+                    <span className="text-xs font-medium text-[#e11d2a]">{discountedPriceMain}</span>
+                    <span className="rounded-full bg-[#e11d2a]/10 px-1.5 py-0.5 text-[9px] font-bold text-[#e11d2a]">
                       {discount!.percentOff
                         ? t('badges.discountOff', { pct: discount!.percentOff })
                         : t('manage.amountOff', {
@@ -393,10 +393,10 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
 
             {/* Próximo pagamento */}
             <div className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/[0.03] px-4 py-3">
-              <CalendarDays className="h-4 w-4 shrink-0 text-[#f5409d]/60" />
+              <CalendarDays className="h-4 w-4 shrink-0 text-[#e11d2a]/60" />
               <span className="flex-1 text-xs text-[#f3f0ed]/40">{t('manage.nextPayment')}</span>
               <div className="flex flex-col items-end">
-                <span className={`text-xs font-medium ${cancelAtPeriodEnd ? 'text-red-400' : hasDiscount ? 'text-[#f5409d]' : 'text-[#f3f0ed]'}`}>
+                <span className={`text-xs font-medium ${cancelAtPeriodEnd ? 'text-red-400' : hasDiscount ? 'text-[#e11d2a]' : 'text-[#f3f0ed]'}`}>
                   {nextPayment}
                 </span>
                 {subEnd && !cancelAtPeriodEnd && (
@@ -450,13 +450,13 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
                             key={p.id}
                             onClick={() => executeUpgrade(p.slug)}
                             disabled={isUpgrading}
-                            className="flex items-center justify-between rounded-lg border border-[#f5409d]/15 bg-[#f5409d]/5 px-3 py-2 text-xs text-[#f3f0ed]/60 transition-colors hover:border-[#f5409d]/30 hover:bg-[#f5409d]/10"
+                            className="flex items-center justify-between rounded-lg border border-[#e11d2a]/15 bg-[#e11d2a]/5 px-3 py-2 text-xs text-[#f3f0ed]/60 transition-colors hover:border-[#e11d2a]/30 hover:bg-[#e11d2a]/10"
                           >
                             <span className="flex items-center gap-1.5">
                               {p.name}
-                              <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-0.5 text-[9px] font-bold text-[#f5409d]">{t('badges.upgrade')}</span>
+                              <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-0.5 text-[9px] font-bold text-[#e11d2a]">{t('badges.upgrade')}</span>
                             </span>
-                            <span className="text-[#f5409d]/60">{main}{perMonthShort}</span>
+                            <span className="text-[#e11d2a]/60">{main}{perMonthShort}</span>
                           </button>
                         );
                       })}
@@ -496,7 +496,7 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
                   <button
                     onClick={() => reactivateMutation.mutate()}
                     disabled={reactivateMutation.isPending}
-                    className="rounded-lg border border-[#f5409d]/20 bg-[#f5409d]/10 px-4 py-1.5 text-[11px] font-medium text-[#f5409d] transition-colors hover:bg-[#f5409d]/20 disabled:opacity-50"
+                    className="rounded-lg border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-4 py-1.5 text-[11px] font-medium text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/20 disabled:opacity-50"
                   >
                     {reactivateMutation.isPending ? t('manage.reactivating') : t('manage.reactivate')}
                   </button>

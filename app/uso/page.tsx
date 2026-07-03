@@ -84,8 +84,8 @@ function TransactionRow({
       <div
         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
         style={{
-          background: debit ? 'rgba(239,68,68,0.08)' : 'rgba(245,64,157,0.08)',
-          color: debit ? 'rgba(239,68,68,0.7)' : 'rgba(245,64,157,0.8)',
+          background: debit ? 'rgba(239,68,68,0.08)' : 'rgba(225,29,42,0.08)',
+          color: debit ? 'rgba(239,68,68,0.7)' : 'rgba(225,29,42,0.8)',
         }}
       >
         {getTransactionIcon(tx.type, tx.description)}
@@ -105,7 +105,7 @@ function TransactionRow({
       <div className="shrink-0 text-right">
         <span
           className="text-sm font-bold tabular-nums"
-          style={{ color: debit ? 'rgba(239,68,68,0.75)' : 'rgba(245,64,157,0.9)' }}
+          style={{ color: debit ? 'rgba(239,68,68,0.75)' : 'rgba(225,29,42,0.9)' }}
         >
           {debit ? '' : '+'}{numFmt.format(tx.amount)}
         </span>
@@ -214,15 +214,15 @@ export default function UsoPage() {
 
   if (authLoading) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#1a2123]">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#111113]">
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
         {loadingMsg && <p className="text-sm text-[#f3f0ed]/40">{loadingMsg}</p>}
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#1a2123]">
+    <div className="flex min-h-screen flex-col bg-[#111113]">
       {/* Header */}
       <header className="flex h-12 shrink-0 items-center border-b border-[#f3f0ed]/7 px-4">
         <button
@@ -237,7 +237,7 @@ export default function UsoPage() {
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-6 sm:gap-8 sm:py-10">
 
         {/* ── Title ── */}
-        <div className="flex items-center gap-3">
+        <div className="app-reveal flex items-center gap-3">
           <div>
             <h1 className="text-lg font-bold text-[#f3f0ed]">{t('historyTitle')}</h1>
             <p className="text-xs text-[#f3f0ed]/35">{t('historySubtitle')}</p>
@@ -251,7 +251,7 @@ export default function UsoPage() {
               <span className="text-[10px] font-bold tracking-[0.13em] text-[#f3f0ed]/35">
                 {t('totalTransactions')}
               </span>
-              <span className="text-xl font-bold tabular-nums text-[#f5409d] sm:text-2xl">
+              <span className="text-xl font-bold tabular-nums text-[#e11d2a] sm:text-2xl">
                 {numFmt.format(meta.total)}
               </span>
             </div>

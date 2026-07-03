@@ -32,15 +32,15 @@ function StatusBadge({ status }: { status: string }) {
   const config: Record<string, string> = {
     PENDING: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400',
     PROCESSING: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
-    COMPLETED: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
+    COMPLETED: 'border-red-500/30 bg-red-500/10 text-red-400',
     PARTIAL_FAILURE: 'border-orange-500/30 bg-orange-500/10 text-orange-400',
     FAILED: 'border-red-500/30 bg-red-500/10 text-red-400',
     SENT: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
-    DELIVERED: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
-    OPENED: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
+    DELIVERED: 'border-red-500/30 bg-red-500/10 text-red-400',
+    OPENED: 'border-red-500/30 bg-red-500/10 text-red-400',
     CLICKED: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400',
     BOUNCED: 'border-red-500/30 bg-red-500/10 text-red-400',
-    COMPLAINED: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
+    COMPLAINED: 'border-red-500/30 bg-red-500/10 text-red-400',
   };
   return (
     <span
@@ -72,7 +72,7 @@ export default function AdminEmailDetailPage() {
   if (query.isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function AdminEmailDetailPage() {
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
-        <div className="min-w-0 flex-1">
+        <div className="app-reveal min-w-0 flex-1">
           <h1 className="truncate text-xl font-semibold text-[#f3f0ed]">{b.subject}</h1>
           <p className="text-sm text-[#f3f0ed]/50">
             Enviado por {b.triggeredBy.name} ·{' '}
@@ -113,13 +113,13 @@ export default function AdminEmailDetailPage() {
       {/* ─── Stats ─────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatCard label="Destinatários" value={b.totalRecipients} icon={Clock} accent="text-[#f3f0ed]" />
-        <StatCard label="Enviados" value={b.sentCount} icon={CheckCircle2} accent="text-pink-400" />
+        <StatCard label="Enviados" value={b.sentCount} icon={CheckCircle2} accent="text-red-400" />
         <StatCard label="Falhas" value={b.failedCount} icon={XCircle} accent="text-red-400" />
         <StatCard
           label="Progresso"
           value={`${progress.toFixed(0)}%`}
           icon={AlertCircle}
-          accent="text-[#f5409d]"
+          accent="text-[#e11d2a]"
         />
       </div>
 
@@ -134,7 +134,7 @@ export default function AdminEmailDetailPage() {
       )}
 
       {/* ─── Preview do email ──────────────────────── */}
-      <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c] p-5">
+      <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] p-5">
         <h3 className="mb-3 text-sm font-semibold text-[#f3f0ed]">Email enviado</h3>
         <div className="overflow-hidden rounded-lg border border-[#f3f0ed]/6 bg-white">
           <iframe
@@ -147,7 +147,7 @@ export default function AdminEmailDetailPage() {
       </div>
 
       {/* ─── Lista de destinatários ────────────────── */}
-      <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c]">
+      <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b]">
         <div className="border-b border-[#f3f0ed]/6 px-5 py-3">
           <h3 className="text-sm font-semibold text-[#f3f0ed]">
             Destinatários (mostrando até 200)
@@ -194,7 +194,7 @@ function StatCard({
   accent: string;
 }) {
   return (
-    <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c] p-4">
+    <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] p-4">
       <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-wider text-[#f3f0ed]/40">
         <Icon className={`h-3.5 w-3.5 ${accent}`} />
         {label}

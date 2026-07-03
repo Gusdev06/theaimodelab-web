@@ -240,7 +240,7 @@ export function CreationsPanel({
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col">
       {/* cabeçalho */}
-      <div className="flex items-center gap-2 px-5 pt-4 pb-4">
+      <div className="app-reveal flex items-center gap-2 px-5 pt-4 pb-4">
         <Grid2x2 className="size-[17px] text-app-lime" strokeWidth={1.8} />
         <h2 className="text-[15px] font-semibold text-app-text">{t('image.creations')}</h2>
 
@@ -274,7 +274,7 @@ export function CreationsPanel({
             title={t('image.favorites')}
             onClick={() => setFavOnly((v) => !v)}
             className={cn(
-              'flex size-8 items-center justify-center rounded-full transition-colors duration-200 ease-app',
+              'app-press flex size-8 items-center justify-center rounded-full transition-colors duration-200 ease-app',
               favOnly ? 'bg-app-surface text-app-lime' : 'text-app-text-2 hover:bg-app-surface hover:text-app-text',
             )}
           >
@@ -284,7 +284,7 @@ export function CreationsPanel({
           {/* busca — escondida no mobile */}
           <div className="max-lg:hidden lg:contents">
             {searchOpen ? (
-              <div className="flex h-8 w-[200px] items-center gap-2 rounded-full border border-app-hairline bg-app-surface px-3 transition-colors duration-200 ease-app focus-within:border-[rgba(245,64,157,0.4)]">
+              <div className="flex h-8 w-[200px] items-center gap-2 rounded-full border border-app-hairline bg-app-surface px-3 transition-colors duration-200 ease-app focus-within:border-[rgba(225,29,42,0.4)]">
                 <Search className="size-3.5 shrink-0 text-app-muted" strokeWidth={1.8} />
                 <input
                   autoFocus

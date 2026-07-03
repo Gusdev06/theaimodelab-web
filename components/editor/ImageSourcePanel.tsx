@@ -121,7 +121,7 @@ export function ImageSourcePanel({ nodeId, onClose, onDuplicate }: ImageSourcePa
     <div className="relative">
       <StudioImageOutputHandle />
       <div
-        className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#f5409d]/30' : ''}`}
+        className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#e11d2a]/30' : ''}`}
         style={{ width: 240 }}
         onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setIsDraggingOver(true); }}
         onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setIsDraggingOver(false); }}
@@ -156,11 +156,11 @@ export function ImageSourcePanel({ nodeId, onClose, onDuplicate }: ImageSourcePa
               </button>
             </div>
           ) : (
-            <div className="group/slot relative aspect-square w-full overflow-hidden rounded-xl bg-[#0d1011] transition-all hover:bg-[#0f1416]">
+            <div className="group/slot relative aspect-square w-full overflow-hidden rounded-xl bg-[#050506] transition-all hover:bg-[#0f1416]">
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-[#f3f0ed]/40 transition-colors hover:text-[#f5409d]"
+                className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-[#f3f0ed]/40 transition-colors hover:text-[#e11d2a]"
               >
                 <Plus className="h-5 w-5" />
                 <span className="text-[11px] font-medium">Anexar imagem</span>
@@ -169,7 +169,7 @@ export function ImageSourcePanel({ nodeId, onClose, onDuplicate }: ImageSourcePa
                 type="button"
                 onClick={(e) => { e.stopPropagation(); openGallery(); }}
                 title="Escolher da galeria"
-                className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#1a2123]/80 text-[#f3f0ed]/60 backdrop-blur-sm transition-all hover:bg-[#4b1e3a] hover:text-[#f5409d]"
+                className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#111113]/80 text-[#f3f0ed]/60 backdrop-blur-sm transition-all hover:bg-[#3a0f16] hover:text-[#e11d2a]"
               >
                 <FolderOpen className="h-3.5 w-3.5" />
               </button>

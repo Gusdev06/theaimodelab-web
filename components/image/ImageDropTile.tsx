@@ -126,10 +126,10 @@ export function ImageDropTile({
             handleFile(e.dataTransfer.files?.[0]);
           }}
           className={cn(
-            'flex h-full min-h-[96px] w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed text-app-text-2 transition-colors duration-200 ease-app',
+            'app-press flex h-full min-h-[96px] w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed text-app-text-2 transition-colors duration-200 ease-app',
             dragOver
-              ? 'border-[rgba(245,64,157,0.6)] bg-[rgba(245,64,157,0.05)] text-app-text'
-              : 'border-app-hairline-2 hover:border-[rgba(245,64,157,0.4)] hover:text-app-text',
+              ? 'border-[rgba(225,29,42,0.6)] bg-[rgba(225,29,42,0.05)] text-app-text'
+              : 'border-app-hairline-2 hover:border-[rgba(225,29,42,0.4)] hover:text-app-text',
           )}
         >
           <Icon className="size-[19px]" strokeWidth={1.8} />

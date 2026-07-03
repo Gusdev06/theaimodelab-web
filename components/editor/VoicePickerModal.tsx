@@ -153,7 +153,7 @@ export function VoicePickerModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="bg-[#1a2123] border border-[#f3f0ed]/[0.08] sm:max-w-3xl p-0 gap-0 rounded-2xl shadow-2xl shadow-black/60"
+        className="bg-[#111113] border border-[#f3f0ed]/[0.08] sm:max-w-3xl p-0 gap-0 rounded-2xl shadow-2xl shadow-black/60"
       >
         <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-[#f3f0ed]/[0.05]">
           <div className="space-y-0.5">
@@ -166,7 +166,7 @@ export function VoicePickerModal({
           </div>
           <button
             onClick={() => onOpenChange(false)}
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#4b1e3a]/40 text-[#f3f0ed]/50 transition-colors hover:bg-[#4b1e3a]/70 hover:text-[#f3f0ed]/90"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#3a0f16]/40 text-[#f3f0ed]/50 transition-colors hover:bg-[#3a0f16]/70 hover:text-[#f3f0ed]/90"
             aria-label={t('close')}
           >
             <X className="h-4 w-4" />
@@ -189,7 +189,7 @@ export function VoicePickerModal({
                     onAddVoice();
                     onOpenChange(false);
                   }}
-                  className="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-[#f5409d]/30 bg-[#f5409d]/5 p-4 text-[#f5409d]/80 transition-all hover:border-[#f5409d]/60 hover:bg-[#f5409d]/10 hover:text-[#f5409d] min-h-[150px]"
+                  className="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-[#e11d2a]/30 bg-[#e11d2a]/5 p-4 text-[#e11d2a]/80 transition-all hover:border-[#e11d2a]/60 hover:bg-[#e11d2a]/10 hover:text-[#e11d2a] min-h-[150px]"
                 >
                   <Plus className="h-6 w-6" strokeWidth={1.5} />
                   <span className="text-xs font-medium">{t('cloneVoice')}</span>
@@ -239,8 +239,8 @@ export function VoicePickerModal({
                   type="button"
                   onClick={() => setCountry(null)}
                   className={`flex h-7 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-[11px] font-medium transition-colors ${country === null
-                    ? 'bg-[#f5409d]/15 text-[#f5409d]'
-                    : 'bg-[#4b1e3a]/30 text-[#f3f0ed]/55 hover:bg-[#4b1e3a]/50 hover:text-[#f3f0ed]/80'
+                    ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
+                    : 'bg-[#3a0f16]/30 text-[#f3f0ed]/55 hover:bg-[#3a0f16]/50 hover:text-[#f3f0ed]/80'
                     }`}
                 >
                   {t('all')}
@@ -256,8 +256,8 @@ export function VoicePickerModal({
                       type="button"
                       onClick={() => setCountry(code)}
                       className={`flex h-7 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-[11px] font-medium transition-colors ${active
-                        ? 'bg-[#f5409d]/15 text-[#f5409d]'
-                        : 'bg-[#4b1e3a]/30 text-[#f3f0ed]/55 hover:bg-[#4b1e3a]/50 hover:text-[#f3f0ed]/80'
+                        ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
+                        : 'bg-[#3a0f16]/30 text-[#f3f0ed]/55 hover:bg-[#3a0f16]/50 hover:text-[#f3f0ed]/80'
                         }`}
                     >
                       {countryLabel(code)}
@@ -335,17 +335,17 @@ function SectionHeader({
   return (
     <div className="mb-3 flex items-center gap-2">
       <Icon
-        className={`h-3.5 w-3.5 ${accent ? 'text-[#f5409d]/80' : 'text-[#f3f0ed]/40'}`}
+        className={`h-3.5 w-3.5 ${accent ? 'text-[#e11d2a]/80' : 'text-[#f3f0ed]/40'}`}
       />
       <span
-        className={`text-[10px] font-bold uppercase tracking-[0.18em] ${accent ? 'text-[#f5409d]/80' : 'text-[#f3f0ed]/45'
+        className={`text-[10px] font-bold uppercase tracking-[0.18em] ${accent ? 'text-[#e11d2a]/80' : 'text-[#f3f0ed]/45'
           }`}
       >
         {label}
       </span>
       <span
         className={`rounded-full px-1.5 py-px text-[9px] font-bold tabular-nums ${accent
-          ? 'bg-[#f5409d]/10 text-[#f5409d]/80'
+          ? 'bg-[#e11d2a]/10 text-[#e11d2a]/80'
           : 'bg-[#f3f0ed]/[0.05] text-[#f3f0ed]/40'
           }`}
       >

@@ -47,36 +47,38 @@
   --radius-4xl: calc(var(--radius) + 16px);
 
   /* Landing Page Colors — The AI Model Lab Brand */
-  --color-landing-bg: #141a1c;
-  --color-landing-bg-secondary: #1a2123;
-  --color-landing-card: #1e2829;
-  --color-landing-card-hover: #243032;
-  --color-landing-accent: #f5409d;
-  --color-landing-accent-hover: #d63389;
+  --color-landing-bg: #0a0a0b;
+  --color-landing-bg-secondary: #111113;
+  --color-landing-card: #16161a;
+  --color-landing-card-hover: #1e1e22;
+  --color-landing-accent: #e11d2a;
+  --color-landing-accent-hover: #b3121a;
   --color-landing-text: #f3f0ed;
   --color-landing-text-secondary: rgba(243, 240, 237, 0.6);
   --color-landing-text-muted: rgba(243, 240, 237, 0.35);
-  --color-landing-green: #f5409d;
+  --color-landing-green: #e11d2a;
 
   /* App Shell — The AI Model Lab 2.0 (THEAIMODELAB_DESIGN_SYSTEM.md) */
-  --color-app-deep: #0d1011;
-  --color-app-bg: #141a1c;
-  --color-app-surface: #1a2123;
-  --color-app-card: #1e2829;
-  --color-app-card-hover: #243032;
+  --color-app-deep: #050506;
+  --color-app-bg: #0a0a0b;
+  --color-app-surface: #111113;
+  --color-app-card: #16161a;
+  --color-app-card-hover: #1e1e22;
   --color-app-text: #f3f0ed;
   --color-app-text-2: rgba(243, 240, 237, 0.6);
   --color-app-muted: rgba(243, 240, 237, 0.35);
   --color-app-hairline: rgba(243, 240, 237, 0.08);
   --color-app-hairline-2: rgba(243, 240, 237, 0.14);
-  --color-app-lime: #f5409d;
-  --color-app-lime-hover: #d63389;
-  --color-app-lime-bright: #ff85c2;
-  --color-app-lime-ink: #11181a;
-  --color-app-petrol: #4b1e3a;
+  --color-app-lime: #e11d2a;
+  --color-app-lime-hover: #b3121a;
+  --color-app-lime-bright: #ff5964;
+  --color-app-lime-ink: #0a0a0b;
+  --color-app-petrol: #3a0f16;
   --color-app-violet: #a855f7;
   --color-app-violet-2: #d8b4fe;
   --ease-app: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Apple-style easing — used across landing micro-interactions */
+  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
 
   /* entradas/saídas suaves de overlays/modais do app shell */
   --animate-overlay-in: overlay-in 0.18s ease-out both;
@@ -150,7 +152,7 @@
   border-radius: 99px;
 }
 .scrollbar-app::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 64, 157, 0.4);
+  background: rgba(225, 29, 42, 0.4);
 }
 
 :root {
@@ -267,15 +269,15 @@
   background: conic-gradient(
     from 0deg,
     transparent 0%,
-    rgba(245, 64, 157, 0.12) 18%,
-    #f5409d 40%,
-    #ff9ccb 47%,
+    rgba(225, 29, 42, 0.12) 18%,
+    #e11d2a 40%,
+    #ff8a91 47%,
     transparent 62%
   );
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
   mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
   animation: ws-loader-spin 1.2s linear infinite;
-  filter: drop-shadow(0 0 6px rgba(245, 64, 157, 0.55));
+  filter: drop-shadow(0 0 6px rgba(225, 29, 42, 0.55));
 }
 
 /* anel interno: arco mais suave girando ao contrário */
@@ -283,7 +285,7 @@
   background: conic-gradient(
     from 180deg,
     transparent 0%,
-    rgba(245, 64, 157, 0.5) 30%,
+    rgba(225, 29, 42, 0.5) 30%,
     transparent 55%
   );
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 1.5px));
@@ -432,7 +434,7 @@
    Quando o filho tiver .unlimited-shimmer-border, suprime o outline pra não
    cobrir o shimmer violeta animado. */
 .panel-selected-outline {
-  box-shadow: 0 0 0 1.5px rgba(245, 64, 157, 0.45);
+  box-shadow: 0 0 0 1.5px rgba(225, 29, 42, 0.45);
 }
 
 .panel-selected-outline:has(.unlimited-shimmer-border) {
@@ -473,7 +475,7 @@
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 64, 157, 0.25);
+  background: rgba(225, 29, 42, 0.25);
 }
 
 /* ─── Textarea scrollbar ───────────────────────────────────────────────────── */
@@ -510,7 +512,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 textarea::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 64, 157, 0.25);
+  background: rgba(225, 29, 42, 0.25);
 }
 
 /* ─── React Flow overrides ─────────────────────────────────────────────────── */
@@ -597,8 +599,8 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 @keyframes landing-glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(245, 64, 157, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(245, 64, 157, 0.25); }
+  0%, 100% { box-shadow: 0 0 20px rgba(225, 29, 42, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(225, 29, 42, 0.25); }
 }
 
 @keyframes landing-grain {
@@ -622,7 +624,7 @@ textarea::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     110deg,
     transparent 25%,
-    rgba(245, 64, 157, 0.06) 37%,
+    rgba(225, 29, 42, 0.06) 37%,
     transparent 50%
   );
   background-size: 200% 100%;
@@ -650,6 +652,144 @@ textarea::-webkit-scrollbar-thumb:hover {
 
 .landing-smooth {
   scroll-behavior: smooth;
+}
+
+/* ─── Apple-refined landing system ─────────────────────────────────────────── */
+/* Keeps the dark + red brand, adds Apple-style depth, motion and geometry.     */
+
+/* Apple easing helper (attach to any element with a transition) */
+.landing-ease {
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Frosted-glass surface — depth through layering, not heavy borders */
+.landing-glass {
+  background: rgba(22, 22, 26, 0.6);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(243, 240, 237, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+}
+.landing-glass-hover {
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+    border-color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.landing-glass-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(243, 240, 237, 0.14);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Pill primary CTA — Apple's signature button geometry, in brand red */
+.landing-btn {
+  border-radius: 980px;
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+    filter 0.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.landing-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.08);
+}
+.landing-btn:active {
+  transform: scale(0.98);
+}
+
+/* Scroll-reveal — subtle fade-up, honours reduced-motion */
+@keyframes landing-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.landing-reveal {
+  animation: landing-fade-up 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-reveal,
+  .landing-float,
+  .landing-float-alt,
+  .landing-shimmer,
+  .landing-glow-pulse {
+    animation: none !important;
+  }
+  .landing-btn:hover,
+  .landing-glass-hover:hover {
+    transform: none;
+  }
+}
+
+/* ─── Apple-refined app system (app shell + admin, uses app-* tokens) ──────── */
+/* Same Apple polish as the landing, mapped onto the product UI's app-* tokens.  */
+
+/* Apple/app easing helper */
+.app-ease {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle press feedback for controls that stay rectangular (most app buttons) */
+.app-press {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.app-press:active {
+  transform: scale(0.97);
+}
+
+/* Pill primary CTA in brand red — for prominent actions only */
+.app-btn {
+  border-radius: 980px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.app-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.08);
+}
+.app-btn:active {
+  transform: scale(0.98);
+}
+
+/* Frosted surface + hover lift for cards */
+.app-glass {
+  background: rgba(22, 22, 26, 0.66);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--color-app-hairline);
+}
+.app-glass-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.app-glass-hover:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-app-hairline-2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Scroll/mount reveal */
+@keyframes app-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.app-reveal {
+  animation: app-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-reveal {
+    animation: none !important;
+  }
+  .app-btn:hover,
+  .app-btn:active,
+  .app-glass-hover:hover,
+  .app-press:active {
+    transform: none;
+  }
 }
 
 /* ── Weekly claim celebration ── */

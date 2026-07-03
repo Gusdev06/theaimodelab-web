@@ -18,9 +18,9 @@ export default function StripeAdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="flex flex-col gap-4 md:gap-6">
-      <div>
+      <div className="app-reveal">
         <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">Stripe</h1>
-        <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
+        <p className="mt-0.5 text-sm text-[#f3f0ed]/40" style={{ animationDelay: '0.08s' }}>
           Gerencia transações, clientes, produtos e assinaturas direto no Stripe.
         </p>
       </div>
@@ -35,9 +35,9 @@ export default function StripeAdminLayout({ children }: { children: React.ReactN
             <Link
               key={item.href}
               href={item.href}
-              className={`shrink-0 rounded-t-lg px-3 py-2 text-[13px] font-medium transition-colors ${
+              className={`shrink-0 rounded-t-lg px-3 py-2 text-[13px] font-medium transition-colors app-ease app-press ${
                 isActive
-                  ? 'border-b-2 border-[#f5409d] text-[#f5409d]'
+                  ? 'border-b-2 border-[#e11d2a] text-[#e11d2a]'
                   : 'border-b-2 border-transparent text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80'
               }`}
             >

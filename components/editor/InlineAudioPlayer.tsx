@@ -67,10 +67,10 @@ export function InlineAudioPlayer({
   const progressPct = duration ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="flex items-center gap-1.5 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 p-2">
+    <div className="flex items-center gap-1.5 rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 p-2">
       <button
         onClick={togglePlay}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f5409d]/15 text-[#f5409d] transition-all hover:bg-[#f5409d]/25"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e11d2a]/15 text-[#e11d2a] transition-all hover:bg-[#e11d2a]/25"
       >
         {playing ? (
           <Pause className="h-3.5 w-3.5" />
@@ -94,11 +94,11 @@ export function InlineAudioPlayer({
         className="group relative h-1.5 min-w-0 flex-1 cursor-pointer overflow-hidden rounded-full bg-[#f3f0ed]/8"
       >
         <div
-          className="h-full bg-[#f5409d] transition-[width] duration-75"
+          className="h-full bg-[#e11d2a] transition-[width] duration-75"
           style={{ width: `${progressPct}%` }}
         />
         <div
-          className="pointer-events-none absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5409d] opacity-0 transition-opacity group-hover:opacity-100"
+          className="pointer-events-none absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e11d2a] opacity-0 transition-opacity group-hover:opacity-100"
           style={{ left: `${progressPct}%` }}
         />
       </div>
@@ -109,7 +109,7 @@ export function InlineAudioPlayer({
 
       <button
         onClick={() => setMuted((m) => !m)}
-        className="flex h-5 w-5 shrink-0 items-center justify-center text-[#f3f0ed]/40 transition-colors hover:text-[#f5409d]"
+        className="flex h-5 w-5 shrink-0 items-center justify-center text-[#f3f0ed]/40 transition-colors hover:text-[#e11d2a]"
       >
         {muted || volume === 0 ? (
           <VolumeX className="h-3.5 w-3.5" />
@@ -128,7 +128,7 @@ export function InlineAudioPlayer({
           setVolume(v);
           if (v > 0 && muted) setMuted(false);
         }}
-        className="h-1 w-10 shrink-0 cursor-pointer accent-[#f5409d]"
+        className="h-1 w-10 shrink-0 cursor-pointer accent-[#e11d2a]"
       />
 
       {actions}

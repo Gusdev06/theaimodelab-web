@@ -20,10 +20,10 @@ const PAGE_SIZE = 20;
 
 const VIDEO_TYPES = new Set(['text_to_video', 'image_to_video', 'motion_control']);
 
-function buildWorkspaceHref(prompt: string, type: string) {
-  const panel = VIDEO_TYPES.has(type) ? 'generate-video' : 'generate-image';
-  const qs = new URLSearchParams({ prompt, panel });
-  return `/workspace?${qs.toString()}`;
+function buildPromptHref(prompt: string, type: string) {
+  const path = VIDEO_TYPES.has(type) ? '/video' : '/image';
+  const qs = new URLSearchParams({ prompt });
+  return `${path}?${qs.toString()}`;
 }
 
 interface LibraryPrompt {
@@ -51,7 +51,7 @@ function PromptCard({ p }: { p: LibraryPrompt }) {
     <article className="group flex flex-col overflow-hidden rounded-[14px] border border-app-hairline bg-app-card transition-all duration-200 ease-app hover:-translate-y-0.5 hover:border-app-hairline-2">
       {/* mídia 3:4 */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[linear-gradient(135deg,#1d2628,#161d1f)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(245,64,157,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(225,29,42,0.08),transparent_55%)]" />
         {image && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -74,7 +74,7 @@ function PromptCard({ p }: { p: LibraryPrompt }) {
           <button
             type="button"
             onClick={copy}
-            className="flex h-9 flex-1 items-center justify-center gap-2 rounded-[10px] border border-app-hairline bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
+            className="app-press flex h-9 flex-1 items-center justify-center gap-2 rounded-[10px] border border-app-hairline bg-app-surface text-[13.5px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
           >
             {copied ? (
               <>
@@ -89,10 +89,10 @@ function PromptCard({ p }: { p: LibraryPrompt }) {
             )}
           </button>
           <Link
-            href={buildWorkspaceHref(p.prompt, p.type)}
+            href={buildPromptHref(p.prompt, p.type)}
             aria-label={t('library.use')}
             title={t('library.use')}
-            className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-app-lime text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover"
+            className="app-press flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-app-lime text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover"
           >
             <Wand2 className="size-[16px]" strokeWidth={2} />
           </Link>
@@ -174,7 +174,7 @@ export function PromptLibrary({ sections }: { sections: ApiPromptSection[] }) {
         <div className="sticky top-0 z-10 bg-app-bg pb-3 pt-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             {/* busca */}
-            <div className="flex h-[46px] items-center gap-3 rounded-[14px] border border-app-hairline bg-app-surface px-4 transition-colors duration-200 ease-app focus-within:border-[rgba(245,64,157,0.4)] sm:flex-1">
+            <div className="flex h-[46px] items-center gap-3 rounded-[14px] border border-app-hairline bg-app-surface px-4 transition-colors duration-200 ease-app focus-within:border-[rgba(225,29,42,0.4)] sm:flex-1">
               <Search className="size-[18px] shrink-0 text-app-muted" strokeWidth={1.8} />
               <input
                 value={query}
@@ -191,7 +191,7 @@ export function PromptLibrary({ sections }: { sections: ApiPromptSection[] }) {
             {/* filtro de categoria */}
             <Select value={category ?? 'all'} onValueChange={selectCategory}>
               <SelectTrigger
-                className="!h-[46px] w-full shrink-0 rounded-xl border-app-hairline bg-app-surface px-3.5 text-[13.5px] font-semibold text-app-text shadow-none transition-colors duration-200 ease-app hover:border-app-hairline-2 focus-visible:border-[rgba(245,64,157,0.4)] focus-visible:ring-0 sm:w-[230px] dark:bg-app-surface dark:hover:bg-app-surface [&_svg:not([class*='text-'])]:text-app-muted"
+                className="!h-[46px] w-full shrink-0 rounded-xl border-app-hairline bg-app-surface px-3.5 text-[13.5px] font-semibold text-app-text shadow-none transition-colors duration-200 ease-app hover:border-app-hairline-2 focus-visible:border-[rgba(225,29,42,0.4)] focus-visible:ring-0 sm:w-[230px] dark:bg-app-surface dark:hover:bg-app-surface [&_svg:not([class*='text-'])]:text-app-muted"
               >
                 <Library className="size-[16px] !text-app-lime" strokeWidth={1.8} />
                 <span className="flex-1 truncate text-left">

@@ -18,7 +18,7 @@ function Stat({
   tone: 'green' | 'blue' | 'amber' | 'red';
 }) {
   const toneClass = {
-    green: 'text-[#f5409d] bg-[#f5409d]/10',
+    green: 'text-[#e11d2a] bg-[#e11d2a]/10',
     blue: 'text-blue-400 bg-blue-500/10',
     amber: 'text-amber-400 bg-amber-500/10',
     red: 'text-red-400 bg-red-500/10',
@@ -49,7 +49,7 @@ export default function StripeOverviewPage() {
   if (isLoading || !data) {
     return (
       <div className="flex h-[40vh] items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
       </div>
     );
   }

@@ -49,12 +49,12 @@ export function TutorialDialog({ open, onOpenChange }: TutorialDialogProps) {
   if (!mounted) return null;
 
   return (
-    <aside className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col border-r border-[#f3f0ed]/[0.07] ${studioMode ? 'bg-[#0d1011]' : 'bg-[#1a2123]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0`}>
+    <aside className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col border-r border-[#f3f0ed]/[0.07] ${studioMode ? 'bg-[#050506]' : 'bg-[#111113]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0`}>
       {/* Header */}
       <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.05] bg-gradient-to-b from-[#f3f0ed]/[0.02] to-transparent px-4 py-3.5">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10">
-            <GraduationCap className="h-3.5 w-3.5 text-[#f5409d]" />
+          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10">
+            <GraduationCap className="h-3.5 w-3.5 text-[#e11d2a]" />
           </div>
           <div className="min-w-0">
             <h2 className="text-sm font-bold text-[#f3f0ed]/60 truncate">{t('title')}</h2>
@@ -104,10 +104,10 @@ function TutorialList({ onSelect, countLabel, t }: {
               <li key={id}>
                 <button
                   onClick={() => onSelect(id)}
-                  className="group flex w-full items-center gap-3 rounded-xl border border-[#f3f0ed]/[0.06] bg-[#f3f0ed]/[0.02] px-3 py-3 text-left transition-all hover:border-[#f5409d]/30 hover:bg-[#f5409d]/[0.04]"
+                  className="group flex w-full items-center gap-3 rounded-xl border border-[#f3f0ed]/[0.06] bg-[#f3f0ed]/[0.02] px-3 py-3 text-left transition-all hover:border-[#e11d2a]/30 hover:bg-[#e11d2a]/[0.04]"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10 ring-1 ring-[#f5409d]/20 group-hover:bg-[#f5409d]/15">
-                    <Icon className="h-4.5 w-4.5 text-[#f5409d]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10 ring-1 ring-[#e11d2a]/20 group-hover:bg-[#e11d2a]/15">
+                    <Icon className="h-4.5 w-4.5 text-[#e11d2a]" />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <div className="flex items-center gap-2">
@@ -124,7 +124,7 @@ function TutorialList({ onSelect, countLabel, t }: {
                       {t(`items.${id}.description`)}
                     </p>
                   </div>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-[#f3f0ed]/30 transition-colors group-hover:text-[#f5409d]" />
+                  <ChevronRight className="h-4 w-4 shrink-0 text-[#f3f0ed]/30 transition-colors group-hover:text-[#e11d2a]" />
                 </button>
               </li>
             );
@@ -154,7 +154,7 @@ function TutorialDetail({ id, onBack, t }: {
       <div className="border-b border-[#f3f0ed]/[0.05] bg-gradient-to-b from-[#f3f0ed]/[0.015] to-transparent px-4 py-2.5">
         <button
           onClick={onBack}
-          className="group inline-flex items-center gap-1.5 rounded-lg border border-[#f3f0ed]/[0.06] bg-[#f3f0ed]/[0.03] px-2.5 py-1.5 text-[11px] font-medium text-[#f3f0ed]/60 transition-all hover:border-[#f5409d]/25 hover:bg-[#f5409d]/[0.06] hover:text-[#f5409d]"
+          className="group inline-flex items-center gap-1.5 rounded-lg border border-[#f3f0ed]/[0.06] bg-[#f3f0ed]/[0.03] px-2.5 py-1.5 text-[11px] font-medium text-[#f3f0ed]/60 transition-all hover:border-[#e11d2a]/25 hover:bg-[#e11d2a]/[0.06] hover:text-[#e11d2a]"
         >
           <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
           {t('back')}
@@ -165,8 +165,8 @@ function TutorialDetail({ id, onBack, t }: {
         <div className="flex flex-col gap-4">
           {/* Hero */}
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10 ring-1 ring-[#f5409d]/20">
-              <Icon className="h-4 w-4 text-[#f5409d]" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10 ring-1 ring-[#e11d2a]/20">
+              <Icon className="h-4 w-4 text-[#e11d2a]" />
             </div>
             <div className="flex min-w-0 flex-col">
               <h3 className="text-sm font-semibold leading-tight text-[#f3f0ed]">
@@ -210,7 +210,7 @@ function TutorialDetail({ id, onBack, t }: {
                   key={i}
                   className="flex items-start gap-3 rounded-lg border border-[#f3f0ed]/[0.05] bg-[#f3f0ed]/[0.02] px-3 py-2.5"
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f5409d]/15 text-[10px] font-bold text-[#f5409d]">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#e11d2a]/15 text-[10px] font-bold text-[#e11d2a]">
                     {i + 1}
                   </span>
                   <span className="text-xs leading-relaxed text-[#f3f0ed]/80">{step}</span>

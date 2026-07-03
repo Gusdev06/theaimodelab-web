@@ -175,8 +175,8 @@ export function ClonePromptView() {
         )}
       >
         <div>
-          <h2 className="text-[16px] font-semibold text-app-text">{t('clone.uploadTitle')}</h2>
-          <p className="mt-1 text-[13.5px] leading-relaxed text-app-text-2">
+          <h2 className="app-reveal text-[16px] font-semibold text-app-text">{t('clone.uploadTitle')}</h2>
+          <p className="app-reveal mt-1 text-[13.5px] leading-relaxed text-app-text-2" style={{ animationDelay: '0.08s' }}>
             {t('clone.uploadSubtitle')}
           </p>
         </div>
@@ -204,7 +204,7 @@ export function ClonePromptView() {
                 setImageData(null);
                 setResult(null);
               }}
-              className="absolute right-2.5 top-2.5 flex size-8 items-center justify-center rounded-full bg-[rgba(13,16,17,0.7)] text-app-text-2 backdrop-blur-md transition-colors duration-200 ease-app hover:text-app-text"
+              className="app-press absolute right-2.5 top-2.5 flex size-8 items-center justify-center rounded-full bg-[rgba(13,16,17,0.7)] text-app-text-2 backdrop-blur-md transition-colors duration-200 ease-app hover:text-app-text"
             >
               <X className="size-4" strokeWidth={1.8} />
             </button>
@@ -256,7 +256,7 @@ export function ClonePromptView() {
           type="button"
           onClick={analyze}
           disabled={!imageData || loading}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-app-lime text-[14.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="app-btn flex h-11 w-full items-center justify-center gap-2 bg-app-lime text-[14.5px] font-semibold text-app-lime-ink disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <>
@@ -345,7 +345,7 @@ export function ClonePromptView() {
               <button
                 type="button"
                 onClick={copyResult}
-                className="flex h-11 items-center justify-center gap-2 rounded-[10px] bg-app-lime text-[14.5px] font-semibold text-app-lime-ink transition-colors duration-200 ease-app hover:bg-app-lime-hover sm:flex-1"
+                className="app-btn flex h-11 items-center justify-center gap-2 bg-app-lime text-[14.5px] font-semibold text-app-lime-ink sm:flex-1"
               >
                 {copied ? (
                   <>
@@ -361,7 +361,7 @@ export function ClonePromptView() {
               </button>
               <Link
                 href={useInGenerator}
-                className="flex h-11 shrink-0 items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface px-5 text-[14px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
+                className="app-press flex h-11 shrink-0 items-center justify-center gap-2 rounded-[10px] border border-app-hairline-2 bg-app-surface px-5 text-[14px] font-semibold text-app-text transition-colors duration-200 ease-app hover:bg-app-card-hover"
               >
                 <ImageIcon className="size-[16px]" strokeWidth={1.8} />
                 {t('clone.useImage')}

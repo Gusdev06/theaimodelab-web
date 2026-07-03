@@ -568,7 +568,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
           <StudioImageInputHandle />
         <div
           ref={panelRef}
-          className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#f5409d]/30' : ''}`}
+          className={`group/studio max-w-[calc(100vw-5rem)] overflow-hidden rounded-2xl bg-[#161a1c] shadow-2xl shadow-black/50 ${isDraggingOver ? 'ring-2 ring-[#e11d2a]/30' : ''}`}
           style={{ width: 340 }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -642,7 +642,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
               >
                 <button
                   onClick={handleDiscard}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1a2123]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#4b1e3a] hover:text-[#f5409d]"
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111113]/80 text-[#f3f0ed]/70 backdrop-blur-sm transition-all hover:bg-[#3a0f16] hover:text-[#e11d2a]"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -681,7 +681,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                       onClick={handleGenerate}
                       disabled={isGenerating || !ready}
                       title={tCommon('generate')}
-                      className="ml-auto inline-flex items-center gap-1 rounded-full bg-[#f5409d] px-2.5 py-1 text-[11px] font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="ml-auto inline-flex items-center gap-1 rounded-full bg-[#e11d2a] px-2.5 py-1 text-[11px] font-bold text-[#111113] transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {isGenerating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Sparkles className="h-3 w-3" />}
                       {isFreeGen ? tCommon('free') : (creditCost || '—')}
@@ -701,7 +701,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
     <TooltipProvider>
       <div
         ref={panelRef}
-        className={`w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border bg-[#1a2123] shadow-2xl shadow-black/50 transition-colors sm:w-[320px] ${isDraggingOver ? 'border-[#f5409d]/50 ring-2 ring-[#f5409d]/30' : 'border-[#f3f0ed]/8'}`}
+        className={`w-[calc(100vw-5rem)] overflow-hidden rounded-2xl border bg-[#111113] shadow-2xl shadow-black/50 transition-colors sm:w-[320px] ${isDraggingOver ? 'border-[#e11d2a]/50 ring-2 ring-[#e11d2a]/30' : 'border-[#f3f0ed]/8'}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -709,7 +709,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
         {/* Header */}
         <div className="panel-drag-handle flex cursor-grab items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3 active:cursor-grabbing">
           <div className="flex items-center gap-2">
-            <AudioWaveform className="h-4 w-4 text-[#f5409d]" />
+            <AudioWaveform className="h-4 w-4 text-[#e11d2a]" />
             <span className="text-xs font-bold tracking-[0.15em] text-[#f3f0ed]/90">
               {t('header')}
             </span>
@@ -774,7 +774,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                           window.open(generatedVideoUrl, '_blank');
                         }
                       }}
-                      className="flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-[#f3f0ed]/8 bg-[#4b1e3a]/20 text-xs font-semibold text-[#f3f0ed]/60 transition-all hover:border-[#f5409d]/30 hover:text-[#f5409d]"
+                      className="flex h-9 flex-1 items-center justify-center gap-2 rounded-xl border border-[#f3f0ed]/8 bg-[#3a0f16]/20 text-xs font-semibold text-[#f3f0ed]/60 transition-all hover:border-[#e11d2a]/30 hover:text-[#e11d2a]"
                     >
                       <Download className="h-3.5 w-3.5" />
                       {tCommon('download')}
@@ -801,8 +801,8 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                   {t('labels.referenceVideo')}
                 </label>
                 {videoFile ? (
-                  <div className="flex items-center gap-2 rounded-xl border border-[#f3f0ed]/[0.08] bg-[#4b1e3a]/15 px-3 py-2.5">
-                    <Video className="h-4 w-4 shrink-0 text-[#f5409d]" />
+                  <div className="flex items-center gap-2 rounded-xl border border-[#f3f0ed]/[0.08] bg-[#3a0f16]/15 px-3 py-2.5">
+                    <Video className="h-4 w-4 shrink-0 text-[#e11d2a]" />
                     <span className="flex-1 truncate text-xs text-[#f3f0ed]/70">{videoFile.name}</span>
                     <button
                       onClick={() => setVideoFile(null)}
@@ -814,7 +814,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                 ) : (
                   <button
                     onClick={() => videoInputRef.current?.click()}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/[0.12] bg-[#4b1e3a]/10 px-3 py-4 text-xs text-[#f3f0ed]/40 transition-all hover:border-[#f5409d]/30 hover:text-[#f5409d]/70"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/[0.12] bg-[#3a0f16]/10 px-3 py-4 text-xs text-[#f3f0ed]/40 transition-all hover:border-[#e11d2a]/30 hover:text-[#e11d2a]/70"
                   >
                     <Video className="h-4 w-4" />
                     {t('uploads.video')}
@@ -848,7 +848,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                 ) : (
                   <button
                     onClick={() => imageInputRef.current?.click()}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/[0.12] bg-[#4b1e3a]/10 px-3 py-4 text-xs text-[#f3f0ed]/40 transition-all hover:border-[#f5409d]/30 hover:text-[#f5409d]/70"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/[0.12] bg-[#3a0f16]/10 px-3 py-4 text-xs text-[#f3f0ed]/40 transition-all hover:border-[#e11d2a]/30 hover:text-[#e11d2a]/70"
                   >
                     <Image className="h-4 w-4" />
                     {t('uploads.image')}
@@ -869,12 +869,12 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                   {t('labels.resolution')}
                 </label>
                 <Select value={resolution} onValueChange={setResolution}>
-                  <SelectTrigger className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#4b1e3a]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:border-[#f5409d]/40 focus:ring-0 data-placeholder:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30">
+                  <SelectTrigger className="h-9 w-full rounded-xl border border-[#f3f0ed]/[0.07] bg-[#3a0f16]/20 px-3 text-xs text-[#f3f0ed]/80 outline-none transition-all focus:border-[#e11d2a]/40 focus:ring-0 data-placeholder:text-[#f3f0ed]/35 [&>svg]:text-[#f3f0ed]/30">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
-                    <SelectItem value="720p" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#4b1e3a]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]">720p</SelectItem>
-                    <SelectItem value="1080p" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#4b1e3a]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]">1080p</SelectItem>
+                  <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#111113] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
+                    <SelectItem value="720p" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#3a0f16]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]">720p</SelectItem>
+                    <SelectItem value="1080p" className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#3a0f16]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]">1080p</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -887,7 +887,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                 <div className="flex flex-col gap-1.5 rounded-xl border border-[#f3f0ed]/7 bg-[#f3f0ed]/3 px-3 py-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <Coins className="h-3 w-3 text-[#f5409d]" />
+                      <Coins className="h-3 w-3 text-[#e11d2a]" />
                       <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/40 uppercase">
                         {tCommon('estimatedCost')}
                       </span>
@@ -897,7 +897,7 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                     ) : estimate ? (
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-bold text-[#f3f0ed]/70">{estimate.creditsRequired} {tCommon('credits')}</span>
-                        <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#f5409d]' : 'bg-red-400'}`} />
+                        <div className={`h-1.5 w-1.5 rounded-full ${estimate.hasSufficientBalance ? 'bg-[#e11d2a]' : 'bg-red-400'}`} />
                       </div>
                     ) : null}
                   </div>
@@ -925,8 +925,8 @@ export function MotionControlPanel({ nodeId, onClose, onDuplicate }: MotionContr
                   onClick={handleGenerate}
                   className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
                   style={{
-                    background: '#f5409d',
-                    color: '#1a2123',
+                    background: '#e11d2a',
+                    color: '#111113',
                   }}
                 >
                   <Wand2 className="h-4 w-4" />
@@ -966,12 +966,12 @@ function MotionStudioSlot({
 }) {
   if (filled) {
     return (
-      <div className="group/slot relative aspect-square min-w-0 flex-1 overflow-hidden rounded-xl bg-[#0d1011]">
+      <div className="group/slot relative aspect-square min-w-0 flex-1 overflow-hidden rounded-xl bg-[#050506]">
         {imagePreview ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img src={imagePreview} alt={label} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-[#f5409d]/80">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-2 text-[#e11d2a]/80">
             <Video className="h-5 w-5" />
             <span className="line-clamp-2 text-center text-[9px] text-[#f3f0ed]/50">{videoName}</span>
           </div>
@@ -991,7 +991,7 @@ function MotionStudioSlot({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="group/slot flex aspect-square min-w-0 flex-1 flex-col items-center justify-center gap-1.5 rounded-xl bg-[#0d1011] text-[#f3f0ed]/40 transition-all hover:bg-[#0f1416] hover:text-[#f5409d] disabled:cursor-not-allowed disabled:opacity-40"
+      className="group/slot flex aspect-square min-w-0 flex-1 flex-col items-center justify-center gap-1.5 rounded-xl bg-[#050506] text-[#f3f0ed]/40 transition-all hover:bg-[#0f1416] hover:text-[#e11d2a] disabled:cursor-not-allowed disabled:opacity-40"
     >
       <span className="opacity-70 transition-opacity group-hover/slot:opacity-100">{icon}</span>
       <span className="text-[10px] font-medium">{label}</span>

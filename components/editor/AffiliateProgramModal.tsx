@@ -48,10 +48,10 @@ export function AffiliateProgramModal({ onClose }: AffiliateProgramModalProps) {
       icon: CircleDollarSign,
       titleKey: 'commissionTitle',
       descKey: 'commissionDesc',
-      iconColor: 'text-[#f5409d]',
-      bg: 'bg-[#f5409d]/10',
-      ring: 'ring-[#f5409d]/20',
-      glow: 'from-[#f5409d]/10',
+      iconColor: 'text-[#e11d2a]',
+      bg: 'bg-[#e11d2a]/10',
+      ring: 'ring-[#e11d2a]/20',
+      glow: 'from-[#e11d2a]/10',
     },
     {
       icon: BarChart3,
@@ -66,10 +66,10 @@ export function AffiliateProgramModal({ onClose }: AffiliateProgramModalProps) {
       icon: CalendarClock,
       titleKey: 'payoutTitle',
       descKey: 'payoutDesc',
-      iconColor: 'text-pink-400',
-      bg: 'bg-pink-400/10',
-      ring: 'ring-pink-400/20',
-      glow: 'from-pink-400/10',
+      iconColor: 'text-red-400',
+      bg: 'bg-red-400/10',
+      ring: 'ring-red-400/20',
+      glow: 'from-red-400/10',
     },
   ] as const;
 
@@ -80,34 +80,34 @@ export function AffiliateProgramModal({ onClose }: AffiliateProgramModalProps) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="sidebar-scroll relative mx-4 flex max-h-[88vh] w-full max-w-lg flex-col overflow-y-auto rounded-[20px] border border-[#f3f0ed]/[0.08] bg-[#1a2123] shadow-[0_24px_72px_-16px_rgba(0,0,0,0.6)]">
+      <div className="sidebar-scroll relative mx-4 flex max-h-[88vh] w-full max-w-lg flex-col overflow-y-auto rounded-[20px] border border-[#f3f0ed]/[0.08] bg-[#111113] shadow-[0_24px_72px_-16px_rgba(0,0,0,0.6)]">
         {/* Ambient glow behind header */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-32 left-1/2 h-64 w-[420px] -translate-x-1/2 rounded-full bg-[#f5409d] opacity-[0.08] blur-3xl"
+          className="pointer-events-none absolute -top-32 left-1/2 h-64 w-[420px] -translate-x-1/2 rounded-full bg-[#e11d2a] opacity-[0.08] blur-3xl"
         />
 
         {/* Close */}
         <button
           onClick={onClose}
           aria-label={t('close')}
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full text-[#f3f0ed]/30 transition-colors hover:bg-[#f3f0ed]/8 hover:text-[#f3f0ed]/80"
+          className="app-press app-ease absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full text-[#f3f0ed]/30 transition-colors hover:bg-[#f3f0ed]/8 hover:text-[#f3f0ed]/80"
         >
           <X className="h-4 w-4" />
         </button>
 
         {/* Heading */}
         <div className="relative flex flex-col items-center gap-3 px-6 pb-6 pt-11 text-center">
-          <div className="flex items-center gap-1.5 rounded-full border border-[#f5409d]/25 bg-[#f5409d]/10 px-3 py-1 shadow-[0_0_24px_-4px_rgba(245,64,157,0.4)]">
-            <Handshake className="h-3 w-3 text-[#f5409d]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#f5409d]">
+          <div className="flex items-center gap-1.5 rounded-full border border-[#e11d2a]/25 bg-[#e11d2a]/10 px-3 py-1 shadow-[0_0_24px_-4px_rgba(225,29,42,0.4)]">
+            <Handshake className="h-3 w-3 text-[#e11d2a]" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#e11d2a]">
               The AI Model Lab Afiliados
             </span>
           </div>
-          <h2 className="max-w-sm text-[22px] font-bold leading-tight tracking-tight text-[#f3f0ed]">
+          <h2 className="app-reveal max-w-sm text-[22px] font-bold leading-tight tracking-tight text-[#f3f0ed]">
             {t('title')}
           </h2>
-          <p className="max-w-sm text-sm leading-relaxed text-[#f3f0ed]/50">{t('intro')}</p>
+          <p className="app-reveal max-w-sm text-sm leading-relaxed text-[#f3f0ed]/50" style={{ animationDelay: '0.08s' }}>{t('intro')}</p>
         </div>
 
         {/* Divider */}
@@ -156,10 +156,10 @@ export function AffiliateProgramModal({ onClose }: AffiliateProgramModalProps) {
         </div>
 
         {/* Footer CTAs */}
-        <div className="sticky bottom-0 flex items-center gap-2.5 border-t border-[#f3f0ed]/[0.06] bg-gradient-to-t from-[#1a2123] via-[#1a2123]/95 to-[#1a2123]/80 px-6 py-4 backdrop-blur">
+        <div className="sticky bottom-0 flex items-center gap-2.5 border-t border-[#f3f0ed]/[0.06] bg-gradient-to-t from-[#111113] via-[#111113]/95 to-[#111113]/80 px-6 py-4 backdrop-blur">
           <button
             onClick={onClose}
-            className="rounded-xl border border-[#f3f0ed]/[0.08] px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/60 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/80"
+            className="app-press app-ease rounded-xl border border-[#f3f0ed]/[0.08] px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/60 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/80"
           >
             {t('close')}
           </button>
@@ -168,7 +168,7 @@ export function AffiliateProgramModal({ onClose }: AffiliateProgramModalProps) {
               onClose();
               router.push('/painel-afiliado');
             }}
-            className="group inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] shadow-[0_0_0_1px_rgba(245,64,157,0.4),0_4px_16px_-4px_rgba(245,64,157,0.3)] transition-all hover:bg-[#fa4da6] hover:shadow-[0_0_0_1px_rgba(245,64,157,0.6),0_12px_28px_-6px_rgba(245,64,157,0.5)]"
+            className="app-btn group inline-flex flex-1 items-center justify-center gap-2 bg-[#e11d2a] px-4 py-2.5 text-sm font-semibold text-[#1c1917] shadow-[0_0_0_1px_rgba(225,29,42,0.4),0_4px_16px_-4px_rgba(225,29,42,0.3)]"
           >
             {t('cta')}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

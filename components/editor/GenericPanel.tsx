@@ -154,13 +154,13 @@ export function GenericPanel({ nodeId, onClose, onDuplicate }: GenericPanelProps
               <Image className="h-3.5 w-3.5 text-[#f3f0ed]/40" />
               <span className="text-[11px] font-semibold text-[#f3f0ed]/40">{t('header')}</span>
             </div>
-            <span className="text-[11px] font-semibold text-[#f5409d]/70">
+            <span className="text-[11px] font-semibold text-[#e11d2a]/70">
               {MODEL_LABELS[model]}
             </span>
           </div>
 
           {/* main card */}
-          <div className="w-lg overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#1a2123] shadow-2xl shadow-black/50">
+          <div className="w-lg overflow-hidden rounded-2xl border border-[#f3f0ed]/8 bg-[#111113] shadow-2xl shadow-black/50">
             {/* Preview area */}
             {genState === 'idle' ? (
               <div
@@ -214,11 +214,11 @@ export function GenericPanel({ nodeId, onClose, onDuplicate }: GenericPanelProps
               <button
                 onClick={handleGenerate}
                 disabled={isGenerating || !prompt.trim()}
-                className="mb-0.5 flex items-center gap-1.5 rounded-full px-3 py-3 text-xs font-bold transition-all active:scale-95 disabled:opacity-50"
+                className="app-btn mb-0.5 flex items-center gap-1.5 px-3 py-3 text-xs font-bold disabled:opacity-50"
                 style={{
-                  background: isGenerating ? 'rgba(245,64,157,0.12)' : '#f5409d',
-                  color: isGenerating ? '#f5409d' : '#1a2123',
-                  border: isGenerating ? '1px solid rgba(245,64,157,0.2)' : 'none',
+                  background: isGenerating ? 'rgba(225,29,42,0.12)' : '#e11d2a',
+                  color: isGenerating ? '#e11d2a' : '#111113',
+                  border: isGenerating ? '1px solid rgba(225,29,42,0.2)' : 'none',
                 }}
               >
                 {isGenerating ? (
@@ -232,7 +232,7 @@ export function GenericPanel({ nodeId, onClose, onDuplicate }: GenericPanelProps
 
           {/* ── Floating options pill ── */}
           <div
-            className="flex items-center gap-3 rounded-lg border border-[#f3f0ed]/8 bg-[#1a2123]/90 px-3 py-1.5 shadow-xl backdrop-blur-md"
+            className="flex items-center gap-3 rounded-lg border border-[#f3f0ed]/8 bg-[#111113]/90 px-3 py-1.5 shadow-xl backdrop-blur-md"
             style={{ opacity: isGenerating ? 0.4 : 1, pointerEvents: isGenerating ? 'none' : undefined }}
           >
             <BarSelect
@@ -288,7 +288,7 @@ export function GenericPanel({ nodeId, onClose, onDuplicate }: GenericPanelProps
               onClick={() => fileInputRef.current?.click()}
               disabled={attachedImages.length >= 4}
               title={t('addReference')}
-              className="flex h-6 w-6 items-center justify-center rounded-full text-[#f3f0ed]/35 transition-all hover:text-[#f3f0ed]/70 disabled:cursor-not-allowed disabled:opacity-30"
+              className="app-press app-ease flex h-6 w-6 items-center justify-center rounded-full text-[#f3f0ed]/35 transition-all hover:text-[#f3f0ed]/70 disabled:cursor-not-allowed disabled:opacity-30"
             >
               <ImagePlus className="h-4 w-4" />
             </button>
@@ -297,7 +297,7 @@ export function GenericPanel({ nodeId, onClose, onDuplicate }: GenericPanelProps
 
             <button
               onClick={onClose}
-              className="flex h-6 w-6 items-center justify-center rounded-full text-red-500/30 transition-all hover:bg-red-500/8 hover:text-red-500/80"
+              className="app-press app-ease flex h-6 w-6 items-center justify-center rounded-full text-red-500/30 transition-all hover:bg-red-500/8 hover:text-red-500/80"
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -327,12 +327,12 @@ function BarSelect({
       <SelectTrigger className="h-auto w-auto border-none bg-transparent p-0 text-[11px] font-semibold text-[#f3f0ed]/50 shadow-none outline-none ring-0 transition-colors hover:text-[#f3f0ed]/80 focus:ring-0 [&>svg]:ml-0.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-[#f3f0ed]/25">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#1a2123] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
+      <SelectContent className="rounded-xl border border-[#f3f0ed]/8 bg-[#111113] p-1 shadow-2xl shadow-black/60 backdrop-blur-md">
         {options.map((opt) => (
           <SelectItem
             key={opt.value}
             value={opt.value}
-            className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#4b1e3a]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#f5409d] [&>span:last-child>svg]:text-[#f5409d]"
+            className="cursor-pointer rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/70 transition-all focus:bg-[#3a0f16]/40 focus:text-[#f3f0ed] data-[state=checked]:text-[#e11d2a] [&>span:last-child>svg]:text-[#e11d2a]"
           >
             {opt.label}
           </SelectItem>

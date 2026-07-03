@@ -76,7 +76,7 @@ export function SidebarWeeklyClaim({ collapsed }: { collapsed: boolean }) {
               className={cn(
                 'relative mx-auto flex size-9 items-center justify-center rounded-xl border transition-colors duration-200 ease-app',
                 canClaim
-                  ? 'border-[rgba(245,64,157,0.4)] bg-[rgba(245,64,157,0.1)] text-app-lime hover:bg-[rgba(245,64,157,0.16)]'
+                  ? 'border-[rgba(225,29,42,0.4)] bg-[rgba(225,29,42,0.1)] text-app-lime hover:bg-[rgba(225,29,42,0.16)]'
                   : 'border-app-hairline bg-app-surface text-app-text-2 hover:text-app-text',
               )}
             >
@@ -106,13 +106,13 @@ export function SidebarWeeklyClaim({ collapsed }: { collapsed: boolean }) {
         className={cn(
           'group relative w-full overflow-hidden rounded-xl border p-2.5 text-left transition-all duration-200 ease-app',
           canClaim
-            ? 'border-[rgba(245,64,157,0.32)] bg-[rgba(245,64,157,0.06)] hover:border-[rgba(245,64,157,0.5)]'
+            ? 'border-[rgba(225,29,42,0.32)] bg-[rgba(225,29,42,0.06)] hover:border-[rgba(225,29,42,0.5)]'
             : 'border-app-hairline bg-app-surface/60 hover:border-app-hairline-2',
         )}
       >
         {/* brilho radial — só no estado resgatável */}
         {canClaim && (
-          <span className="pointer-events-none absolute -inset-x-6 -top-8 h-20 bg-[radial-gradient(ellipse_at_center,rgba(245,64,157,0.28),transparent_70%)] opacity-70 blur-md transition-opacity duration-300 group-hover:opacity-100" />
+          <span className="pointer-events-none absolute -inset-x-6 -top-8 h-20 bg-[radial-gradient(ellipse_at_center,rgba(225,29,42,0.28),transparent_70%)] opacity-70 blur-md transition-opacity duration-300 group-hover:opacity-100" />
         )}
 
         <div className="relative flex items-center gap-2.5">
@@ -120,7 +120,7 @@ export function SidebarWeeklyClaim({ collapsed }: { collapsed: boolean }) {
             className={cn(
               'flex size-9 shrink-0 items-center justify-center rounded-lg ring-1',
               canClaim
-                ? 'bg-gradient-to-br from-[rgba(245,64,157,0.2)] to-[rgba(245,64,157,0.05)] text-app-lime ring-[rgba(245,64,157,0.25)]'
+                ? 'bg-gradient-to-br from-[rgba(225,29,42,0.2)] to-[rgba(225,29,42,0.05)] text-app-lime ring-[rgba(225,29,42,0.25)]'
                 : isLocked
                   ? 'bg-yellow-400/10 text-yellow-300 ring-yellow-400/20'
                   : 'bg-app-card text-app-text-2 ring-app-hairline',

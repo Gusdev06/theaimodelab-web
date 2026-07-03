@@ -99,7 +99,7 @@ function PixKeyForm({
               type="button"
               onClick={() => setPixKeyType(value)}
               className={`rounded-lg border px-2 py-1.5 text-[11px] font-medium transition-colors ${pixKeyType === value
-                ? 'border-[#f5409d]/50 bg-[#f5409d]/10 text-[#f5409d]'
+                ? 'border-[#e11d2a]/50 bg-[#e11d2a]/10 text-[#e11d2a]'
                 : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50 hover:border-[#f3f0ed]/20 hover:text-[#f3f0ed]/80'
                 }`}
             >
@@ -116,7 +116,7 @@ function PixKeyForm({
           onChange={(e) => setPixKey(e.target.value)}
           placeholder={t(`placeholders.${pixKeyType}`)}
           required
-          className="h-10 rounded-lg border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus:border-[#f5409d]/30 focus:outline-none"
+          className="h-10 rounded-lg border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus:border-[#e11d2a]/30 focus:outline-none"
         />
       </div>
       <div className="flex gap-2">
@@ -124,7 +124,7 @@ function PixKeyForm({
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 rounded-xl border border-[#f3f0ed]/8 px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/60 transition-colors hover:bg-[#f3f0ed]/5"
+            className="app-press app-ease flex-1 rounded-xl border border-[#f3f0ed]/8 px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/60 transition-colors hover:bg-[#f3f0ed]/5"
           >
             {t('cancel')}
           </button>
@@ -132,7 +132,7 @@ function PixKeyForm({
         <button
           type="submit"
           disabled={submitting || !pixKey.trim()}
-          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="app-btn inline-flex flex-1 items-center justify-center gap-2 bg-[#e11d2a] px-4 py-2.5 text-sm font-semibold text-[#1c1917] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? (
             <>
@@ -163,7 +163,7 @@ function CopyButton({ text, label }: { text: string; label?: string }) {
     <button
       onClick={handleCopy}
       className={`flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-medium transition-colors ${copied
-        ? 'border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]'
+        ? 'border-[#e11d2a]/30 bg-[#e11d2a]/10 text-[#e11d2a]'
         : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70'
         }`}
     >
@@ -229,7 +229,7 @@ export default function PainelAfiliadoPage() {
   if (loading || !accessToken) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#111618] px-4">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
         {loadingMsg && <p className="text-center text-sm text-[#f3f0ed]/40">{loadingMsg}</p>}
       </div>
     );
@@ -239,7 +239,7 @@ export default function PainelAfiliadoPage() {
   if (isLoading) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#111618] px-4">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
         {loadingMsg && <p className="text-center text-sm text-[#f3f0ed]/40">{loadingMsg}</p>}
       </div>
     );
@@ -251,8 +251,8 @@ export default function PainelAfiliadoPage() {
       <div className="relative flex min-h-screen flex-col items-center justify-center gap-4 bg-[#111618] px-4 py-10">
         <div className="w-full max-w-md rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 p-8">
           <div className="text-center">
-            <Users className="mx-auto h-10 w-10 text-[#f5409d]/50" />
-            <h1 className="mt-4 text-lg font-bold text-[#f3f0ed]">{t('signup.title')}</h1>
+            <Users className="mx-auto h-10 w-10 text-[#e11d2a]/50" />
+            <h1 className="app-reveal mt-4 text-lg font-bold text-[#f3f0ed]">{t('signup.title')}</h1>
             <p className="mt-2 text-sm leading-relaxed text-[#f3f0ed]/50">
               {t('signup.description')}
             </p>
@@ -282,9 +282,9 @@ export default function PainelAfiliadoPage() {
 
   const statCards = [
     { label: t('stats.referredUsers'), value: summary.referredUsers.toLocaleString(intlLocale(locale)), icon: Users, color: 'text-blue-400' },
-    { label: t('stats.available'), value: formatCents(summary.availableCommissionCents ?? 0, locale), icon: Wallet, color: 'text-pink-400' },
+    { label: t('stats.available'), value: formatCents(summary.availableCommissionCents ?? 0, locale), icon: Wallet, color: 'text-red-400' },
     { label: t('stats.maturing'), value: formatCents(summary.maturingCommissionCents ?? 0, locale), icon: Timer, color: 'text-yellow-400' },
-    { label: t('stats.paid'), value: formatCents(summary.paidCommissionCents ?? 0, locale), icon: CheckCircle2, color: 'text-pink-400' },
+    { label: t('stats.paid'), value: formatCents(summary.paidCommissionCents ?? 0, locale), icon: CheckCircle2, color: 'text-red-400' },
   ];
 
   return (
@@ -303,7 +303,7 @@ export default function PainelAfiliadoPage() {
                   <ArrowLeft className="h-4 w-4" />
                 </a>
                 <div>
-                  <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">{t('panelTitle')}</h1>
+                  <h1 className="app-reveal text-xl font-bold text-[#f3f0ed] md:text-2xl">{t('panelTitle')}</h1>
                   <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
                     {t('subtitle', { name: affiliate.name, percent: affiliate.commissionPercent })}
                   </p>
@@ -314,7 +314,7 @@ export default function PainelAfiliadoPage() {
             <div className="flex flex-wrap items-center gap-2">
               <div className="flex items-center gap-2 rounded-lg border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 py-1.5">
                 <span className="text-xs text-[#f3f0ed]/40">{t('codeLabel')}</span>
-                <span className="font-mono text-sm font-medium text-[#f5409d]">{affiliate.code}</span>
+                <span className="font-mono text-sm font-medium text-[#e11d2a]">{affiliate.code}</span>
               </div>
               <CopyButton text={affiliate.code} />
               <CopyButton text={referralLink} label={t('copyLink')} />
@@ -371,7 +371,7 @@ export default function PainelAfiliadoPage() {
             {editingPix ? (
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-2">
-                  <KeyRound className="h-4 w-4 text-[#f5409d]" />
+                  <KeyRound className="h-4 w-4 text-[#e11d2a]" />
                   <span className="text-sm font-semibold text-[#f3f0ed]">
                     {affiliate.pixKey ? t('pix.editTitle') : t('pix.registerTitle')}
                   </span>
@@ -388,8 +388,8 @@ export default function PainelAfiliadoPage() {
             ) : affiliate.pixKey ? (
               <div className="flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5409d]/10">
-                    <KeyRound className="h-4 w-4 text-[#f5409d]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e11d2a]/10">
+                    <KeyRound className="h-4 w-4 text-[#e11d2a]" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f3f0ed]/30">
@@ -400,7 +400,7 @@ export default function PainelAfiliadoPage() {
                 </div>
                 <button
                   onClick={() => setEditingPix(true)}
-                  className="flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-[#f3f0ed]/8 px-2.5 text-xs font-medium text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70"
+                  className="app-press app-ease flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-[#f3f0ed]/8 px-2.5 text-xs font-medium text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70"
                 >
                   <Pencil className="h-3.5 w-3.5" />
                   {t('pix.edit')}
@@ -421,7 +421,7 @@ export default function PainelAfiliadoPage() {
                 </div>
                 <button
                   onClick={() => setEditingPix(true)}
-                  className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#f5409d] px-3 text-xs font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90"
+                  className="app-press app-ease inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#e11d2a] px-3 text-xs font-semibold text-[#1c1917] transition-colors hover:bg-[#e11d2a]/90"
                 >
                   <KeyRound className="h-3.5 w-3.5" />
                   {t('pix.register')}
@@ -463,11 +463,11 @@ export default function PainelAfiliadoPage() {
                         </p>
                       </div>
                       <div className="flex flex-col items-end gap-1">
-                        <span className="text-sm font-bold tabular-nums text-[#f5409d]">
+                        <span className="text-sm font-bold tabular-nums text-[#e11d2a]">
                           {formatCents(earning.commissionCents, locale)}
                         </span>
                         {earning.status === 'PAID' ? (
-                          <Badge variant="outline" className="border-pink-500/30 bg-pink-500/10 text-pink-400">
+                          <Badge variant="outline" className="border-red-500/30 bg-red-500/10 text-red-400">
                             {t('earnings.statusPaid')}
                           </Badge>
                         ) : (() => {
@@ -478,7 +478,7 @@ export default function PainelAfiliadoPage() {
                               {t('earnings.availableOn', { date: formatDate(availDate.toISOString(), locale) })}
                             </span>
                           ) : (
-                            <Badge variant="outline" className="border-pink-500/30 bg-pink-500/10 text-pink-400">
+                            <Badge variant="outline" className="border-red-500/30 bg-red-500/10 text-red-400">
                               {t('earnings.statusAvailable')}
                             </Badge>
                           );
@@ -541,13 +541,13 @@ export default function PainelAfiliadoPage() {
                             </span>
                           </TableCell>
                           <TableCell>
-                            <span className="text-sm font-bold tabular-nums text-[#f5409d]">
+                            <span className="text-sm font-bold tabular-nums text-[#e11d2a]">
                               {formatCents(earning.commissionCents, locale)}
                             </span>
                           </TableCell>
                           <TableCell>
                             {earning.status === 'PAID' ? (
-                              <Badge variant="outline" className="border-pink-500/30 bg-pink-500/10 text-pink-400">
+                              <Badge variant="outline" className="border-red-500/30 bg-red-500/10 text-red-400">
                                 {t('earnings.statusPaid')}
                               </Badge>
                             ) : (() => {
@@ -563,7 +563,7 @@ export default function PainelAfiliadoPage() {
                                   </span>
                                 </div>
                               ) : (
-                                <Badge variant="outline" className="border-pink-500/30 bg-pink-500/10 text-pink-400">
+                                <Badge variant="outline" className="border-red-500/30 bg-red-500/10 text-red-400">
                                   {t('earnings.statusAvailable')}
                                 </Badge>
                               );

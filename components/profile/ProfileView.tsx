@@ -52,7 +52,7 @@ function AvatarRing({
   const R = 44;
   const C = 2 * Math.PI * R;
   const offset = C * (1 - fraction);
-  const color = fraction > 0.25 ? '#f5409d' : fraction > 0.1 ? '#f59e0b' : '#ef4444';
+  const color = fraction > 0.25 ? '#e11d2a' : fraction > 0.1 ? '#f59e0b' : '#ef4444';
 
   return (
     <div className="relative size-[96px] shrink-0">
@@ -111,7 +111,7 @@ function MyPostCard({ post, onOpen }: { post: MyCommunityPost; onOpen: () => voi
           !showMedia && 'h-[200px]',
         )}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(245,64,157,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(225,29,42,0.08),transparent_55%)]" />
         {showMedia ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -481,8 +481,8 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
     <div className="min-h-0 flex-1 overflow-y-auto scrollbar-app">
       <div className="mx-auto w-full max-w-[1500px] px-6 pb-16 pt-5 sm:pt-7">
         {/* cabeçalho */}
-        <div className="relative overflow-hidden rounded-[18px] border border-app-hairline bg-app-surface p-5 sm:p-6">
-          <div className="pointer-events-none absolute -right-12 -top-12 size-48 rounded-full bg-[radial-gradient(circle,rgba(245,64,157,0.12),transparent_65%)]" />
+        <div className="app-reveal relative overflow-hidden rounded-[18px] border border-app-hairline bg-app-surface p-5 sm:p-6">
+          <div className="pointer-events-none absolute -right-12 -top-12 size-48 rounded-full bg-[radial-gradient(circle,rgba(225,29,42,0.12),transparent_65%)]" />
           <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center">
             <AvatarRing avatarUrl={avatarUrl} name={profile.name} fraction={fraction} />
             <div className="min-w-0 flex-1">
@@ -677,7 +677,7 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
             <button
               type="button"
               onClick={() => setShowManageModal(true)}
-              className="flex items-center gap-3 rounded-[14px] border border-app-hairline bg-app-surface px-4 py-3.5 text-left transition-colors duration-200 ease-app hover:border-app-hairline-2"
+              className="app-press flex items-center gap-3 rounded-[14px] border border-app-hairline bg-app-surface px-4 py-3.5 text-left transition-colors duration-200 ease-app hover:border-app-hairline-2"
             >
               <Settings className="size-4 shrink-0 text-app-lime" strokeWidth={1.8} />
               <span className="flex-1 text-[14px] font-semibold text-app-text">{tp('manageSubscription')}</span>
@@ -692,7 +692,7 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
                   type="button"
                   onClick={() => reactivateMutation.mutate()}
                   disabled={reactivateMutation.isPending}
-                  className="flex h-9 w-fit items-center gap-2 rounded-[10px] bg-app-lime px-4 text-[13px] font-bold text-app-lime-ink transition-colors hover:bg-app-lime-hover disabled:opacity-50"
+                  className="app-btn flex h-9 w-fit items-center gap-2 bg-app-lime px-4 text-[13px] font-bold text-app-lime-ink disabled:opacity-50"
                 >
                   {reactivateMutation.isPending && <Loader2 className="size-3.5 animate-spin" />}
                   {tp('reactivateSubscription')}

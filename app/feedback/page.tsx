@@ -63,7 +63,7 @@ function npsColor(score: number, selected: boolean): string {
   if (selected) {
     if (score <= 5) return 'bg-red-500/90 text-white border-red-500';
     if (score <= 8) return 'bg-amber-400 text-[#1c1917] border-amber-400';
-    return 'bg-[#f5409d] text-[#1c1917] border-[#f5409d]';
+    return 'bg-[#e11d2a] text-[#1c1917] border-[#e11d2a]';
   }
   return 'border-[#f3f0ed]/15 bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/60 hover:border-[#f3f0ed]/30 hover:text-[#f3f0ed]';
 }
@@ -212,8 +212,8 @@ export default function FeedbackPage() {
 
   if (authLoading || profileLoading || !profile) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#1a2123]">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+      <div className="flex min-h-screen items-center justify-center bg-[#111113]">
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -226,26 +226,26 @@ export default function FeedbackPage() {
 
   if (submitted) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#1a2123] px-4 py-10 text-[#f3f0ed]">
+      <div className="flex min-h-screen items-center justify-center bg-[#111113] px-4 py-10 text-[#f3f0ed]">
         <div className="w-full max-w-md text-center">
-          <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-[#f5409d]/15 ring-1 ring-[#f5409d]/40">
-            <div className="absolute inset-0 rounded-3xl bg-[#f5409d]/20 blur-2xl" />
-            <Check className="relative h-10 w-10 text-[#f5409d]" strokeWidth={3} />
+          <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-[#e11d2a]/15 ring-1 ring-[#e11d2a]/40">
+            <div className="absolute inset-0 rounded-3xl bg-[#e11d2a]/20 blur-2xl" />
+            <Check className="relative h-10 w-10 text-[#e11d2a]" strokeWidth={3} />
           </div>
           <h1 className="mb-3 text-3xl font-bold">{t('success.title')}</h1>
           <p className="mb-6 text-[15px] leading-relaxed text-[#f3f0ed]/70">
             {t('success.description')}
           </p>
 
-          <div className="mb-8 rounded-2xl border border-[#f5409d]/30 bg-[#f5409d]/5 p-5">
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#f5409d]/80">
+          <div className="mb-8 rounded-2xl border border-[#e11d2a]/30 bg-[#e11d2a]/5 p-5">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#e11d2a]/80">
               {t('success.creditsLabel')}
             </div>
             <div className="mt-1 flex items-baseline justify-center gap-1.5">
-              <span className="text-4xl font-bold text-[#f5409d]">
+              <span className="text-4xl font-bold text-[#e11d2a]">
                 +{creditsAwarded.toLocaleString(locale)}
               </span>
-              <span className="text-sm font-medium text-[#f5409d]/70">
+              <span className="text-sm font-medium text-[#e11d2a]/70">
                 {t('success.creditsSuffix')}
               </span>
             </div>
@@ -254,7 +254,7 @@ export default function FeedbackPage() {
 
           <Button
             onClick={() => router.push('/workspace')}
-            className="h-11 bg-[#f5409d] px-6 font-semibold text-[#1c1917] hover:bg-[#fa4da6]"
+            className="h-11 bg-[#e11d2a] px-6 font-semibold text-[#1c1917] hover:bg-[#ff5964]"
           >
             {t('success.backCta')}
           </Button>
@@ -270,28 +270,28 @@ export default function FeedbackPage() {
   const minCharsLabel = (min: number) => t('validation.minChars', { min });
 
   return (
-    <div className="min-h-screen bg-[#1a2123] px-4 py-10 text-[#f3f0ed]">
+    <div className="min-h-screen bg-[#111113] px-4 py-10 text-[#f3f0ed]">
       <div className="mx-auto max-w-2xl">
         <button
           onClick={() => router.push('/workspace')}
-          className="mb-8 inline-flex items-center gap-2 text-sm text-[#f3f0ed]/60 transition-colors hover:text-[#f5409d]"
+          className="app-press app-ease mb-8 inline-flex items-center gap-2 text-sm text-[#f3f0ed]/60 transition-colors hover:text-[#e11d2a]"
         >
           <ArrowLeft className="h-4 w-4" />
           {t('back')}
         </button>
 
         {/* Hero */}
-        <div className="relative mb-6 overflow-hidden rounded-2xl border border-[#f5409d]/20 bg-gradient-to-br from-[#1f2a1c] via-[#1a2123] to-[#1a2123] p-8 sm:p-10">
-          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#f5409d]/15 blur-3xl" />
+        <div className="relative mb-6 overflow-hidden rounded-2xl border border-[#e11d2a]/20 bg-gradient-to-br from-[#1f2a1c] via-[#111113] to-[#111113] p-8 sm:p-10">
+          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#e11d2a]/15 blur-3xl" />
           <div className="relative z-10">
-            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f5409d]/15 ring-1 ring-[#f5409d]/30">
-              <Gift className="h-7 w-7 text-[#f5409d]" />
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e11d2a]/15 ring-1 ring-[#e11d2a]/30">
+              <Gift className="h-7 w-7 text-[#e11d2a]" />
             </div>
-            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[#f5409d]/30 bg-[#f5409d]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#f5409d]">
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#e11d2a]">
               <Gem className="h-3 w-3" />
               {t('badge')}
             </div>
-            <h1 className="mb-3 text-3xl font-bold sm:text-4xl">{t('title')}</h1>
+            <h1 className="app-reveal mb-3 text-3xl font-bold sm:text-4xl">{t('title')}</h1>
             <p className="text-[15px] leading-relaxed text-[#f3f0ed]/70">
               {t('description')}
             </p>
@@ -352,7 +352,7 @@ export default function FeedbackPage() {
                         aria-label={t('q2.aria', { n })}
                       >
                         <Star
-                          className={`h-9 w-9 transition-colors ${active ? 'fill-[#f5409d] text-[#f5409d]' : 'text-[#f3f0ed]/20'}`}
+                          className={`h-9 w-9 transition-colors ${active ? 'fill-[#e11d2a] text-[#e11d2a]' : 'text-[#f3f0ed]/20'}`}
                         />
                       </button>
                     );
@@ -386,12 +386,12 @@ export default function FeedbackPage() {
                         type="button"
                         onClick={() => field.onChange(id)}
                         className={`flex items-center gap-3 rounded-xl border p-3.5 text-left text-sm transition-all ${selected
-                          ? 'border-[#f5409d] bg-[#f5409d]/10 text-[#f3f0ed]'
+                          ? 'border-[#e11d2a] bg-[#e11d2a]/10 text-[#f3f0ed]'
                           : 'border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/70 hover:border-[#f3f0ed]/25 hover:text-[#f3f0ed]'
                           }`}
                       >
                         <div
-                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors ${selected ? 'bg-[#f5409d]/20 text-[#f5409d]' : 'bg-[#f3f0ed]/[0.06] text-[#f3f0ed]/60'
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors ${selected ? 'bg-[#e11d2a]/20 text-[#e11d2a]' : 'bg-[#f3f0ed]/[0.06] text-[#f3f0ed]/60'
                             }`}
                         >
                           <Icon className="h-4 w-4" />
@@ -406,7 +406,7 @@ export default function FeedbackPage() {
             {goal === 'outro' && (
               <div className="mt-4">
                 <label className="mb-2 block text-xs font-medium text-[#f3f0ed]/70">
-                  {t('q3.otherLabel')} <span className="text-[#f5409d]">*</span>
+                  {t('q3.otherLabel')} <span className="text-[#e11d2a]">*</span>
                 </label>
                 <Controller
                   name="goalOther"
@@ -447,7 +447,7 @@ export default function FeedbackPage() {
                     onClick={() => toggleFeature(id)}
                     disabled={disabled}
                     className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all ${selected
-                      ? 'border-[#f5409d] bg-[#f5409d]/15 text-[#f5409d]'
+                      ? 'border-[#e11d2a] bg-[#e11d2a]/15 text-[#e11d2a]'
                       : disabled
                         ? 'cursor-not-allowed border-[#f3f0ed]/5 bg-[#f3f0ed]/[0.02] text-[#f3f0ed]/30'
                         : 'border-[#f3f0ed]/15 bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/70 hover:border-[#f3f0ed]/35 hover:text-[#f3f0ed]'
@@ -532,7 +532,7 @@ export default function FeedbackPage() {
           </Section>
 
           {/* Submit */}
-          <div className="sticky bottom-4 z-10 mt-8 rounded-2xl border border-[#f5409d]/20 bg-[#1a2123]/95 p-4 backdrop-blur sm:p-5">
+          <div className="sticky bottom-4 z-10 mt-8 rounded-2xl border border-[#e11d2a]/20 bg-[#111113]/95 p-4 backdrop-blur sm:p-5">
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
               <p className="text-center text-xs text-[#f3f0ed]/60 sm:text-left">
                 {isValid ? t('submitReady') : t('submitPending')}
@@ -540,7 +540,7 @@ export default function FeedbackPage() {
               <Button
                 type="submit"
                 disabled={!isValid || isSubmitting}
-                className="group h-11 w-full bg-[#f5409d] px-6 font-semibold text-[#1c1917] shadow-[0_0_24px_rgba(245,64,157,0.35)] hover:bg-[#fa4da6] hover:shadow-[0_0_32px_rgba(245,64,157,0.5)] disabled:cursor-not-allowed disabled:bg-[#f3f0ed]/10 disabled:text-[#f3f0ed]/30 disabled:shadow-none sm:w-auto"
+                className="group h-11 w-full bg-[#e11d2a] px-6 font-semibold text-[#1c1917] shadow-[0_0_24px_rgba(225,29,42,0.35)] hover:bg-[#ff5964] hover:shadow-[0_0_32px_rgba(225,29,42,0.5)] disabled:cursor-not-allowed disabled:bg-[#f3f0ed]/10 disabled:text-[#f3f0ed]/30 disabled:shadow-none sm:w-auto"
               >
                 {isSubmitting ? (
                   <>
@@ -578,13 +578,13 @@ function Section({
   return (
     <div className="rounded-2xl border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.02] p-5 sm:p-6">
       <div className="mb-4 flex items-start gap-3">
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f5409d]/15 text-[12px] font-bold text-[#f5409d] ring-1 ring-[#f5409d]/30">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e11d2a]/15 text-[12px] font-bold text-[#e11d2a] ring-1 ring-[#e11d2a]/30">
           {number}
         </div>
         <div className="min-w-0 flex-1">
           <h2 className="text-[15px] font-semibold text-[#f3f0ed] sm:text-base">
             {title}
-            {required && <span className="ml-1 text-[#f5409d]">*</span>}
+            {required && <span className="ml-1 text-[#e11d2a]">*</span>}
           </h2>
           {subtitle && <p className="mt-0.5 text-xs text-[#f3f0ed]/50">{subtitle}</p>}
         </div>
@@ -624,7 +624,7 @@ function Textarea({
         placeholder={placeholder}
         maxLength={maxLength}
         rows={4}
-        className="w-full resize-none rounded-xl border border-[#f3f0ed]/10 bg-[#1a2123] p-3.5 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#f5409d]/50 focus:outline-none focus:ring-2 focus:ring-[#f5409d]/20"
+        className="w-full resize-none rounded-xl border border-[#f3f0ed]/10 bg-[#111113] p-3.5 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:border-[#e11d2a]/50 focus:outline-none focus:ring-2 focus:ring-[#e11d2a]/20"
       />
       <div className="mt-1.5 flex justify-between text-[11px]">
         <span className="text-amber-400/80">{hint}</span>

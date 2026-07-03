@@ -4,12 +4,12 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight, AudioLines, Loader2, Pause, Play } from 'lucide-react';
 
 const GRADIENTS = [
-  'linear-gradient(135deg, #f9a8d4, #ec4899)',
+  'linear-gradient(135deg, #ff8a91, #e11d2a)',
   'linear-gradient(135deg, #818cf8, #4f46e5)',
   'linear-gradient(135deg, #d8b4fe, #a855f7)',
-  'linear-gradient(135deg, #fb7185, #e11d48)',
-  'linear-gradient(135deg, #f9a8d4, #db2777)',
-  'linear-gradient(135deg, #f472b6, #db2777)',
+  'linear-gradient(135deg, #ff5964, #b3121a)',
+  'linear-gradient(135deg, #ff8a91, #b3121a)',
+  'linear-gradient(135deg, #ff5964, #b3121a)',
   'linear-gradient(135deg, #94a3b8, #475569)',
   'linear-gradient(135deg, #67e8f9, #0891b2)',
   'linear-gradient(135deg, #fcd34d, #d97706)',
@@ -102,17 +102,17 @@ function VoiceCardImpl({
           onSelect();
         }
       }}
-      className={`group relative flex min-h-[150px] cursor-pointer flex-col gap-2.5 overflow-hidden rounded-2xl border p-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-[#f5409d]/50 ${selected
-        ? 'border-[#f5409d]/70 bg-gradient-to-br from-[#f5409d]/[0.08] to-transparent shadow-[0_0_24px_rgba(245,64,157,0.12)]'
+      className={`group relative flex min-h-[150px] cursor-pointer flex-col gap-2.5 overflow-hidden rounded-2xl border p-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-[#e11d2a]/50 ${selected
+        ? 'border-[#e11d2a]/70 bg-gradient-to-br from-[#e11d2a]/[0.08] to-transparent shadow-[0_0_24px_rgba(225,29,42,0.12)]'
         : active
-          ? 'border-[#f5409d]/30 bg-[#f5409d]/[0.03]'
-          : 'border-[#f3f0ed]/[0.07] bg-[#0f1416] hover:border-[#f5409d]/25 hover:bg-[#0f1416]/70'
+          ? 'border-[#e11d2a]/30 bg-[#e11d2a]/[0.03]'
+          : 'border-[#f3f0ed]/[0.07] bg-[#0f1416] hover:border-[#e11d2a]/25 hover:bg-[#0f1416]/70'
         }`}
     >
       <div
-        className={`absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#4b1e3a]/40 transition-all ${selected
-          ? 'text-[#f5409d]'
-          : 'text-[#f3f0ed]/40 group-hover:bg-[#f5409d]/15 group-hover:text-[#f5409d]'
+        className={`absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#3a0f16]/40 transition-all ${selected
+          ? 'text-[#e11d2a]'
+          : 'text-[#f3f0ed]/40 group-hover:bg-[#e11d2a]/15 group-hover:text-[#e11d2a]'
           }`}
         aria-hidden
       >
@@ -149,8 +149,8 @@ function VoiceCardImpl({
               onPlay();
             }}
             className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all ${active
-              ? 'bg-[#f5409d] text-[#1a2123] shadow-[0_0_12px_rgba(245,64,157,0.5)]'
-              : 'bg-[#4b1e3a]/40 text-[#f3f0ed]/70 hover:bg-[#f5409d]/20 hover:text-[#f5409d]'
+              ? 'bg-[#e11d2a] text-[#111113] shadow-[0_0_12px_rgba(225,29,42,0.5)]'
+              : 'bg-[#3a0f16]/40 text-[#f3f0ed]/70 hover:bg-[#e11d2a]/20 hover:text-[#e11d2a]'
               }`}
             aria-label={
               loading ? 'Carregando prévia' : playing ? 'Pausar prévia' : 'Tocar prévia'
@@ -165,7 +165,7 @@ function VoiceCardImpl({
             )}
           </button>
         ) : (
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#4b1e3a]/20 text-[#f3f0ed]/20">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#3a0f16]/20 text-[#f3f0ed]/20">
             <Play className="h-3.5 w-3.5 translate-x-0.5" />
           </div>
         )}
@@ -247,8 +247,8 @@ function Waveform({
         const played = playing && barPosition <= progress;
         const color = active
           ? played
-            ? 'bg-[#f5409d]'
-            : 'bg-[#f5409d]/30'
+            ? 'bg-[#e11d2a]'
+            : 'bg-[#e11d2a]/30'
           : 'bg-[#f3f0ed]/25';
         return (
           <div

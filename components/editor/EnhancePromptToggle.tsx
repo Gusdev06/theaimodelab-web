@@ -19,7 +19,7 @@ export function EnhancePromptToggle({
   isEnhancing = false,
   disabled = false,
   icon,
-  accent = '#f5409d',
+  accent = '#e11d2a',
 }: EnhancePromptToggleProps) {
   const t = useTranslations('editorChrome.buttons');
   // Converte hex → rgba para os tons translúcidos da borda/background.
@@ -34,7 +34,7 @@ export function EnhancePromptToggle({
     <button
       onClick={() => onToggle(!enabled)}
       disabled={disabled}
-      className="flex w-full items-center justify-between rounded-xl border px-3 py-2 transition-all"
+      className="app-press app-ease flex w-full items-center justify-between rounded-xl border px-3 py-2 transition-all"
       style={{
         background: enabled ? hexToRgba(accent, 0.06) : 'transparent',
         borderColor: enabled ? hexToRgba(accent, 0.2) : 'rgba(243,240,237,0.07)',

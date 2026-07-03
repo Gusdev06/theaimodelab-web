@@ -118,11 +118,11 @@ function VerifyEmailContent() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#1a2123] px-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#111113] px-4">
       <div className="flex w-full max-w-[400px] flex-col items-center gap-6">
         {/* Logo */}
         <Image
-          src="/full_logo.svg"
+          src="/logo-red.jpg"
           alt="The AI Model Lab"
           width={140}
           height={140}
@@ -131,16 +131,16 @@ function VerifyEmailContent() {
 
         {status === 'success' ? (
           <>
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f5409d]/15">
-              <CheckCircle className="h-8 w-8 text-[#f5409d]" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e11d2a]/15">
+              <CheckCircle className="h-8 w-8 text-[#e11d2a]" />
             </div>
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-[#f3f0ed]">{t('successTitle')}</h1>
+              <h1 className="app-reveal text-2xl font-bold text-[#f3f0ed]">{t('successTitle')}</h1>
               <p className="mt-2 text-sm text-[#f3f0ed]/50">{message}</p>
             </div>
             <button
               onClick={() => router.push('/login')}
-              className="flex items-center gap-2 rounded-xl bg-[#f5409d] px-6 py-3 text-sm font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-[0.98]"
+              className="app-btn flex items-center gap-2 bg-[#e11d2a] px-6 py-3 text-sm font-bold text-[#111113]"
             >
               {t('goToLogin')}
               <ArrowRight className="h-4 w-4" />
@@ -149,7 +149,7 @@ function VerifyEmailContent() {
         ) : (
           <>
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-[#f3f0ed]">{t('title')}</h1>
+              <h1 className="app-reveal text-2xl font-bold text-[#f3f0ed]">{t('title')}</h1>
               <p className="mt-2 text-sm text-[#f3f0ed]/50">
                 {emailParam
                   ? t.rich('descriptionWithEmail', {
@@ -178,7 +178,7 @@ function VerifyEmailContent() {
                   className={`h-14 w-12 rounded-xl border text-center text-xl font-bold outline-none transition-all ${
                     status === 'error'
                       ? 'border-red-400/40 bg-red-400/10 text-red-400'
-                      : 'border-white/[0.08] bg-white/[0.04] text-white focus:border-[#f5409d]/50 focus:bg-white/[0.06]'
+                      : 'border-white/[0.08] bg-white/[0.04] text-white focus:border-[#e11d2a]/50 focus:bg-white/[0.06]'
                   } disabled:opacity-50`}
                 />
               ))}
@@ -199,7 +199,7 @@ function VerifyEmailContent() {
                 </div>
                 <button
                   onClick={handleRetry}
-                  className="text-xs text-[#f5409d]/70 hover:text-[#f5409d] transition-colors"
+                  className="text-xs text-[#e11d2a]/70 hover:text-[#e11d2a] transition-colors"
                 >
                   {t('tryAgain')}
                 </button>
@@ -207,7 +207,7 @@ function VerifyEmailContent() {
             )}
 
             {resendSuccess && (
-              <p className="rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/10 px-3 py-2 text-xs text-[#f5409d]">
+              <p className="rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-3 py-2 text-xs text-[#e11d2a]">
                 {resendSuccess}
               </p>
             )}

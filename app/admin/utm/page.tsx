@@ -206,10 +206,10 @@ export default function UtmBuilderPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f5409d]/15">
-          <Link2 className="h-5 w-5 text-[#f5409d]" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e11d2a]/15">
+          <Link2 className="h-5 w-5 text-[#e11d2a]" />
         </div>
-        <div>
+        <div className="app-reveal">
           <h1 className="text-2xl font-bold text-[#f3f0ed]">UTM Builder</h1>
           <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
             Gere URLs com parâmetros UTM para Instagram, TikTok, ManyChat e outras origens.
@@ -218,7 +218,7 @@ export default function UtmBuilderPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <section className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c] p-5 md:p-6">
+        <section className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] p-5 md:p-6">
           <div className="flex flex-col gap-5">
             <Field
               label="URL Base"
@@ -331,7 +331,7 @@ export default function UtmBuilderPage() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <div className="min-h-[44px] break-all rounded-lg border border-[#f3f0ed]/8 bg-[#0a0d0e] p-3 font-mono text-[13px] text-[#f5409d]">
+                <div className="min-h-[44px] break-all rounded-lg border border-[#f3f0ed]/8 bg-[#0a0d0e] p-3 font-mono text-[13px] text-[#e11d2a]">
                   {error ? (
                     <span className="text-red-400">{error}</span>
                   ) : generatedUrl ? (
@@ -346,7 +346,7 @@ export default function UtmBuilderPage() {
                     type="button"
                     onClick={() => copy(generatedUrl, 'main')}
                     disabled={!generatedUrl || !!error}
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#f5409d] px-4 py-2 text-sm font-semibold text-[#0a0d0e] transition-colors hover:bg-[#fa4da6] disabled:cursor-not-allowed disabled:opacity-40"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#e11d2a] px-4 py-2 text-sm font-semibold text-[#0a0d0e] transition-colors hover:bg-[#ff5964] disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     {copiedField === 'main' ? (
                       <>
@@ -396,7 +396,7 @@ export default function UtmBuilderPage() {
           </div>
         </section>
 
-        <aside className="rounded-2xl border border-[#f3f0ed]/6 bg-[#141a1c] p-5">
+        <aside className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] p-5">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-[#f3f0ed]">Links salvos</h2>
             <span className="text-[11px] text-[#f3f0ed]/40">
@@ -435,7 +435,7 @@ export default function UtmBuilderPage() {
                     <button
                       type="button"
                       onClick={() => copy(link.url, link.id)}
-                      className="inline-flex items-center gap-1 rounded-md bg-[#f5409d]/10 px-2 py-1 text-[11px] font-medium text-[#f5409d] transition-colors hover:bg-[#f5409d]/20"
+                      className="inline-flex items-center gap-1 rounded-md bg-[#e11d2a]/10 px-2 py-1 text-[11px] font-medium text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/20"
                     >
                       {copiedField === link.id ? (
                         <>
@@ -484,7 +484,7 @@ function Field({
         <label className="text-xs font-semibold uppercase tracking-wide text-[#f3f0ed]/70">
           {label}
         </label>
-        {required && <span className="text-[10px] text-[#f5409d]">obrigatório</span>}
+        {required && <span className="text-[10px] text-[#e11d2a]">obrigatório</span>}
       </div>
       {children}
       {hint && <p className="text-[11px] text-[#f3f0ed]/35">{hint}</p>}
@@ -512,7 +512,7 @@ function PresetRow({
             onClick={() => onSelect(item)}
             className={`rounded-md px-2 py-1 text-[11px] font-medium transition-colors ${
               isActive
-                ? 'bg-[#f5409d]/15 text-[#f5409d]'
+                ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
                 : 'bg-[#f3f0ed]/4 text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/8 hover:text-[#f3f0ed]/80'
             }`}
           >

@@ -34,7 +34,7 @@ function PostCard({ post, onOpen }: { post: CommunityFeedPost; onOpen: () => voi
           !showImage && 'h-[200px]',
         )}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(245,64,157,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(225,29,42,0.08),transparent_55%)]" />
         {showImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -196,15 +196,15 @@ export function PublicProfileView({ userId }: { userId: string }) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="mb-5 flex items-center gap-2 text-[13.5px] font-semibold text-app-text-2 transition-colors duration-200 ease-app hover:text-app-text"
+          className="app-press mb-5 flex items-center gap-2 text-[13.5px] font-semibold text-app-text-2 transition-colors duration-200 ease-app hover:text-app-text"
         >
           <ArrowLeft className="size-4" strokeWidth={1.8} />
           {t('community.back')}
         </button>
 
         {/* cabeçalho */}
-        <div className="relative overflow-hidden rounded-[18px] border border-app-hairline bg-app-surface p-6">
-          <div className="pointer-events-none absolute -right-12 -top-12 size-48 rounded-full bg-[radial-gradient(circle,rgba(245,64,157,0.12),transparent_65%)]" />
+        <div className="app-reveal relative overflow-hidden rounded-[18px] border border-app-hairline bg-app-surface p-6">
+          <div className="pointer-events-none absolute -right-12 -top-12 size-48 rounded-full bg-[radial-gradient(circle,rgba(225,29,42,0.12),transparent_65%)]" />
           {profilePending || !profile ? (
             <div className="flex items-center gap-5">
               <div className="size-[88px] shrink-0 skeleton-app rounded-full bg-app-card" />
@@ -243,10 +243,10 @@ export function PublicProfileView({ userId }: { userId: string }) {
                   onClick={() => followMutation.mutate()}
                   disabled={followMutation.isPending}
                   className={cn(
-                    'h-10 shrink-0 rounded-[10px] px-5 text-[13.5px] font-semibold transition-colors duration-200 ease-app disabled:opacity-60',
+                    'app-btn h-10 shrink-0 px-5 text-[13.5px] font-semibold disabled:opacity-60',
                     profile.isFollowing
                       ? 'border border-app-hairline-2 text-app-text-2 hover:text-app-text'
-                      : 'bg-app-lime text-app-lime-ink hover:bg-app-lime-hover',
+                      : 'bg-app-lime text-app-lime-ink',
                   )}
                 >
                   {profile.isFollowing ? t('community.following') : t('community.follow')}

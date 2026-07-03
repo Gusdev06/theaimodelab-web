@@ -68,7 +68,7 @@ function CreatePostModal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="mt-[6vh] w-[min(560px,100%)] overflow-hidden rounded-2xl border border-[#f3f0ed]/10 bg-[#1a2123] shadow-2xl"
+        className="mt-[6vh] w-[min(560px,100%)] overflow-hidden rounded-2xl border border-[#f3f0ed]/10 bg-[#111113] shadow-2xl"
       >
         <div className="flex items-center justify-between border-b border-[#f3f0ed]/10 px-5 py-4">
           <h2 className="text-base font-bold text-[#f3f0ed]">Nova publicação</h2>
@@ -110,7 +110,7 @@ function CreatePostModal({
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className="flex h-44 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/15 text-[#f3f0ed]/50 transition-colors hover:border-[#f5409d]/40 hover:text-[#f3f0ed]"
+              className="flex h-44 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-[#f3f0ed]/15 text-[#f3f0ed]/50 transition-colors hover:border-[#e11d2a]/40 hover:text-[#f3f0ed]"
             >
               <ImagePlus className="size-7" strokeWidth={1.6} />
               <span className="text-sm font-medium">Selecionar imagem ou vídeo</span>
@@ -126,7 +126,7 @@ function CreatePostModal({
               maxLength={2000}
               rows={3}
               placeholder="Descreva ou cole o prompt usado..."
-              className="resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] px-3 py-2 text-[13px] text-[#f3f0ed] outline-none placeholder:text-[#f3f0ed]/30 focus:border-[#f5409d]/40"
+              className="resize-none rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] px-3 py-2 text-[13px] text-[#f3f0ed] outline-none placeholder:text-[#f3f0ed]/30 focus:border-[#e11d2a]/40"
             />
           </div>
         </div>
@@ -143,7 +143,7 @@ function CreatePostModal({
             type="button"
             disabled={!file || submitting}
             onClick={submit}
-            className="flex h-10 items-center gap-2 rounded-lg bg-[#f5409d] px-5 text-[13px] font-semibold text-[#11181a] transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="flex h-10 items-center gap-2 rounded-lg bg-[#e11d2a] px-5 text-[13px] font-semibold text-[#0a0a0b] transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {submitting && <Loader2 className="size-4 animate-spin" />}
             Publicar
@@ -162,7 +162,7 @@ const STATUS_TABS: { value: CommunityPostStatus; label: string }[] = [
 
 const STATUS_BADGE: Record<CommunityPostStatus, { label: string; className: string }> = {
   PENDING: { label: 'Em análise', className: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30' },
-  APPROVED: { label: 'Aprovado', className: 'bg-[#f5409d]/15 text-[#f5409d] border-[#f5409d]/30' },
+  APPROVED: { label: 'Aprovado', className: 'bg-[#e11d2a]/15 text-[#e11d2a] border-[#e11d2a]/30' },
   REJECTED: { label: 'Rejeitado', className: 'bg-red-500/15 text-red-400 border-red-500/30' },
 };
 
@@ -186,7 +186,7 @@ function PostCard({
   const badge = STATUS_BADGE[post.status];
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#f3f0ed]/10 bg-[#1e2829]">
+    <div className="overflow-hidden rounded-xl border border-[#f3f0ed]/10 bg-[#16161a]">
       {/* mídia */}
       <a href={post.mediaUrl} target="_blank" rel="noopener noreferrer" className="block">
         <div className="relative aspect-square bg-black/30">
@@ -227,7 +227,7 @@ function PostCard({
                 type="button"
                 disabled={busy}
                 onClick={() => onApprove(post.id)}
-                className="flex h-9 flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#f5409d] text-[13px] font-semibold text-[#11181a] transition-opacity hover:opacity-90 disabled:opacity-50"
+                className="flex h-9 flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#e11d2a] text-[13px] font-semibold text-[#0a0a0b] transition-opacity hover:opacity-90 disabled:opacity-50"
               >
                 <Check className="size-4" strokeWidth={2.2} /> Aprovar
               </button>
@@ -274,7 +274,7 @@ function PostCard({
               onChange={(e) => setReason(e.target.value)}
               maxLength={500}
               placeholder="Motivo (opcional, visível ao autor)"
-              className="h-9 rounded-lg border border-[#f3f0ed]/10 bg-[#141a1c] px-3 text-[13px] text-[#f3f0ed] outline-none placeholder:text-[#f3f0ed]/30 focus:border-red-500/40"
+              className="h-9 rounded-lg border border-[#f3f0ed]/10 bg-[#0a0a0b] px-3 text-[13px] text-[#f3f0ed] outline-none placeholder:text-[#f3f0ed]/30 focus:border-red-500/40"
             />
             <div className="flex gap-2">
               <button
@@ -352,9 +352,9 @@ export default function AdminComunidadePage() {
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="app-reveal">
           <h1 className="flex items-center gap-2.5 text-2xl font-bold text-[#f3f0ed]">
-            <Rss className="size-6 text-[#f5409d]" /> Comunidade
+            <Rss className="size-6 text-[#e11d2a]" /> Comunidade
           </h1>
           <p className="mt-1 text-sm text-[#f3f0ed]/50">
             Modere as publicações enviadas pelos usuários. Aprovar ou rejeitar notifica o autor.
@@ -363,7 +363,7 @@ export default function AdminComunidadePage() {
         <button
           type="button"
           onClick={() => setCreateOpen(true)}
-          className="flex h-10 shrink-0 items-center gap-2 rounded-lg bg-[#f5409d] px-4 text-[13px] font-semibold text-[#11181a] transition-opacity hover:opacity-90"
+          className="app-btn flex h-10 shrink-0 items-center gap-2 bg-[#e11d2a] px-4 text-[13px] font-semibold text-[#0a0a0b]"
         >
           <Plus className="size-4" strokeWidth={2.5} /> Nova publicação
         </button>
@@ -378,7 +378,7 @@ export default function AdminComunidadePage() {
       )}
 
       {/* abas de status */}
-      <div className="flex gap-1 rounded-xl border border-[#f3f0ed]/10 bg-[#1a2123] p-1 w-fit">
+      <div className="flex gap-1 rounded-xl border border-[#f3f0ed]/10 bg-[#111113] p-1 w-fit">
         {STATUS_TABS.map((tab) => (
           <button
             key={tab.value}
@@ -386,13 +386,13 @@ export default function AdminComunidadePage() {
             onClick={() => setStatus(tab.value)}
             className={`rounded-lg px-4 py-2 text-[13px] font-semibold transition-colors ${
               status === tab.value
-                ? 'bg-[#1e2829] text-[#f3f0ed]'
+                ? 'bg-[#16161a] text-[#f3f0ed]'
                 : 'text-[#f3f0ed]/50 hover:text-[#f3f0ed]/80'
             }`}
           >
             {tab.label}
             {tab.value === 'PENDING' && status === 'PENDING' && data?.meta.total ? (
-              <span className="ml-2 rounded-full bg-[#f5409d] px-1.5 py-0.5 text-[10px] font-bold text-[#11181a]">
+              <span className="ml-2 rounded-full bg-[#e11d2a] px-1.5 py-0.5 text-[10px] font-bold text-[#0a0a0b]">
                 {data.meta.total}
               </span>
             ) : null}
@@ -402,7 +402,7 @@ export default function AdminComunidadePage() {
 
       {isPending ? (
         <div className="flex justify-center py-16">
-          <Loader2 className="size-6 animate-spin text-[#f5409d]" />
+          <Loader2 className="size-6 animate-spin text-[#e11d2a]" />
         </div>
       ) : posts.length === 0 ? (
         <p className="py-16 text-center text-sm text-[#f3f0ed]/40">

@@ -170,14 +170,14 @@ export function AvatarsDialog({ open, onOpenChange }: AvatarsDialogProps) {
 
   return (
     <aside
-      className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col ${studioMode ? 'bg-[#0d1011]' : 'bg-[#171f21]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0 border-r border-white/[0.06]`}
+      className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col ${studioMode ? 'bg-[#050506]' : 'bg-[#171f21]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-xl sm:shrink-0 border-r border-white/[0.06]`}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-2.5">
           <span className="text-sm font-semibold tracking-tight text-white/85">{t('header')}</span>
           {!loading && quota && (
-            <span className="text-[10px] font-bold text-[#f5409d]/80 bg-[#f5409d]/[0.08] px-2 py-0.5 rounded-full tabular-nums">
+            <span className="text-[10px] font-bold text-[#e11d2a]/80 bg-[#e11d2a]/[0.08] px-2 py-0.5 rounded-full tabular-nums">
               {quota.used}/{quota.limit || '—'}
             </span>
           )}
@@ -237,10 +237,10 @@ export function AvatarsDialog({ open, onOpenChange }: AvatarsDialogProps) {
             )}
 
             {/* Section header */}
-            <div className="px-1 pt-2 pb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#f5409d]/75">
-              <span className="h-1 w-1 rounded-full bg-[#f5409d]/70" />
+            <div className="px-1 pt-2 pb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#e11d2a]/75">
+              <span className="h-1 w-1 rounded-full bg-[#e11d2a]/70" />
               {t('sectionTitle')}
-              <span className="ml-auto rounded-full bg-[#f5409d]/[0.08] px-1.5 py-px text-[9px] font-bold tabular-nums text-[#f5409d]/80">
+              <span className="ml-auto rounded-full bg-[#e11d2a]/[0.08] px-1.5 py-px text-[9px] font-bold tabular-nums text-[#e11d2a]/80">
                 {avatars.length}
               </span>
             </div>
@@ -252,24 +252,24 @@ export function AvatarsDialog({ open, onOpenChange }: AvatarsDialogProps) {
               <button
                 type="button"
                 onClick={() => setShowCreateModal(true)}
-                className="group relative flex w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-dashed border-[#f5409d]/30 bg-gradient-to-br from-[#f5409d]/[0.08] via-[#f5409d]/[0.02] to-transparent p-6 text-center text-[#f5409d]/85 transition-all hover:border-[#f5409d]/55 hover:from-[#f5409d]/[0.14] hover:text-[#f5409d] hover:shadow-[0_0_28px_-8px_rgba(245,64,157,0.45)]"
+                className="group relative flex w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-dashed border-[#e11d2a]/30 bg-gradient-to-br from-[#e11d2a]/[0.08] via-[#e11d2a]/[0.02] to-transparent p-6 text-center text-[#e11d2a]/85 transition-all hover:border-[#e11d2a]/55 hover:from-[#e11d2a]/[0.14] hover:text-[#e11d2a] hover:shadow-[0_0_28px_-8px_rgba(225,29,42,0.45)]"
               >
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(to_right,#f5409d_1px,transparent_1px),linear-gradient(to_bottom,#f5409d_1px,transparent_1px)] [background-size:16px_16px]"
+                  className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(to_right,#e11d2a_1px,transparent_1px),linear-gradient(to_bottom,#e11d2a_1px,transparent_1px)] [background-size:16px_16px]"
                 />
-                <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#f5409d]/15 ring-1 ring-[#f5409d]/30 transition-transform group-hover:scale-110">
+                <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#e11d2a]/15 ring-1 ring-[#e11d2a]/30 transition-transform group-hover:scale-110">
                   <Plus className="h-7 w-7" strokeWidth={2} />
                 </span>
                 <div className="relative space-y-1.5">
-                  <div className="text-[14px] font-extrabold text-[#f5409d]">
+                  <div className="text-[14px] font-extrabold text-[#e11d2a]">
                     {t('createCard.emptyTitle')}
                   </div>
                   <p className="text-[11px] leading-relaxed text-white/55">
                     {t('createCard.emptyDescription')}
                   </p>
                 </div>
-                <div className="relative mt-1 inline-flex items-center gap-1.5 rounded-full bg-[#f5409d]/12 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] ring-1 ring-[#f5409d]/30 transition-all group-hover:bg-[#f5409d]/20">
+                <div className="relative mt-1 inline-flex items-center gap-1.5 rounded-full bg-[#e11d2a]/12 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] ring-1 ring-[#e11d2a]/30 transition-all group-hover:bg-[#e11d2a]/20">
                   <Plus className="h-3 w-3" strokeWidth={2.5} />
                   {t('createCard.label')}
                 </div>
@@ -282,13 +282,13 @@ export function AvatarsDialog({ open, onOpenChange }: AvatarsDialogProps) {
                   <button
                     type="button"
                     onClick={() => setShowCreateModal(true)}
-                    className="group relative flex min-h-[180px] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border border-dashed border-[#f5409d]/30 bg-gradient-to-br from-[#f5409d]/[0.08] via-[#f5409d]/[0.02] to-transparent p-4 text-[#f5409d]/85 transition-all hover:border-[#f5409d]/55 hover:from-[#f5409d]/[0.14] hover:text-[#f5409d] hover:shadow-[0_0_28px_-8px_rgba(245,64,157,0.45)]"
+                    className="group relative flex min-h-[180px] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border border-dashed border-[#e11d2a]/30 bg-gradient-to-br from-[#e11d2a]/[0.08] via-[#e11d2a]/[0.02] to-transparent p-4 text-[#e11d2a]/85 transition-all hover:border-[#e11d2a]/55 hover:from-[#e11d2a]/[0.14] hover:text-[#e11d2a] hover:shadow-[0_0_28px_-8px_rgba(225,29,42,0.45)]"
                   >
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(to_right,#f5409d_1px,transparent_1px),linear-gradient(to_bottom,#f5409d_1px,transparent_1px)] [background-size:16px_16px]"
+                      className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(to_right,#e11d2a_1px,transparent_1px),linear-gradient(to_bottom,#e11d2a_1px,transparent_1px)] [background-size:16px_16px]"
                     />
-                    <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#f5409d]/15 ring-1 ring-[#f5409d]/30 transition-transform group-hover:scale-110">
+                    <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#e11d2a]/15 ring-1 ring-[#e11d2a]/30 transition-transform group-hover:scale-110">
                       <Plus className="h-5 w-5" strokeWidth={2} />
                     </span>
                     <span className="relative text-[12px] font-bold">{t('createCard.label')}</span>
@@ -403,7 +403,7 @@ function AvatarCard({
     <div
       className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all ${
         isReady
-          ? 'border-white/[0.07] bg-[#1e2a2c]/40 hover:border-[#f5409d]/30 hover:shadow-[0_8px_28px_-10px_rgba(245,64,157,0.35)]'
+          ? 'border-white/[0.07] bg-[#1e2a2c]/40 hover:border-[#e11d2a]/30 hover:shadow-[0_8px_28px_-10px_rgba(225,29,42,0.35)]'
           : isFailed
             ? 'border-red-500/25 bg-red-500/[0.04]'
             : isPendingConsent
@@ -434,7 +434,7 @@ function AvatarCard({
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-[#243032] via-[#1a2123] to-[#0f1414]">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-[#1e1e22] via-[#111113] to-[#0f1414]">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.04] ring-1 ring-white/[0.06]">
               <User className="h-6 w-6 text-white/25" strokeWidth={1.5} />
             </span>
@@ -455,12 +455,12 @@ function AvatarCard({
 
         {/* "Pronto" badge with pulse — top-left, only when READY */}
         {isReady && (
-          <div className="absolute left-2 top-2 z-10 flex items-center gap-1 rounded-full bg-black/55 px-1.5 py-0.5 ring-1 ring-[#f5409d]/25 backdrop-blur-md">
+          <div className="absolute left-2 top-2 z-10 flex items-center gap-1 rounded-full bg-black/55 px-1.5 py-0.5 ring-1 ring-[#e11d2a]/25 backdrop-blur-md">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inset-0 animate-ping rounded-full bg-[#f5409d]/70" />
-              <span className="relative h-1.5 w-1.5 rounded-full bg-[#f5409d]" />
+              <span className="absolute inset-0 animate-ping rounded-full bg-[#e11d2a]/70" />
+              <span className="relative h-1.5 w-1.5 rounded-full bg-[#e11d2a]" />
             </span>
-            <span className="text-[8.5px] font-extrabold uppercase tracking-[0.16em] text-[#f5409d]">
+            <span className="text-[8.5px] font-extrabold uppercase tracking-[0.16em] text-[#e11d2a]">
               {t('ready')}
             </span>
           </div>
@@ -469,7 +469,7 @@ function AvatarCard({
         {/* Processing overlay */}
         {isProcessing && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-[#0f1414]/85 backdrop-blur-sm">
-            <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]/85" />
+            <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]/85" />
             <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/75">
               {status === 'TRAINING' ? t('trainingTitle') : t('initiatingTitle')}
             </span>
@@ -558,7 +558,7 @@ function AvatarCard({
           <button
             type="button"
             onClick={onGenerateVideo}
-            className="mt-auto flex h-8 w-full items-center justify-center gap-1.5 rounded-lg bg-[#f5409d] text-[10.5px] font-extrabold text-black shadow-[0_2px_10px_-2px_rgba(245,64,157,0.4)] transition-all hover:bg-[#f75fae] hover:shadow-[0_4px_14px_-2px_rgba(245,64,157,0.55)]"
+            className="mt-auto flex h-8 w-full items-center justify-center gap-1.5 rounded-lg bg-[#e11d2a] text-[10.5px] font-extrabold text-black shadow-[0_2px_10px_-2px_rgba(225,29,42,0.4)] transition-all hover:bg-[#f75fae] hover:shadow-[0_4px_14px_-2px_rgba(225,29,42,0.55)]"
           >
             <Video className="h-3 w-3" />
             {t('generateVideo')}
@@ -579,7 +579,7 @@ function AvatarCard({
 
       {/* Delete confirm overlay */}
       {isConfirming && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-red-500/40 bg-[#1a2123]/95 p-3 backdrop-blur-md">
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-red-500/40 bg-[#111113]/95 p-3 backdrop-blur-md">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500/15 ring-1 ring-red-400/35">
             <Trash2 className="h-4 w-4 text-red-400" />
           </span>

@@ -125,10 +125,10 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                   <div
                     key={pkg.id}
                     className={`group relative flex flex-col border transition-all duration-300 ${compact ? 'rounded-[16px]' : 'rounded-[22px]'} ${isBest
-                      ? 'border-[#f5409d]/30 bg-gradient-to-b from-[#1f2d20] to-[#1a2523] ring-1 ring-[#f5409d]/15 shadow-[0_0_40px_rgba(245,64,157,0.08)] hover:shadow-[0_0_60px_rgba(245,64,157,0.12)]'
+                      ? 'border-[#e11d2a]/30 bg-gradient-to-b from-[#2a1519] to-[#1c1518] ring-1 ring-[#e11d2a]/15 shadow-[0_0_40px_rgba(225,29,42,0.08)] hover:shadow-[0_0_60px_rgba(225,29,42,0.12)]'
                       : isPopular
-                        ? 'border-[#f3f0ed]/[0.1] bg-[#171e20] hover:border-[#f3f0ed]/[0.15]'
-                        : 'border-[#f3f0ed]/[0.06] bg-[#171e20] hover:border-[#f3f0ed]/[0.12] hover:bg-[#1a1f21]'
+                        ? 'border-[#f3f0ed]/[0.1] bg-[#16161a] hover:border-[#f3f0ed]/[0.15]'
+                        : 'border-[#f3f0ed]/[0.06] bg-[#16161a] hover:border-[#f3f0ed]/[0.12] hover:bg-[#1e1e22]'
                       }`}
                   >
                     {/* Top glow for best value */}
@@ -137,13 +137,13 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                         <div
                           className={`pointer-events-none absolute -inset-px ${compact ? 'rounded-[16px]' : 'rounded-[22px]'}`}
                           style={{
-                            background: 'linear-gradient(180deg, rgba(245,64,157,0.15) 0%, rgba(245,64,157,0) 50%)',
+                            background: 'linear-gradient(180deg, rgba(225,29,42,0.15) 0%, rgba(225,29,42,0) 50%)',
                           }}
                         />
                         <div
                           className={`pointer-events-none absolute -top-[1px] h-[2px] ${compact ? 'left-6 right-6' : 'left-8 right-8'}`}
                           style={{
-                            background: 'linear-gradient(90deg, transparent, rgba(245,64,157,0.6), transparent)',
+                            background: 'linear-gradient(90deg, transparent, rgba(225,29,42,0.6), transparent)',
                           }}
                         />
                       </>
@@ -152,7 +152,7 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                     {/* Badge */}
                     {isPopular && (
                       <div className={`absolute left-1/2 z-10 -translate-x-1/2 ${compact ? '-top-2.5' : '-top-3'}`}>
-                        <div className={`flex items-center gap-1 rounded-full border border-[#f3f0ed]/15 bg-[#1a2123] shadow-lg ${compact ? 'px-3 py-0.5' : 'px-4 py-1'}`}>
+                        <div className={`flex items-center gap-1 rounded-full border border-[#f3f0ed]/15 bg-[#111113] shadow-lg ${compact ? 'px-3 py-0.5' : 'px-4 py-1'}`}>
                           <Flame className={`${compact ? 'h-2.5 w-2.5' : 'h-3 w-3'} text-[#f3f0ed]/60`} />
                           <span className={`font-bold uppercase tracking-[0.08em] text-[#f3f0ed] ${compact ? 'text-[10px]' : 'text-[10px]'}`}>
                             {t('badges.mostPopular')}
@@ -162,9 +162,9 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                     )}
                     {isBest && (
                       <div className={`absolute left-1/2 z-10 -translate-x-1/2 ${compact ? '-top-2.5' : '-top-3.5'}`}>
-                        <div className={`flex items-center gap-1 rounded-full bg-[#f5409d] shadow-[0_0_30px_rgba(245,64,157,0.4)] ${compact ? 'px-3 py-0.5' : 'px-5 py-1.5'}`}>
-                          <Crown className={`${compact ? 'h-2.5 w-2.5' : 'h-3.5 w-3.5'} text-[#141a1c]`} />
-                          <span className={`font-extrabold uppercase tracking-[0.08em] text-[#141a1c] ${compact ? 'text-[10px]' : 'text-[11px]'}`}>
+                        <div className={`flex items-center gap-1 rounded-full bg-[#e11d2a] shadow-[0_0_30px_rgba(225,29,42,0.4)] ${compact ? 'px-3 py-0.5' : 'px-5 py-1.5'}`}>
+                          <Crown className={`${compact ? 'h-2.5 w-2.5' : 'h-3.5 w-3.5'} text-[#0a0a0b]`} />
+                          <span className={`font-extrabold uppercase tracking-[0.08em] text-[#0a0a0b] ${compact ? 'text-[10px]' : 'text-[11px]'}`}>
                             {t('badges.bestValue')}
                           </span>
                         </div>
@@ -176,9 +176,9 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
 
                       {/* Icon + label */}
                       <div className="flex items-center gap-2">
-                        <div className={`flex items-center justify-center rounded-lg ${compact ? 'h-6 w-6' : 'h-8 w-8'} ${isBest ? 'bg-[#f5409d]/15' : 'bg-[#f3f0ed]/[0.05]'
+                        <div className={`flex items-center justify-center rounded-lg ${compact ? 'h-6 w-6' : 'h-8 w-8'} ${isBest ? 'bg-[#e11d2a]/15' : 'bg-[#f3f0ed]/[0.05]'
                           }`}>
-                          <PkgIcon className={`${compact ? 'h-3 w-3' : 'h-4 w-4'} ${isBest ? 'text-[#f5409d]' : 'text-[#f3f0ed]/40'}`} />
+                          <PkgIcon className={`${compact ? 'h-3 w-3' : 'h-4 w-4'} ${isBest ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/40'}`} />
                         </div>
                         <div>
                           <h3 className={`font-bold text-[#f3f0ed] ${compact ? 'text-[15px]' : 'text-[15px]'}`}>{boostLabel}</h3>
@@ -195,13 +195,13 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                             <span className={`text-[#f3f0ed]/25 line-through ${compact ? 'text-[12px]' : 'text-[12px]'}`}>
                               {formatCurrency(originalPrice, currency, locale)}
                             </span>
-                            <span className={`rounded-md bg-[#f5409d]/15 font-bold text-[#f5409d] ${compact ? 'px-1 py-0.5 text-[10px]' : 'px-1.5 py-0.5 text-[9px]'}`}>
+                            <span className={`rounded-md bg-[#e11d2a]/15 font-bold text-[#e11d2a] ${compact ? 'px-1 py-0.5 text-[10px]' : 'px-1.5 py-0.5 text-[9px]'}`}>
                               {t('badges.discountOff', { pct: discountPct })}
                             </span>
                           </div>
                         )}
                         <div className="flex items-baseline gap-0.5">
-                          <span className={`font-extrabold leading-none tracking-tight ${compact ? 'text-[22px]' : 'text-[22px]'} ${isBest ? 'text-[#f5409d]' : 'text-[#f3f0ed]'
+                          <span className={`font-extrabold leading-none tracking-tight ${compact ? 'text-[22px]' : 'text-[22px]'} ${isBest ? 'text-[#e11d2a]' : 'text-[#f3f0ed]'
                             }`}>
                             {formatCurrency(pkg.priceCents, currency, locale)}
                           </span>
@@ -209,11 +209,11 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                       </div>
 
                       {/* Credits highlight box */}
-                      <div className={`flex items-center gap-1.5 rounded-lg border ${compact ? 'mt-2 px-2.5 py-1.5' : 'mt-4 rounded-xl px-3.5 py-2.5'} ${isBest ? 'bg-[#f5409d]/10 border-[#f5409d]/15' : 'bg-[#f3f0ed]/[0.03] border-[#f3f0ed]/[0.05]'
+                      <div className={`flex items-center gap-1.5 rounded-lg border ${compact ? 'mt-2 px-2.5 py-1.5' : 'mt-4 rounded-xl px-3.5 py-2.5'} ${isBest ? 'bg-[#e11d2a]/10 border-[#e11d2a]/15' : 'bg-[#f3f0ed]/[0.03] border-[#f3f0ed]/[0.05]'
                         }`}>
-                        <Coins className={`${compact ? 'h-3 w-3' : 'h-4 w-4'} ${isBest ? 'text-[#f5409d]' : 'text-[#f3f0ed]/40'}`} />
+                        <Coins className={`${compact ? 'h-3 w-3' : 'h-4 w-4'} ${isBest ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/40'}`} />
                         <div>
-                          <span className={`font-extrabold tabular-nums ${compact ? 'text-[15px]' : 'text-[16px]'} ${isBest ? 'text-[#f5409d]' : 'text-[#f3f0ed]'
+                          <span className={`font-extrabold tabular-nums ${compact ? 'text-[15px]' : 'text-[16px]'} ${isBest ? 'text-[#e11d2a]' : 'text-[#f3f0ed]'
                             }`}>
                             {pkg.credits.toLocaleString(locale)}
                           </span>
@@ -223,7 +223,7 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
 
                       {/* Savings callout */}
                       {savingsPct > 0 && (
-                        <p className={`font-medium text-[#f5409d]/70 ${compact ? 'mt-1.5 text-[12px]' : 'mt-3 text-[11px]'}`}>
+                        <p className={`font-medium text-[#e11d2a]/70 ${compact ? 'mt-1.5 text-[12px]' : 'mt-3 text-[11px]'}`}>
                           {t('packages.saveByCredit', { pct: savingsPct })}
                         </p>
                       )}
@@ -236,10 +236,10 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                         {(['instant', 'neverExpire', 'stackWithPlan'] as const).map((perkKey) => (
                           <li key={perkKey} className="flex items-start gap-2">
                             <div
-                              className={`mt-[1px] flex shrink-0 items-center justify-center rounded-full ${compact ? 'h-[13px] w-[13px]' : 'h-[16px] w-[16px] mt-[2px]'} ${isBest ? 'bg-[#f5409d]/20' : 'bg-[#f3f0ed]/[0.06]'
+                              className={`mt-[1px] flex shrink-0 items-center justify-center rounded-full ${compact ? 'h-[13px] w-[13px]' : 'h-[16px] w-[16px] mt-[2px]'} ${isBest ? 'bg-[#e11d2a]/20' : 'bg-[#f3f0ed]/[0.06]'
                                 }`}
                             >
-                              <Check className={`${compact ? 'h-2 w-2' : 'h-2.5 w-2.5'} ${isBest ? 'text-[#f5409d]' : 'text-[#f3f0ed]/45'}`} />
+                              <Check className={`${compact ? 'h-2 w-2' : 'h-2.5 w-2.5'} ${isBest ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/45'}`} />
                             </div>
                             <span className={`leading-snug text-[#f3f0ed]/55 ${compact ? 'text-[12px]' : 'text-[12px]'}`}>
                               {t(`packages.perks.${perkKey}` as 'packages.perks.instant')}
@@ -254,8 +254,8 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                       <button
                         onClick={() => handlePurchase(pkg.id)}
                         disabled={!!purchasingId}
-                        className={`flex w-full items-center justify-center gap-2 rounded-xl font-bold transition-all duration-300 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 ${compact ? 'mt-3 h-9 text-[13px]' : 'mt-6 h-11 text-[13px]'} ${isBest
-                          ? 'bg-[#f5409d] text-[#141a1c] shadow-[0_4px_20px_rgba(245,64,157,0.3)] hover:shadow-[0_4px_30px_rgba(245,64,157,0.4)] hover:brightness-110'
+                        className={`app-ease flex w-full items-center justify-center gap-2 rounded-xl font-bold transition-all duration-300 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 ${compact ? 'mt-3 h-9 text-[13px]' : 'mt-6 h-11 text-[13px]'} ${isBest
+                          ? 'bg-[#e11d2a] text-[#0a0a0b] shadow-[0_4px_20px_rgba(225,29,42,0.3)] hover:shadow-[0_4px_30px_rgba(225,29,42,0.4)] hover:brightness-110'
                           : isPopular
                             ? 'border border-[#f3f0ed]/[0.1] bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/80 hover:border-[#f3f0ed]/[0.2] hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]'
                             : 'border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.03] text-[#f3f0ed]/70 hover:border-[#f3f0ed]/[0.15] hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]'

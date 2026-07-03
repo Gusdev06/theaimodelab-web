@@ -51,7 +51,7 @@ export default function ProdutosPage() {
       <div className="flex items-center justify-end gap-2">
         <button
           onClick={() => setShowForm((s) => !s)}
-          className="flex items-center gap-1.5 rounded-xl bg-[#f5409d]/10 px-3 py-2 text-[12px] font-semibold text-[#f5409d] hover:bg-[#f5409d]/15"
+          className="flex items-center gap-1.5 rounded-xl bg-[#e11d2a]/10 px-3 py-2 text-[12px] font-semibold text-[#e11d2a] hover:bg-[#e11d2a]/15"
         >
           <Plus className="h-3.5 w-3.5" /> Novo produto
         </button>
@@ -81,7 +81,7 @@ export default function ProdutosPage() {
             <button
               onClick={() => createMut.mutate()}
               disabled={!form.name || createMut.isPending}
-              className="flex items-center gap-1.5 rounded-lg bg-[#f5409d] px-3 py-1.5 text-[12px] font-semibold text-black hover:bg-[#ff6ab5] disabled:opacity-40"
+              className="app-btn flex items-center gap-1.5 bg-[#e11d2a] px-3 py-1.5 text-[12px] font-semibold text-black disabled:opacity-40"
             >
               {createMut.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
               Criar
@@ -112,7 +112,7 @@ export default function ProdutosPage() {
 
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : products.length === 0 ? (
         <p className="py-10 text-center text-sm text-[#f3f0ed]/30">Nenhum produto</p>
@@ -139,7 +139,7 @@ export default function ProdutosPage() {
                   <TableCell>
                     <Badge
                       variant="outline"
-                      className={p.active ? 'border-pink-500/30 bg-pink-500/10 text-pink-400' : 'border-[#f3f0ed]/10 text-[#f3f0ed]/40'}
+                      className={p.active ? 'border-red-500/30 bg-red-500/10 text-red-400' : 'border-[#f3f0ed]/10 text-[#f3f0ed]/40'}
                     >
                       {p.active ? 'Ativo' : 'Arquivado'}
                     </Badge>

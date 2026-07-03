@@ -21,7 +21,7 @@ export function HealthTab({ active }: { active: boolean }) {
   if (isLoading || !data) {
     return (
       <div className="flex h-[40vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -78,8 +78,8 @@ export function HealthTab({ active }: { active: boolean }) {
           <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] p-4">
             {(data.recentFailuresByModel ?? []).length === 0 ? (
               <div className="flex items-center gap-2 py-6 justify-center">
-                <Server className="h-4 w-4 text-[#f5409d]" />
-                <span className="text-sm text-[#f5409d]">Nenhuma falha na última hora</span>
+                <Server className="h-4 w-4 text-[#e11d2a]" />
+                <span className="text-sm text-[#e11d2a]">Nenhuma falha na última hora</span>
               </div>
             ) : (
               <div className="flex flex-col gap-3">
@@ -109,7 +109,7 @@ export function HealthTab({ active }: { active: boolean }) {
           <h3 className="mb-3 text-sm font-semibold text-[#f3f0ed]">Últimos Erros</h3>
           <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] p-4">
             {(data.recentErrors ?? []).length === 0 ? (
-              <p className="py-6 text-center text-sm text-[#f5409d]">Nenhum erro recente</p>
+              <p className="py-6 text-center text-sm text-[#e11d2a]">Nenhum erro recente</p>
             ) : (
               <div className="sidebar-scroll flex max-h-[400px] flex-col gap-2 overflow-y-auto">
                 {data.recentErrors.map((e) => (
@@ -124,7 +124,7 @@ export function HealthTab({ active }: { active: boolean }) {
                       <span
                         className={`mt-1 inline-block rounded px-1.5 py-0.5 text-[9px] ${
                           e.safetyFallback
-                            ? 'bg-[#f5409d]/10 text-[#f5409d]'
+                            ? 'bg-[#e11d2a]/10 text-[#e11d2a]'
                             : 'bg-[#f87171]/10 text-[#f87171]'
                         }`}
                       >

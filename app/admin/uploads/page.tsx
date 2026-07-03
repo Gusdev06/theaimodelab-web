@@ -139,7 +139,7 @@ export default function AdminUploadsPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
-      <div>
+      <div className="app-reveal">
         <h1 className="text-2xl font-bold text-[#f3f0ed]">Upload de Imagens</h1>
         <p className="mt-1 text-sm text-[#f3f0ed]/40">
           Envie imagens e vídeos para o S3. Use as URLs na landing page, galeria ou onde precisar.
@@ -156,7 +156,7 @@ export default function AdminUploadsPage() {
               onClick={() => setFolder(opt.value)}
               className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                 folder === opt.value
-                  ? 'bg-[#f5409d]/15 text-[#f5409d]'
+                  ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
                   : 'border border-[#f3f0ed]/8 text-[#f3f0ed]/40 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/60'
               }`}
             >
@@ -177,12 +177,12 @@ export default function AdminUploadsPage() {
         onClick={() => inputRef.current?.click()}
         className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-12 transition-all ${
           isDragging
-            ? 'border-[#f5409d] bg-[#f5409d]/5'
+            ? 'border-[#e11d2a] bg-[#e11d2a]/5'
             : 'border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.02] hover:border-[#f3f0ed]/20 hover:bg-[#f3f0ed]/[0.04]'
         }`}
       >
-        <div className={`rounded-xl p-3 ${isDragging ? 'bg-[#f5409d]/10' : 'bg-[#f3f0ed]/5'}`}>
-          <Upload className={`h-6 w-6 ${isDragging ? 'text-[#f5409d]' : 'text-[#f3f0ed]/30'}`} />
+        <div className={`rounded-xl p-3 ${isDragging ? 'bg-[#e11d2a]/10' : 'bg-[#f3f0ed]/5'}`}>
+          <Upload className={`h-6 w-6 ${isDragging ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/30'}`} />
         </div>
         <div className="text-center">
           <p className="text-sm font-medium text-[#f3f0ed]/60">
@@ -232,7 +232,7 @@ export default function AdminUploadsPage() {
                       playsInline
                     />
                   ) : file.status === 'uploading' ? (
-                    <Loader2 className="h-6 w-6 animate-spin text-[#f5409d]" />
+                    <Loader2 className="h-6 w-6 animate-spin text-[#e11d2a]" />
                   ) : (
                     <X className="h-6 w-6 text-red-400" />
                   )}
@@ -270,7 +270,7 @@ export default function AdminUploadsPage() {
                       className="flex items-center gap-1.5 rounded-lg bg-[#f3f0ed]/5 px-2.5 py-1.5 text-left transition-colors hover:bg-[#f3f0ed]/8"
                     >
                       {copiedId === file.id ? (
-                        <Check className="h-3 w-3 shrink-0 text-[#f5409d]" />
+                        <Check className="h-3 w-3 shrink-0 text-[#e11d2a]" />
                       ) : (
                         <Copy className="h-3 w-3 shrink-0 text-[#f3f0ed]/30" />
                       )}
@@ -285,7 +285,7 @@ export default function AdminUploadsPage() {
                   )}
 
                   {file.status === 'uploading' && (
-                    <span className="text-[10px] text-[#f5409d]">Enviando...</span>
+                    <span className="text-[10px] text-[#e11d2a]">Enviando...</span>
                   )}
                 </div>
               </div>

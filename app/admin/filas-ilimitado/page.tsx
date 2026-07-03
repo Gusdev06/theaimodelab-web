@@ -43,11 +43,11 @@ function statusColor(status: UnlimitedJobStatus): string {
     case 'waiting':
       return '#fbbf24';
     case 'active':
-      return '#f5409d';
+      return '#e11d2a';
     case 'delayed':
       return '#a855f7';
     case 'completed':
-      return '#ec4899';
+      return '#e11d2a';
     case 'failed':
       return '#ef4444';
     case 'paused':
@@ -59,7 +59,7 @@ function planColor(slug: string | null | undefined): string {
   if (!slug) return 'rgba(243,240,237,0.2)';
   if (slug === 'studio') return '#a855f7';
   if (slug === 'advanced') return '#3b82f6';
-  if (slug === 'pro') return '#ec4899';
+  if (slug === 'pro') return '#e11d2a';
   if (slug === 'creator') return '#f59e0b';
   return 'rgba(243,240,237,0.4)';
 }
@@ -161,7 +161,7 @@ export default function FilasIlimitadoPage() {
     <div className="flex flex-col gap-6">
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="app-reveal">
           <div className="flex items-center gap-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#a855f7]/15">
               <InfinityIcon className="h-3.5 w-3.5 text-[#a855f7]" />
@@ -175,7 +175,7 @@ export default function FilasIlimitadoPage() {
 
         <button
           onClick={refreshAll}
-          className="flex items-center gap-1.5 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-1.5 text-[11px] font-medium text-[#f3f0ed]/70 transition-colors hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]"
+          className="app-press app-ease flex items-center gap-1.5 rounded-lg border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.03] px-3 py-1.5 text-[11px] font-medium text-[#f3f0ed]/70 transition-colors hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]"
         >
           <RefreshCw className="h-3 w-3" />
           Atualizar
@@ -223,7 +223,7 @@ export default function FilasIlimitadoPage() {
       )}
 
       {/* Jobs table */}
-      <div className="rounded-xl border border-[#f3f0ed]/[0.07] bg-[#141a1c]">
+      <div className="rounded-xl border border-[#f3f0ed]/[0.07] bg-[#0a0a0b]">
         <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3">
           <h2 className="text-[13px] font-semibold text-[#f3f0ed]">
             Jobs · {STATUS_TABS.find((s) => s.key === activeTab)?.label}
@@ -325,7 +325,7 @@ export default function FilasIlimitadoPage() {
       {/* Usage overview (24h) */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* By model */}
-        <div className="rounded-xl border border-[#f3f0ed]/[0.07] bg-[#141a1c]">
+        <div className="rounded-xl border border-[#f3f0ed]/[0.07] bg-[#0a0a0b]">
           <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3">
             <h2 className="text-[13px] font-semibold text-[#f3f0ed]">
               Gerações por modelo (24h)
@@ -372,7 +372,7 @@ export default function FilasIlimitadoPage() {
         </div>
 
         {/* Top users */}
-        <div className="rounded-xl border border-[#f3f0ed]/[0.07] bg-[#141a1c]">
+        <div className="rounded-xl border border-[#f3f0ed]/[0.07] bg-[#0a0a0b]">
           <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.07] px-4 py-3">
             <h2 className="text-[13px] font-semibold text-[#f3f0ed]">
               Top usuários (24h)

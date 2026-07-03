@@ -53,7 +53,7 @@ function statusBadge(isActive: boolean) {
       variant="outline"
       className={
         isActive
-          ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+          ? 'border-red-500/30 bg-red-500/10 text-red-400'
           : 'border-red-500/30 bg-red-500/10 text-red-400'
       }
     >
@@ -66,7 +66,7 @@ function statusDot(sub: AdminUser['subscription']) {
   if (!sub) return null;
   const isActive = sub.status === 'ACTIVE' || sub.status === 'active';
   return (
-    <span className={`inline-block h-1.5 w-1.5 rounded-full ${isActive ? 'bg-[#f5409d]' : 'bg-[#f87171]'}`} />
+    <span className={`inline-block h-1.5 w-1.5 rounded-full ${isActive ? 'bg-[#e11d2a]' : 'bg-[#f87171]'}`} />
   );
 }
 
@@ -110,7 +110,7 @@ export default function AdminUsersPage() {
     <div className="flex flex-col gap-4 md:gap-6">
       {/* Header */}
       <div className="flex items-start justify-between">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">Usuários</h1>
           <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
             {total.toLocaleString('pt-BR')} usuários cadastrados
@@ -119,7 +119,7 @@ export default function AdminUsersPage() {
         <button
           onClick={() => refetch()}
           disabled={isFetching}
-          className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
+          className="app-press app-ease flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
         >
           <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
         </button>
@@ -132,13 +132,13 @@ export default function AdminUsersPage() {
           placeholder="Buscar por nome ou email..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="h-10 w-full border-[#f3f0ed]/8 bg-[#f3f0ed]/3 pl-9 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+          className="h-10 w-full border-[#f3f0ed]/8 bg-[#f3f0ed]/3 pl-9 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
         />
       </div>
 
       {isLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : (
         <>
@@ -171,7 +171,7 @@ export default function AdminUsersPage() {
                       {planBadge(user.subscription)}
                     </div>
                     <div className="flex items-center gap-1">
-                      <Coins className="h-3 w-3 text-[#f5409d]/50" />
+                      <Coins className="h-3 w-3 text-[#e11d2a]/50" />
                       <span className="text-[11px] tabular-nums text-[#f3f0ed]/40">{userCredits(user)}</span>
                     </div>
                   </div>
@@ -218,7 +218,7 @@ export default function AdminUsersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1.5">
-                        <Coins className="h-3.5 w-3.5 text-[#f5409d]/50" />
+                        <Coins className="h-3.5 w-3.5 text-[#e11d2a]/50" />
                         <span className="text-sm tabular-nums text-[#f3f0ed]">{userCredits(user)}</span>
                       </div>
                     </TableCell>

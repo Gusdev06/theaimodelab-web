@@ -54,7 +54,7 @@ function DashboardView({ dashboard, isLoading }: { dashboard: AffiliateDashboard
   if (isLoading) {
     return (
       <div className="flex h-32 items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -63,9 +63,9 @@ function DashboardView({ dashboard, isLoading }: { dashboard: AffiliateDashboard
 
   const cards = [
     { label: 'Afiliados Ativos', value: `${dashboard.activeAffiliates}/${dashboard.totalAffiliates}`, icon: Users, color: 'text-blue-400' },
-    { label: 'Usuários Indicados', value: dashboard.referredUsers.toLocaleString('pt-BR'), icon: TrendingUp, color: 'text-[#f5409d]' },
+    { label: 'Usuários Indicados', value: dashboard.referredUsers.toLocaleString('pt-BR'), icon: TrendingUp, color: 'text-[#e11d2a]' },
     { label: 'Comissão Pendente', value: formatCents(dashboard.pendingCommissionCents), icon: Clock, color: 'text-yellow-400' },
-    { label: 'Comissão Paga', value: formatCents(dashboard.paidCommissionCents), icon: CheckCircle2, color: 'text-pink-400' },
+    { label: 'Comissão Paga', value: formatCents(dashboard.paidCommissionCents), icon: CheckCircle2, color: 'text-red-400' },
     { label: 'Total Comissões', value: formatCents(dashboard.totalCommissionCents), icon: DollarSign, color: 'text-violet-400' },
     { label: 'Receita Gerada', value: formatCents(dashboard.totalRevenueCents), icon: DollarSign, color: 'text-[#f3f0ed]/60' },
   ];
@@ -127,7 +127,7 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="mx-4 w-full max-w-md rounded-2xl border border-[#f3f0ed]/8 bg-[#1a2123] p-6"
+        className="mx-4 w-full max-w-md rounded-2xl border border-[#f3f0ed]/8 bg-[#111113] p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="mb-4 text-lg font-bold text-[#f3f0ed]">Novo Afiliado</h2>
@@ -139,7 +139,7 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Influencer Maria"
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
 
@@ -149,7 +149,7 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
               placeholder="Ex: MARIA30"
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
 
@@ -160,7 +160,7 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
               value={commission}
               onChange={(e) => setCommission(e.target.value)}
               placeholder="30"
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
 
@@ -170,7 +170,7 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
               placeholder="UUID do user na plataforma"
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
 
@@ -181,13 +181,13 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
               value={discount}
               onChange={(e) => setDiscount(e.target.value)}
               placeholder="Ex: 10 (deixe vazio para não dar desconto)"
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
             {discount.trim() && Number(discount) > 0 && (
               <div className="mt-3 flex flex-col gap-1.5">
                 <span className="text-[11px] text-[#f3f0ed]/40">Aplica em:</span>
                 <div className="flex gap-2">
-                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'FIRST_PURCHASE' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'FIRST_PURCHASE' ? 'border-[#e11d2a]/40 bg-[#e11d2a]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
                     <input
                       type="radio"
                       checked={discountScope === 'FIRST_PURCHASE'}
@@ -196,7 +196,7 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
                     />
                     Primeira compra
                   </label>
-                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'ALL_PURCHASES' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'ALL_PURCHASES' ? 'border-[#e11d2a]/40 bg-[#e11d2a]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
                     <input
                       type="radio"
                       checked={discountScope === 'ALL_PURCHASES'}
@@ -221,7 +221,7 @@ function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
           <button
             onClick={() => mutation.mutate()}
             disabled={!name || !code || mutation.isPending}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90 disabled:opacity-40"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#e11d2a] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#e11d2a]/90 disabled:opacity-40"
           >
             {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             Criar
@@ -282,7 +282,7 @@ function EditAffiliateForm({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="mx-4 w-full max-w-md rounded-2xl border border-[#f3f0ed]/8 bg-[#1a2123] p-6"
+        className="mx-4 w-full max-w-md rounded-2xl border border-[#f3f0ed]/8 bg-[#111113] p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="mb-4 text-lg font-bold text-[#f3f0ed]">Editar Afiliado</h2>
@@ -293,7 +293,7 @@ function EditAffiliateForm({
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
 
@@ -303,7 +303,7 @@ function EditAffiliateForm({
               type="number"
               value={commission}
               onChange={(e) => setCommission(e.target.value)}
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
           </div>
 
@@ -313,7 +313,7 @@ function EditAffiliateForm({
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
               placeholder="UUID do user na plataforma"
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
             {affiliate.user && (
               <p className="mt-1 text-xs text-[#f3f0ed]/30">
@@ -329,13 +329,13 @@ function EditAffiliateForm({
               value={discount}
               onChange={(e) => setDiscount(e.target.value)}
               placeholder="Ex: 10"
-              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#e11d2a]/30 focus-visible:ring-[#e11d2a]/10"
             />
             {discount.trim() && Number(discount) > 0 && (
               <div className="mt-3 flex flex-col gap-1.5">
                 <span className="text-[11px] text-[#f3f0ed]/40">Aplica em:</span>
                 <div className="flex gap-2">
-                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'FIRST_PURCHASE' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'FIRST_PURCHASE' ? 'border-[#e11d2a]/40 bg-[#e11d2a]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
                     <input
                       type="radio"
                       checked={discountScope === 'FIRST_PURCHASE'}
@@ -344,7 +344,7 @@ function EditAffiliateForm({
                     />
                     Primeira compra
                   </label>
-                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'ALL_PURCHASES' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'ALL_PURCHASES' ? 'border-[#e11d2a]/40 bg-[#e11d2a]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
                     <input
                       type="radio"
                       checked={discountScope === 'ALL_PURCHASES'}
@@ -369,7 +369,7 @@ function EditAffiliateForm({
           <button
             onClick={() => mutation.mutate()}
             disabled={!name || mutation.isPending}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90 disabled:opacity-40"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#e11d2a] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#e11d2a]/90 disabled:opacity-40"
           >
             {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             Salvar
@@ -463,7 +463,7 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
   if (isLoading) {
     return (
       <div className="flex h-[40vh] items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
       </div>
     );
   }
@@ -489,7 +489,7 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
               variant="outline"
               className={
                 affiliate.isActive
-                  ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                  ? 'border-red-500/30 bg-red-500/10 text-red-400'
                   : 'border-red-500/30 bg-red-500/10 text-red-400'
               }
             >
@@ -497,11 +497,11 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
             </Badge>
           </div>
           <p className="text-sm text-[#f3f0ed]/40">
-            Código: <span className="font-mono text-[#f5409d]">{affiliate.code}</span>
+            Código: <span className="font-mono text-[#e11d2a]">{affiliate.code}</span>
             {' · '}Comissão: {affiliate.commissionPercent}%
             {affiliate.discountPercent ? (
               <>
-                {' · '}Desconto p/ indicado: <span className="text-[#f5409d]">{affiliate.discountPercent}%</span>
+                {' · '}Desconto p/ indicado: <span className="text-[#e11d2a]">{affiliate.discountPercent}%</span>
                 {' '}({affiliate.discountAppliesTo === 'FIRST_PURCHASE' ? '1ª compra' : 'todas'})
               </>
             ) : null}
@@ -546,8 +546,8 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
         {affiliate.pixKey ? (
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5409d]/10">
-                <KeyRound className="h-4 w-4 text-[#f5409d]" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e11d2a]/10">
+                <KeyRound className="h-4 w-4 text-[#e11d2a]" />
               </div>
               <div className="min-w-0">
                 <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f3f0ed]/30">
@@ -579,7 +579,7 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
           { label: 'Receita Gerada', value: formatCents(summary.totalRevenueCents), color: 'text-[#f3f0ed]/60' },
           { label: 'Total Comissões', value: formatCents(summary.totalCommissionCents), color: 'text-violet-400' },
           { label: 'Pendente', value: formatCents(summary.pendingCommissionCents), color: 'text-yellow-400' },
-          { label: 'Pago', value: formatCents(summary.paidCommissionCents), color: 'text-pink-400' },
+          { label: 'Pago', value: formatCents(summary.paidCommissionCents), color: 'text-red-400' },
         ].map((card) => (
           <div key={card.label} className="flex flex-col gap-1 rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 p-4">
             <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f3f0ed]/30">{card.label}</span>
@@ -655,11 +655,11 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
 
       {/* Actions bar */}
       {selectedIds.size > 0 && (
-        <div className="flex items-center gap-3 rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/5 px-4 py-3">
+        <div className="flex items-center gap-3 rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/5 px-4 py-3">
           <span className="text-sm text-[#f3f0ed]/60">
             {selectedIds.size} selecionada{selectedIds.size > 1 ? 's' : ''}
             {' · '}
-            <span className="font-bold text-[#f5409d]">
+            <span className="font-bold text-[#e11d2a]">
               {formatCents(
                 pendingEarnings
                   .filter((e) => selectedIds.has(e.id))
@@ -670,7 +670,7 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
           <button
             onClick={() => setShowPay(true)}
             disabled={markPaidMutation.isPending}
-            className="flex items-center gap-2 rounded-lg bg-[#f5409d] px-3 py-1.5 text-sm font-semibold text-[#1c1917] hover:bg-[#f5409d]/90 disabled:opacity-40"
+            className="flex items-center gap-2 rounded-lg bg-[#e11d2a] px-3 py-1.5 text-sm font-semibold text-[#1c1917] hover:bg-[#e11d2a]/90 disabled:opacity-40"
           >
             {markPaidMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
             Pagar
@@ -685,7 +685,7 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
           {pendingEarnings.length > 0 && (
             <button
               onClick={selectAllPending}
-              className="text-xs text-[#f5409d] hover:underline"
+              className="text-xs text-[#e11d2a] hover:underline"
             >
               {selectedIds.size === pendingEarnings.length ? 'Desmarcar todas' : 'Selecionar pendentes'}
             </button>
@@ -704,14 +704,14 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
                   onClick={() => earning.status === 'PENDING' && toggleSelect(earning.id)}
                   className={`flex items-center gap-3 rounded-xl border p-3 ${
                     selectedIds.has(earning.id)
-                      ? 'border-[#f5409d]/30 bg-[#f5409d]/5'
+                      ? 'border-[#e11d2a]/30 bg-[#e11d2a]/5'
                       : 'border-[#f3f0ed]/6 bg-[#f3f0ed]/2'
                   } ${earning.status === 'PENDING' ? 'cursor-pointer' : ''}`}
                 >
                   {earning.status === 'PENDING' && (
                     <div className={`h-4 w-4 shrink-0 rounded border ${
                       selectedIds.has(earning.id)
-                        ? 'border-[#f5409d] bg-[#f5409d]'
+                        ? 'border-[#e11d2a] bg-[#e11d2a]'
                         : 'border-[#f3f0ed]/20'
                     } flex items-center justify-center`}>
                       {selectedIds.has(earning.id) && <Check className="h-3 w-3 text-[#1c1917]" />}
@@ -725,12 +725,12 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    <span className="text-sm font-bold tabular-nums text-[#f5409d]">{formatCents(earning.commissionCents)}</span>
+                    <span className="text-sm font-bold tabular-nums text-[#e11d2a]">{formatCents(earning.commissionCents)}</span>
                     <Badge
                       variant="outline"
                       className={
                         earning.status === 'PAID'
-                          ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                          ? 'border-red-500/30 bg-red-500/10 text-red-400'
                           : 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
                       }
                     >
@@ -762,13 +762,13 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
                       onClick={() => earning.status === 'PENDING' && toggleSelect(earning.id)}
                       className={`border-[#f3f0ed]/4 transition-colors ${
                         earning.status === 'PENDING' ? 'cursor-pointer' : ''
-                      } ${selectedIds.has(earning.id) ? 'bg-[#f5409d]/5' : 'hover:bg-[#f3f0ed]/3'}`}
+                      } ${selectedIds.has(earning.id) ? 'bg-[#e11d2a]/5' : 'hover:bg-[#f3f0ed]/3'}`}
                     >
                       <TableCell>
                         {earning.status === 'PENDING' && (
                           <div className={`h-4 w-4 rounded border ${
                             selectedIds.has(earning.id)
-                              ? 'border-[#f5409d] bg-[#f5409d]'
+                              ? 'border-[#e11d2a] bg-[#e11d2a]'
                               : 'border-[#f3f0ed]/20'
                           } flex items-center justify-center`}>
                             {selectedIds.has(earning.id) && <Check className="h-3 w-3 text-[#1c1917]" />}
@@ -792,7 +792,7 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm font-bold tabular-nums text-[#f5409d]">
+                        <span className="text-sm font-bold tabular-nums text-[#e11d2a]">
                           {formatCents(earning.commissionCents)}
                         </span>
                       </TableCell>
@@ -801,7 +801,7 @@ function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onB
                           variant="outline"
                           className={
                             earning.status === 'PAID'
-                              ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                              ? 'border-red-500/30 bg-red-500/10 text-red-400'
                               : 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
                           }
                         >
@@ -928,12 +928,12 @@ function PayCommissionsModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-[#f5409d]/20 bg-[#1a2123]"
+        className="mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-[#e11d2a]/20 bg-[#111113]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start gap-3 border-b border-[#f3f0ed]/6 px-6 py-5">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5409d]/10">
-            <DollarSign className="h-4 w-4 text-[#f5409d]" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#e11d2a]/10">
+            <DollarSign className="h-4 w-4 text-[#e11d2a]" />
           </div>
           <div className="min-w-0 flex-1">
             <h2 className="text-base font-bold text-[#f3f0ed]">Pagar comissões</h2>
@@ -950,9 +950,9 @@ function PayCommissionsModal({
               <p className="mt-1 truncate text-sm font-medium text-[#f3f0ed]">{affiliateName}</p>
               <p className="mt-0.5 truncate text-xs text-[#f3f0ed]/40">{affiliateEmail ?? '—'}</p>
             </div>
-            <div className="rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/5 px-4 py-3">
-              <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f5409d]/70">Total</p>
-              <p className="mt-1 text-sm font-bold tabular-nums text-[#f5409d]">{formatCents(totalCents)}</p>
+            <div className="rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/5 px-4 py-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#e11d2a]/70">Total</p>
+              <p className="mt-1 text-sm font-bold tabular-nums text-[#e11d2a]">{formatCents(totalCents)}</p>
               <p className="mt-0.5 text-xs text-[#f3f0ed]/40">
                 {earningsCount} comissã{earningsCount === 1 ? 'o' : 'ões'}
               </p>
@@ -965,8 +965,8 @@ function PayCommissionsModal({
             </label>
 
             {file ? (
-              <div className="flex items-center gap-3 rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/5 px-3 py-2.5">
-                <Paperclip className="h-4 w-4 shrink-0 text-[#f5409d]" />
+              <div className="flex items-center gap-3 rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/5 px-3 py-2.5">
+                <Paperclip className="h-4 w-4 shrink-0 text-[#e11d2a]" />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm text-[#f3f0ed]">{file.name}</p>
                   <p className="text-[11px] text-[#f3f0ed]/40">{(file.size / 1024).toFixed(0)} KB</p>
@@ -979,7 +979,7 @@ function PayCommissionsModal({
                 </button>
               </div>
             ) : (
-              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#f3f0ed]/2 px-3 py-3 text-sm text-[#f3f0ed]/50 transition-colors hover:border-[#f5409d]/30 hover:bg-[#f5409d]/5">
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#f3f0ed]/2 px-3 py-3 text-sm text-[#f3f0ed]/50 transition-colors hover:border-[#e11d2a]/30 hover:bg-[#e11d2a]/5">
                 <Paperclip className="h-4 w-4" />
                 <span>Anexar PDF, JPG, PNG ou WEBP (até 5 MB)</span>
                 <input
@@ -1016,7 +1016,7 @@ function PayCommissionsModal({
           <button
             onClick={handleConfirm}
             disabled={isPending}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#e11d2a] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#e11d2a]/90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isPending ? (
               <>
@@ -1061,7 +1061,7 @@ function DeleteAffiliateModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-red-500/20 bg-[#1a2123]"
+        className="mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-red-500/20 bg-[#111113]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start gap-3 border-b border-[#f3f0ed]/6 px-6 py-5">
@@ -1080,7 +1080,7 @@ function DeleteAffiliateModal({
           <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 px-4 py-3">
             <p className="text-xs text-[#f3f0ed]/40">Afiliado</p>
             <p className="mt-1 text-sm font-medium text-[#f3f0ed]">{affiliateName}</p>
-            <p className="mt-0.5 font-mono text-xs text-[#f5409d]">{affiliateCode}</p>
+            <p className="mt-0.5 font-mono text-xs text-[#e11d2a]">{affiliateCode}</p>
           </div>
 
           <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3">
@@ -1098,7 +1098,7 @@ function DeleteAffiliateModal({
 
           <div>
             <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#f3f0ed]/40">
-              Digite <span className="font-mono text-[#f5409d]">{affiliateCode}</span> para confirmar
+              Digite <span className="font-mono text-[#e11d2a]">{affiliateCode}</span> para confirmar
             </label>
             <Input
               value={confirmCode}
@@ -1156,7 +1156,7 @@ function CopyButton({ text }: { text: string }) {
 
   return (
     <button onClick={(e) => { e.stopPropagation(); handleCopy(); }} className="text-[#f3f0ed]/30 hover:text-[#f3f0ed]/60">
-      {copied ? <Check className="h-3.5 w-3.5 text-[#f5409d]" /> : <Copy className="h-3.5 w-3.5" />}
+      {copied ? <Check className="h-3.5 w-3.5 text-[#e11d2a]" /> : <Copy className="h-3.5 w-3.5" />}
     </button>
   );
 }
@@ -1177,7 +1177,7 @@ function CopyLinkButton({ code }: { code: string }) {
       onClick={(e) => { e.stopPropagation(); handleCopy(); }}
       className={`flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-medium transition-colors ${
         copied
-          ? 'border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]'
+          ? 'border-[#e11d2a]/30 bg-[#e11d2a]/10 text-[#e11d2a]'
           : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70'
       }`}
     >
@@ -1216,7 +1216,7 @@ export default function AdminAffiliatosPage() {
     <div className="flex flex-col gap-4 md:gap-6">
       {/* Header */}
       <div className="flex items-start justify-between">
-        <div>
+        <div className="app-reveal">
           <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">Afiliados</h1>
           <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
             Gerencie afiliados e comissões
@@ -1226,13 +1226,13 @@ export default function AdminAffiliatosPage() {
           <button
             onClick={() => refetch()}
             disabled={isFetching}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
+            className="app-press app-ease flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
           >
             <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
           </button>
           <button
             onClick={() => setShowCreate(true)}
-            className="flex h-9 items-center gap-2 rounded-xl bg-[#f5409d] px-3 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90"
+            className="app-btn flex h-9 items-center gap-2 bg-[#e11d2a] px-3 text-sm font-semibold text-[#1c1917]"
           >
             <Plus className="h-4 w-4" />
             <span className="hidden md:inline">Novo Afiliado</span>
@@ -1246,7 +1246,7 @@ export default function AdminAffiliatosPage() {
       {/* Affiliates list */}
       {listLoading ? (
         <div className="flex h-32 items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#e11d2a]" />
         </div>
       ) : !affiliates || affiliates.length === 0 ? (
         <div className="flex flex-col items-center gap-2 py-16">
@@ -1269,7 +1269,7 @@ export default function AdminAffiliatosPage() {
                     setSelectedAffiliate(aff.id);
                   }
                 }}
-                className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 py-3 text-left outline-none transition-colors active:bg-[#f3f0ed]/6 focus-visible:border-[#f5409d]/40"
+                className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 py-3 text-left outline-none transition-colors active:bg-[#f3f0ed]/6 focus-visible:border-[#e11d2a]/40"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
@@ -1278,7 +1278,7 @@ export default function AdminAffiliatosPage() {
                       variant="outline"
                       className={
                         aff.isActive
-                          ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                          ? 'border-red-500/30 bg-red-500/10 text-red-400'
                           : 'border-red-500/30 bg-red-500/10 text-red-400'
                       }
                     >
@@ -1294,13 +1294,13 @@ export default function AdminAffiliatosPage() {
                     )}
                   </div>
                   <div className="mt-0.5 flex items-center gap-2">
-                    <span className="font-mono text-xs text-[#f5409d]">{aff.code}</span>
+                    <span className="font-mono text-xs text-[#e11d2a]">{aff.code}</span>
                     <CopyButton text={aff.code} />
                     <CopyLinkButton code={aff.code} />
                   </div>
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-1">
-                  <span className="text-sm font-bold tabular-nums text-[#f5409d]">{formatCents(aff.pendingEarningsCents)}</span>
+                  <span className="text-sm font-bold tabular-nums text-[#e11d2a]">{formatCents(aff.pendingEarningsCents)}</span>
                   <span className="flex items-center gap-1 text-[11px] text-[#f3f0ed]/30">
                     <Users className="h-3 w-3" />
                     {aff.referredUsersCount.toLocaleString('pt-BR')}
@@ -1342,7 +1342,7 @@ export default function AdminAffiliatosPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-sm text-[#f5409d]">{aff.code}</span>
+                        <span className="font-mono text-sm text-[#e11d2a]">{aff.code}</span>
                         <CopyButton text={aff.code} />
                         <CopyLinkButton code={aff.code} />
                       </div>
@@ -1388,7 +1388,7 @@ export default function AdminAffiliatosPage() {
                         variant="outline"
                         className={
                           aff.isActive
-                            ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                            ? 'border-red-500/30 bg-red-500/10 text-red-400'
                             : 'border-red-500/30 bg-red-500/10 text-red-400'
                         }
                       >

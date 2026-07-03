@@ -55,7 +55,7 @@ function ItemCard({ item }: { item: GalleryItem }) {
     >
       <div className="relative h-[152px] overflow-hidden rounded-xl border border-app-hairline bg-[linear-gradient(135deg,#1d2628,#161d1f)] transition-colors duration-200 ease-app group-hover:border-app-hairline-2">
         {/* brilho lime sutil no canto (fallback sem mídia) */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(245,64,157,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(225,29,42,0.08),transparent_55%)]" />
         {showImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

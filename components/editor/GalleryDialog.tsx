@@ -389,12 +389,12 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
   if (!mounted) return null;
 
   return (
-    <aside className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col border-r border-[#f3f0ed]/[0.07] ${studioMode ? 'bg-[#0d1011]' : 'bg-[#1a2123]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-2xl sm:shrink-0`}>
+    <aside className={`${closing ? 'aside-out-left' : 'aside-in-left'} fixed inset-0 z-50 flex flex-col border-r border-[#f3f0ed]/[0.07] ${studioMode ? 'bg-[#050506]' : 'bg-[#111113]'} text-[#f3f0ed] overflow-hidden sm:static sm:h-full sm:w-2xl sm:shrink-0`}>
       {/* Header */}
       <div className="flex items-center justify-between border-b border-[#f3f0ed]/[0.05] bg-gradient-to-b from-[#f3f0ed]/[0.02] to-transparent px-4 py-3.5">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#f5409d]/10">
-            <ImageIcon className="h-3.5 w-3.5 text-[#f5409d]" />
+          <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#e11d2a]/10">
+            <ImageIcon className="h-3.5 w-3.5 text-[#e11d2a]" />
           </div>
           <div>
             <h2 className="text-sm font-bold text-[#f3f0ed]/60">{t('title')}</h2>
@@ -411,10 +411,10 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
 
       {/* Picker mode banner */}
       {galleryPickerRequest && (
-        <div className="flex items-center justify-between border-b border-[#f5409d]/20 bg-[#f5409d]/5 px-4 py-2.5">
+        <div className="flex items-center justify-between border-b border-[#e11d2a]/20 bg-[#e11d2a]/5 px-4 py-2.5">
           <div className="flex items-center gap-2">
-            <ImagePlus className="h-4 w-4 text-[#f5409d]" />
-            <span className="text-xs font-medium text-[#f5409d]">
+            <ImagePlus className="h-4 w-4 text-[#e11d2a]" />
+            <span className="text-xs font-medium text-[#e11d2a]">
               {t('pickerBanner')}
             </span>
           </div>
@@ -456,7 +456,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${activeTab === tab.key
-                  ? 'bg-[#f5409d]/15 text-[#f5409d]'
+                  ? 'bg-[#e11d2a]/15 text-[#e11d2a]'
                   : 'text-[#f3f0ed]/40 hover:text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/5'
                   }`}
               >
@@ -485,7 +485,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => { setActiveFolderId(null); setShowFoldersList(true); }}
-              className="flex items-center gap-1 text-xs font-medium text-[#f5409d] hover:text-[#f5409d]/80 transition-colors"
+              className="flex items-center gap-1 text-xs font-medium text-[#e11d2a] hover:text-[#e11d2a]/80 transition-colors"
             >
               <ArrowLeft className="h-3 w-3" />
               {activeFolder.name}
@@ -498,7 +498,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
           <div className="flex items-center justify-between shrink-0">
             <button
               onClick={() => setShowFoldersList(false)}
-              className="flex items-center gap-1 text-xs font-medium text-[#f5409d] hover:text-[#f5409d]/80 transition-colors"
+              className="flex items-center gap-1 text-xs font-medium text-[#e11d2a] hover:text-[#e11d2a]/80 transition-colors"
             >
               <ArrowLeft className="h-3 w-3" />
               {t('folders.myFolders')}
@@ -523,7 +523,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
                     }
                   }}
                   placeholder={t('folders.newFolderPlaceholder')}
-                  className="flex-1 rounded-lg bg-[#f3f0ed]/5 border border-[#f3f0ed]/10 px-3 py-2 text-xs text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:outline-none focus:border-[#f5409d]/30"
+                  className="flex-1 rounded-lg bg-[#f3f0ed]/5 border border-[#f3f0ed]/10 px-3 py-2 text-xs text-[#f3f0ed] placeholder:text-[#f3f0ed]/30 focus:outline-none focus:border-[#e11d2a]/30"
                 />
                 <button
                   onClick={() => {
@@ -533,7 +533,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
                     }
                   }}
                   disabled={!newFolderName.trim() || createFolderMutation.isPending}
-                  className="rounded-lg bg-[#f5409d]/10 px-3 py-2 text-xs font-medium text-[#f5409d] hover:bg-[#f5409d]/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="rounded-lg bg-[#e11d2a]/10 px-3 py-2 text-xs font-medium text-[#e11d2a] hover:bg-[#e11d2a]/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   {createFolderMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
                 </button>
@@ -642,7 +642,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
               {/* Loading indicator for next page */}
               {isFetchingNextPage && (
                 <div className="flex justify-center py-4">
-                  <Loader2 className="h-4 w-4 animate-spin text-[#f5409d]/50" />
+                  <Loader2 className="h-4 w-4 animate-spin text-[#e11d2a]/50" />
                 </div>
               )}
             </>
@@ -662,7 +662,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
 
         {/* Picker confirm footer */}
         {galleryPickerRequest && pickerSelectedUrls.size > 0 && (
-          <div className="flex items-center justify-between border-t border-[#f5409d]/20 bg-[#f5409d]/5 rounded-xl px-4 py-2.5 shrink-0">
+          <div className="flex items-center justify-between border-t border-[#e11d2a]/20 bg-[#e11d2a]/5 rounded-xl px-4 py-2.5 shrink-0">
             <span className="text-xs text-[#f3f0ed]/50">
               {pickerSelectedUrls.size === 1
                 ? t('selectedSingular', { count: pickerSelectedUrls.size })
@@ -674,7 +674,7 @@ export function GalleryDialog({ open, onOpenChange }: GalleryDialogProps) {
                 setPickerSelectedUrls(new Set());
                 closeGalleryPicker();
               }}
-              className="rounded-lg bg-[#f5409d] px-4 py-1.5 text-xs font-bold text-[#1a2123] transition-all hover:bg-[#f5409d]/90 active:scale-95"
+              className="rounded-lg bg-[#e11d2a] px-4 py-1.5 text-xs font-bold text-[#111113] transition-all hover:bg-[#e11d2a]/90 active:scale-95"
             >
               {t('add')}
             </button>
@@ -737,7 +737,7 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
     <div className="flex flex-col gap-4">
       <button
         onClick={onBack}
-        className="self-start flex items-center gap-1 text-xs font-medium text-[#f5409d] hover:text-[#f5409d]/80 transition-colors"
+        className="self-start flex items-center gap-1 text-xs font-medium text-[#e11d2a] hover:text-[#e11d2a]/80 transition-colors"
       >
         <ArrowLeft className="h-3 w-3" />
         {t('detail.back')}
@@ -748,9 +748,9 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
         {!loaded && !isAudio && <div className="absolute inset-0 animate-pulse bg-[#f3f0ed]/6 rounded-xl" />}
 
         {isAudio ? (
-          <div className="flex flex-col items-center gap-4 rounded-xl bg-linear-to-br from-[#4b1e3a]/40 to-[#1a2123] py-10 px-6">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#f5409d]/15 ring-1 ring-[#f5409d]/30">
-              <Music className="h-9 w-9 text-[#f5409d]" />
+          <div className="flex flex-col items-center gap-4 rounded-xl bg-linear-to-br from-[#3a0f16]/40 to-[#111113] py-10 px-6">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#e11d2a]/15 ring-1 ring-[#e11d2a]/30">
+              <Music className="h-9 w-9 text-[#e11d2a]" />
             </div>
             <audio
               key={url}
@@ -795,7 +795,7 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
       {multipleOutputs && (
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-1.5">
-            <Layers className="h-4 w-4 text-[#f5409d]" />
+            <Layers className="h-4 w-4 text-[#e11d2a]" />
             <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/30 uppercase">
               {t('detail.versionsGenerated', { count: outputs.length })}
             </span>
@@ -823,7 +823,7 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
             onClick={(e) => toggleFavorite(item, e)}
             className="flex items-center gap-2 rounded-lg bg-[#f3f0ed]/5 px-3 py-1.5 text-xs font-medium text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/10 transition-colors"
           >
-            <Heart className={`h-4 w-4 ${item.isFavorited ? 'fill-[#f5409d] text-[#f5409d]' : ''}`} />
+            <Heart className={`h-4 w-4 ${item.isFavorited ? 'fill-[#e11d2a] text-[#e11d2a]' : ''}`} />
             {item.isFavorited ? t('detail.favorited') : t('detail.favorite')}
           </button>
           <FolderDropdown
@@ -855,7 +855,7 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
                 a.click();
               }
             }}
-            className="flex items-center gap-2 rounded-lg bg-[#f5409d]/10 px-3 py-1.5 text-xs font-medium text-[#f5409d] hover:bg-[#f5409d]/20 transition-colors"
+            className="flex items-center gap-2 rounded-lg bg-[#e11d2a]/10 px-3 py-1.5 text-xs font-medium text-[#e11d2a] hover:bg-[#e11d2a]/20 transition-colors"
           >
             <Download className="h-4 w-4" />
             {t('detail.download')}
@@ -905,8 +905,8 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
                   <span className="relative shrink-0 mt-0.5">
                     {promptCopied ? (
                       <>
-                        <span className="absolute inset-0 rounded-full bg-[#f5409d]/40 animate-ping" />
-                        <Check className="relative h-3.5 w-3.5 text-[#f5409d]" />
+                        <span className="absolute inset-0 rounded-full bg-[#e11d2a]/40 animate-ping" />
+                        <Check className="relative h-3.5 w-3.5 text-[#e11d2a]" />
                       </>
                     ) : (
                       <Copy className="h-3.5 w-3.5 text-[#f3f0ed]/50 sm:text-[#f3f0ed]/30 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" />
@@ -958,7 +958,7 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
       {hasRefs && (
         <div className="flex flex-col gap-2 mb-5">
           <div className="flex items-center gap-1.5">
-            <ScanFace className="h-4 w-4 text-[#f5409d]" />
+            <ScanFace className="h-4 w-4 text-[#e11d2a]" />
             <span className="text-[10px] font-bold tracking-[0.15em] text-[#f3f0ed]/30 uppercase">
               {t('detail.referencesUsed')}
             </span>
@@ -968,7 +968,7 @@ function DetailView({ item, onBack, toggleFavorite, folders, onAddToFolder, onRe
               <button
                 key={img.id}
                 onClick={() => setLightbox(img)}
-                className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-lg ring-1 ring-[#f3f0ed]/10 hover:ring-[#f5409d]/50 transition-all"
+                className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-lg ring-1 ring-[#f3f0ed]/10 hover:ring-[#e11d2a]/50 transition-all"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -1034,15 +1034,15 @@ function OutputThumb({
     <button
       onClick={onClick}
       className={`relative shrink-0 h-20 w-32 overflow-hidden rounded-lg ring-2 transition-all ${isActive
-        ? 'ring-[#f5409d] opacity-100'
+        ? 'ring-[#e11d2a] opacity-100'
         : 'ring-[#f3f0ed]/10 opacity-50 hover:opacity-80 hover:ring-[#f3f0ed]/30'
         }`}
     >
       {!loaded && !isAudio && <div className="absolute inset-0 animate-pulse bg-[#f3f0ed]/6" />}
 
       {isAudio ? (
-        <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-[#4b1e3a]/40 to-[#1a2123]">
-          <Music className="h-6 w-6 text-[#f5409d]" />
+        <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-[#3a0f16]/40 to-[#111113]">
+          <Music className="h-6 w-6 text-[#e11d2a]" />
         </div>
       ) : isVideo ? (
         <video
@@ -1066,13 +1066,13 @@ function OutputThumb({
       {/* Version label */}
       <div className="absolute bottom-1 left-1 flex items-center gap-0.5 rounded bg-black/60 px-1 py-0.5">
         {isVideo && <Play className="h-2 w-2 fill-white text-white" />}
-        {isAudio && <Music className="h-2 w-2 text-[#f5409d]" />}
+        {isAudio && <Music className="h-2 w-2 text-[#e11d2a]" />}
         <span className="text-[9px] font-bold text-white">{index + 1}</span>
       </div>
 
       {/* Active indicator */}
       {isActive && (
-        <div className="absolute inset-0 ring-inset ring-2 ring-[#f5409d]/40 rounded-lg pointer-events-none" />
+        <div className="absolute inset-0 ring-inset ring-2 ring-[#e11d2a]/40 rounded-lg pointer-events-none" />
       )}
     </button>
   );
@@ -1128,12 +1128,12 @@ const GalleryItem = memo(function GalleryItem({
       onClick={() => { if (!folderDropdownOpen) onClick(); }}
       onKeyDown={(e) => { if (!folderDropdownOpen && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onClick(); } }}
       className={`group relative aspect-square rounded-xl overflow-hidden ring-2 transition-[box-shadow,ring-color,opacity] cursor-pointer ${pickerSelected
-        ? 'ring-[#f5409d] opacity-100'
+        ? 'ring-[#e11d2a] opacity-100'
         : pickerDisabled
           ? 'ring-transparent opacity-30 cursor-not-allowed'
           : pickerMode
-            ? 'ring-transparent opacity-80 hover:opacity-100 hover:ring-[#f5409d]/30'
-            : 'ring-[#f3f0ed]/6 hover:ring-[#f5409d]/40'
+            ? 'ring-transparent opacity-80 hover:opacity-100 hover:ring-[#e11d2a]/30'
+            : 'ring-[#f3f0ed]/6 hover:ring-[#e11d2a]/40'
         }`}
       style={{ contain: 'layout paint' }}
     >
@@ -1141,9 +1141,9 @@ const GalleryItem = memo(function GalleryItem({
       {!loaded && !isAudio && <div className="absolute inset-0 bg-[#f3f0ed]/6" />}
 
       {isAudio ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-linear-to-br from-[#4b1e3a]/40 to-[#1a2123]" ref={() => setLoaded(true)}>
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f5409d]/15 ring-1 ring-[#f5409d]/30">
-            <Music className="h-6 w-6 text-[#f5409d]" />
+        <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-linear-to-br from-[#3a0f16]/40 to-[#111113]" ref={() => setLoaded(true)}>
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e11d2a]/15 ring-1 ring-[#e11d2a]/30">
+            <Music className="h-6 w-6 text-[#e11d2a]" />
           </div>
         </div>
       ) : displayUrl ? (
@@ -1167,9 +1167,9 @@ const GalleryItem = memo(function GalleryItem({
 
       {/* Picker selected overlay */}
       {pickerSelected && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#f5409d]/20">
-          <div className="h-7 w-7 rounded-full bg-[#f5409d] flex items-center justify-center">
-            <svg className="h-4 w-4 text-[#1a2123]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <div className="absolute inset-0 flex items-center justify-center bg-[#e11d2a]/20">
+          <div className="h-7 w-7 rounded-full bg-[#e11d2a] flex items-center justify-center">
+            <svg className="h-4 w-4 text-[#111113]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
@@ -1193,8 +1193,8 @@ const GalleryItem = memo(function GalleryItem({
       <div className="absolute bottom-3 right-3 flex items-center gap-1">
         {item.folder && (
           <div className="flex items-center gap-0.5 rounded-md bg-black/70 px-1.5 py-0.5">
-            <FolderIcon className="h-3.5 w-3.5 text-[#f5409d]" />
-            <span className="text-[10px] font-bold text-[#f5409d] max-w-[60px] truncate">{item.folder.name}</span>
+            <FolderIcon className="h-3.5 w-3.5 text-[#e11d2a]" />
+            <span className="text-[10px] font-bold text-[#e11d2a] max-w-[60px] truncate">{item.folder.name}</span>
           </div>
         )}
         {isVideo && (
@@ -1205,14 +1205,14 @@ const GalleryItem = memo(function GalleryItem({
         )}
         {isAudio && (
           <div className="flex items-center gap-1 rounded-md bg-black/70 px-1.5 py-0.5">
-            <Music className="h-3 w-3 text-[#f5409d]" />
-            <span className="text-[9px] font-bold text-[#f5409d]">ÁUDIO</span>
+            <Music className="h-3 w-3 text-[#e11d2a]" />
+            <span className="text-[9px] font-bold text-[#e11d2a]">ÁUDIO</span>
           </div>
         )}
         {outputCount > 1 && (
           <div className="flex items-center gap-0.5 rounded-md bg-black/70 px-1.5 py-0.5">
-            <Layers className="h-3 w-3 text-[#f5409d]" />
-            <span className="text-[9px] font-bold text-[#f5409d]">{outputCount}</span>
+            <Layers className="h-3 w-3 text-[#e11d2a]" />
+            <span className="text-[9px] font-bold text-[#e11d2a]">{outputCount}</span>
           </div>
         )}
       </div>
@@ -1228,8 +1228,8 @@ const GalleryItem = memo(function GalleryItem({
             }`}
         >
           <Heart className={`h-3.5 w-3.5 drop-shadow transition-colors ${item.isFavorited
-            ? 'fill-[#f5409d] text-[#f5409d]'
-            : 'text-white/70 hover:text-[#f5409d]'
+            ? 'fill-[#e11d2a] text-[#e11d2a]'
+            : 'text-white/70 hover:text-[#e11d2a]'
             }`} />
         </div>
         <GalleryItemFolderButton
@@ -1291,10 +1291,10 @@ function FolderCard({
       tabIndex={0}
       onClick={() => { if (!isEditing) onOpen(); }}
       onKeyDown={(e) => { if (!isEditing && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onOpen(); } }}
-      className="group flex flex-col gap-2 rounded-xl border border-[#f3f0ed]/7 bg-[#f3f0ed]/3 p-4 text-left hover:border-[#f5409d]/20 hover:bg-[#f3f0ed]/5 transition-colors cursor-pointer"
+      className="group flex flex-col gap-2 rounded-xl border border-[#f3f0ed]/7 bg-[#f3f0ed]/3 p-4 text-left hover:border-[#e11d2a]/20 hover:bg-[#f3f0ed]/5 transition-colors cursor-pointer"
     >
       <div className="flex items-center justify-between">
-        <FolderIcon className="h-5 w-5 text-[#f5409d]" />
+        <FolderIcon className="h-5 w-5 text-[#e11d2a]" />
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={(e) => {
@@ -1337,7 +1337,7 @@ function FolderCard({
               setIsEditing(false);
             }
           }}
-          className="bg-transparent text-sm font-medium text-[#f3f0ed]/80 outline-none border-b border-[#f5409d]/40 w-full"
+          className="bg-transparent text-sm font-medium text-[#f3f0ed]/80 outline-none border-b border-[#e11d2a]/40 w-full"
         />
       ) : (
         <span className="text-sm font-medium text-[#f3f0ed]/80 truncate">{folder.name}</span>
@@ -1430,7 +1430,7 @@ function FolderChip({
     <div className="relative shrink-0">
       {isEditing ? (
         <div className="flex items-center gap-1.5 rounded-lg bg-[#f3f0ed]/10 px-3 py-1.5">
-          <FolderIcon className="h-3.5 w-3.5 text-[#f5409d] shrink-0" />
+          <FolderIcon className="h-3.5 w-3.5 text-[#e11d2a] shrink-0" />
           <input
             ref={inputRef}
             value={editName}
@@ -1455,7 +1455,7 @@ function FolderChip({
           }}
           className="flex items-center gap-1.5 rounded-lg bg-[#f3f0ed]/5 px-3 py-1.5 text-xs font-medium text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/10 hover:text-[#f3f0ed]/80 transition-colors"
         >
-          <FolderIcon className="h-3.5 w-3.5 text-[#f5409d]" />
+          <FolderIcon className="h-3.5 w-3.5 text-[#e11d2a]" />
           {folder.name}
           <span className="text-[10px] text-[#f3f0ed]/30">{folder.generationCount}</span>
         </button>
@@ -1545,10 +1545,10 @@ function FolderDropdown({
                     }}
                     className="flex items-center gap-2 w-full px-3 py-1.5 text-xs text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]"
                   >
-                    <FolderIcon className={`h-3.5 w-3.5 shrink-0 ${isActive ? 'text-[#f5409d]' : 'text-[#f3f0ed]/30'}`} />
+                    <FolderIcon className={`h-3.5 w-3.5 shrink-0 ${isActive ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/30'}`} />
                     <span className="truncate flex-1 text-left">{f.name}</span>
                     {isActive && (
-                      <svg className="h-3.5 w-3.5 text-[#f5409d] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="h-3.5 w-3.5 text-[#e11d2a] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
                     )}
@@ -1580,7 +1580,7 @@ function FolderDropdown({
               <button
                 type="submit"
                 disabled={!newName.trim()}
-                className="rounded p-0.5 text-[#f5409d] hover:bg-[#f5409d]/10 disabled:opacity-30 disabled:cursor-not-allowed"
+                className="rounded p-0.5 text-[#e11d2a] hover:bg-[#e11d2a]/10 disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 <Plus className="h-3.5 w-3.5" />
               </button>
@@ -1624,7 +1624,7 @@ function GalleryItemFolderButton({
         }}
         className="rounded-md p-0.5 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-colors hover:bg-black/60"
       >
-        <FolderPlus className="h-3.5 w-3.5 text-white/70 hover:text-[#f5409d] drop-shadow transition-colors" />
+        <FolderPlus className="h-3.5 w-3.5 text-white/70 hover:text-[#e11d2a] drop-shadow transition-colors" />
       </div>
 
       <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) setNewName(''); }}>
@@ -1653,10 +1653,10 @@ function GalleryItemFolderButton({
                     }}
                     className="flex items-center gap-2.5 w-full rounded-lg px-3 py-2 text-xs text-[#f3f0ed]/60 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed] transition-colors"
                   >
-                    <FolderIcon className={`h-4 w-4 shrink-0 ${isActive ? 'text-[#f5409d]' : 'text-[#f3f0ed]/30'}`} />
+                    <FolderIcon className={`h-4 w-4 shrink-0 ${isActive ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/30'}`} />
                     <span className="truncate flex-1 text-left">{f.name}</span>
                     {isActive && (
-                      <svg className="h-3.5 w-3.5 text-[#f5409d] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="h-3.5 w-3.5 text-[#e11d2a] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
                     )}
@@ -1683,12 +1683,12 @@ function GalleryItemFolderButton({
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder={t('folders.newFolderPlaceholder')}
-                className="flex-1 rounded-lg bg-[#f3f0ed]/5 px-3 py-2 text-xs text-[#f3f0ed] placeholder-[#f3f0ed]/20 outline-none border border-transparent focus:border-[#f5409d]/30 transition-colors"
+                className="flex-1 rounded-lg bg-[#f3f0ed]/5 px-3 py-2 text-xs text-[#f3f0ed] placeholder-[#f3f0ed]/20 outline-none border border-transparent focus:border-[#e11d2a]/30 transition-colors"
               />
               <button
                 type="submit"
                 disabled={!newName.trim()}
-                className="rounded-lg bg-[#f5409d]/10 px-3 py-2 text-[#f5409d] hover:bg-[#f5409d]/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="rounded-lg bg-[#e11d2a]/10 px-3 py-2 text-[#e11d2a] hover:bg-[#e11d2a]/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
                 <Plus className="h-4 w-4" />
               </button>
@@ -1748,12 +1748,12 @@ function StatCard({
     <Wrapper
       onClick={onClick}
       className={`flex flex-col gap-1 rounded-xl border px-2 py-2 text-left transition-colors ${active
-        ? 'border-[#f5409d]/30 bg-[#f5409d]/8'
+        ? 'border-[#e11d2a]/30 bg-[#e11d2a]/8'
         : 'border-[#f3f0ed]/7 bg-[#f3f0ed]/3'
-        } ${onClick ? 'cursor-pointer hover:border-[#f5409d]/20 hover:bg-[#f3f0ed]/5' : ''}`}
+        } ${onClick ? 'cursor-pointer hover:border-[#e11d2a]/20 hover:bg-[#f3f0ed]/5' : ''}`}
     >
       <div className="flex items-start gap-1.5 min-w-0">
-        <Icon className="h-4 w-4 shrink-0 text-[#f5409d]" />
+        <Icon className="h-4 w-4 shrink-0 text-[#e11d2a]" />
         <span className="min-w-0 break-words text-[9px] font-bold leading-[1.15] tracking-wider text-[#f3f0ed]/30 uppercase">
           {label}
         </span>

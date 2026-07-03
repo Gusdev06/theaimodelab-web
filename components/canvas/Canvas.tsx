@@ -261,7 +261,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
             ...connection,
             id: `${params.source}-${params.target}-${Date.now()}`,
             animated: true,
-            style: { stroke: '#f5409d', strokeWidth: 2 },
+            style: { stroke: '#e11d2a', strokeWidth: 2 },
           },
           eds,
         ),
@@ -301,7 +301,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                 sourceHandle,
                 targetHandle,
                 animated: true,
-                style: { stroke: '#f5409d', strokeWidth: 2 },
+                style: { stroke: '#e11d2a', strokeWidth: 2 },
               },
               eds,
             ),
@@ -354,7 +354,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
             sourceHandle: connectMenu.sourceHandle,
             targetHandle,
             animated: true,
-            style: { stroke: '#f5409d', strokeWidth: 2 },
+            style: { stroke: '#e11d2a', strokeWidth: 2 },
           },
           eds,
         ),
@@ -452,12 +452,12 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
       {/* Rubber-band selection colours */}
       <style>{`
         .react-flow__selection {
-          background: rgba(245, 64, 157, 0.08) !important;
-          border: 1.5px solid rgba(245, 64, 157, 0.5) !important;
+          background: rgba(225,29,42, 0.08) !important;
+          border: 1.5px solid rgba(225,29,42, 0.5) !important;
         }
         .react-flow__nodesselection-rect {
-          background: rgba(245, 64, 157, 0.08) !important;
-          border: 1.5px solid rgba(245, 64, 157, 0.5) !important;
+          background: rgba(225,29,42, 0.08) !important;
+          border: 1.5px solid rgba(225,29,42, 0.5) !important;
         }
         @keyframes toast-in-out {
           0%   { opacity: 0; transform: translateX(-50%) translateY(-16px); }
@@ -526,7 +526,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
             nodesConnectable={studioMode}
             nodesFocusable={false}
             proOptions={{ hideAttribution: true }}
-            style={{ width: '100%', height: '100%', background: studioMode ? '#0d1011' : '#1a2123' }}
+            style={{ width: '100%', height: '100%', background: studioMode ? '#050506' : '#111113' }}
           >
             <Background
               variant={BackgroundVariant.Dots}
@@ -546,7 +546,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                     height: 80,
                   }}
                   maskColor="rgba(26,33,35,0.7)"
-                  nodeColor="#f5409d"
+                  nodeColor="#e11d2a"
                   nodeStrokeWidth={3}
                   onNodeClick={(_, node) =>
                     setCenter(
@@ -565,7 +565,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
       {isMobile && nodes.length > 0 && !minimapOpen && (
         <button
           onClick={() => setMinimapOpen((v) => !v)}
-          className={`pointer-events-auto absolute bottom-5 left-4 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[#f5409d]/40 bg-[#1a2123]/90 shadow-[0_0_20px_rgba(245,64,157,0.25)] backdrop-blur-md transition-all sm:hidden ${minimapOpen ? 'border-[#f5409d]/70 bg-[#f5409d]/10' : ''}`}
+          className={`app-press app-ease pointer-events-auto absolute bottom-5 left-4 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[#e11d2a]/40 bg-[#111113]/90 shadow-[0_0_20px_rgba(225,29,42,0.25)] backdrop-blur-md transition-all sm:hidden ${minimapOpen ? 'border-[#e11d2a]/70 bg-[#e11d2a]/10' : ''}`}
         >
           <Map className="h-4 w-4 text-[#f3f0ed]/60" />
         </button>
@@ -578,7 +578,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
         );
         return (
           <div
-            className="absolute z-[100] w-56 overflow-hidden rounded-xl bg-[#1a2123]/95 shadow-2xl backdrop-blur-md"
+            className="absolute z-[100] w-56 overflow-hidden rounded-xl bg-[#111113]/95 shadow-2xl backdrop-blur-md"
             style={{ left: connectMenu.x, top: connectMenu.y }}
             onMouseDown={(e) => e.stopPropagation()}
           >
@@ -602,7 +602,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                     onClick={() => handleConnectMenuSelect(panelType)}
                     className="flex w-full items-center gap-2.5 px-3 py-2 text-left transition-colors hover:bg-[#f3f0ed]/[0.04]"
                   >
-                    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#f5409d]/10 text-[#f5409d]">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#e11d2a]/10 text-[#e11d2a]">
                       <Icon className="h-3.5 w-3.5" />
                     </span>
                     <span className="text-[12px] font-medium text-[#f3f0ed]/85">{label}</span>
@@ -619,12 +619,12 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
           className="toast-animate pointer-events-none absolute left-1/2 top-6 z-50"
           onAnimationEnd={() => setShowMaxNodesWarning(false)}
         >
-          <div className="flex items-center gap-3 rounded-xl border border-[#f5409d]/40 bg-[#1a2123]/95 px-5 py-3 shadow-[0_0_24px_rgba(245,64,157,0.12)] backdrop-blur-md">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f5409d]/10 ring-1 ring-[#f5409d]/30">
-              <LayoutGrid className="h-4 w-4 text-[#f5409d]" />
+          <div className="flex items-center gap-3 rounded-xl border border-[#e11d2a]/40 bg-[#111113]/95 px-5 py-3 shadow-[0_0_24px_rgba(225,29,42,0.12)] backdrop-blur-md">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#e11d2a]/10 ring-1 ring-[#e11d2a]/30">
+              <LayoutGrid className="h-4 w-4 text-[#e11d2a]" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#f5409d]">{t('maxNodesTitle')}</span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#e11d2a]">{t('maxNodesTitle')}</span>
               <span className="text-sm text-[#f3f0ed]/70">{t('maxNodesMessage', { count: MAX_NODES })}</span>
             </div>
           </div>
@@ -652,7 +652,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
           <div className="pointer-events-auto flex w-full flex-col items-center gap-3 px-5 sm:w-auto sm:gap-6 sm:px-0">
             <div className="animate-pulse">
               <Image
-                src="/logo_2.svg"
+                src="/logo-red.jpg"
                 alt="The AI Model Lab"
                 width={64}
                 height={64}
@@ -669,9 +669,9 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
             <div className="relative w-full sm:w-auto">
               {/* Ambient backdrop — gives the glass something to refract */}
               <div className="pointer-events-none absolute inset-0 -z-10 overflow-visible">
-                <div className="absolute -left-10 top-[5%] h-56 w-56 rounded-full bg-[#f5409d]/[0.10] blur-[90px]" />
-                <div className="absolute -right-10 bottom-[5%] h-56 w-56 rounded-full bg-[#4b1e3a]/55 blur-[90px]" />
-                <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f5409d]/[0.05] blur-[70px]" />
+                <div className="absolute -left-10 top-[5%] h-56 w-56 rounded-full bg-[#e11d2a]/[0.10] blur-[90px]" />
+                <div className="absolute -right-10 bottom-[5%] h-56 w-56 rounded-full bg-[#3a0f16]/55 blur-[90px]" />
+                <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e11d2a]/[0.05] blur-[70px]" />
               </div>
 
               <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
@@ -679,12 +679,12 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                 const GroupIcon = group.icon;
                 const groupLabel = t(`groups.${group.id}`);
                 const animDelay = `${0.35 + gi * 0.08}s`;
-                const cardClass = "empty-card-animate group/card flex flex-col rounded-xl border border-white/[0.08] bg-white/[0.045] p-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.09),0_10px_30px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,border-color,box-shadow] duration-200 hover:border-[#f5409d]/40 hover:bg-[#f5409d]/[0.045] hover:shadow-[inset_0_1px_0_0_rgba(245,64,157,0.18),0_0_18px_-4px_rgba(245,64,157,0.12),0_10px_30px_-12px_rgba(0,0,0,0.55)] data-[state=open]:border-[#f5409d]/40 data-[state=open]:bg-[#f5409d]/[0.045] sm:w-52 sm:p-4";
+                const cardClass = "empty-card-animate group/card flex flex-col rounded-xl border border-white/[0.08] bg-white/[0.045] p-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.09),0_10px_30px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,border-color,box-shadow] duration-200 hover:border-[#e11d2a]/40 hover:bg-[#e11d2a]/[0.045] hover:shadow-[inset_0_1px_0_0_rgba(225,29,42,0.18),0_0_18px_-4px_rgba(225,29,42,0.12),0_10px_30px_-12px_rgba(0,0,0,0.55)] data-[state=open]:border-[#e11d2a]/40 data-[state=open]:bg-[#e11d2a]/[0.045] sm:w-52 sm:p-4";
 
                 const headerInner = (
                   <>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#f5409d]/[0.10] ring-1 ring-inset ring-[#f5409d]/[0.18] transition-colors group-hover/card:bg-[#f5409d]/[0.18] group-hover/card:ring-[#f5409d]/[0.32] group-data-[state=open]/card:bg-[#f5409d]/[0.18] group-data-[state=open]/card:ring-[#f5409d]/[0.32]">
-                      <GroupIcon className="h-3.5 w-3.5 text-[#f5409d]" />
+                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#e11d2a]/[0.10] ring-1 ring-inset ring-[#e11d2a]/[0.18] transition-colors group-hover/card:bg-[#e11d2a]/[0.18] group-hover/card:ring-[#e11d2a]/[0.32] group-data-[state=open]/card:bg-[#e11d2a]/[0.18] group-data-[state=open]/card:ring-[#e11d2a]/[0.32]">
+                      <GroupIcon className="h-3.5 w-3.5 text-[#e11d2a]" />
                     </div>
                     <span className="flex-1 text-left text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#f3f0ed]/65 transition-colors group-hover/card:text-[#f3f0ed]/85 group-data-[state=open]/card:text-[#f3f0ed]/85">
                       {groupLabel}
@@ -704,7 +704,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                       >
                         <div className="flex w-full items-center gap-2.5">
                           {headerInner}
-                          <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#f5409d]">
+                          <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#e11d2a]">
                             {t('comingSoon')}
                           </span>
                         </div>
@@ -721,7 +721,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                       <div className="flex w-full items-center gap-2.5">
                         {headerInner}
                         {only.isNew ? (
-                          <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#f5409d]">
+                          <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#e11d2a]">
                             {t('newBadge')}
                           </span>
                         ) : null}
@@ -757,7 +757,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                         side="bottom"
                         align="center"
                         sideOffset={8}
-                        className="min-w-[12rem] overflow-hidden rounded-xl border border-white/[0.08] bg-[#1a2123]/85 p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_10px_30px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150"
+                        className="min-w-[12rem] overflow-hidden rounded-xl border border-white/[0.08] bg-[#111113]/85 p-1 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_10px_30px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150"
                       >
                         {group.panels.map((panel) => {
                           const Icon = panel.icon;
@@ -780,20 +780,20 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                                   : 'cursor-pointer data-[highlighted]:bg-[#f3f0ed]/[0.045]'
                               }`}
                             >
-                              <Icon className="h-3.5 w-3.5 shrink-0 text-[#f3f0ed]/45 transition-colors group-data-[highlighted]/item:text-[#f5409d]" />
+                              <Icon className="h-3.5 w-3.5 shrink-0 text-[#f3f0ed]/45 transition-colors group-data-[highlighted]/item:text-[#e11d2a]" />
                               <span className="flex-1 truncate text-[12.5px] font-medium text-[#f3f0ed]/85 transition-colors group-data-[highlighted]/item:text-[#f3f0ed]">
                                 {t(`actions.${panel.actionKey}`)}
                               </span>
                               {isComingSoon ? (
-                                <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#f5409d]">
+                                <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#e11d2a]">
                                   {t('comingSoon')}
                                 </span>
                               ) : isNew ? (
-                                <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#f5409d]">
+                                <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#e11d2a]">
                                   {t('newBadge')}
                                 </span>
                               ) : (
-                                <ChevronRight className="h-3 w-3 shrink-0 text-[#f3f0ed]/0 transition-all group-data-[highlighted]/item:translate-x-0.5 group-data-[highlighted]/item:text-[#f5409d]/70" />
+                                <ChevronRight className="h-3 w-3 shrink-0 text-[#f3f0ed]/0 transition-all group-data-[highlighted]/item:translate-x-0.5 group-data-[highlighted]/item:text-[#e11d2a]/70" />
                               )}
                             </DropdownMenuItem>
                           );
@@ -828,7 +828,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                               <span className="flex-1 truncate text-[12.5px] font-medium text-[#f3f0ed]/85">
                                 {t(`actions.${panel.actionKey}`)}
                               </span>
-                              <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#f5409d]">
+                              <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#e11d2a]">
                                 {t('comingSoon')}
                               </span>
                             </div>
@@ -840,16 +840,16 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
                             onClick={() => handleAddPanel(panel.type)}
                             className="group/btn flex items-center gap-2.5 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-[#f3f0ed]/[0.045] active:bg-[#f3f0ed]/[0.06]"
                           >
-                            <Icon className="h-3.5 w-3.5 shrink-0 text-[#f3f0ed]/45 transition-colors group-hover/btn:text-[#f5409d]" />
+                            <Icon className="h-3.5 w-3.5 shrink-0 text-[#f3f0ed]/45 transition-colors group-hover/btn:text-[#e11d2a]" />
                             <span className="flex-1 truncate text-[12.5px] font-medium text-[#f3f0ed]/85 transition-colors group-hover/btn:text-[#f3f0ed]">
                               {t(`actions.${panel.actionKey}`)}
                             </span>
                             {panel.isNew ? (
-                              <span className="rounded-full bg-[#f5409d]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#f5409d]">
+                              <span className="rounded-full bg-[#e11d2a]/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#e11d2a]">
                                 {t('newBadge')}
                               </span>
                             ) : (
-                              <ChevronRight className="h-3 w-3 shrink-0 text-[#f3f0ed]/0 transition-all group-hover/btn:translate-x-0.5 group-hover/btn:text-[#f5409d]/70" />
+                              <ChevronRight className="h-3 w-3 shrink-0 text-[#f3f0ed]/0 transition-all group-hover/btn:translate-x-0.5 group-hover/btn:text-[#e11d2a]/70" />
                             )}
                           </button>
                         );

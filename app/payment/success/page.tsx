@@ -17,10 +17,10 @@ export default function PaymentSuccessPage() {
   }, [queryClient]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[#1a2123] px-4">
-      <div className="flex flex-col items-center gap-4 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f5409d]/15">
-          <CheckCircle className="h-8 w-8 text-[#f5409d]" />
+    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[#111113] px-4">
+      <div className="app-reveal flex flex-col items-center gap-4 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e11d2a]/15">
+          <CheckCircle className="h-8 w-8 text-[#e11d2a]" />
         </div>
         <h1 className="text-2xl font-bold text-[#f3f0ed]">{t('title')}</h1>
         <p className="max-w-md text-sm text-[#f3f0ed]/50">
@@ -29,7 +29,7 @@ export default function PaymentSuccessPage() {
       </div>
       <button
         onClick={() => router.push('/workspace')}
-        className="flex items-center gap-2 rounded-xl bg-[#f5409d] px-6 py-3 text-sm font-bold text-[#1a2123] transition-all hover:brightness-110 active:scale-[0.98]"
+        className="app-btn flex items-center gap-2 bg-[#e11d2a] px-6 py-3 text-sm font-bold text-[#111113]"
       >
         {t('cta')}
         <ArrowRight className="h-4 w-4" />
