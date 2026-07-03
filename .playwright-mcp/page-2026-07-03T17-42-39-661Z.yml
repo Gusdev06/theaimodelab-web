@@ -1,0 +1,26 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - img "The AI Model Lab" [ref=f3e5]
+      - paragraph [ref=f3e6]: AI-powered image generator
+    - generic [ref=f3e7]:
+      - heading "Welcome back" [level=2] [ref=f3e8]
+      - paragraph [ref=f3e9]: Sign in or create an account to start creating
+      - button "Continue with Google" [ref=f3e10] [cursor=pointer]:
+        - img [ref=f3e11]
+        - text: Continue with Google
+      - generic [ref=f3e18]: or
+      - button "Continue with Email" [ref=f3e20] [cursor=pointer]:
+        - img [ref=f3e21]
+        - text: Continue with Email
+      - paragraph [ref=f3e24]:
+        - text: By continuing, you agree to our
+        - link "Terms of Service" [ref=f3e25] [cursor=pointer]:
+          - /url: /termos-de-uso
+        - text: and
+        - link "Privacy Policy" [ref=f3e26] [cursor=pointer]:
+          - /url: /politica-de-privacidade
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f3e32] [cursor=pointer]:
+    - img [ref=f3e33]
+  - alert [ref=f3e36]

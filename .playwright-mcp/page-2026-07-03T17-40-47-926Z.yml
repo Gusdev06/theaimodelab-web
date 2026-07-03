@@ -1,0 +1,43 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - img "The AI Model Lab" [ref=e5]
+        - paragraph [ref=e6]: AI-powered image generator
+      - generic [ref=e7]:
+        - heading "Welcome back" [level=2] [ref=e8]
+        - paragraph [ref=e9]: Sign in or create an account to start creating
+        - button "Continue with Google" [ref=e10] [cursor=pointer]:
+          - img [ref=e11]
+          - text: Continue with Google
+        - generic [ref=e18]: or
+        - button "Continue with Email" [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+          - text: Continue with Email
+        - paragraph [ref=e24]:
+          - text: By continuing, you agree to our
+          - link "Terms of Service" [ref=e25] [cursor=pointer]:
+            - /url: /termos-de-uso
+          - text: and
+          - link "Privacy Policy" [ref=e26] [cursor=pointer]:
+            - /url: /politica-de-privacidade
+    - generic [ref=e27]:
+      - generic [ref=e32]:
+        - button [ref=e33] [cursor=pointer]
+        - button [ref=e35] [cursor=pointer]
+      - generic [ref=e36]:
+        - generic [ref=e37]: Professional video generation
+        - heading "Create unique AI videos" [level=2] [ref=e39]
+        - paragraph [ref=e40]: Turn text into video in seconds with state-of-the-art models.
+        - generic [ref=e41]:
+          - button [ref=e42] [cursor=pointer]
+          - button [ref=e43] [cursor=pointer]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e49] [cursor=pointer]:
+    - generic [ref=e52]:
+      - text: Compiling
+      - generic [ref=e53]:
+        - generic [ref=e54]: .
+        - generic [ref=e55]: .
+        - generic [ref=e56]: .
+  - alert [ref=e57]

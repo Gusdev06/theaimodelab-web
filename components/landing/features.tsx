@@ -5,10 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import {
   User,
   Move3d,
-  Wand2,
   Image as ImageIcon,
   Video,
-  Maximize2,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -16,7 +14,7 @@ import { useScrollReveal } from "./use-scroll-reveal";
 
 type Media =
   | { kind: "image"; src: string }
-  | { kind: "video"; src: string }
+  | { kind: "video"; src: string; poster?: string }
   | { kind: "beforeAfter"; src: string; beforeSrc?: string; beforeFilter?: string };
 
 const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
@@ -25,24 +23,15 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
     icon: User,
     media: {
       kind: "image",
-      src: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/3e6ff0c4-d1b0-4af8-bd41-6742c7776579/output_0__17_.png",
+      src: "https://www.promptsgoat.com/en/assets/4963395053896272996.jpg",
     },
   },
   {
     key: "motion",
     icon: Move3d,
     media: {
-      kind: "image",
-      src: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/b5145041-7bbb-41fe-9285-08beea301133/hfesGwtYPXPKQSfh.gif",
-    },
-  },
-  {
-    key: "skinEnhancer",
-    icon: Wand2,
-    media: {
-      kind: "beforeAfter",
-      src: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/81b5ff74-49b3-444f-acc8-7def73b980d1/theaimodelab-ai__46_.jpg",
-      beforeFilter: "blur(1.2px) saturate(0.7) contrast(0.88) brightness(1.07)",
+      kind: "video",
+      src: "https://zayraai.com/videos/motion-showcase-3.mp4?v=2",
     },
   },
   {
@@ -50,7 +39,7 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
     icon: ImageIcon,
     media: {
       kind: "image",
-      src: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/generations/cmn75brpl0092s101g088osyw/abbc63ee-8331-4bdf-b416-73e5393c7de3/output_0.png",
+      src: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/generations/cmr3dn6co08utlc0110yinfg5/feffd1b1-fffb-4db2-a370-e22b029b85ce/output_0.jpg",
     },
   },
   {
@@ -58,22 +47,13 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
     icon: Video,
     media: {
       kind: "video",
-      src: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/generations/cmmv24p4y00wdq201jad39azh/ed291ab0-d3ef-45d6-9ed8-cf1887a54a76/output_0.mp4",
-    },
-  },
-  {
-    key: "upscale",
-    icon: Maximize2,
-    media: {
-      kind: "beforeAfter",
-      src: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/7187c0db-8ce0-4097-ba9b-50933c13ad07/output_0.jpg",
-      beforeSrc:
-        "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/2edf4685-c039-4f97-bcb7-721e60f22606/e49d733e40e4e78d42c46872d34fe8d8.jpg",
+      src: "https://zayraai.com/videos/motion-zaza.mp4",
+      poster: "https://zayraai.com/images/motion-zaza-poster.jpg",
     },
   },
 ];
 
-function LazyVideo({ src }: { src: string }) {
+function LazyVideo({ src, poster }: { src: string; poster?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -98,6 +78,7 @@ function LazyVideo({ src }: { src: string }) {
       {visible ? (
         <video
           src={src}
+          poster={poster}
           autoPlay
           loop
           muted
@@ -286,7 +267,7 @@ function FeatureCard({
             className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
           />
         )}
-        {media.kind === "video" && <LazyVideo src={media.src} />}
+        {media.kind === "video" && <LazyVideo src={media.src} poster={media.poster} />}
         {media.kind === "beforeAfter" && (
           <BeforeAfterSlider
             src={media.src}

@@ -9,11 +9,11 @@
     "accessPlatform": "Open Platform"
   },
   "hero": {
-    "badge": "AI-powered content creation platform",
-    "title": "Create digital influencers with unlimited video and image generations.",
-    "subtitle": "Generate ultra-realistic images, videos, and motion with just a few clicks. No studio, no models, no showing your face. Everything you need to create professional content is here.",
+    "badge": "The AI model factory for OFM agencies",
+    "title": "Build and scale AI models that earn on Fanvue.",
+    "subtitle": "Create dozens of hyper-realistic personas with a 100% consistent face and mass-produce content to feed every account. No real models, no photographer, no bloating your team.",
     "cta": "Start Now",
-    "microcopy": "Ready in under 2 minutes"
+    "microcopy": "Your first model ready in under 2 minutes"
   },
   "howItWorks": {
     "tag": "IT'S THAT SIMPLE",
@@ -35,15 +35,15 @@
     "ctaLoggedIn": "Open Platform"
   },
   "features": {
-    "tag": "EVERYTHING YOU NEED",
-    "title": "A complete platform to create content that converts.",
-    "subtitle": "Photos, videos, motion, and editing — all with AI, all in one place.",
+    "tag": "EVERYTHING FOR YOUR OFM OPERATION",
+    "title": "A full assembly line to build and scale your AI models.",
+    "subtitle": "Consistent face, photos, videos, motion, and voice — all with AI, all in one place, ready to feed Fanvue.",
     "beforeLabel": "BEFORE",
     "afterLabel": "AFTER",
     "items": {
       "influencers": {
         "title": "AI Influencers",
-        "description": "Create hyper-realistic avatars with their own face, voice, and personality. Make your influencer talk, gesture, and appear in any scene without recording anything — perfect for UGC, ads, and branded content."
+        "description": "Create hyper-realistic AI models with their own face, body, and personality — and keep the same face on every single generation. The consistency that keeps Fanvue subscribers paying, without hiring anyone or showing your face."
       },
       "motion": {
         "title": "Motion Control",
@@ -131,47 +131,47 @@
   },
   "gallery": {
     "tag": "Gallery",
-    "title": "See what's already being created with The AI Model Lab.",
-    "subtitle": "Every image and video below was generated 100% by AI inside our platform.",
+    "title": "See the AI models already built on the platform.",
+    "subtitle": "Every face, photo, and video below was generated 100% by AI — with the same consistency you'll use to scale your accounts.",
     "cta": "Create yours now",
     "ctaLoggedIn": "Open Platform",
     "alt": "Result {index}"
   },
   "testimonials": {
     "tag": "What People Say",
-    "title": "Real creators. Real results.",
+    "title": "Real operators. Real accounts.",
     "cta": "Join them",
     "ctaLoggedIn": "Open Platform",
     "items": [
       {
         "name": "Lucas Ferreira",
         "handle": "@lucasferreira.ai",
-        "niche": "Content Creator",
-        "text": "In 2 weeks I had more content ready than in the last 3 months. The video quality is insane."
+        "niche": "OFM Operator",
+        "text": "I scaled from 1 to 6 models in two months. The face comes out identical on every generation — subscribers don't even suspect it's AI."
       },
       {
         "name": "Mariana Costa",
         "handle": "@maricosta.digital",
-        "niche": "Digital Affiliate",
-        "text": "My product reviews with a virtual influencer converted 3x better than before. I'm never going back to the old way."
+        "niche": "Fanvue Creator",
+        "text": "I launched my model without showing my face and hit my first subscriber goal in 3 weeks. Fresh content every day with zero photoshoot costs."
       },
       {
         "name": "Rafael Souza",
         "handle": "@rafasouza.mkt",
-        "niche": "Social Media",
-        "text": "I can deliver content for 5 different clients without a team. The AI Model Lab changed my business."
+        "niche": "OFM Agency",
+        "text": "We feed 12 accounts with a lean team. The content assembly line is what protects our margin."
       },
       {
         "name": "Camila Oliveira",
         "handle": "@camilaoliveira.brand",
-        "niche": "Marketing Agency",
-        "text": "We cut production costs by 80% and tripled creative output for our clients."
+        "niche": "Account Manager",
+        "text": "We cut production cost by 80% and still doubled the content volume per model."
       }
     ]
   },
   "comparison": {
     "tag": "Why The AI Model Lab",
-    "title": "The old way is expensive. The new way costs pennies.",
+    "title": "Running an OFM operation used to cost a fortune. Now it costs pennies.",
     "perMonth": "/mo",
     "totalTag": "TOTAL IF BOUGHT SEPARATELY",
     "totalAmount": "~$745/mo",
@@ -205,23 +205,23 @@
   },
   "useCases": {
     "tag": "Who It's For",
-    "title": "Whatever your niche. The AI Model Lab adapts to your goal.",
+    "title": "From your first model to an agency with dozens of accounts. The assembly line scales with you.",
     "items": {
       "creators": {
-        "title": "Content Creators",
-        "desc": "Post every day without showing your face. Build a persona that becomes your channel's identity and grow a real audience with AI-generated content."
+        "title": "Solo Fanvue Creators",
+        "desc": "Launch your first AI model without showing your face and without hiring anyone. Post every day, keep the same face, and build a base of recurring paying subscribers."
       },
       "sellers": {
-        "title": "Sellers and Affiliates",
-        "desc": "Generate review, unboxing, and demo videos with virtual influencers. Scale sales on TikTok Shop, Instagram, and any platform without relying on anyone."
+        "title": "OFM Operators",
+        "desc": "Manage several models at once with content on an assembly line. Feed every Fanvue account's feed without relying on a photographer, studio, or real model."
       },
       "brands": {
-        "title": "Brands and Agencies",
-        "desc": "Produce unlimited UGC without hiring models or influencers. Cut production costs and get fresh creatives every day for your campaigns."
+        "title": "OFM Agencies",
+        "desc": "Multiply your number of accounts without bloating your team. Produce unlimited photos and videos for dozens of personas and cut production cost down to pennies."
       },
       "social": {
-        "title": "Social Media Managers",
-        "desc": "Deliver more results with less time and lower cost. Create content for multiple brands using a different persona for each one."
+        "title": "Chatters & Managers",
+        "desc": "Always have fresh content on hand to keep subscribers engaged. Every model with a consistent face and its own library, ready to sell."
       }
     }
   },
@@ -238,15 +238,15 @@
     "items": [
       {
         "question": "How do I get started?",
-        "answer": "Create your account in under 2 minutes, pick a plan starting at $2.90/mo, and you'll get your credits right away to generate images and videos. Cancel anytime — no fees, no hassle."
+        "answer": "Create your account in under 2 minutes, pick a plan starting at $2.90/mo, and you'll instantly get credits to generate your first AI model — photos, videos, and voice. Cancel anytime, no fees, no hassle."
       },
       {
         "question": "Do I need to install anything?",
         "answer": "No. The AI Model Lab runs 100% online, right in your browser. Works on desktop and mobile."
       },
       {
-        "question": "Can I use the content to sell on TikTok Shop?",
-        "answer": "Yes. Many creators use The AI Model Lab to generate review and demo videos for TikTok Shop. Use it on any platform for any commercial purpose."
+        "question": "Can I use the content to monetize on Fanvue?",
+        "answer": "Yes. The platform is built to feed Fanvue accounts and any other subscription platform. You generate the content and monetize however you want, following each platform's rules."
       },
       {
         "question": "Do videos have a watermark?",
@@ -257,8 +257,8 @@
         "answer": "Yes. Images and videos you generate can be used on Meta Ads, TikTok Ads, Google Ads, and any other platform."
       },
       {
-        "question": "Is the generated content exclusive to me?",
-        "answer": "Yes. Every generation is unique. Even with the same prompt, results differ. Your content is exclusively yours."
+        "question": "Can I keep the same face across every generation?",
+        "answer": "Yes. That's the core of the platform: you lock your model's identity and the face comes out consistent on every photo and video — the foundation for building a persona subscribers recognize and follow."
       },
       {
         "question": "What happens if I run out of credits?",
@@ -267,25 +267,17 @@
       {
         "question": "Can I cancel anytime?",
         "answer": "Yes. No penalties, no fees, no hassle. Cancel straight from the dashboard and keep using it until the end of your paid period."
-      },
-      {
-        "question": "How does voice cloning work?",
-        "answer": "You record or upload a short sample of your voice (minimum 10 seconds) and The AI Model Lab clones it with AI. Then just write the script and your voice speaks any text, in multiple languages. You must have legal permission to clone the voice you use (yours or someone who authorized you). Each plan allows a different amount of saved voices — check the pricing table."
-      },
-      {
-        "question": "Can I generate audio with professional voices without cloning mine?",
-        "answer": "Yes. We have 60+ ready-to-use voices in 15 languages (English, Portuguese, Spanish and more). Just write the text, pick a voice and the audio is ready in seconds — perfect for reels, videos, podcasts or ads."
       }
     ]
   },
   "ctaFinal": {
-    "title": "Ready to create your first AI influencer?",
-    "subtitle": "Join thousands of creators turning ideas into professional content with AI.",
+    "title": "Ready to launch your first AI model on Fanvue?",
+    "subtitle": "Join the operators and agencies already scaling their accounts with an assembly line of content and a 100% consistent face.",
     "cta": "Start Now",
     "ctaLoggedIn": "Open Platform",
     "microcopy": "2-minute setup · Cancel anytime",
     "microcopyShort": "2-minute setup · Cancel anytime",
-    "creatorsUsing": "+2,000 creators already using it"
+    "creatorsUsing": "+2,000 creators already scaling"
   },
   "footer": {
     "tagline": "Create professional AI influencers, videos, and images.",
@@ -745,10 +737,10 @@
     "english": "English"
   },
   "landingMeta": {
-    "title": "The AI Model Lab - Create Digital Influencers with AI | Ultra-Realistic Images and Videos",
-    "description": "AI platform to create digital influencers, ultra-realistic images, and videos. No face on camera, no studio, no crew. Start free.",
-    "ogTitle": "The AI Model Lab - Create Digital Influencers with AI",
-    "ogDescription": "Generate ultra-realistic images and videos with AI. No face on camera, no studio. Start free."
+    "title": "The AI Model Lab — The AI Model Factory for OFM Agencies and Fanvue Creators",
+    "description": "Build and scale hyper-realistic AI influencers with a 100% consistent face. Produce content on an assembly line and monetize on Fanvue — no real models, no photographer, no crew.",
+    "ogTitle": "The AI Model Lab — AI Models for OFM and Fanvue",
+    "ogDescription": "Scale dozens of consistent AI personas and mass-produce content for Fanvue. No real models. Start now."
   },
   "promptsLibrary": {
     "metaTitle": "Prompt Library · The AI Model Lab",

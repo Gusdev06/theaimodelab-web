@@ -10,32 +10,32 @@ const PLATFORMS: Platform[] = [
   {
     key: "chatgpt",
     price: "R$ 1.100",
-    logo: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/24068788-cb91-4365-9fe0-7f7420944c24/output_0__15_.png",
+    logo: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/24068788-cb91-4365-9fe0-7f7420944c24/output_0__15_.png",
   },
   {
     key: "googleFlow",
     price: "R$ 1.375",
-    logo: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/a2f2f9e2-4783-412e-8052-795f99de108c/output_0__10_.png",
+    logo: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/a2f2f9e2-4783-412e-8052-795f99de108c/output_0__10_.png",
   },
   {
     key: "magnific",
     price: "R$ 540",
-    logo: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/ae29d1c1-65ba-45fc-9338-e6786fce20c3/output_0__12_.png",
+    logo: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/ae29d1c1-65ba-45fc-9338-e6786fce20c3/output_0__12_.png",
   },
   {
     key: "kling",
     price: "R$ 200",
-    logo: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/87533535-09ba-4048-84eb-237184c7e896/output_0__14_.png",
+    logo: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/87533535-09ba-4048-84eb-237184c7e896/output_0__14_.png",
   },
   {
     key: "elevenLabs",
     price: "R$ 540",
-    logo: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/b2f95bd9-ee8c-4eef-859d-cd4876acc86c/output_0__11_.png",
+    logo: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/b2f95bd9-ee8c-4eef-859d-cd4876acc86c/output_0__11_.png",
   },
   {
     key: "xPremium",
     price: "R$ 220",
-    logo: "https://cdn.theaimodelab.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/c1ae7d1b-374a-4555-a97d-df49ccb703f2/output_0__13_.png",
+    logo: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/admin_assets/landing/c1ae7d1b-374a-4555-a97d-df49ccb703f2/output_0__13_.png",
   },
 ];
 
