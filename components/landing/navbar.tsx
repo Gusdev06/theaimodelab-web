@@ -61,7 +61,7 @@ export function Navbar() {
           {/* logo */}
           <a href="/" className="group flex items-center gap-2">
             <Image
-              src="/logo-red.jpg"
+              src="/logo-red-sem-fundo.png"
               alt="The AI Model Lab"
               width={130}
               height={32}
@@ -146,7 +146,7 @@ export function Navbar() {
       >
         {/* header do aside */}
         <div className="flex h-[64px] items-center justify-between border-b border-[#f3f0ed]/[0.06] px-5 sm:h-[72px]">
-          <Image src="/logo-red.jpg" alt="The AI Model Lab" width={100} height={28} className="h-7 w-auto" />
+          <Image src="/logo-red-sem-fundo.png" alt="The AI Model Lab" width={100} height={28} className="h-7 w-auto" />
           <button
             onClick={() => setOpen(false)}
             className="flex h-9 w-9 items-center justify-center rounded-xl text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]"

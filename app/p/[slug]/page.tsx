@@ -123,7 +123,7 @@ export default async function PromptPostPage({
             >
               <span className="flex w-full h-full rounded-full bg-black items-center justify-center overflow-hidden">
                 <Image
-                  src="/logo-red.jpg"
+                  src="/logo-red-sem-fundo.png"
                   alt="The AI Model Lab"
                   width={20}
                   height={20}

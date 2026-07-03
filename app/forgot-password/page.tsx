@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <Image
-            src="/logo-red.jpg"
+            src="/logo-red-sem-fundo.png"
             alt="The AI Model Lab"
             width={140}
             height={140}

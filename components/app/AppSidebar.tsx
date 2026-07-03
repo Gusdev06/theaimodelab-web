@@ -95,7 +95,7 @@ export function AppSidebar() {
       {/* marca + colapsar */}
       <div className={cn('flex items-center gap-2.5 px-1.5 pb-4 pt-1.5', collapsed && 'flex-col px-0')}>
         <Link href="/home" className="flex min-w-0 items-center gap-2.5">
-          <Image src="/logo-red.jpg" alt="The AI Model Lab" width={28} height={28} className="size-7 shrink-0" />
+          <Image src="/logo-red-sem-fundo.png" alt="The AI Model Lab" width={28} height={28} className="size-7 shrink-0" />
           {!collapsed && <span className="truncate text-[19px] font-bold text-app-text">The AI Model Lab</span>}
         </Link>
         <button

@@ -652,7 +652,7 @@ function CanvasContent({ initial, onPersist }: CanvasWorkspaceProps) {
           <div className="pointer-events-auto flex w-full flex-col items-center gap-3 px-5 sm:w-auto sm:gap-6 sm:px-0">
             <div className="animate-pulse">
               <Image
-                src="/logo-red.jpg"
+                src="/logo-red-sem-fundo.png"
                 alt="The AI Model Lab"
                 width={64}
                 height={64}

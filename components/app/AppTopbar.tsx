@@ -66,7 +66,7 @@ export function AppTopbar() {
         ) : (
           /* sem título (Início) — exibe a marca apenas no mobile (sidebar oculta) */
           <Link href="/home" className="flex items-center gap-2.5 lg:hidden">
-            <Image src="/logo-red.jpg" alt="The AI Model Lab" width={26} height={26} className="size-[26px] shrink-0" />
+            <Image src="/logo-red-sem-fundo.png" alt="The AI Model Lab" width={26} height={26} className="size-[26px] shrink-0" />
             <span className="text-[18px] font-bold text-app-text">The AI Model Lab</span>
           </Link>
         )}

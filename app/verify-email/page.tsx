@@ -122,7 +122,7 @@ function VerifyEmailContent() {
       <div className="flex w-full max-w-[400px] flex-col items-center gap-6">
         {/* Logo */}
         <Image
-          src="/logo-red.jpg"
+          src="/logo-red-sem-fundo.png"
           alt="The AI Model Lab"
           width={140}
           height={140}

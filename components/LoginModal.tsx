@@ -347,7 +347,7 @@ function LoginModalContent() {
 
           {/* Logo */}
           <div className="app-reveal mb-6 flex flex-col items-center">
-            <Image src="/logo-red.jpg" alt="The AI Model Lab" width={140} height={140} className="mix-blend-lighten" />
+            <Image src="/logo-red-sem-fundo.png" alt="The AI Model Lab" width={140} height={140} className="mix-blend-lighten" />
             <p className="mt-1 text-xs text-white/25">{tCommon('tagline')}</p>
           </div>
 

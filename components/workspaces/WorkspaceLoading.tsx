@@ -70,7 +70,7 @@ export function WorkspaceLoading() {
           <span className="ws-loader-ring-2 absolute inset-[16px] rounded-full" />
           {/* logo no centro */}
           <Image
-            src="/logo-red.jpg"
+            src="/logo-red-sem-fundo.png"
             alt=""
             width={58}
             height={58}

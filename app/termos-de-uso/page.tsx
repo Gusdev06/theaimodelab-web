@@ -29,7 +29,7 @@ export default function TermosDeUsoPage() {
             <ArrowLeft className="h-3.5 w-3.5" />
             {t('common.back')}
           </Link>
-          <Image src="/logo-red.jpg" alt={t('common.logoAlt')} width={100} height={32} className="mix-blend-lighten" />
+          <Image src="/logo-red-sem-fundo.png" alt={t('common.logoAlt')} width={100} height={32} className="mix-blend-lighten" />
           <div className="w-16" />
         </div>
       </header>

@@ -110,7 +110,7 @@ export function TopNavbar() {
               {t('home')}
             </Link>
             <Image
-              src="/logo-red.jpg"
+              src="/logo-red-sem-fundo.png"
               alt={t('logoAlt')}
               width={22}
               height={22}
@@ -310,7 +310,7 @@ export function TopNavbar() {
             {t('home')}
           </Link>
           <Image
-            src="/logo-red.jpg"
+            src="/logo-red-sem-fundo.png"
             alt={t('logoAlt')}
             width={32}
             height={32}

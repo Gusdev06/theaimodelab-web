@@ -45,7 +45,7 @@ export function Footer() {
           <div className="md:col-span-4">
             <div className="flex items-center gap-2.5">
               <Image
-                src="/logo-red.jpg"
+                src="/logo-red-sem-fundo.png"
                 alt="The AI Model Lab"
                 width={130}
                 height={32}
