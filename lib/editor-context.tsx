@@ -1,0 +1,371 @@
+'use client';
+
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { InfiniteData, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuth } from './auth-context';
+import { api, CreditsBalance, Generation, GalleryItem, PaginatedResponse, UserAvatar } from './api';
+
+type UpscaleState = 'idle' | 'upscaling' | 'done';
+
+export interface GalleryPickerRequest {
+  nodeId: string;
+  remaining: number;
+  onSelect: (url: string) => void;
+}
+
+export interface PendingPrompt {
+  panelType: 'generate-image' | 'generate-video' | 'generate-audio';
+  prompt: string;
+  /** Optional: pre-select a voice when opening the audio panel (raw value, e.g. "clone:<id>" or default voice id). */
+  voiceId?: string;
+  /** Optional: pre-set the audio panel mode (used for "Clonar voz" entry from sidebar). */
+  audioMode?: 'tts' | 'clone';
+}
+
+export interface PendingPanelImage {
+  panelType: 'generate-image';
+  imageUrl: string;
+  /** Optional title to seed the prompt (e.g., product name from Trending). */
+  productTitle?: string;
+}
+
+/** Hand-off payload created when the user clicks "Gerar vídeo" on an avatar card.
+ *  Opens a new `avatar-video-form` panel on the canvas with the chosen avatar
+ *  pre-loaded — the form replaces the old modal. */
+export interface PendingAvatarVideoForm {
+  avatar: UserAvatar;
+}
+
+interface EditorContextValue {
+  selectedNodeId: string | null;
+  setSelectedNodeId: (id: string | null) => void;
+  nodeImages: Record<string, string>;
+  setNodeImage: (nodeId: string, imageUrl: string) => void;
+  nodeUpscaleStates: Record<string, UpscaleState>;
+  setNodeUpscaleState: (nodeId: string, state: UpscaleState) => void;
+  nodePanelTypes: Record<string, string>;
+  setNodePanelType: (nodeId: string, panelType: string) => void;
+  credits: number;
+  creditsBalance: CreditsBalance | undefined;
+  creditsLoading: boolean;
+  consumeCredits: (amount: number) => void;
+  refetchCredits: () => void;
+  prependToGallery: (generation: Generation) => void;
+  galleryPickerRequest: GalleryPickerRequest | null;
+  openGalleryPicker: (req: GalleryPickerRequest) => void;
+  closeGalleryPicker: () => void;
+  pendingPromptRef: React.RefObject<PendingPrompt | null>;
+  requestPanelWithPrompt: (req: PendingPrompt) => void;
+  consumePendingPrompt: () => PendingPrompt | null;
+  pendingPanelImageRef: React.RefObject<PendingPanelImage | null>;
+  requestPanelWithImage: (req: PendingPanelImage) => void;
+  consumePendingPanelImage: () => PendingPanelImage | null;
+  pendingAvatarVideoFormRef: React.RefObject<PendingAvatarVideoForm | null>;
+  requestAvatarVideoForm: (req: PendingAvatarVideoForm) => void;
+  consumePendingAvatarVideoForm: () => PendingAvatarVideoForm | null;
+  leftPanelOpen: boolean;
+  setLeftPanelOpen: (open: boolean) => void;
+  generatingNodeIds: Set<string>;
+  setNodeGenerating: (nodeId: string, generating: boolean) => void;
+  weeklyClaimRequest: number;
+  requestWeeklyClaim: () => void;
+  /** Incremented whenever the saved voice profiles list changes. Subscribers re-fetch on change. */
+  voicesVersion: number;
+  bumpVoicesVersion: () => void;
+  studioMode: boolean;
+  toggleStudioMode: () => void;
+  setStudioMode: (enabled: boolean) => void;
+  /** Map of target nodeId → source nodeId for the `image-in` connection. */
+  imageConnections: Record<string, string>;
+  setImageConnections: (next: Record<string, string>) => void;
+  /** Map of target nodeId → source nodeId for the `text-in` connection. */
+  textConnections: Record<string, string>;
+  setTextConnections: (next: Record<string, string>) => void;
+  /** Per-node text/prompt published by source panels. */
+  nodeTexts: Record<string, string>;
+  setNodeText: (nodeId: string, text: string) => void;
+  /** Canvas registers an add-panel callback so other UI (sidebar, etc.) can request a new node. */
+  registerAddPanelHandler: (fn: ((type: string) => void) | null) => void;
+  addPanel: (type: string) => void;
+  /** LeftSidebar registers an opener for the "Minhas Vozes" dialog so panels can trigger it. */
+  registerOpenVoicesDialog: (fn: (() => void) | null) => void;
+  openVoicesDialog: () => void;
+}
+
+const STUDIO_MODE_STORAGE_KEY = 'theaimodelab-studio-mode';
+
+const EditorContext = createContext<EditorContextValue | null>(null);
+
+export function EditorProvider({ children }: { children: React.ReactNode }) {
+  const { accessToken } = useAuth();
+  const queryClient = useQueryClient();
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [nodeImages, setNodeImages] = useState<Record<string, string>>({});
+  const [nodeUpscaleStates, setNodeUpscaleStates] = useState<Record<string, UpscaleState>>({});
+  const [nodePanelTypes, setNodePanelTypes] = useState<Record<string, string>>({});
+  const [galleryPickerRequest, setGalleryPickerRequest] = useState<GalleryPickerRequest | null>(null);
+  const [weeklyClaimRequest, setWeeklyClaimRequest] = useState(0);
+  const [voicesVersion, setVoicesVersion] = useState(0);
+  const bumpVoicesVersion = useCallback(() => setVoicesVersion((v) => v + 1), []);
+  const [leftPanelOpen, setLeftPanelOpen] = useState(false);
+  const [generatingNodeIds, setGeneratingNodeIds] = useState<Set<string>>(new Set());
+  const [studioMode, setStudioModeState] = useState(false);
+  const [imageConnections, setImageConnections] = useState<Record<string, string>>({});
+  const [textConnections, setTextConnections] = useState<Record<string, string>>({});
+  const [nodeTexts, setNodeTexts] = useState<Record<string, string>>({});
+  const addPanelHandlerRef = useRef<((type: string) => void) | null>(null);
+  const registerAddPanelHandler = useCallback((fn: ((type: string) => void) | null) => {
+    addPanelHandlerRef.current = fn;
+  }, []);
+  const addPanel = useCallback((type: string) => {
+    addPanelHandlerRef.current?.(type);
+  }, []);
+  const openVoicesDialogRef = useRef<(() => void) | null>(null);
+  const registerOpenVoicesDialog = useCallback((fn: (() => void) | null) => {
+    openVoicesDialogRef.current = fn;
+  }, []);
+  const openVoicesDialog = useCallback(() => {
+    openVoicesDialogRef.current?.();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(min-width: 768px)');
+    const apply = () => {
+      if (!mql.matches) {
+        setStudioModeState(false);
+        return;
+      }
+      if (window.localStorage.getItem(STUDIO_MODE_STORAGE_KEY) === '1') {
+        setStudioModeState(true);
+      }
+    };
+    apply();
+    mql.addEventListener('change', apply);
+    return () => mql.removeEventListener('change', apply);
+  }, []);
+
+  const setStudioMode = useCallback((enabled: boolean) => {
+    if (typeof window !== 'undefined' && !window.matchMedia('(min-width: 768px)').matches) {
+      setStudioModeState(false);
+      return;
+    }
+    setStudioModeState(enabled);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(STUDIO_MODE_STORAGE_KEY, enabled ? '1' : '0');
+    }
+  }, []);
+
+  const toggleStudioMode = useCallback(() => {
+    if (typeof window !== 'undefined' && !window.matchMedia('(min-width: 768px)').matches) {
+      setStudioModeState(false);
+      return;
+    }
+    setStudioModeState((prev) => {
+      const next = !prev;
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(STUDIO_MODE_STORAGE_KEY, next ? '1' : '0');
+      }
+      return next;
+    });
+  }, []);
+
+  const setNodeGenerating = useCallback((nodeId: string, generating: boolean) => {
+    setGeneratingNodeIds((prev) => {
+      const has = prev.has(nodeId);
+      if (generating && has) return prev;
+      if (!generating && !has) return prev;
+      const next = new Set(prev);
+      if (generating) next.add(nodeId);
+      else next.delete(nodeId);
+      return next;
+    });
+  }, []);
+  const pendingPromptRef = useRef<PendingPrompt | null>(null);
+  const pendingPanelImageRef = useRef<PendingPanelImage | null>(null);
+  const pendingAvatarVideoFormRef = useRef<PendingAvatarVideoForm | null>(null);
+  const [, forceUpdate] = useState(0);
+
+  const { data: creditsBalance, isLoading: creditsLoading, refetch: refetchCredits } = useQuery({
+    queryKey: ['credits', 'balance'],
+    queryFn: () => api.credits.balance(accessToken!),
+    enabled: !!accessToken,
+  });
+
+  const credits = creditsBalance?.totalCreditsAvailable ?? 0;
+
+  const prependToGallery = useCallback(
+    (generation: Generation) => {
+      // Convert full Generation to lightweight GalleryItem for cache
+      const galleryItem: GalleryItem = {
+        id: generation.id,
+        type: generation.type,
+        status: generation.status,
+        prompt: generation.prompt,
+        resolution: generation.resolution,
+        durationSeconds: generation.durationSeconds,
+        hasAudio: generation.hasAudio,
+        hasWatermark: generation.hasWatermark,
+        creditsConsumed: generation.creditsConsumed,
+        isFavorited: generation.isFavorited,
+        thumbnailUrl: generation.outputs?.[0]?.thumbnailUrl,
+        outputUrl: generation.outputs?.[0]?.url,
+        outputCount: generation.outputs?.length ?? 0,
+        folder: generation.folder,
+        createdAt: generation.createdAt,
+        completedAt: generation.completedAt,
+      };
+
+      // Update every cached gallery list variant (each tab / folder has its own key)
+      const keys = queryClient
+        .getQueryCache()
+        .findAll({ queryKey: ['gallery', 'list'] })
+        .map((q) => q.queryKey);
+
+      for (const key of keys) {
+        queryClient.setQueryData<InfiniteData<PaginatedResponse<GalleryItem>>>(key, (old) => {
+          if (!old?.pages.length) return old;
+
+          // Dedupe: if the generation is already cached, replace it in place
+          // (covers race between SSE + polling fallback both calling prependToGallery)
+          const existsInPageIndex = old.pages.findIndex((p) =>
+            p.data.some((g) => g.id === galleryItem.id),
+          );
+          if (existsInPageIndex !== -1) {
+            return {
+              ...old,
+              pages: old.pages.map((p, i) =>
+                i === existsInPageIndex
+                  ? {
+                      ...p,
+                      data: p.data.map((g) =>
+                        g.id === galleryItem.id ? galleryItem : g,
+                      ),
+                    }
+                  : p,
+              ),
+            };
+          }
+
+          const [firstPage, ...rest] = old.pages;
+          return {
+            ...old,
+            pages: [
+              {
+                ...firstPage,
+                data: [galleryItem, ...firstPage.data],
+                meta: { ...firstPage.meta, total: firstPage.meta.total + 1 },
+              },
+              ...rest,
+            ],
+          };
+        });
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['gallery', 'stats'] });
+    },
+    [queryClient],
+  );
+
+  const consumeCredits = (amount: number) => {
+    // Optimistic update on the cache
+    queryClient.setQueryData<CreditsBalance>(['credits', 'balance'], (old) => {
+      if (!old) return old;
+      return {
+        ...old,
+        totalCreditsAvailable: Math.max(0, old.totalCreditsAvailable - amount),
+        planCreditsUsed: old.planCreditsUsed + amount,
+        planCreditsRemaining: Math.max(0, old.planCreditsRemaining - amount),
+      };
+    });
+    // Refetch to sync with server
+    refetchCredits();
+  };
+
+  return (
+    <EditorContext.Provider
+      value={{
+        selectedNodeId,
+        setSelectedNodeId,
+        nodeImages,
+        setNodeImage: (nodeId, url) =>
+          setNodeImages((prev) => ({ ...prev, [nodeId]: url })),
+        nodeUpscaleStates,
+        setNodeUpscaleState: (nodeId, state) =>
+          setNodeUpscaleStates((prev) => ({ ...prev, [nodeId]: state })),
+        nodePanelTypes,
+        setNodePanelType: (nodeId, panelType) =>
+          setNodePanelTypes((prev) => ({ ...prev, [nodeId]: panelType })),
+        credits,
+        creditsBalance,
+        creditsLoading,
+        consumeCredits,
+        refetchCredits,
+        prependToGallery,
+        galleryPickerRequest,
+        openGalleryPicker: setGalleryPickerRequest,
+        closeGalleryPicker: () => setGalleryPickerRequest(null),
+        leftPanelOpen,
+        setLeftPanelOpen,
+        generatingNodeIds,
+        setNodeGenerating,
+        pendingPromptRef,
+        requestPanelWithPrompt: (req: PendingPrompt) => {
+          pendingPromptRef.current = req;
+          forceUpdate((n) => n + 1);
+        },
+        consumePendingPrompt: () => {
+          const current = pendingPromptRef.current;
+          pendingPromptRef.current = null;
+          return current;
+        },
+        pendingPanelImageRef,
+        requestPanelWithImage: (req: PendingPanelImage) => {
+          pendingPanelImageRef.current = req;
+          forceUpdate((n) => n + 1);
+        },
+        consumePendingPanelImage: () => {
+          const current = pendingPanelImageRef.current;
+          pendingPanelImageRef.current = null;
+          return current;
+        },
+        pendingAvatarVideoFormRef,
+        requestAvatarVideoForm: (req: PendingAvatarVideoForm) => {
+          pendingAvatarVideoFormRef.current = req;
+          forceUpdate((n) => n + 1);
+        },
+        consumePendingAvatarVideoForm: () => {
+          const current = pendingAvatarVideoFormRef.current;
+          pendingAvatarVideoFormRef.current = null;
+          return current;
+        },
+        weeklyClaimRequest,
+        requestWeeklyClaim: () => setWeeklyClaimRequest((n) => n + 1),
+        voicesVersion,
+        bumpVoicesVersion,
+        studioMode,
+        toggleStudioMode,
+        setStudioMode,
+        imageConnections,
+        setImageConnections,
+        textConnections,
+        setTextConnections,
+        nodeTexts,
+        setNodeText: (nodeId, text) =>
+          setNodeTexts((prev) => ({ ...prev, [nodeId]: text })),
+        registerAddPanelHandler,
+        addPanel,
+        registerOpenVoicesDialog,
+        openVoicesDialog,
+      }}
+    >
+      {children}
+    </EditorContext.Provider>
+  );
+}
+
+export function useEditor() {
+  const ctx = useContext(EditorContext);
+  if (!ctx) throw new Error('useEditor must be used within EditorProvider');
+  return ctx;
+}

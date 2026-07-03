@@ -1,0 +1,1416 @@
+'use client';
+
+import { useAuth } from '@/lib/auth-context';
+import { api } from '@/lib/api';
+import type { Affiliate, AffiliateEarning, AffiliateDashboard, AffiliateEarningsResponse, AffiliateReferredUser, AffiliateDiscountScope } from '@/lib/api';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import {
+  Loader2,
+  RefreshCw,
+  Plus,
+  DollarSign,
+  Users,
+  TrendingUp,
+  Clock,
+  CheckCircle2,
+  Power,
+  ChevronLeft,
+  Eye,
+  Copy,
+  Check,
+  Link,
+  Pencil,
+  Trash2,
+  KeyRound,
+  AlertTriangle,
+  Paperclip,
+  X,
+  Mail,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { toast } from 'sonner';
+
+function formatCents(cents: number) {
+  return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString('pt-BR');
+}
+
+// ─── Dashboard Cards ────────────────────────────────────────────────────────
+
+function DashboardView({ dashboard, isLoading }: { dashboard: AffiliateDashboard | undefined; isLoading: boolean }) {
+  if (isLoading) {
+    return (
+      <div className="flex h-32 items-center justify-center">
+        <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+      </div>
+    );
+  }
+
+  if (!dashboard) return null;
+
+  const cards = [
+    { label: 'Afiliados Ativos', value: `${dashboard.activeAffiliates}/${dashboard.totalAffiliates}`, icon: Users, color: 'text-blue-400' },
+    { label: 'Usuários Indicados', value: dashboard.referredUsers.toLocaleString('pt-BR'), icon: TrendingUp, color: 'text-[#f5409d]' },
+    { label: 'Comissão Pendente', value: formatCents(dashboard.pendingCommissionCents), icon: Clock, color: 'text-yellow-400' },
+    { label: 'Comissão Paga', value: formatCents(dashboard.paidCommissionCents), icon: CheckCircle2, color: 'text-pink-400' },
+    { label: 'Total Comissões', value: formatCents(dashboard.totalCommissionCents), icon: DollarSign, color: 'text-violet-400' },
+    { label: 'Receita Gerada', value: formatCents(dashboard.totalRevenueCents), icon: DollarSign, color: 'text-[#f3f0ed]/60' },
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+      {cards.map((card) => {
+        const Icon = card.icon;
+        return (
+          <div
+            key={card.label}
+            className="flex flex-col gap-2 rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 p-4"
+          >
+            <div className="flex items-center gap-2">
+              <Icon className={`h-4 w-4 ${card.color}`} />
+              <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f3f0ed]/30">{card.label}</span>
+            </div>
+            <span className="text-lg font-bold tabular-nums text-[#f3f0ed]">{card.value}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Create Affiliate Modal ─────────────────────────────────────────────────
+
+function CreateAffiliateForm({ onClose }: { onClose: () => void }) {
+  const { accessToken } = useAuth();
+  const queryClient = useQueryClient();
+  const [name, setName] = useState('');
+  const [code, setCode] = useState('');
+  const [commission, setCommission] = useState('30');
+  const [userId, setUserId] = useState('');
+  const [discount, setDiscount] = useState('');
+  const [discountScope, setDiscountScope] = useState<AffiliateDiscountScope>('FIRST_PURCHASE');
+
+  const mutation = useMutation({
+    mutationFn: () => {
+      const discountNum = discount.trim() ? Number(discount) : undefined;
+      return api.admin.createAffiliate(accessToken!, {
+        name,
+        code,
+        commissionPercent: Number(commission),
+        ...(userId && { userId }),
+        ...(discountNum && discountNum > 0 ? { discountPercent: discountNum, discountAppliesTo: discountScope } : {}),
+      });
+    },
+    onSuccess: () => {
+      toast.success('Afiliado criado com sucesso');
+      queryClient.invalidateQueries({ queryKey: ['admin', 'affiliates'] });
+      onClose();
+    },
+    onError: (err: Error) => {
+      toast.error(err.message || 'Erro ao criar afiliado');
+    },
+  });
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="mx-4 w-full max-w-md rounded-2xl border border-[#f3f0ed]/8 bg-[#1a2123] p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="mb-4 text-lg font-bold text-[#f3f0ed]">Novo Afiliado</h2>
+
+        <div className="flex flex-col gap-3">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">Nome</label>
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ex: Influencer Maria"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">Codigo (sera convertido p/ maiúscula)</label>
+            <Input
+              value={code}
+              onChange={(e) => setCode(e.target.value.toUpperCase())}
+              placeholder="Ex: MARIA30"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">Comissão (%)</label>
+            <Input
+              type="number"
+              value={commission}
+              onChange={(e) => setCommission(e.target.value)}
+              placeholder="30"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">User ID (opcional)</label>
+            <Input
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder="UUID do user na plataforma"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+          </div>
+
+          <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 p-3">
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">Desconto para o indicado (%) — opcional</label>
+            <Input
+              type="number"
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
+              placeholder="Ex: 10 (deixe vazio para não dar desconto)"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+            {discount.trim() && Number(discount) > 0 && (
+              <div className="mt-3 flex flex-col gap-1.5">
+                <span className="text-[11px] text-[#f3f0ed]/40">Aplica em:</span>
+                <div className="flex gap-2">
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'FIRST_PURCHASE' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                    <input
+                      type="radio"
+                      checked={discountScope === 'FIRST_PURCHASE'}
+                      onChange={() => setDiscountScope('FIRST_PURCHASE')}
+                      className="sr-only"
+                    />
+                    Primeira compra
+                  </label>
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'ALL_PURCHASES' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                    <input
+                      type="radio"
+                      checked={discountScope === 'ALL_PURCHASES'}
+                      onChange={() => setDiscountScope('ALL_PURCHASES')}
+                      className="sr-only"
+                    />
+                    Todas as compras
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-5 flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 rounded-xl border border-[#f3f0ed]/8 px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/5"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => mutation.mutate()}
+            disabled={!name || !code || mutation.isPending}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90 disabled:opacity-40"
+          >
+            {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            Criar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Edit Affiliate Modal ────────────────────────────────────────────────────
+
+function EditAffiliateForm({
+  affiliate,
+  onClose,
+}: {
+  affiliate: {
+    id: string;
+    name: string;
+    commissionPercent: number;
+    userId: string | null;
+    user: { id: string; email: string; name: string } | null;
+    discountPercent: number | null;
+    discountAppliesTo: AffiliateDiscountScope;
+  };
+  onClose: () => void;
+}) {
+  const { accessToken } = useAuth();
+  const queryClient = useQueryClient();
+  const [name, setName] = useState(affiliate.name);
+  const [commission, setCommission] = useState(String(affiliate.commissionPercent));
+  const [userId, setUserId] = useState(affiliate.userId ?? '');
+  const [discount, setDiscount] = useState(affiliate.discountPercent ? String(affiliate.discountPercent) : '');
+  const [discountScope, setDiscountScope] = useState<AffiliateDiscountScope>(affiliate.discountAppliesTo);
+
+  const mutation = useMutation({
+    mutationFn: () => {
+      const trimmed = discount.trim();
+      const discountPercent = trimmed === '' ? null : Number(trimmed);
+      return api.admin.updateAffiliate(accessToken!, affiliate.id, {
+        name,
+        commissionPercent: Number(commission),
+        userId: userId || null,
+        discountPercent: discountPercent && discountPercent > 0 ? discountPercent : null,
+        discountAppliesTo: discountScope,
+      });
+    },
+    onSuccess: () => {
+      toast.success('Afiliado atualizado');
+      queryClient.invalidateQueries({ queryKey: ['admin', 'affiliates'] });
+      onClose();
+    },
+    onError: (err: Error) => {
+      toast.error(err.message || 'Erro ao atualizar');
+    },
+  });
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="mx-4 w-full max-w-md rounded-2xl border border-[#f3f0ed]/8 bg-[#1a2123] p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="mb-4 text-lg font-bold text-[#f3f0ed]">Editar Afiliado</h2>
+
+        <div className="flex flex-col gap-3">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">Nome</label>
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">Comissão (%)</label>
+            <Input
+              type="number"
+              value={commission}
+              onChange={(e) => setCommission(e.target.value)}
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">User ID</label>
+            <Input
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder="UUID do user na plataforma"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm font-mono text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+            {affiliate.user && (
+              <p className="mt-1 text-xs text-[#f3f0ed]/30">
+                Atual: {affiliate.user.email}
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 p-3">
+            <label className="mb-1 block text-xs font-medium text-[#f3f0ed]/50">Desconto para o indicado (%) — vazio = sem desconto</label>
+            <Input
+              type="number"
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
+              placeholder="Ex: 10"
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/25 focus-visible:border-[#f5409d]/30 focus-visible:ring-[#f5409d]/10"
+            />
+            {discount.trim() && Number(discount) > 0 && (
+              <div className="mt-3 flex flex-col gap-1.5">
+                <span className="text-[11px] text-[#f3f0ed]/40">Aplica em:</span>
+                <div className="flex gap-2">
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'FIRST_PURCHASE' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                    <input
+                      type="radio"
+                      checked={discountScope === 'FIRST_PURCHASE'}
+                      onChange={() => setDiscountScope('FIRST_PURCHASE')}
+                      className="sr-only"
+                    />
+                    Primeira compra
+                  </label>
+                  <label className={`flex flex-1 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-xs ${discountScope === 'ALL_PURCHASES' ? 'border-[#f5409d]/40 bg-[#f5409d]/8 text-[#f3f0ed]' : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50'}`}>
+                    <input
+                      type="radio"
+                      checked={discountScope === 'ALL_PURCHASES'}
+                      onChange={() => setDiscountScope('ALL_PURCHASES')}
+                      className="sr-only"
+                    />
+                    Todas as compras
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-5 flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 rounded-xl border border-[#f3f0ed]/8 px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/5"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => mutation.mutate()}
+            disabled={!name || mutation.isPending}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90 disabled:opacity-40"
+          >
+            {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Affiliate Detail View ──────────────────────────────────────────────────
+
+function AffiliateDetailView({ affiliateId, onBack }: { affiliateId: string; onBack: () => void }) {
+  const { accessToken } = useAuth();
+  const queryClient = useQueryClient();
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [showPay, setShowPay] = useState(false);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['admin', 'affiliates', affiliateId, 'earnings'],
+    queryFn: () => api.admin.affiliateEarnings(accessToken!, affiliateId),
+    enabled: !!accessToken,
+  });
+
+  const { data: referredUsers } = useQuery({
+    queryKey: ['admin', 'affiliates', affiliateId, 'referred-users'],
+    queryFn: () => api.admin.affiliateReferredUsers(accessToken!, affiliateId),
+    enabled: !!accessToken,
+  });
+
+  const toggleMutation = useMutation({
+    mutationFn: () => api.admin.toggleAffiliate(accessToken!, affiliateId),
+    onSuccess: () => {
+      toast.success('Status alterado');
+      queryClient.invalidateQueries({ queryKey: ['admin', 'affiliates'] });
+    },
+    onError: () => toast.error('Erro ao alterar status'),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => api.admin.deleteAffiliate(accessToken!, affiliateId),
+    onSuccess: (result) => {
+      toast.success('Afiliado deletado', {
+        description: result.deletedEarnings > 0
+          ? `${result.deletedEarnings} comissão(ões) removidas em cascata.`
+          : undefined,
+      });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'affiliates'] });
+      onBack();
+    },
+    onError: () => toast.error('Erro ao deletar afiliado'),
+  });
+
+  const markPaidMutation = useMutation({
+    mutationFn: (args: {
+      ids: string[];
+      receipt?: { base64: string; filename: string; mimeType: string };
+    }) => api.admin.markEarningsPaid(accessToken!, args.ids, args.receipt),
+    onSuccess: (result) => {
+      toast.success(`${result.updated} comissões marcadas como pagas`, {
+        description: 'O afiliado recebeu um e-mail de confirmação.',
+      });
+      setSelectedIds(new Set());
+      setShowPay(false);
+      queryClient.invalidateQueries({ queryKey: ['admin', 'affiliates'] });
+    },
+    onError: () => toast.error('Erro ao marcar como pago'),
+  });
+
+  const pendingEarnings = data?.earnings.filter((e) => e.status === 'PENDING') ?? [];
+
+  function toggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function selectAllPending() {
+    if (selectedIds.size === pendingEarnings.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(pendingEarnings.map((e) => e.id)));
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[40vh] items-center justify-center">
+        <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
+  const { affiliate, earnings, summary } = data;
+
+  return (
+    <div className="flex flex-col gap-4 md:gap-6">
+      {/* Back + header */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={onBack}
+          className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        <div className="flex-1">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-bold text-[#f3f0ed]">{affiliate.name}</h2>
+            <Badge
+              variant="outline"
+              className={
+                affiliate.isActive
+                  ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                  : 'border-red-500/30 bg-red-500/10 text-red-400'
+              }
+            >
+              {affiliate.isActive ? 'Ativo' : 'Inativo'}
+            </Badge>
+          </div>
+          <p className="text-sm text-[#f3f0ed]/40">
+            Código: <span className="font-mono text-[#f5409d]">{affiliate.code}</span>
+            {' · '}Comissão: {affiliate.commissionPercent}%
+            {affiliate.discountPercent ? (
+              <>
+                {' · '}Desconto p/ indicado: <span className="text-[#f5409d]">{affiliate.discountPercent}%</span>
+                {' '}({affiliate.discountAppliesTo === 'FIRST_PURCHASE' ? '1ª compra' : 'todas'})
+              </>
+            ) : null}
+            {affiliate.user && <>{' · '}{affiliate.user.email}</>}
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <CopyLinkButton code={affiliate.code} />
+          <button
+            onClick={() => setShowEdit(true)}
+            className="flex h-9 items-center gap-2 rounded-xl border border-[#f3f0ed]/8 px-3 text-sm text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/5"
+          >
+            <Pencil className="h-3.5 w-3.5" />
+            Editar
+          </button>
+          <button
+            onClick={() => toggleMutation.mutate()}
+            disabled={toggleMutation.isPending}
+            className="flex h-9 items-center gap-2 rounded-xl border border-[#f3f0ed]/8 px-3 text-sm text-[#f3f0ed]/50 transition-colors hover:bg-[#f3f0ed]/5"
+          >
+            <Power className="h-3.5 w-3.5" />
+            {affiliate.isActive ? 'Desativar' : 'Ativar'}
+          </button>
+          <button
+            onClick={() => setShowDelete(true)}
+            disabled={deleteMutation.isPending}
+            className="flex h-9 items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/5 px-3 text-sm text-red-400 transition-colors hover:border-red-500/40 hover:bg-red-500/10 disabled:opacity-50"
+          >
+            {deleteMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+            Deletar
+          </button>
+        </div>
+      </div>
+
+      {/* Pix key card */}
+      <div
+        className={`rounded-2xl border p-4 ${affiliate.pixKey
+          ? 'border-[#f3f0ed]/6 bg-[#f3f0ed]/2'
+          : 'border-yellow-500/30 bg-yellow-500/5'
+          }`}
+      >
+        {affiliate.pixKey ? (
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5409d]/10">
+                <KeyRound className="h-4 w-4 text-[#f5409d]" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f3f0ed]/30">
+                  Chave Pix ({affiliate.pixKeyType})
+                </p>
+                <p className="mt-0.5 truncate font-mono text-sm text-[#f3f0ed]">{affiliate.pixKey}</p>
+              </div>
+            </div>
+            <CopyButton text={affiliate.pixKey} />
+          </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-yellow-500/10">
+              <AlertTriangle className="h-4 w-4 text-yellow-400" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-[#f3f0ed]">Sem chave Pix cadastrada</p>
+              <p className="mt-0.5 text-xs text-[#f3f0ed]/50">
+                O afiliado ainda não cadastrou a chave — não é possível processar saques.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Summary cards */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        {[
+          { label: 'Receita Gerada', value: formatCents(summary.totalRevenueCents), color: 'text-[#f3f0ed]/60' },
+          { label: 'Total Comissões', value: formatCents(summary.totalCommissionCents), color: 'text-violet-400' },
+          { label: 'Pendente', value: formatCents(summary.pendingCommissionCents), color: 'text-yellow-400' },
+          { label: 'Pago', value: formatCents(summary.paidCommissionCents), color: 'text-pink-400' },
+        ].map((card) => (
+          <div key={card.label} className="flex flex-col gap-1 rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 p-4">
+            <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f3f0ed]/30">{card.label}</span>
+            <span className={`text-lg font-bold tabular-nums ${card.color}`}>{card.value}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Referred users */}
+      {referredUsers && referredUsers.length > 0 && (
+        <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2">
+          <div className="border-b border-[#f3f0ed]/6 px-4 py-3">
+            <span className="text-sm font-medium text-[#f3f0ed]">
+              Usuarios Indicados ({referredUsers.length})
+            </span>
+          </div>
+
+          {/* Mobile cards */}
+          <div className="flex flex-col gap-2 p-3 md:hidden">
+            {referredUsers.map((user) => (
+              <div
+                key={user.id}
+                className="flex items-center gap-3 rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 p-3"
+              >
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm text-[#f3f0ed]">{user.name || user.email}</p>
+                  <p className="text-xs text-[#f3f0ed]/40">{user.email}</p>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <Badge variant="outline" className="border-[#f3f0ed]/10 bg-[#f3f0ed]/5 text-[#f3f0ed]/60">
+                    {user.plan}
+                  </Badge>
+                  <span className="text-[10px] tabular-nums text-[#f3f0ed]/30">{formatDate(user.createdAt)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop table */}
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-[#f3f0ed]/6 hover:bg-transparent">
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Usuario</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Plano</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Cadastro</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {referredUsers.map((user) => (
+                  <TableRow key={user.id} className="border-[#f3f0ed]/4 hover:bg-[#f3f0ed]/3">
+                    <TableCell>
+                      <div className="flex flex-col">
+                        <span className="text-sm text-[#f3f0ed]">{user.name || '—'}</span>
+                        <span className="text-xs text-[#f3f0ed]/40">{user.email}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="border-[#f3f0ed]/10 bg-[#f3f0ed]/5 text-[#f3f0ed]/60">
+                        {user.plan}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-xs tabular-nums text-[#f3f0ed]/40">{formatDate(user.createdAt)}</span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      )}
+
+      {/* Actions bar */}
+      {selectedIds.size > 0 && (
+        <div className="flex items-center gap-3 rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/5 px-4 py-3">
+          <span className="text-sm text-[#f3f0ed]/60">
+            {selectedIds.size} selecionada{selectedIds.size > 1 ? 's' : ''}
+            {' · '}
+            <span className="font-bold text-[#f5409d]">
+              {formatCents(
+                pendingEarnings
+                  .filter((e) => selectedIds.has(e.id))
+                  .reduce((sum, e) => sum + e.commissionCents, 0),
+              )}
+            </span>
+          </span>
+          <button
+            onClick={() => setShowPay(true)}
+            disabled={markPaidMutation.isPending}
+            className="flex items-center gap-2 rounded-lg bg-[#f5409d] px-3 py-1.5 text-sm font-semibold text-[#1c1917] hover:bg-[#f5409d]/90 disabled:opacity-40"
+          >
+            {markPaidMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+            Pagar
+          </button>
+        </div>
+      )}
+
+      {/* Earnings table */}
+      <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2">
+        <div className="flex items-center justify-between border-b border-[#f3f0ed]/6 px-4 py-3">
+          <span className="text-sm font-medium text-[#f3f0ed]">Comissões ({earnings.length})</span>
+          {pendingEarnings.length > 0 && (
+            <button
+              onClick={selectAllPending}
+              className="text-xs text-[#f5409d] hover:underline"
+            >
+              {selectedIds.size === pendingEarnings.length ? 'Desmarcar todas' : 'Selecionar pendentes'}
+            </button>
+          )}
+        </div>
+
+        {earnings.length === 0 ? (
+          <p className="py-10 text-center text-sm text-[#f3f0ed]/30">Nenhuma comissão registrada</p>
+        ) : (
+          <>
+            {/* Mobile cards */}
+            <div className="flex flex-col gap-2 p-3 md:hidden">
+              {earnings.map((earning) => (
+                <div
+                  key={earning.id}
+                  onClick={() => earning.status === 'PENDING' && toggleSelect(earning.id)}
+                  className={`flex items-center gap-3 rounded-xl border p-3 ${
+                    selectedIds.has(earning.id)
+                      ? 'border-[#f5409d]/30 bg-[#f5409d]/5'
+                      : 'border-[#f3f0ed]/6 bg-[#f3f0ed]/2'
+                  } ${earning.status === 'PENDING' ? 'cursor-pointer' : ''}`}
+                >
+                  {earning.status === 'PENDING' && (
+                    <div className={`h-4 w-4 shrink-0 rounded border ${
+                      selectedIds.has(earning.id)
+                        ? 'border-[#f5409d] bg-[#f5409d]'
+                        : 'border-[#f3f0ed]/20'
+                    } flex items-center justify-center`}>
+                      {selectedIds.has(earning.id) && <Check className="h-3 w-3 text-[#1c1917]" />}
+                    </div>
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm text-[#f3f0ed]">{earning.user.name || earning.user.email}</p>
+                    <p className="text-xs text-[#f3f0ed]/40">
+                      {earning.payment.type === 'SUBSCRIPTION' ? 'Assinatura' : 'Créditos'}
+                      {' · '}{formatDate(earning.createdAt)}
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-sm font-bold tabular-nums text-[#f5409d]">{formatCents(earning.commissionCents)}</span>
+                    <Badge
+                      variant="outline"
+                      className={
+                        earning.status === 'PAID'
+                          ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                          : 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
+                      }
+                    >
+                      {earning.status === 'PAID' ? 'Pago' : 'Pendente'}
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop table */}
+            <div className="hidden md:block">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-[#f3f0ed]/6 hover:bg-transparent">
+                    <TableHead className="w-10 text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30" />
+                    <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Usuário</TableHead>
+                    <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Tipo</TableHead>
+                    <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Valor Pago</TableHead>
+                    <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Comissão</TableHead>
+                    <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Status</TableHead>
+                    <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Data</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {earnings.map((earning) => (
+                    <TableRow
+                      key={earning.id}
+                      onClick={() => earning.status === 'PENDING' && toggleSelect(earning.id)}
+                      className={`border-[#f3f0ed]/4 transition-colors ${
+                        earning.status === 'PENDING' ? 'cursor-pointer' : ''
+                      } ${selectedIds.has(earning.id) ? 'bg-[#f5409d]/5' : 'hover:bg-[#f3f0ed]/3'}`}
+                    >
+                      <TableCell>
+                        {earning.status === 'PENDING' && (
+                          <div className={`h-4 w-4 rounded border ${
+                            selectedIds.has(earning.id)
+                              ? 'border-[#f5409d] bg-[#f5409d]'
+                              : 'border-[#f3f0ed]/20'
+                          } flex items-center justify-center`}>
+                            {selectedIds.has(earning.id) && <Check className="h-3 w-3 text-[#1c1917]" />}
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span className="text-sm text-[#f3f0ed]">{earning.user.name || '—'}</span>
+                          <span className="text-xs text-[#f3f0ed]/40">{earning.user.email}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <span className="text-sm text-[#f3f0ed]/60">
+                          {earning.payment.type === 'SUBSCRIPTION' ? 'Assinatura' : 'Créditos'}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <span className="text-sm tabular-nums text-[#f3f0ed]/60">
+                          {formatCents(earning.amountCents)}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <span className="text-sm font-bold tabular-nums text-[#f5409d]">
+                          {formatCents(earning.commissionCents)}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant="outline"
+                          className={
+                            earning.status === 'PAID'
+                              ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                              : 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400'
+                          }
+                        >
+                          {earning.status === 'PAID' ? 'Pago' : 'Pendente'}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <span className="text-xs tabular-nums text-[#f3f0ed]/40">
+                          {formatDate(earning.createdAt)}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Edit modal */}
+      {showEdit && (
+        <EditAffiliateForm
+          affiliate={affiliate}
+          onClose={() => setShowEdit(false)}
+        />
+      )}
+
+      {/* Delete confirmation modal */}
+      {showDelete && (
+        <DeleteAffiliateModal
+          affiliateName={affiliate.name}
+          affiliateCode={affiliate.code}
+          earningsCount={earnings.length}
+          pendingCents={summary.pendingCommissionCents ?? 0}
+          isPending={deleteMutation.isPending}
+          onConfirm={() => deleteMutation.mutate()}
+          onClose={() => setShowDelete(false)}
+        />
+      )}
+
+      {/* Pay (mark as paid + email) modal */}
+      {showPay && (
+        <PayCommissionsModal
+          affiliateName={affiliate.name}
+          affiliateEmail={affiliate.user?.email ?? null}
+          totalCents={pendingEarnings
+            .filter((e) => selectedIds.has(e.id))
+            .reduce((sum, e) => sum + e.commissionCents, 0)}
+          earningsCount={selectedIds.size}
+          isPending={markPaidMutation.isPending}
+          onConfirm={(receipt) =>
+            markPaidMutation.mutate({ ids: Array.from(selectedIds), receipt })
+          }
+          onClose={() => setShowPay(false)}
+        />
+      )}
+    </div>
+  );
+}
+
+// ─── Pay Commissions Modal ──────────────────────────────────────────────────
+
+const MAX_RECEIPT_BYTES = 5 * 1024 * 1024;
+const ALLOWED_RECEIPT_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
+
+function PayCommissionsModal({
+  affiliateName,
+  affiliateEmail,
+  totalCents,
+  earningsCount,
+  isPending,
+  onConfirm,
+  onClose,
+}: {
+  affiliateName: string;
+  affiliateEmail: string | null;
+  totalCents: number;
+  earningsCount: number;
+  isPending: boolean;
+  onConfirm: (receipt?: { base64: string; filename: string; mimeType: string }) => void;
+  onClose: () => void;
+}) {
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  function handleFile(picked: File | null) {
+    setError(null);
+    if (!picked) {
+      setFile(null);
+      return;
+    }
+    if (!ALLOWED_RECEIPT_TYPES.includes(picked.type)) {
+      setError('Formato inválido. Use PDF, JPG, PNG ou WEBP.');
+      return;
+    }
+    if (picked.size > MAX_RECEIPT_BYTES) {
+      setError('Arquivo excede 5 MB.');
+      return;
+    }
+    setFile(picked);
+  }
+
+  async function fileToBase64(f: File): Promise<string> {
+    const buffer = await f.arrayBuffer();
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const chunkSize = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+    }
+    return btoa(binary);
+  }
+
+  async function handleConfirm() {
+    if (!file) {
+      onConfirm(undefined);
+      return;
+    }
+    const base64 = await fileToBase64(file);
+    onConfirm({ base64, filename: file.name, mimeType: file.type });
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-[#f5409d]/20 bg-[#1a2123]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start gap-3 border-b border-[#f3f0ed]/6 px-6 py-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5409d]/10">
+            <DollarSign className="h-4 w-4 text-[#f5409d]" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-base font-bold text-[#f3f0ed]">Pagar comissões</h2>
+            <p className="mt-0.5 text-xs text-[#f3f0ed]/50">
+              Marca como pago e envia e-mail ao afiliado.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 px-6 py-5">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 px-4 py-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f3f0ed]/30">Afiliado</p>
+              <p className="mt-1 truncate text-sm font-medium text-[#f3f0ed]">{affiliateName}</p>
+              <p className="mt-0.5 truncate text-xs text-[#f3f0ed]/40">{affiliateEmail ?? '—'}</p>
+            </div>
+            <div className="rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/5 px-4 py-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#f5409d]/70">Total</p>
+              <p className="mt-1 text-sm font-bold tabular-nums text-[#f5409d]">{formatCents(totalCents)}</p>
+              <p className="mt-0.5 text-xs text-[#f3f0ed]/40">
+                {earningsCount} comissã{earningsCount === 1 ? 'o' : 'ões'}
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#f3f0ed]/40">
+              Comprovante de pagamento <span className="text-[#f3f0ed]/30">(opcional)</span>
+            </label>
+
+            {file ? (
+              <div className="flex items-center gap-3 rounded-xl border border-[#f5409d]/20 bg-[#f5409d]/5 px-3 py-2.5">
+                <Paperclip className="h-4 w-4 shrink-0 text-[#f5409d]" />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm text-[#f3f0ed]">{file.name}</p>
+                  <p className="text-[11px] text-[#f3f0ed]/40">{(file.size / 1024).toFixed(0)} KB</p>
+                </div>
+                <button
+                  onClick={() => handleFile(null)}
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[#f3f0ed]/40 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ) : (
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#f3f0ed]/15 bg-[#f3f0ed]/2 px-3 py-3 text-sm text-[#f3f0ed]/50 transition-colors hover:border-[#f5409d]/30 hover:bg-[#f5409d]/5">
+                <Paperclip className="h-4 w-4" />
+                <span>Anexar PDF, JPG, PNG ou WEBP (até 5 MB)</span>
+                <input
+                  type="file"
+                  accept=".pdf,image/jpeg,image/png,image/webp"
+                  onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
+                  className="hidden"
+                />
+              </label>
+            )}
+
+            {error && <p className="mt-1.5 text-xs text-red-400">{error}</p>}
+          </div>
+
+          {affiliateEmail && (
+            <div className="flex items-start gap-2 rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 px-3 py-2.5">
+              <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#f3f0ed]/40" />
+              <p className="text-xs text-[#f3f0ed]/50">
+                Um e-mail será enviado para <span className="text-[#f3f0ed]/80">{affiliateEmail}</span> confirmando o pagamento
+                {file ? ' com o comprovante anexado.' : '.'}
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="flex gap-3 border-t border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] px-6 py-4">
+          <button
+            onClick={onClose}
+            disabled={isPending}
+            className="flex-1 rounded-xl border border-[#f3f0ed]/8 px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/60 transition-colors hover:bg-[#f3f0ed]/5 disabled:opacity-50"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleConfirm}
+            disabled={isPending}
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#f5409d] px-4 py-2.5 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Processando...
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="h-4 w-4" />
+                Confirmar pagamento
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Delete Affiliate Modal ─────────────────────────────────────────────────
+
+function DeleteAffiliateModal({
+  affiliateName,
+  affiliateCode,
+  earningsCount,
+  pendingCents,
+  isPending,
+  onConfirm,
+  onClose,
+}: {
+  affiliateName: string;
+  affiliateCode: string;
+  earningsCount: number;
+  pendingCents: number;
+  isPending: boolean;
+  onConfirm: () => void;
+  onClose: () => void;
+}) {
+  const [confirmCode, setConfirmCode] = useState('');
+  const codeMatches = confirmCode.trim().toUpperCase() === affiliateCode.toUpperCase();
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-red-500/20 bg-[#1a2123]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start gap-3 border-b border-[#f3f0ed]/6 px-6 py-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/10">
+            <Trash2 className="h-4 w-4 text-red-400" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-base font-bold text-[#f3f0ed]">Deletar afiliado</h2>
+            <p className="mt-0.5 text-xs text-[#f3f0ed]/50">
+              Esta ação é irreversível e cascata nos dados associados.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 px-6 py-5">
+          <div className="rounded-xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 px-4 py-3">
+            <p className="text-xs text-[#f3f0ed]/40">Afiliado</p>
+            <p className="mt-1 text-sm font-medium text-[#f3f0ed]">{affiliateName}</p>
+            <p className="mt-0.5 font-mono text-xs text-[#f5409d]">{affiliateCode}</p>
+          </div>
+
+          <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3">
+            <p className="text-[11px] font-bold uppercase tracking-wide text-red-400">Impacto</p>
+            <ul className="mt-2 flex flex-col gap-1 text-xs text-[#f3f0ed]/60">
+              <li>• {earningsCount} comissão(ões) serão apagadas em cascata</li>
+              {pendingCents > 0 && (
+                <li className="text-red-300">
+                  • {formatCents(pendingCents)} em comissões <strong>PENDENTES</strong> serão perdidas
+                </li>
+              )}
+              <li>• Usuários indicados permanecem, mas perdem a origem</li>
+            </ul>
+          </div>
+
+          <div>
+            <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-[#f3f0ed]/40">
+              Digite <span className="font-mono text-[#f5409d]">{affiliateCode}</span> para confirmar
+            </label>
+            <Input
+              value={confirmCode}
+              onChange={(e) => setConfirmCode(e.target.value)}
+              placeholder={affiliateCode}
+              autoFocus
+              className="h-10 border-[#f3f0ed]/8 bg-[#f3f0ed]/3 font-mono text-sm text-[#f3f0ed] placeholder:text-[#f3f0ed]/20 focus-visible:border-red-500/30 focus-visible:ring-red-500/10"
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-3 border-t border-[#f3f0ed]/6 bg-[#f3f0ed]/[0.02] px-6 py-4">
+          <button
+            onClick={onClose}
+            disabled={isPending}
+            className="flex-1 rounded-xl border border-[#f3f0ed]/8 px-4 py-2.5 text-sm font-medium text-[#f3f0ed]/60 transition-colors hover:bg-[#f3f0ed]/5 disabled:opacity-50"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={!codeMatches || isPending}
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-500/90 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Deletando...
+              </>
+            ) : (
+              <>
+                <Trash2 className="h-4 w-4" />
+                Deletar afiliado
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Affiliates List ────────────────────────────────────────────────────────
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://theaimodelab.ai';
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  function handleCopy() {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <button onClick={(e) => { e.stopPropagation(); handleCopy(); }} className="text-[#f3f0ed]/30 hover:text-[#f3f0ed]/60">
+      {copied ? <Check className="h-3.5 w-3.5 text-[#f5409d]" /> : <Copy className="h-3.5 w-3.5" />}
+    </button>
+  );
+}
+
+function CopyLinkButton({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+  const link = `${SITE_URL}/?ref=${code}`;
+
+  function handleCopy() {
+    navigator.clipboard.writeText(link);
+    setCopied(true);
+    toast.success('Link copiado!');
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); handleCopy(); }}
+      className={`flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs font-medium transition-colors ${
+        copied
+          ? 'border-[#f5409d]/30 bg-[#f5409d]/10 text-[#f5409d]'
+          : 'border-[#f3f0ed]/8 text-[#f3f0ed]/50 hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70'
+      }`}
+    >
+      {copied ? <Check className="h-3.5 w-3.5" /> : <Link className="h-3.5 w-3.5" />}
+      {copied ? 'Copiado!' : 'Copiar link'}
+    </button>
+  );
+}
+
+// ─── Main Page ──────────────────────────────────────────────────────────────
+
+export default function AdminAffiliatosPage() {
+  const { accessToken } = useAuth();
+  const [showCreate, setShowCreate] = useState(false);
+  const [selectedAffiliate, setSelectedAffiliate] = useState<string | null>(null);
+
+  const { data: dashboard, isLoading: dashLoading } = useQuery({
+    queryKey: ['admin', 'affiliates', 'dashboard'],
+    queryFn: () => api.admin.affiliatesDashboard(accessToken!),
+    enabled: !!accessToken,
+    refetchInterval: 30_000,
+  });
+
+  const { data: affiliates, isLoading: listLoading, refetch, isFetching } = useQuery({
+    queryKey: ['admin', 'affiliates', 'list'],
+    queryFn: () => api.admin.affiliatesList(accessToken!),
+    enabled: !!accessToken,
+  });
+
+  // If viewing a specific affiliate
+  if (selectedAffiliate) {
+    return <AffiliateDetailView affiliateId={selectedAffiliate} onBack={() => setSelectedAffiliate(null)} />;
+  }
+
+  return (
+    <div className="flex flex-col gap-4 md:gap-6">
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-xl font-bold text-[#f3f0ed] md:text-2xl">Afiliados</h1>
+          <p className="mt-0.5 text-sm text-[#f3f0ed]/40">
+            Gerencie afiliados e comissões
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#f3f0ed]/8 text-[#f3f0ed]/40 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]/70 disabled:opacity-40"
+          >
+            <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+          </button>
+          <button
+            onClick={() => setShowCreate(true)}
+            className="flex h-9 items-center gap-2 rounded-xl bg-[#f5409d] px-3 text-sm font-semibold text-[#1c1917] transition-colors hover:bg-[#f5409d]/90"
+          >
+            <Plus className="h-4 w-4" />
+            <span className="hidden md:inline">Novo Afiliado</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Dashboard */}
+      <DashboardView dashboard={dashboard} isLoading={dashLoading} />
+
+      {/* Affiliates list */}
+      {listLoading ? (
+        <div className="flex h-32 items-center justify-center">
+          <Loader2 className="h-5 w-5 animate-spin text-[#f5409d]" />
+        </div>
+      ) : !affiliates || affiliates.length === 0 ? (
+        <div className="flex flex-col items-center gap-2 py-16">
+          <Users className="h-8 w-8 text-[#f3f0ed]/15" />
+          <p className="text-sm text-[#f3f0ed]/30">Nenhum afiliado cadastrado</p>
+        </div>
+      ) : (
+        <>
+          {/* Mobile cards */}
+          <div className="flex flex-col gap-2 md:hidden">
+            {affiliates.map((aff) => (
+              <div
+                key={aff.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedAffiliate(aff.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedAffiliate(aff.id);
+                  }
+                }}
+                className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#f3f0ed]/8 bg-[#f3f0ed]/3 px-3 py-3 text-left outline-none transition-colors active:bg-[#f3f0ed]/6 focus-visible:border-[#f5409d]/40"
+              >
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="truncate text-sm font-medium text-[#f3f0ed]">{aff.name}</p>
+                    <Badge
+                      variant="outline"
+                      className={
+                        aff.isActive
+                          ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                          : 'border-red-500/30 bg-red-500/10 text-red-400'
+                      }
+                    >
+                      {aff.isActive ? 'Ativo' : 'Inativo'}
+                    </Badge>
+                    {!aff.pixKey && (
+                      <span
+                        title="Sem chave Pix cadastrada"
+                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-yellow-500/10"
+                      >
+                        <AlertTriangle className="h-3 w-3 text-yellow-400" />
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-0.5 flex items-center gap-2">
+                    <span className="font-mono text-xs text-[#f5409d]">{aff.code}</span>
+                    <CopyButton text={aff.code} />
+                    <CopyLinkButton code={aff.code} />
+                  </div>
+                </div>
+                <div className="flex shrink-0 flex-col items-end gap-1">
+                  <span className="text-sm font-bold tabular-nums text-[#f5409d]">{formatCents(aff.pendingEarningsCents)}</span>
+                  <span className="flex items-center gap-1 text-[11px] text-[#f3f0ed]/30">
+                    <Users className="h-3 w-3" />
+                    {aff.referredUsersCount.toLocaleString('pt-BR')}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop table */}
+          <div className="hidden rounded-2xl border border-[#f3f0ed]/6 bg-[#f3f0ed]/2 md:block">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-[#f3f0ed]/6 hover:bg-transparent">
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Afiliado</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Código</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Comissão</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Indicados</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Total Ganho</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Pendente</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Pix</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Status</TableHead>
+                  <TableHead className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/30">Criado em</TableHead>
+                  <TableHead className="w-10" />
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {affiliates.map((aff) => (
+                  <TableRow
+                    key={aff.id}
+                    onClick={() => setSelectedAffiliate(aff.id)}
+                    className="cursor-pointer border-[#f3f0ed]/4 transition-colors hover:bg-[#f3f0ed]/3"
+                  >
+                    <TableCell>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-[#f3f0ed]">{aff.name}</span>
+                        {aff.user && <span className="text-xs text-[#f3f0ed]/40">{aff.user.email}</span>}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-sm text-[#f5409d]">{aff.code}</span>
+                        <CopyButton text={aff.code} />
+                        <CopyLinkButton code={aff.code} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm tabular-nums text-[#f3f0ed]">{aff.commissionPercent}%</span>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1.5">
+                        <Users className="h-3.5 w-3.5 text-[#f3f0ed]/30" />
+                        <span className={`text-sm font-medium tabular-nums ${aff.referredUsersCount > 0 ? 'text-[#f3f0ed]' : 'text-[#f3f0ed]/30'}`}>
+                          {aff.referredUsersCount.toLocaleString('pt-BR')}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm tabular-nums text-[#f3f0ed]">{formatCents(aff.totalEarningsCents)}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className={`text-sm font-bold tabular-nums ${aff.pendingEarningsCents > 0 ? 'text-yellow-400' : 'text-[#f3f0ed]/40'}`}>
+                        {formatCents(aff.pendingEarningsCents)}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      {aff.pixKey ? (
+                        <div className="flex min-w-0 flex-col">
+                          <span className="text-[10px] font-bold uppercase tracking-wide text-[#f3f0ed]/30">
+                            {aff.pixKeyType}
+                          </span>
+                          <span className="max-w-[180px] truncate font-mono text-xs text-[#f3f0ed]/70">
+                            {aff.pixKey}
+                          </span>
+                        </div>
+                      ) : (
+                        <Badge variant="outline" className="border-yellow-500/30 bg-yellow-500/10 text-yellow-400">
+                          <AlertTriangle className="h-3 w-3" />
+                          Sem Pix
+                        </Badge>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={
+                          aff.isActive
+                            ? 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+                            : 'border-red-500/30 bg-red-500/10 text-red-400'
+                        }
+                      >
+                        {aff.isActive ? 'Ativo' : 'Inativo'}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-xs tabular-nums text-[#f3f0ed]/40">{formatDate(aff.createdAt)}</span>
+                    </TableCell>
+                    <TableCell>
+                      <Eye className="h-4 w-4 text-[#f3f0ed]/20" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </>
+      )}
+
+      {/* Create modal */}
+      {showCreate && <CreateAffiliateForm onClose={() => setShowCreate(false)} />}
+    </div>
+  );
+}

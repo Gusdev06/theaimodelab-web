@@ -1,0 +1,111 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
+import { useScrollReveal } from "./use-scroll-reveal";
+
+const FAQ_COUNT = 10;
+
+function Item({
+  question,
+  answer,
+  open,
+  onToggle,
+}: {
+  question: string;
+  answer: string;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const body = useRef<HTMLDivElement>(null);
+  const [h, setH] = useState(0);
+
+  useEffect(() => {
+    if (body.current) setH(open ? body.current.scrollHeight : 0);
+  }, [open]);
+
+  return (
+    <div className="border-b border-[#f3f0ed]/[0.05]">
+      <button
+        onClick={onToggle}
+        className="group flex w-full items-center justify-between py-5 text-left sm:py-6"
+      >
+        <span className="pr-6 text-[14px] font-medium text-landing-text sm:text-[15px] transition-colors group-hover:text-landing-accent">
+          {question}
+        </span>
+        <div
+          className={cn(
+            "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-400",
+            open
+              ? "border-landing-accent/30 bg-landing-accent/10"
+              : "border-[#f3f0ed]/[0.08] bg-transparent",
+          )}
+        >
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 transition-all duration-400",
+              open ? "rotate-180 text-landing-accent" : "text-landing-text-muted",
+            )}
+          />
+        </div>
+      </button>
+      <div
+        className="overflow-hidden transition-all duration-400 ease-out"
+        style={{ maxHeight: h }}
+      >
+        <div ref={body} className="pb-6">
+          <p className="text-[14px] leading-relaxed text-landing-text-secondary">
+            {answer}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Faq() {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const { ref, isVisible } = useScrollReveal();
+  const t = useTranslations("faq");
+
+  return (
+    <section id="faq" className="bg-landing-bg-secondary py-16 sm:py-28 lg:py-36">
+      <div className="mx-auto max-w-3xl px-5 sm:px-8">
+        {/* Header */}
+        <div
+          ref={ref}
+          className="text-center transition-all duration-700"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "translateY(0)" : "translateY(24px)",
+          }}
+        >
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-landing-accent">
+            {t("tag")}
+          </span>
+          <h2 className="mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
+            {t("title")}
+          </h2>
+          <p className="mt-3.5 text-[15px] leading-relaxed text-landing-text-secondary sm:mt-5 sm:text-[17px]">
+            {t("subtitle")}
+          </p>
+        </div>
+
+        {/* Accordion */}
+        <div className="mt-10 sm:mt-14">
+          {Array.from({ length: FAQ_COUNT }).map((_, i) => (
+            <Item
+              key={i}
+              question={t(`items.${i}.question`)}
+              answer={t(`items.${i}.answer`)}
+              open={openIdx === i}
+              onToggle={() => setOpenIdx(openIdx === i ? null : i)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

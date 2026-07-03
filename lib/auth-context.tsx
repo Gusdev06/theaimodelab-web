@@ -1,0 +1,220 @@
+'use client';
+
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { api, AuthUser, setRefreshHandler } from './api';
+import { captureRecoveryPromoFromUrl } from './recovery-promo';
+
+interface AuthState {
+  user: AuthUser | null;
+  accessToken: string | null;
+  refreshToken: string | null;
+  loading: boolean;
+}
+
+interface AuthContextValue extends AuthState {
+  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, name: string, password: string) => Promise<void>;
+  googleLogin: (googleToken: string) => Promise<void>;
+  logout: () => void;
+  updateAuth: (data: { accessToken: string; refreshToken: string; user: AuthUser }) => void;
+  loginMutation: ReturnType<typeof useLoginMutation>;
+  registerMutation: ReturnType<typeof useRegisterMutation>;
+  googleLoginMutation: ReturnType<typeof useGoogleLoginMutation>;
+}
+
+const AuthContext = createContext<AuthContextValue | null>(null);
+
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+
+function setCookie(name: string, value: string) {
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+}
+
+function getCookie(name: string): string | null {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function deleteCookie(name: string) {
+  document.cookie = `${name}=; path=/; max-age=0`;
+}
+
+function saveAuth(data: { accessToken: string; refreshToken: string; user: AuthUser }) {
+  setCookie('theaimodelab-access-token', data.accessToken);
+  setCookie('theaimodelab-refresh-token', data.refreshToken);
+  setCookie('theaimodelab-user', JSON.stringify(data.user));
+}
+
+function loadAuth(): { accessToken: string; refreshToken: string; user: AuthUser } | null {
+  try {
+    const accessToken = getCookie('theaimodelab-access-token');
+    const refreshToken = getCookie('theaimodelab-refresh-token');
+    const userRaw = getCookie('theaimodelab-user');
+    if (!accessToken || !refreshToken || !userRaw) return null;
+    return { accessToken, refreshToken, user: JSON.parse(userRaw) };
+  } catch {
+    return null;
+  }
+}
+
+function clearAuth() {
+  deleteCookie('theaimodelab-access-token');
+  deleteCookie('theaimodelab-refresh-token');
+  deleteCookie('theaimodelab-user');
+  if (typeof localStorage !== 'undefined') {
+    localStorage.removeItem('theaimodelab-auth');
+    localStorage.removeItem('theaimodelab-auth-data');
+    // Clear canvas and panel data from previous session
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('theaimodelab-')) keysToRemove.push(key);
+    }
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
+  }
+}
+
+function useLoginMutation(onSuccess: (res: Awaited<ReturnType<typeof api.auth.login>>) => void) {
+  return useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      api.auth.login(email, password),
+    onSuccess,
+  });
+}
+
+function useRegisterMutation(onSuccess: (res: Awaited<ReturnType<typeof api.auth.register>>) => void) {
+  return useMutation({
+    mutationFn: ({ email, name, password, referralCode }: { email: string; name: string; password: string; referralCode?: string }) =>
+      api.auth.register(email, name, password, referralCode),
+    onSuccess,
+  });
+}
+
+function useGoogleLoginMutation(onSuccess: (res: Awaited<ReturnType<typeof api.auth.google>>) => void) {
+  return useMutation({
+    mutationFn: ({ googleToken, referralCode }: { googleToken: string; referralCode?: string }) =>
+      api.auth.google(googleToken, referralCode),
+    onSuccess,
+  });
+}
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const queryClient = useQueryClient();
+  const [state, setState] = useState<AuthState>({
+    user: null,
+    accessToken: null,
+    refreshToken: null,
+    loading: true,
+  });
+
+  // Invalidates any in-flight hydration refresh when a fresh login/logout happens,
+  // preventing a stale refresh failure from wiping a just-established session.
+  const hydrationIdRef = useRef(0);
+
+  const handleAuthSuccess = useCallback((res: { accessToken: string; refreshToken: string; user: AuthUser }) => {
+    hydrationIdRef.current++;
+    saveAuth(res);
+    setState({ user: res.user, accessToken: res.accessToken, refreshToken: res.refreshToken, loading: false });
+  }, []);
+
+  const loginMutation = useLoginMutation(handleAuthSuccess);
+  const registerMutation = useRegisterMutation(handleAuthSuccess);
+  const googleLoginMutation = useGoogleLoginMutation(handleAuthSuccess);
+
+  // Captura ?recovery_promo=RECOVERY20 da URL e persiste em sessionStorage
+  // por 48h. Acionado em qualquer página onde o AuthProvider monte.
+  useEffect(() => {
+    captureRecoveryPromoFromUrl();
+  }, []);
+
+  // Register the 401 refresh handler so authRequest can auto-retry
+  useEffect(() => {
+    setRefreshHandler(async () => {
+      const stored = loadAuth();
+      if (!stored) {
+        clearAuth();
+        setState({ user: null, accessToken: null, refreshToken: null, loading: false });
+        throw new Error('No refresh token available');
+      }
+      try {
+        const res = await api.auth.refresh(stored.refreshToken);
+        saveAuth(res);
+        setState({ user: res.user, accessToken: res.accessToken, refreshToken: res.refreshToken, loading: false });
+        return res.accessToken;
+      } catch {
+        clearAuth();
+        setState({ user: null, accessToken: null, refreshToken: null, loading: false });
+        throw new Error('Session expired');
+      }
+    });
+  }, []);
+
+  // Hydrate from cookies on mount.
+  // We intentionally do NOT call /auth/refresh here — the backend rotates (revokes)
+  // the refresh token on every call, so hydrating with /refresh creates races with
+  // StrictMode double-mount, multi-tab, and concurrent 401 interceptor refreshes,
+  // logging the user out for no reason. The 15min access token is good enough; when
+  // it expires, the 401 interceptor in lib/api.ts will refresh on demand.
+  useEffect(() => {
+    const stored = loadAuth();
+    if (stored) {
+      setState({
+        user: stored.user,
+        accessToken: stored.accessToken,
+        refreshToken: stored.refreshToken,
+        loading: false,
+      });
+    } else {
+      setState((s) => ({ ...s, loading: false }));
+    }
+  }, []);
+
+  const login = useCallback(
+    async (email: string, password: string) => {
+      await loginMutation.mutateAsync({ email, password });
+    },
+    [loginMutation]
+  );
+
+  const register = useCallback(
+    async (email: string, name: string, password: string) => {
+      await registerMutation.mutateAsync({ email, name, password });
+    },
+    [registerMutation]
+  );
+
+  const googleLogin = useCallback(
+    async (googleToken: string) => {
+      await googleLoginMutation.mutateAsync({ googleToken });
+    },
+    [googleLoginMutation]
+  );
+
+  const updateAuth = useCallback((data: { accessToken: string; refreshToken: string; user: AuthUser }) => {
+    saveAuth(data);
+    setState({ user: data.user, accessToken: data.accessToken, refreshToken: data.refreshToken, loading: false });
+  }, []);
+
+  const logout = useCallback(async () => {
+    hydrationIdRef.current++;
+    if (state.refreshToken) {
+      api.auth.logout(state.refreshToken).catch(() => {});
+    }
+    clearAuth();
+    queryClient.clear();
+    setState({ user: null, accessToken: null, refreshToken: null, loading: false });
+  }, [state.refreshToken, queryClient]);
+
+  return (
+    <AuthContext.Provider value={{ ...state, login, register, googleLogin, logout, updateAuth, loginMutation, registerMutation, googleLoginMutation }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be used inside AuthProvider');
+  return ctx;
+}

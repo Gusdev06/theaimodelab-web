@@ -1,0 +1,420 @@
+{
+  "editorPanels": {
+    "common": {
+      "download": "Download",
+      "downloadImage": "Download image",
+      "downloadVideo": "Download video",
+      "generateAnother": "Generate another",
+      "generate": "GENERATE",
+      "generating": "GENERATING...",
+      "generateAgain": "GENERATE AGAIN",
+      "expand": "Expand",
+      "discard": "Discard",
+      "open": "Open",
+      "uploadFromDevice": "Upload from device",
+      "pickFromGallery": "Pick from gallery",
+      "imageAddedAsReference": "Image added as reference!",
+      "hideOptions": "Hide options",
+      "showOptions": "Show options",
+      "estimatedCost": "Estimated cost",
+      "cost": "Cost",
+      "credits": "credits",
+      "optional": "optional",
+      "free": "Free",
+      "newBadge": "New",
+      "freeGeneration": "Free generation!",
+      "freeGenerationRemaining": "({count} remaining)",
+      "errors": {
+        "generateImage": "Failed to generate image.",
+        "generateVideo": "Failed to generate video.",
+        "startGeneration": "Failed to start generation.",
+        "checkStatus": "Failed to check generation status.",
+        "imageMax10MB": "Image must be at most 10MB.",
+        "invalidImageFormat": "Invalid image format.",
+        "videoMax10MB": "Video must be at most 10MB.",
+        "invalidVideoFormat": "Invalid video format."
+      }
+    },
+    "image": {
+      "header": "GENERATE IMAGE",
+      "docTitleGenerating": "The AI Model Lab - Generating image",
+      "promptPlaceholder": "Describe what you want to generate...",
+      "labels": {
+        "model": "MODEL",
+        "proportion": "RATIO",
+        "quality": "QUALITY",
+        "references": "REFERENCES (OPTIONAL)"
+      },
+      "proportionOptions": {
+        "landscape": "16:9 Landscape",
+        "portrait": "9:16 Portrait",
+        "square": "1:1 Square",
+        "43": "4:3"
+      },
+      "actions": {
+        "addToFolder": "Add to folder",
+        "addedToFolder": "Added to folder",
+        "errorAddToFolder": "Failed to add to folder",
+        "tryAgain": "Please try again.",
+        "folderCreatedAndAdded": "Folder created and image added",
+        "errorCreateFolder": "Failed to create folder"
+      },
+      "folderDialog": {
+        "title": "Add to folder",
+        "description": "Pick an existing folder or create a new one.",
+        "newFolderPlaceholder": "New folder..."
+      },
+      "loadingMessages": [
+        "CONSULTING THE PIXELS...",
+        "TEACHING THE AI TO PAINT...",
+        "MIXING DIGITAL COLORS...",
+        "ASKING THE UNIVERSE FOR INSPIRATION...",
+        "WARMING UP THE NEURONS...",
+        "SUMMONING THE INNER ARTIST...",
+        "CALCULATING CREATIVITY...",
+        "DREAMING IN HIGH RESOLUTION...",
+        "TRAINING THE ARTISTIC EYE...",
+        "LAYERING GENIUS...",
+        "BROWSING THE MUSEUM FOR REFERENCES...",
+        "CHATTING WITH THE PIXELS...",
+        "CONVINCING THE AI TO GO THE EXTRA MILE...",
+        "PROCESSING GOOD VIBES...",
+        "ADDING A DASH OF MAGIC..."
+      ],
+      "queueWaiting": "WAITING FOR A SPOT IN THE QUEUE...",
+      "concurrentLimit": "Concurrent generation limit reached. Please try again in a moment.",
+      "modelMaintenance": "Under maintenance"
+    },
+    "video": {
+      "header": "GENERATE VIDEO",
+      "docTitleGenerating": "The AI Model Lab - Generating Video",
+      "promptPlaceholder": "Describe the scene you have in mind, in detail.",
+      "modes": {
+        "text": "Text → Video",
+        "image": "Image → Video"
+      },
+      "labels": {
+        "firstFrame": "FIRST FRAME",
+        "lastFrame": "LAST FRAME",
+        "lastFrameOptional": "(optional)",
+        "model": "MODEL",
+        "resolution": "RESOLUTION",
+        "duration": "DURATION",
+        "proportion": "RATIO",
+        "quantity": "QUANTITY",
+        "referenceImages": "REFERENCE IMAGES (optional)",
+        "audio": "Audio",
+        "audioAlwaysOn": "(always on)",
+        "videoReference": "Reference video",
+        "videoReferenceMax": "optional · max {maxSeconds}s",
+        "videoReferenceOptionalShort": "optional",
+        "videoTruncateNote": "trimmed to 10s",
+        "audioReference": "Reference audio",
+        "audioReferenceMax": "optional · max {maxSeconds}s"
+      },
+      "proportionOptions": {
+        "landscape": "Landscape",
+        "portrait": "Portrait",
+        "square": "Square"
+      },
+      "buttons": {
+        "upload": "UPLOAD",
+        "attachVideo": "Attach video",
+        "attachVideoReference": "Attach reference video",
+        "attachAudio": "Attach audio",
+        "attachAudioReference": "Attach reference audio",
+        "record": "Record",
+        "stopRecording": "Stop"
+      },
+      "toasts": {
+        "videoAttached": "Reference video attached.",
+        "videoTruncated": "Video is {duration}s — only the first {limit}s will be used.",
+        "audioAttached": "Reference audio attached."
+      },
+      "errors": {
+        "mustBeVideo": "File must be a video.",
+        "videoTooLarge": "Video exceeds {maxMB}MB.",
+        "videoTooLong": "Video exceeds {maxSeconds}s. Use a shorter one.",
+        "mustBeAudio": "File must be an audio.",
+        "audioTooLarge": "Audio exceeds {maxMB}MB.",
+        "audioTooLong": "Audio exceeds {maxSeconds}s. Use a shorter one.",
+        "micAccess": "Could not access the microphone.",
+        "omniRequiresPrompt": "Gemini Omni requires a prompt.",
+        "seedanceRequiresPrompt": "Seedance requires a prompt.",
+        "grokImageRequiresFirstFrame": "Grok Imagine image-to-video requires an initial image.",
+        "grokTextRequiresPrompt": "Grok Imagine text-to-video requires a prompt.",
+        "grokUnsupportedMode": "Grok Imagine does not support this mode."
+      },
+      "only8s": "Only 8s available when using references",
+      "freeGeneration": "Free generation!",
+      "freeGenerationRemaining": "({count} remaining)",
+      "free": "Free",
+      "modelMaintenance": "Under maintenance",
+      "partialResultWarning": "{actual} of {requested} videos were generated. Unused credits were refunded.",
+      "partialResultRefund": "{actual} of {requested} videos were generated. {credits} credit{plural} refunded.",
+      "loadingMessages": [
+        "RENDERING FRAMES...",
+        "PROCESSING SCENES...",
+        "CALCULATING MOTION...",
+        "SYNCING AUDIO...",
+        "APPLYING PHYSICS TO PIXELS...",
+        "DREAMING IN 60FPS...",
+        "ASKING THE UNIVERSE FOR INSPIRATION...",
+        "ANIMATING EVERY DETAIL...",
+        "CONVERTING TEXT INTO MOTION...",
+        "WARMING UP THE VISUAL NEURONS..."
+      ]
+    },
+    "motionControl": {
+      "header": "COPY MOTION",
+      "docTitleGenerating": "The AI Model Lab - Copying motion",
+      "labels": {
+        "referenceVideo": "REFERENCE VIDEO",
+        "replacementImage": "REPLACEMENT IMAGE",
+        "resolution": "RESOLUTION"
+      },
+      "uploads": {
+        "video": "Click or drag a video (max 10MB)",
+        "image": "Click or drag an image (max 10MB)"
+      },
+      "toasts": {
+        "videoAdded": "Video added!",
+        "imageAdded": "Image added!"
+      },
+      "creditsPerSecond": "{duration}s × {rate} credits/s",
+      "footnote": "Copies the motion from the video onto the image you provide",
+      "loadingMessages": [
+        "ANALYZING MOTION...",
+        "REPLACING SUBJECT...",
+        "RENDERING FRAMES...",
+        "APPLYING MOTION CONTROL...",
+        "SYNCING ANIMATION...",
+        "PROCESSING VIDEO...",
+        "WARMING UP THE NEURONS...",
+        "ALMOST THERE..."
+      ]
+    },
+    "virtualTryOn": {
+      "header": "VIRTUAL TRY-ON",
+      "docTitleGenerating": "The AI Model Lab - Virtual Try-On",
+      "labels": {
+        "influencerPhoto": "INFLUENCER PHOTO",
+        "clothingPhoto": "CLOTHING PHOTO",
+        "additionalInstructions": "ADDITIONAL INSTRUCTIONS",
+        "optional": "(optional)",
+        "resolution": "RESOLUTION",
+        "proportion": "RATIO"
+      },
+      "uploads": {
+        "influencer": "Click or drag the influencer photo",
+        "clothing": "Click or drag the clothing photo"
+      },
+      "instructionsPlaceholder": "e.g. white background, natural lighting, full-body shot...",
+      "toasts": {
+        "influencerAdded": "Influencer photo added!",
+        "clothingAdded": "Clothing photo added!",
+        "influencerLabel": "Influencer photo",
+        "clothingLabel": "Clothing photo"
+      },
+      "button": "TRY ON OUTFIT",
+      "footnote": "Dresses your AI influencer in the outfit automatically",
+      "loadingMessages": [
+        "ANALYZING INFLUENCER...",
+        "IDENTIFYING CLOTHING...",
+        "ADJUSTING FIT...",
+        "APPLYING TEXTURE...",
+        "MATCHING LIGHTING...",
+        "RENDERING RESULT...",
+        "WARMING UP THE NEURONS...",
+        "ALMOST THERE..."
+      ]
+    },
+    "faceSwap": {
+      "header": "FACE SWAP",
+      "docTitleGenerating": "The AI Model Lab - Face Swap",
+      "labels": {
+        "facePhoto": "FACE PHOTO (IMAGE 1)",
+        "scenePhoto": "SCENE PHOTO (IMAGE 2)",
+        "resolution": "RESOLUTION"
+      },
+      "uploads": {
+        "face": "Click or drag the face photo",
+        "scene": "Click or drag the scene photo"
+      },
+      "toasts": {
+        "faceAdded": "Face photo added!",
+        "sceneAdded": "Scene photo added!",
+        "faceLabel": "Face photo",
+        "sceneLabel": "Scene photo"
+      },
+      "actions": {
+        "addToFolder": "Add to folder",
+        "addedToFolder": "Added to folder",
+        "errorAddToFolder": "Error adding to folder",
+        "tryAgain": "Please try again.",
+        "folderCreatedAndAdded": "Folder created and image added",
+        "errorCreateFolder": "Error creating folder"
+      },
+      "folderDialog": {
+        "title": "Add to folder",
+        "description": "Choose an existing folder or create a new one.",
+        "newFolderPlaceholder": "New folder..."
+      },
+      "button": "SWAP FACE",
+      "footnote": "Replaces the face and body in the scene with the person from the first image",
+      "loadingMessages": [
+        "ANALYZING FACE...",
+        "MAPPING EXPRESSIONS...",
+        "MATCHING SKIN TONE...",
+        "MATCHING LIGHTING...",
+        "BLENDING INTO SCENE...",
+        "REFINING DETAILS...",
+        "RENDERING RESULT...",
+        "ALMOST THERE..."
+      ]
+    },
+    "generic": {
+      "header": "Image",
+      "emptyState": "Your generation will appear here",
+      "promptPlaceholder": "Type your prompt here...",
+      "resultLabel": "RESULT",
+      "clear": "CLEAR",
+      "addReference": "Add reference image",
+      "simulatedResult": "This is a simulated result for the provided prompt. In production, this panel will send the prompt to the configured API and return the actual result."
+    },
+    "upscale": {
+      "header": "UPSCALE",
+      "imageLabel": "IMAGE TO UPSCALE",
+      "attachImage": "Attach image",
+      "imageAlt": "Image",
+      "estimatedCost": "Estimated cost",
+      "credits": "{count} credits",
+      "generate": "Upscale image",
+      "download": "Download",
+      "downloadTooltip": "Download image",
+      "doAnother": "Upscale another image",
+      "description": "The image will be enhanced to 2K while preserving all original details.",
+      "documentTitle": "Upscale in progress... — The AI Model Lab",
+      "toastImageTooLarge": "Image too large (max 10MB).",
+      "toastInvalidFormat": "Invalid image format.",
+      "toastImageAdded": "Image added.",
+      "errorUpscaleFailed": "Upscale failed.",
+      "errorCheckStatus": "Error checking status.",
+      "errorStartFailed": "Error starting upscale.",
+      "loadingMessages": [
+        "Increasing resolution...",
+        "Reducing compression artifacts...",
+        "Refining fine details...",
+        "Enhancing sharpness..."
+      ]
+    },
+    "audio": {
+      "header": "GENERATE AUDIO",
+      "modes": {
+        "tts": "Text → Voice",
+        "ttsHint": "Ready voice",
+        "clone": "Clone Voice",
+        "cloneHint": "Your voice"
+      },
+      "fields": {
+        "text": "TEXT",
+        "voice": "VOICE",
+        "speed": "SPEED",
+        "referenceAudio": "REFERENCE AUDIO",
+        "voiceName": "VOICE NAME"
+      },
+      "placeholders": {
+        "ttsText": "Write the text to be narrated...",
+        "cloneText": "Write the text the cloned voice should say...",
+        "voiceName": "E.g.: My voice, Commercial voice..."
+      },
+      "defaultCloneText": "Hello! This is a preview of my cloned voice. In a few seconds you'll hear how it sounds.",
+      "states": {
+        "generating": "Generating audio",
+        "audioGenerated": "Audio generated",
+        "rec": "REC",
+        "saving": "Saving..."
+      },
+      "buttons": {
+        "download": "Download",
+        "downloadTooltip": "Download audio",
+        "saveVoice": "Save voice",
+        "saveVoiceCloned": "Save cloned voice",
+        "generateAudio": "Generate audio",
+        "generateAnother": "Generate another audio",
+        "stopRecording": "Stop recording",
+        "upload": "UPLOAD",
+        "record": "RECORD",
+        "expandDetails": "Show details",
+        "collapseDetails": "Hide details"
+      },
+      "estimatedCost": "Estimated cost",
+      "credits": "{count} credits",
+      "saveVoiceForm": {
+        "subtitle": "Reuse this voice in your next audio generations",
+        "quotaSaved": "{used} of {total} saved voices",
+        "quotaReached": "{used} of {total} voices — limit reached",
+        "tooltipNoQuota": "Upgrade your plan to save voices.",
+        "tooltipQuotaReached": "Limit reached. Delete a saved voice or upgrade."
+      },
+      "consent": {
+        "label": "I confirm this voice is mine",
+        "details": "By checking this option you confirm you have legal permission to clone and use this voice. Cloning someone else's voice without authorization violates the platform terms and may have legal implications."
+      },
+      "minDuration": "The audio must be at least <strong>{seconds} seconds</strong> long for cloning.",
+      "audioDisabled": {
+        "title": "Audio generation temporarily unavailable",
+        "fallbackMessage": "We're experiencing instability with the audio provider. Try again in a few minutes."
+      },
+      "errors": {
+        "fileNotAudio": "This file does not look like audio. Use mp3, wav, ogg or webm.",
+        "fileTooLarge": "Audio above 15 MB. Use a shorter file or compress it first.",
+        "micAccess": "Couldn't access the microphone. Check your browser permissions.",
+        "voiceNameRequired": "Give the voice a name before saving.",
+        "voiceSaveFailed": "Couldn't save the voice now. Try again.",
+        "noReferenceAudio": "Upload or record a reference audio before cloning the voice.",
+        "concurrentLimit": "You already have the maximum number of in-progress generations. Wait for one to finish and try again.",
+        "startFailed": "Couldn't start the generation.",
+        "startFailedConnection": "Couldn't start the generation. Check your connection and try again.",
+        "fallback": "Couldn't generate the audio. Try again in a few moments.",
+        "fallbackConnection": "Lost the connection while checking status. Reload to see the result."
+      },
+      "success": {
+        "audioAdded": "Reference audio added.",
+        "recordingSaved": "Recording saved.",
+        "voiceSaved": "Voice \"{name}\" saved."
+      }
+    },
+    "voicePicker": {
+      "title": "Select voice",
+      "description": "Pick a default voice or clone your own",
+      "close": "Close",
+      "myVoices": "My voices",
+      "defaultVoices": "Default voices",
+      "cloneVoice": "Clone voice",
+      "emptyMyVoices": "You don't have any cloned voices yet. Use the button above to create one.",
+      "all": "All",
+      "noVoicesForCountry": "No voices available for this country.",
+      "noVoicesAvailable": "No voices available right now.",
+      "personalized": "Personalized",
+      "genderFemale": "Female",
+      "genderMale": "Male",
+      "selectVoice": "Select a voice",
+      "loading": "Loading voices…",
+      "voicesButton": "Voices",
+      "playPreview": "Play preview",
+      "pausePreview": "Pause preview",
+      "loadingPreview": "Loading preview"
+    },
+    "unlimited": {
+      "toggleLabel": "UNLIMITED",
+      "costLabel": "Unlimited",
+      "errors": {
+        "noImagePlan": "Your plan doesn't include images in unlimited mode. Upgrade to generate images without using credits.",
+        "noVideoPlan": "Your plan doesn't include videos in unlimited mode. Upgrade to generate videos without using credits.",
+        "serverBusy": "Our servers are currently overloaded. Please try again in a few minutes.",
+        "lockHeld": "You already have an unlimited generation in progress. Wait for it to finish."
+      }
+    }
+  }
+}

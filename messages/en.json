@@ -1,0 +1,780 @@
+{
+  "nav": {
+    "features": "Features",
+    "results": "Results",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "login": "Sign in",
+    "tryFree": "Start Now",
+    "accessPlatform": "Open Platform"
+  },
+  "hero": {
+    "badge": "AI-powered content creation platform",
+    "title": "Create digital influencers with unlimited video and image generations.",
+    "subtitle": "Generate ultra-realistic images, videos, and motion with just a few clicks. No studio, no models, no showing your face. Everything you need to create professional content is here.",
+    "cta": "Start Now",
+    "microcopy": "Ready in under 2 minutes"
+  },
+  "howItWorks": {
+    "tag": "IT'S THAT SIMPLE",
+    "title": "From zero to finished content in 3 steps.",
+    "subtitle": "You don't need experience with AI, editing, or design. The AI Model Lab does the heavy lifting for you.",
+    "step1": {
+      "title": "Create Your Influencer",
+      "description": "Pick a model from the gallery or generate a brand new persona. Define face, body, style, and personality in just a few clicks."
+    },
+    "step2": {
+      "title": "Customize the Content",
+      "description": "Choose the scene, pose, outfit, and motion. Use our library of ready-made prompts or write your own. You have full control over every detail."
+    },
+    "step3": {
+      "title": "Export and Publish",
+      "description": "Download high-quality images and videos, ready to post on TikTok, Instagram, YouTube, or any other network. No watermark on paid plans."
+    },
+    "cta": "Create my first influencer",
+    "ctaLoggedIn": "Open Platform"
+  },
+  "features": {
+    "tag": "EVERYTHING YOU NEED",
+    "title": "A complete platform to create content that converts.",
+    "subtitle": "Photos, videos, motion, and editing — all with AI, all in one place.",
+    "beforeLabel": "BEFORE",
+    "afterLabel": "AFTER",
+    "items": {
+      "influencers": {
+        "title": "AI Influencers",
+        "description": "Create hyper-realistic avatars with their own face, voice, and personality. Make your influencer talk, gesture, and appear in any scene without recording anything — perfect for UGC, ads, and branded content."
+      },
+      "motion": {
+        "title": "Motion Control",
+        "description": "Transfer motion from a reference video to any character or avatar. Perfect lip sync, synced facial expressions, and fluid gestures — control every detail of the animation like a director."
+      },
+      "skinEnhancer": {
+        "title": "Skin Enhancer",
+        "description": "Remove the artificial look from AI-generated images. Add realistic pores and natural skin texture with a single click."
+      },
+      "imagesHD": {
+        "title": "Full HD Images",
+        "description": "Generate professional high-definition photos with realistic lighting, cinematic composition, and crisp detail. Ideal for ads, product catalogs, social media, and any content that needs to impress on the first frame."
+      },
+      "videos": {
+        "title": "Ultra-Realistic Videos",
+        "description": "Access the best models on the market in one place — Kling, Veo 3.1, Sora 2 Pro and more. Cinema-grade quality, natural motion, and realistic physics, without juggling five different subscriptions."
+      },
+      "upscale": {
+        "title": "4K Upscale",
+        "description": "Upscale images up to 4K while preserving skin detail, lighting, and facial structure."
+      }
+    }
+  },
+  "pricing": {
+    "tag": "Pricing",
+    "title": "Simple plans. No surprises.",
+    "subtitle": "Pick a plan and scale whenever you want. Cancel anytime.",
+    "mostPopular": "Most Popular",
+    "perMonth": "/mo",
+    "creditsPerMonth": "{credits} credits per month",
+    "creditsForTesting": "credits to try it out",
+    "creditsMonthly": "credits per month",
+    "subscribe": "Subscribe to {plan}",
+    "currentPlan": "Current Plan",
+    "downgradeBlocked": "Lower tier",
+    "startFree": "Start Now",
+    "accessPlatform": "Open Platform",
+    "generationEstimate": "Generation estimates",
+    "blocked": "locked",
+    "generationFootnote": "If you spend all credits on a single model",
+    "guarantee": "Cancel anytime",
+    "guaranteeText": "Subscribe with peace of mind. You can cancel your plan anytime — no fees, no hassle — and keep full access until the end of your paid period.",
+    "sections": {
+      "entry": "Entry plans",
+      "monetizer": "Monetizer plans"
+    },
+    "badges": {
+      "noCancelFee": "No cancellation fee",
+      "securePayment": "Secure payment",
+      "creditsRenew": "Credits renew monthly"
+    },
+    "features": {
+      "credits": "{count} credits",
+      "emailSupport": "Email support",
+      "gallery7": "7-day gallery history",
+      "gallery90": "90-day gallery history",
+      "gallery180": "180-day gallery history",
+      "gallery365": "365-day gallery history",
+      "tryNoCommit": "Try with no commitment",
+      "queuePriority": "Priority in the generation queue",
+      "fasterGen": "Faster generation speed",
+      "prioritySupport": "Priority support"
+    }
+  },
+  "plans": {
+    "subtitles": {
+      "ultra-basic": "Beginner",
+      "starter": "Explorer",
+      "basic": "Essential",
+      "creator": "Creator",
+      "pro": "Producer",
+      "advanced": "Advanced",
+      "studio": "Professional"
+    },
+    "socialProof": {
+      "free": "Test our capacity!",
+      "ultra-basic": "Take your first step",
+      "starter": "Great for personal projects",
+      "basic": "For those growing",
+      "creator": "Picked by 68% of creators",
+      "pro": "For those who take it seriously",
+      "advanced": "Power and total control",
+      "studio": "For teams and agencies"
+    }
+  },
+  "gallery": {
+    "tag": "Gallery",
+    "title": "See what's already being created with The AI Model Lab.",
+    "subtitle": "Every image and video below was generated 100% by AI inside our platform.",
+    "cta": "Create yours now",
+    "ctaLoggedIn": "Open Platform",
+    "alt": "Result {index}"
+  },
+  "testimonials": {
+    "tag": "What People Say",
+    "title": "Real creators. Real results.",
+    "cta": "Join them",
+    "ctaLoggedIn": "Open Platform",
+    "items": [
+      {
+        "name": "Lucas Ferreira",
+        "handle": "@lucasferreira.ai",
+        "niche": "Content Creator",
+        "text": "In 2 weeks I had more content ready than in the last 3 months. The video quality is insane."
+      },
+      {
+        "name": "Mariana Costa",
+        "handle": "@maricosta.digital",
+        "niche": "Digital Affiliate",
+        "text": "My product reviews with a virtual influencer converted 3x better than before. I'm never going back to the old way."
+      },
+      {
+        "name": "Rafael Souza",
+        "handle": "@rafasouza.mkt",
+        "niche": "Social Media",
+        "text": "I can deliver content for 5 different clients without a team. The AI Model Lab changed my business."
+      },
+      {
+        "name": "Camila Oliveira",
+        "handle": "@camilaoliveira.brand",
+        "niche": "Marketing Agency",
+        "text": "We cut production costs by 80% and tripled creative output for our clients."
+      }
+    ]
+  },
+  "comparison": {
+    "tag": "Why The AI Model Lab",
+    "title": "The old way is expensive. The new way costs pennies.",
+    "perMonth": "/mo",
+    "totalTag": "TOTAL IF BOUGHT SEPARATELY",
+    "totalAmount": "~$745/mo",
+    "totalDescription": "That's the monthly bill for anyone who subscribes to each of these platforms on their own. Here you get <strong>everything</strong> in a single plan — for just a fraction of that.",
+    "platforms": {
+      "googleFlow": {
+        "name": "Google Flow Ultra",
+        "desc": "(Veo 3.1 + Nano Banana)"
+      },
+      "chatgpt": {
+        "name": "ChatGPT Pro",
+        "desc": "(Sora 2 + Image 2)"
+      },
+      "kling": {
+        "name": "Kling AI Pro",
+        "desc": "(Kling 2.5, 2.6, 3.0 + Motion Control)"
+      },
+      "xPremium": {
+        "name": "X Premium+",
+        "desc": "(Super Grok Imagine)"
+      },
+      "magnific": {
+        "name": "Magnific AI",
+        "desc": "(Skin Enhancer + Upscale 4K)"
+      },
+      "elevenLabs": {
+        "name": "ElevenLabs Pro",
+        "desc": "(Audio + Voiceovers)"
+      }
+    }
+  },
+  "useCases": {
+    "tag": "Who It's For",
+    "title": "Whatever your niche. The AI Model Lab adapts to your goal.",
+    "items": {
+      "creators": {
+        "title": "Content Creators",
+        "desc": "Post every day without showing your face. Build a persona that becomes your channel's identity and grow a real audience with AI-generated content."
+      },
+      "sellers": {
+        "title": "Sellers and Affiliates",
+        "desc": "Generate review, unboxing, and demo videos with virtual influencers. Scale sales on TikTok Shop, Instagram, and any platform without relying on anyone."
+      },
+      "brands": {
+        "title": "Brands and Agencies",
+        "desc": "Produce unlimited UGC without hiring models or influencers. Cut production costs and get fresh creatives every day for your campaigns."
+      },
+      "social": {
+        "title": "Social Media Managers",
+        "desc": "Deliver more results with less time and lower cost. Create content for multiple brands using a different persona for each one."
+      }
+    }
+  },
+  "socialProof": {
+    "creators": "Active Creators",
+    "images": "Images Generated",
+    "videos": "Videos Created",
+    "rating": "Average Rating"
+  },
+  "faq": {
+    "tag": "QUESTIONS",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know before getting started.",
+    "items": [
+      {
+        "question": "How do I get started?",
+        "answer": "Create your account in under 2 minutes, pick a plan starting at $2.90/mo, and you'll get your credits right away to generate images and videos. Cancel anytime — no fees, no hassle."
+      },
+      {
+        "question": "Do I need to install anything?",
+        "answer": "No. The AI Model Lab runs 100% online, right in your browser. Works on desktop and mobile."
+      },
+      {
+        "question": "Can I use the content to sell on TikTok Shop?",
+        "answer": "Yes. Many creators use The AI Model Lab to generate review and demo videos for TikTok Shop. Use it on any platform for any commercial purpose."
+      },
+      {
+        "question": "Do videos have a watermark?",
+        "answer": "Not on paid plans. All content you generate is yours — no watermark, ready to publish."
+      },
+      {
+        "question": "Can I use it for paid ads?",
+        "answer": "Yes. Images and videos you generate can be used on Meta Ads, TikTok Ads, Google Ads, and any other platform."
+      },
+      {
+        "question": "Is the generated content exclusive to me?",
+        "answer": "Yes. Every generation is unique. Even with the same prompt, results differ. Your content is exclusively yours."
+      },
+      {
+        "question": "What happens if I run out of credits?",
+        "answer": "You can wait for the monthly renewal or buy extra credits anytime, with no need to switch plans."
+      },
+      {
+        "question": "Can I cancel anytime?",
+        "answer": "Yes. No penalties, no fees, no hassle. Cancel straight from the dashboard and keep using it until the end of your paid period."
+      },
+      {
+        "question": "How does voice cloning work?",
+        "answer": "You record or upload a short sample of your voice (minimum 10 seconds) and The AI Model Lab clones it with AI. Then just write the script and your voice speaks any text, in multiple languages. You must have legal permission to clone the voice you use (yours or someone who authorized you). Each plan allows a different amount of saved voices — check the pricing table."
+      },
+      {
+        "question": "Can I generate audio with professional voices without cloning mine?",
+        "answer": "Yes. We have 60+ ready-to-use voices in 15 languages (English, Portuguese, Spanish and more). Just write the text, pick a voice and the audio is ready in seconds — perfect for reels, videos, podcasts or ads."
+      }
+    ]
+  },
+  "ctaFinal": {
+    "title": "Ready to create your first AI influencer?",
+    "subtitle": "Join thousands of creators turning ideas into professional content with AI.",
+    "cta": "Start Now",
+    "ctaLoggedIn": "Open Platform",
+    "microcopy": "2-minute setup · Cancel anytime",
+    "microcopyShort": "2-minute setup · Cancel anytime",
+    "creatorsUsing": "+2,000 creators already using it"
+  },
+  "footer": {
+    "tagline": "Create professional AI influencers, videos, and images.",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "social": "Social",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "about": "About",
+    "contact": "Contact",
+    "features": "Features",
+    "pricing": "Pricing",
+    "gallery": "Gallery",
+    "faq": "FAQ",
+    "rights": "© 2026 The AI Model Lab. All rights reserved."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "or": "or",
+      "continueWith": "Continue with {provider}"
+    },
+    "signup": {
+      "title": "Create account",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create free account",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "common": {
+      "tagline": "AI-powered image generator",
+      "welcomeBack": "Welcome back",
+      "welcomeSubtitle": "Sign in or create an account to start creating",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithEmail": "Continue with Email",
+      "redirecting": "Redirecting...",
+      "or": "or",
+      "back": "Back",
+      "backToLogin": "Back to sign in",
+      "legal": "By continuing, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>",
+      "loginTab": "Sign in",
+      "registerTab": "Sign up",
+      "labels": {
+        "name": "NAME",
+        "email": "EMAIL",
+        "password": "PASSWORD",
+        "newPassword": "NEW PASSWORD",
+        "confirmPassword": "CONFIRM PASSWORD"
+      },
+      "placeholders": {
+        "name": "Your name",
+        "email": "you@email.com"
+      },
+      "submitLogin": "Sign in",
+      "submitRegister": "Create account",
+      "genericError": "Something went wrong. Please try again.",
+      "resendVerification": "Resend verification email",
+      "resending": "Resending...",
+      "forgotPasswordLink": "Forgot password?",
+      "googleErrors": {
+        "google_denied": "Google sign-in was cancelled.",
+        "google_exchange_failed": "Couldn't authenticate with Google. Please try again.",
+        "google_no_token": "Couldn't get Google credentials.",
+        "auth_failed": "Couldn't sign in with Google. Please try again.",
+        "google_failed": "Couldn't sign in with Google. Please try again.",
+        "google_config": "Google configuration is incomplete.",
+        "default": "Couldn't sign in with Google."
+      },
+      "slides": {
+        "s0": {
+          "tag": "Professional video generation",
+          "title": "Create unique AI videos",
+          "description": "Turn text into video in seconds with state-of-the-art models."
+        },
+        "s1": {
+          "tag": "Visual Identity",
+          "title": "Your brand, your way",
+          "description": "Create consistent visual content for campaigns, social media, and more."
+        },
+        "s2": {
+          "tag": "AI Characters",
+          "title": "Characters that look real",
+          "description": "Build unique characters with full control over style, ethnicity, expression, and more."
+        },
+        "s3": {
+          "tag": "Image generation",
+          "title": "Imagine. Describe. Create.",
+          "description": "Turn any idea into an image with cutting-edge models — fast and limitless."
+        }
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot your password?",
+      "description": "Enter your email and we'll send you a link to reset your password.",
+      "submit": "Send reset link",
+      "sentTitle": "Email sent!",
+      "sentBody": "If <strong>{email}</strong> is registered, you'll receive a link to reset your password.",
+      "checkSpam": "Don't forget to check your spam folder.",
+      "error": "Couldn't send email. Please try again."
+    },
+    "resetPassword": {
+      "title": "Reset password",
+      "description": "Choose a new password for your account.",
+      "submit": "Reset password",
+      "passwordHelper": "At least 8 characters, with uppercase, lowercase, and a number.",
+      "passwordsDontMatch": "Passwords don't match.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "passwordWeak": "Password must contain at least one uppercase letter, one lowercase letter, and one number.",
+      "tokenMissing": "Reset token not found.",
+      "invalidLinkTitle": "Invalid link",
+      "invalidLinkBody": "This password reset link is invalid or has expired. Request a new one.",
+      "requestNewLink": "Request new link",
+      "successTitle": "Password updated!",
+      "successBody": "Your password has been reset. Sign in with your new password.",
+      "successBodyShort": "Your password has been reset.",
+      "goToLogin": "Go to sign in",
+      "signIn": "Sign in",
+      "error": "Couldn't reset password. Please try again."
+    },
+    "verifyEmail": {
+      "title": "Verify your email",
+      "descriptionWithEmail": "We sent a 6-digit code to <strong>{email}</strong>",
+      "descriptionGeneric": "Enter the 6-digit code we sent to your email",
+      "verifying": "Verifying...",
+      "invalidCode": "Invalid or expired code.",
+      "tryAgain": "Try again",
+      "resend": "Resend code",
+      "resending": "Resending...",
+      "resendError": "Couldn't resend.",
+      "resendSuccess": "Code sent again!",
+      "successTitle": "Email verified!",
+      "goToLogin": "Go to sign in",
+      "backToLogin": "Back to sign in"
+    }
+  },
+  "checkout": {
+    "success": {
+      "title": "Payment confirmed!",
+      "description": "Your credits are now available. Time to create.",
+      "cta": "Go to editor",
+      "toast": "Payment approved!"
+    },
+    "cancel": {
+      "title": "Payment canceled",
+      "description": "No charges were made. You can try again whenever you want.",
+      "cta": "Back to editor",
+      "toast": "Payment canceled"
+    },
+    "redirecting": "Redirecting..."
+  },
+  "legal": {
+    "common": {
+      "tag": "Legal",
+      "back": "Back",
+      "logoAlt": "The AI Model Lab",
+      "lastUpdated": "Last updated: March 26, 2026",
+      "rights": "© 2026 The AI Model Lab — All rights reserved.",
+      "seeTerms": "View Terms of Service →",
+      "seePrivacy": "View Privacy Policy →"
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "sections": [
+        {
+          "title": "1. Acceptance of Terms",
+          "content": [
+            "By accessing or using the AI Model Lab platform (\"Platform\"), available at theaimodelab.ai, you declare that you have read, understood, and fully agree with these Terms of Service. If you do not agree with any provision set forth herein, you must not use the Platform.",
+            "The AI Model Lab reserves the right to change these Terms at any time, with the user being notified through the Platform or by email. Continued use after notification constitutes acceptance of the changes."
+          ]
+        },
+        {
+          "title": "2. Description of Service",
+          "content": [
+            "The AI Model Lab is an online platform that uses artificial intelligence technologies to generate images and videos from text commands (prompts) provided by the user. Services may include, among others:"
+          ],
+          "list": [
+            "Generation of static images based on text descriptions",
+            "Generation and editing of videos with artificial intelligence assistance",
+            "Tools for editing, enhancing, and customizing visual content",
+            "Temporary storage of content generated on the Platform"
+          ]
+        },
+        {
+          "title": "3. User Registration and Account",
+          "content": [
+            "To access certain features, the user must create an account, providing true, complete, and up-to-date information. The user is fully responsible for:"
+          ],
+          "list": [
+            "Maintaining the confidentiality of their access credentials (login and password)",
+            "All activities carried out in their account",
+            "Immediately notifying The AI Model Lab of any unauthorized use of their account"
+          ],
+          "after": "The AI Model Lab reserves the right to suspend or terminate accounts that violate these Terms, without prior notice."
+        },
+        {
+          "title": "4. Acceptable Use of the Platform",
+          "content": [
+            "The user commits to using the Platform ethically and in compliance with applicable law. It is expressly prohibited to use the Platform to:"
+          ],
+          "list": [
+            "Generate content involving child pornography, exploitation of minors, or any illegal content",
+            "Create images or videos of real people without the explicit consent of those persons",
+            "Produce defamatory, discriminatory content, or content that incites violence or hatred",
+            "Generate content that violates copyrights, trademarks, or other intellectual property rights of third parties",
+            "Create deepfakes or misleading content intended to misinform or defraud",
+            "Perform reverse engineering, decompile, or attempt to access the Platform's source code",
+            "Use the Platform to send spam, phishing, or any malicious activity",
+            "Intentionally overload the servers or interfere with the operation of the Platform"
+          ],
+          "after": "The AI Model Lab reserves the right to remove any content that violates these guidelines and to suspend or ban offending users."
+        },
+        {
+          "title": "5. Intellectual Property",
+          "subsections": [
+            {
+              "title": "5.1. User-Generated Content",
+              "content": [
+                "Content generated by the user through the Platform (images and videos) may be used by the user for personal and commercial purposes, according to the contracted plan and subject to applicable legal restrictions.",
+                "The user acknowledges that content generated by artificial intelligence may not be protected by copyright in all jurisdictions and that The AI Model Lab does not guarantee exclusivity over the generated content."
+              ]
+            },
+            {
+              "title": "5.2. Platform Ownership",
+              "content": [
+                "The Platform, including its design, source code, algorithms, AI models, logos, trademarks, and other elements, is the exclusive property of The AI Model Lab, protected by applicable intellectual property laws."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "6. Plans and Payments",
+          "content": [
+            "The AI Model Lab may offer free and paid plans. By contracting a paid plan, the user agrees to the prices and conditions in effect at the time of contracting. The specific conditions of each plan, including generation limits, available features, and refund policies, will be described on the Platform's pricing page.",
+            "Non-payment may result in suspension of access to the features of the contracted plan."
+          ]
+        },
+        {
+          "title": "7. Limitation of Liability",
+          "content": [
+            "The AI Model Lab is provided \"as is\". To the maximum extent permitted by law, The AI Model Lab is not responsible for:"
+          ],
+          "list": [
+            "Temporary unavailability of the Platform or service interruptions",
+            "Content generated by artificial intelligence that may be considered inaccurate, offensive, or inappropriate",
+            "Direct, indirect, incidental, or consequential damages arising from the use of the Platform",
+            "Loss of data or content stored on the Platform",
+            "Misuse of generated content by third parties"
+          ],
+          "after": "The user is solely responsible for their use of the content generated on the Platform."
+        },
+        {
+          "title": "8. Privacy and Data Protection",
+          "content": [
+            "The processing of users' personal data is governed by our Privacy Policy, which forms an integral part of these Terms of Service. The AI Model Lab undertakes to process personal data in compliance with the Brazilian General Data Protection Law (LGPD – Law No. 13,709/2018)."
+          ]
+        },
+        {
+          "title": "9. Termination",
+          "content": [
+            "The user may close their account at any time through the Platform's settings. The AI Model Lab may suspend or terminate the user's access at any time in the event of a violation of these Terms, without prejudice to other applicable measures.",
+            "After termination, content stored in the user's account may be permanently deleted after the retention period provided for in the Privacy Policy."
+          ]
+        },
+        {
+          "title": "10. General Provisions",
+          "content": [
+            "These Terms are governed by the laws of the Federative Republic of Brazil. The forum of the district of The AI Model Lab's headquarters is elected to resolve any disputes arising from these Terms, with express waiver of any other, however privileged it may be.",
+            "If any clause of these Terms is considered invalid or unenforceable, the remaining clauses will remain in full force and effect."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "sections": [
+        {
+          "title": "1. Introduction",
+          "content": [
+            "The AI Model Lab (\"we\", \"our\", or \"Platform\"), available at theaimodelab.ai, values and respects the privacy of its users. This Privacy Policy describes how we collect, use, store, share, and protect your personal data in compliance with the Brazilian General Data Protection Law (LGPD – Law No. 13,709/2018).",
+            "By using our Platform, you consent to the practices described in this Policy. We recommend reading the entire document carefully."
+          ]
+        },
+        {
+          "title": "2. Personal Data Collected",
+          "subsections": [
+            {
+              "title": "2.1. Data provided by the user",
+              "content": [
+                "We may collect the following data when you sign up or use the Platform:"
+              ],
+              "list": [
+                "Full name",
+                "Email address",
+                "Profile information (photo, display name)",
+                "Payment data (processed by third-party payment gateways)",
+                "Prompts (text commands) entered for content generation"
+              ]
+            },
+            {
+              "title": "2.2. Data collected automatically",
+              "content": [
+                "When you access the Platform, we automatically collect:"
+              ],
+              "list": [
+                "IP address and approximate geolocation data",
+                "Browser type, operating system, and device used",
+                "Pages visited, access time, and interactions with the Platform",
+                "Cookies and similar tracking technologies",
+                "Service usage data (type and quantity of generations performed)"
+              ]
+            },
+            {
+              "title": "2.3. Third-party data",
+              "content": [
+                "If you log in through third-party services (such as Google or social networks), we may receive basic profile data as authorized by the provider and by you."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "3. Purposes of Data Processing",
+          "content": [
+            "We use your personal data for the following purposes:"
+          ],
+          "list": [
+            "Creation and management of your account on the Platform",
+            "Provision and improvement of AI image and video generation services",
+            "Processing of payments and management of subscriptions",
+            "Sending service communications (updates, changes, security notices)",
+            "Sending marketing communications (with prior consent and opt-out option)",
+            "Usage and performance analysis of the Platform for continuous improvement",
+            "Fraud prevention and safeguarding the security of the Platform",
+            "Compliance with legal and regulatory obligations",
+            "Training and improvement of artificial intelligence models (in anonymized form)"
+          ]
+        },
+        {
+          "title": "4. Legal Bases for Processing",
+          "content": [
+            "The processing of your personal data is based on the following legal grounds provided by the LGPD:"
+          ],
+          "highlights": [
+            {
+              "label": "Consent",
+              "desc": "when you expressly authorize the processing (e.g., marketing)"
+            },
+            {
+              "label": "Contract performance",
+              "desc": "to provide the contracted services"
+            },
+            {
+              "label": "Legitimate interest",
+              "desc": "to improve the Platform and prevent fraud"
+            },
+            {
+              "label": "Compliance with legal obligation",
+              "desc": "when required by law or regulation"
+            }
+          ]
+        },
+        {
+          "title": "5. Data Sharing",
+          "content": [
+            "Your personal data may be shared with:"
+          ],
+          "list": [
+            "Payment service providers for processing financial transactions",
+            "Infrastructure and cloud hosting providers",
+            "Providers of artificial intelligence models used in content generation",
+            "Performance analysis and monitoring tools",
+            "Competent authorities, when required by law or court order"
+          ],
+          "after": "We do not sell, rent, or market your personal data to third parties for marketing purposes. All partners and suppliers are subject to contractual obligations of confidentiality and data protection."
+        },
+        {
+          "title": "6. International Data Transfer",
+          "content": [
+            "Your data may be transferred and stored on servers located outside Brazil, including in countries that may not have data protection laws equivalent to the LGPD. In such cases, we adopt appropriate security measures, such as standard contractual clauses, to ensure the protection of your data."
+          ]
+        },
+        {
+          "title": "7. Data Storage and Security",
+          "content": [
+            "We adopt appropriate technical and organizational measures to protect your personal data against unauthorized access, destruction, loss, alteration, or improper processing, including:"
+          ],
+          "list": [
+            "Encryption of data in transit (TLS/SSL) and at rest",
+            "Role-based access control",
+            "Continuous security monitoring"
+          ],
+          "after": "Your personal data will be stored for the time necessary to fulfill the purposes for which it was collected, or as required by law."
+        },
+        {
+          "title": "8. Cookies and Tracking Technologies",
+          "content": [
+            "The Platform uses cookies and similar technologies to:"
+          ],
+          "list": [
+            "Keep your session active and remember your preferences",
+            "Analyze Platform usage and improve the user experience",
+            "Personalize content and advertisements (when applicable)"
+          ],
+          "after": "You can manage your cookie preferences through your browser settings. Disabling certain cookies may affect Platform functionality."
+        },
+        {
+          "title": "9. Data Subject Rights",
+          "content": [
+            "In accordance with the LGPD, you have the right to:"
+          ],
+          "list": [
+            "Confirmation of the existence of processing of your personal data",
+            "Access to your personal data",
+            "Correction of incomplete, inaccurate, or outdated data",
+            "Anonymization, blocking, or elimination of unnecessary data or data processed in non-compliance with the LGPD",
+            "Portability of data to another service provider",
+            "Deletion of personal data processed based on consent",
+            "Information about with whom your data has been shared",
+            "Information about the possibility of not providing consent and its consequences",
+            "Revocation of consent at any time"
+          ],
+          "after": "To exercise any of these rights, contact us through the channels available on the Platform. We will respond to your request within the legal period of 15 (fifteen) days."
+        },
+        {
+          "title": "10. Data of Minors",
+          "content": [
+            "The Platform is not intended for persons under 18 (eighteen) years of age. We do not knowingly collect personal data from minors. If we become aware that data from a minor has been collected without proper consent, we will take the necessary steps to delete it."
+          ]
+        },
+        {
+          "title": "11. Changes to this Policy",
+          "content": [
+            "This Privacy Policy may be updated periodically to reflect changes in our practices or applicable law. The updated version will be published on the Platform with the date of the last modification. We recommend reviewing this document periodically."
+          ]
+        }
+      ]
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "tryAgain": "Try again",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "locale": {
+    "portuguese": "Portuguese",
+    "english": "English"
+  },
+  "landingMeta": {
+    "title": "The AI Model Lab - Create Digital Influencers with AI | Ultra-Realistic Images and Videos",
+    "description": "AI platform to create digital influencers, ultra-realistic images, and videos. No face on camera, no studio, no crew. Start free.",
+    "ogTitle": "The AI Model Lab - Create Digital Influencers with AI",
+    "ogDescription": "Generate ultra-realistic images and videos with AI. No face on camera, no studio. Start free."
+  },
+  "promptsLibrary": {
+    "metaTitle": "Prompt Library · The AI Model Lab",
+    "metaDescription": "Explore The AI Model Lab's full prompt library. Hundreds of ready-made prompts to generate AI images and videos, organized by niche.",
+    "ogDescription": "Hundreds of ready-made prompts to generate AI images and videos. Copy, use, and create professional content in seconds.",
+    "twitterDescription": "Hundreds of ready-made prompts to generate AI images and videos.",
+    "badge": "Prompt Factory",
+    "title": "Prompt Library",
+    "descriptionWithTotal": "Explore {total} ready-made prompts to generate AI images and videos. Click the copy icon and use them directly on your favorite platform.",
+    "descriptionEmpty": "Explore the prompts available on the platform. Click the copy icon to use one.",
+    "loadError": "We couldn't load the prompts right now. Please try again shortly.",
+    "noPreview": "no preview",
+    "copyPrompt": "Copy prompt",
+    "usePrompt": "Use prompt",
+    "searchPlaceholder": "Search prompts...",
+    "filterAll": "All",
+    "allSections": "All sections",
+    "noResults": "No prompts found.",
+    "promptCount": "{count, plural, one {# prompt} other {# prompts}}",
+    "promptCountSimple": "{count, plural, one {prompt} other {prompts}}",
+    "types": {
+      "text_to_image": "Text → Image",
+      "image_to_image": "Image → Image",
+      "text_to_video": "Text → Video",
+      "image_to_video": "Image → Video",
+      "motion_control": "Motion Control"
+    }
+  }
+}

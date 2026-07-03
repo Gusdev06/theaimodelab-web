@@ -1,0 +1,135 @@
+"use client";
+
+import { Sparkles, SlidersHorizontal, Download, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useScrollReveal } from "./use-scroll-reveal";
+import { useAuth } from "@/lib/auth-context";
+
+const STEP_META = [
+  { num: "01", icon: Sparkles, key: "step1" },
+  { num: "02", icon: SlidersHorizontal, key: "step2" },
+  { num: "03", icon: Download, key: "step3" },
+] as const;
+
+function Step({
+  step,
+  i,
+  title,
+  desc,
+}: {
+  step: (typeof STEP_META)[number];
+  i: number;
+  title: string;
+  desc: string;
+}) {
+  const { ref, isVisible } = useScrollReveal();
+  const Icon = step.icon;
+
+  return (
+    <div
+      ref={ref}
+      className="group relative flex flex-col transition-all duration-700"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(32px)",
+        transitionDelay: `${i * 150}ms`,
+      }}
+    >
+      {/* Card */}
+      <div className="relative overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(245,64,157,0.06)] sm:p-8">
+        {/* Large decorative number */}
+        <span className="pointer-events-none absolute -top-3 -left-1 font-sora text-[80px] font-extrabold leading-none text-landing-accent/[0.06] select-none">
+          {step.num}
+        </span>
+
+        {/* Icon */}
+        <div className="relative mb-4 flex h-12 w-12 sm:mb-5 items-center justify-center rounded-xl border border-landing-accent/15 bg-landing-accent/[0.08] transition-colors duration-500 group-hover:bg-landing-accent/[0.12]">
+          <Icon className="h-5 w-5 text-landing-accent" />
+        </div>
+
+        {/* Content */}
+        <h3 className="relative font-sora text-lg font-semibold text-landing-text">
+          {title}
+        </h3>
+        <p className="relative mt-2.5 text-[15px] leading-relaxed text-landing-text-secondary">
+          {desc}
+        </p>
+
+        {/* Placeholder visual */}
+        <div className="relative mt-5 aspect-[4/3] sm:mt-7 w-full overflow-hidden rounded-xl border border-[#f3f0ed]/[0.04] bg-landing-bg-secondary">
+          {/* TODO: SUBSTITUIR POR SCREENSHOT/GIF REAL */}
+          <div className="flex h-full items-center justify-center">
+            <div className="flex flex-col items-center gap-2">
+              <div className="h-8 w-8 rounded-lg bg-landing-accent/10" />
+              <div className="h-1.5 w-20 rounded-full bg-[#f3f0ed]/[0.05]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function HowItWorks() {
+  const { user } = useAuth();
+  const isLoggedIn = !!user;
+  const { ref, isVisible } = useScrollReveal();
+  const t = useTranslations("howItWorks");
+
+  return (
+    <section className="py-16 sm:py-28 lg:py-36">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        {/* Header */}
+        <div
+          ref={ref}
+          className="mx-auto max-w-2xl text-center transition-all duration-700"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "translateY(0)" : "translateY(24px)",
+          }}
+        >
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-landing-accent">
+            {t("tag")}
+          </span>
+          <h2 className="mt-4 font-sora text-[26px] font-bold tracking-tight text-landing-text sm:mt-5 sm:text-3xl lg:text-[44px]">
+            {t("title")}
+          </h2>
+          <p className="mt-3.5 text-[15px] leading-relaxed text-landing-text-secondary sm:mt-5 sm:text-[17px]">
+            {t("subtitle")}
+          </p>
+        </div>
+
+        {/* Steps */}
+        <div className="relative mt-10 sm:mt-16 lg:mt-20">
+          {/* Dashed connector (desktop) */}
+          <div className="absolute top-[160px] hidden h-px w-full md:block">
+            <div className="mx-auto w-2/3 border-t border-dashed border-[#f3f0ed]/[0.06]" />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3 lg:gap-7">
+            {STEP_META.map((step, i) => (
+              <Step
+                key={step.num}
+                step={step}
+                i={i}
+                title={t(`${step.key}.title`)}
+                desc={t(`${step.key}.description`)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-10 flex justify-center sm:mt-14">
+          <a
+            href="/workspace"
+            className="group inline-flex items-center gap-2.5 rounded-xl bg-landing-accent px-6 py-3 text-[13px] font-bold text-landing-bg-secondary shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-colors duration-200 hover:bg-[#f75fae] active:scale-[0.98] sm:px-7 sm:py-3.5 sm:text-[14px]"
+          >
+            {isLoggedIn ? t("ctaLoggedIn") : t("cta")}
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
