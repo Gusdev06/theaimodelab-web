@@ -41,7 +41,8 @@ function CreditosPageContent() {
   const autoSubscribeTriggered = useRef(false);
   const loadingMsg = useLoadingMessage('creditos');
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState<'plans' | 'credits'>('plans');
+  // Assinaturas descontinuadas: monetização é 100% via pacotes de crédito.
+  const [activeTab, setActiveTab] = useState<'plans' | 'credits'>('credits');
   const [subscribingSlug, setSubscribingSlug] = useState<string | null>(null);
   const [pendingDowngradeSlug, setPendingDowngradeSlug] = useState<string | null>(null);
   const [isDowngrading, setIsDowngrading] = useState(false);
@@ -464,13 +465,15 @@ function CreditosPageContent() {
             {packages && packages.length > 0 && (
               <div className="flex justify-center">
                 <div className="flex rounded-xl border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.03] p-1 gap-1">
-                  <button
-                    onClick={() => setActiveTab('plans')}
-                    className={`flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-all duration-200 ${activeTab === 'plans' ? 'bg-[#f3f0ed]/[0.1] text-[#f3f0ed] shadow-sm' : 'text-[#f3f0ed]/40 hover:text-[#f3f0ed]/70'}`}
-                  >
-                    <BadgePercent className="h-3.5 w-3.5" />
-                    {t('tabPlans')}
-                  </button>
+                  {sortedPlans.length > 0 && (
+                    <button
+                      onClick={() => setActiveTab('plans')}
+                      className={`flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-all duration-200 ${activeTab === 'plans' ? 'bg-[#f3f0ed]/[0.1] text-[#f3f0ed] shadow-sm' : 'text-[#f3f0ed]/40 hover:text-[#f3f0ed]/70'}`}
+                    >
+                      <BadgePercent className="h-3.5 w-3.5" />
+                      {t('tabPlans')}
+                    </button>
+                  )}
                   <button
                     onClick={() => setActiveTab('credits')}
                     className={`flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-all duration-200 ${activeTab === 'credits' ? 'bg-[#f3f0ed]/[0.1] text-[#f3f0ed] shadow-sm' : 'text-[#f3f0ed]/40 hover:text-[#f3f0ed]/70'}`}

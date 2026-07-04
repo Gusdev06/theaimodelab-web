@@ -40,7 +40,8 @@ export function PricingView() {
   const uiCurrency = locale === 'pt-BR' ? 'BRL' : 'USD';
   const { accessToken } = useAuth();
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState<'plans' | 'credits'>('plans');
+  // Assinaturas descontinuadas: monetização é 100% via pacotes de crédito.
+  const [activeTab, setActiveTab] = useState<'plans' | 'credits'>('credits');
   const [subscribingSlug, setSubscribingSlug] = useState<string | null>(null);
   const [pendingDowngradeSlug, setPendingDowngradeSlug] = useState<string | null>(null);
   const [isDowngrading, setIsDowngrading] = useState(false);
@@ -175,19 +176,21 @@ export function PricingView() {
             </div>
           ) : packages && packages.length > 0 ? (
             <div className="flex gap-1 rounded-[10px] border border-app-hairline bg-app-bg p-1">
-              <button
-                type="button"
-                onClick={() => setActiveTab('plans')}
-                className={cn(
-                  'flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-colors duration-200 ease-app',
-                  activeTab === 'plans'
-                    ? 'bg-app-surface text-app-text'
-                    : 'text-app-muted hover:text-app-text-2',
-                )}
-              >
-                <BadgePercent className="size-3.5" strokeWidth={1.8} />
-                {t('plansModal.tabPlans')}
-              </button>
+              {sorted.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('plans')}
+                  className={cn(
+                    'flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-colors duration-200 ease-app',
+                    activeTab === 'plans'
+                      ? 'bg-app-surface text-app-text'
+                      : 'text-app-muted hover:text-app-text-2',
+                  )}
+                >
+                  <BadgePercent className="size-3.5" strokeWidth={1.8} />
+                  {t('plansModal.tabPlans')}
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => setActiveTab('credits')}

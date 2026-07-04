@@ -30,9 +30,14 @@ interface CreditPackagesGridProps {
    */
   currency?: string;
   compact?: boolean;
+  /**
+   * Called when a purchase is attempted without an authenticated user
+   * (e.g. on the public landing). Use it to open the login/register modal.
+   */
+  onUnauthenticated?: () => void;
 }
 
-export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: CreditPackagesGridProps) {
+export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnauthenticated }: CreditPackagesGridProps) {
   const t = useTranslations('editorPlans');
   const locale = useLocale();
   const { accessToken } = useAuth();
@@ -50,7 +55,11 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
       : 0;
 
   async function handlePurchase(packageId: string) {
-    if (!accessToken || purchasingId) return;
+    if (purchasingId) return;
+    if (!accessToken) {
+      onUnauthenticated?.();
+      return;
+    }
     setPurchasingId(packageId);
     try {
       const { checkoutUrl } = await api.credits.purchase(accessToken, packageId, currency);
@@ -72,34 +81,10 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
     return Math.round((1 - priceCents / original) * 100);
   }
 
-  const PACKAGE_SECTIONS = [
-    { key: 'quick' as const, keys: ['mini', 'plus', 'pro-pack'] },
-    { key: 'volume' as const, keys: ['mega', 'ultra'] },
-  ];
-
-  function SectionTitle({ label }: { label: string }) {
-    return (
-      <div className="flex items-center gap-2.5">
-        <span className={`shrink-0 rounded-full bg-app-lime ${compact ? 'h-4 w-1' : 'h-5 w-[5px]'}`} />
-        <h3 className={`font-bold tracking-[-0.2px] text-app-text ${compact ? 'text-[16px]' : 'text-[19px]'}`}>
-          {label}
-        </h3>
-      </div>
-    );
-  }
-
   return (
     <div className={`flex flex-col ${compact ? 'gap-4' : 'gap-6'}`}>
-      {PACKAGE_SECTIONS.map((section) => {
-        const sectionPkgs = activePackages.filter((p) => section.keys.includes(getBoostMetaKey(p) ?? ''));
-        if (sectionPkgs.length === 0) return null;
-        const sectionLabel = section.key === 'quick' ? t('packageSections.quick') : t('packageSections.volume');
-        return (
-          <div key={section.key} className="flex flex-col gap-6">
-            <SectionTitle label={sectionLabel} />
-            <div className={`grid grid-cols-1 items-stretch sm:grid-cols-2 lg:grid-cols-3 ${compact ? 'gap-3' : 'gap-4 xl:gap-5'}`}>
-              {sectionPkgs.map((pkg) => {
-                const globalIndex = activePackages.indexOf(pkg);
+      <div className={`grid grid-cols-1 items-stretch sm:grid-cols-2 lg:grid-cols-3 ${compact ? 'gap-3' : 'gap-4 xl:gap-5'}`}>
+        {activePackages.map((pkg, globalIndex) => {
                 const badge = getPackageBadge(globalIndex, activePackages.length);
                 const isPopular = badge === 'popular';
                 const isBest = badge === 'best';
@@ -275,7 +260,7 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                       {isBRL && (
                         <button
                           type="button"
-                          onClick={() => setPixPkg(pkg)}
+                          onClick={() => (accessToken ? setPixPkg(pkg) : onUnauthenticated?.())}
                           disabled={!!purchasingId}
                           className={`group/pix relative mt-2 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl border border-[#32BCAD]/30 bg-gradient-to-r from-[#32BCAD]/[0.08] via-[#32BCAD]/[0.12] to-[#32BCAD]/[0.08] font-semibold text-[#5BD9CB] transition-all duration-300 hover:border-[#32BCAD]/55 hover:from-[#32BCAD]/[0.14] hover:via-[#32BCAD]/[0.2] hover:to-[#32BCAD]/[0.14] hover:text-[#7BE8DC] hover:shadow-[0_0_20px_rgba(50,188,173,0.18)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 ${compact ? 'h-9 text-[12px]' : 'h-10 text-[13px]'}`}
                         >
@@ -304,11 +289,8 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact }: Cred
                     </div>
                   </div>
                 );
-              })}
-            </div>
-          </div>
-        );
-      })}
+        })}
+      </div>
 
       {pixPkg && (
         <PixCheckoutModal pkg={pixPkg} onClose={() => setPixPkg(null)} />

@@ -123,6 +123,8 @@ export interface CreditPackage {
   priceCents: number;
   isActive: boolean;
   sortOrder: number;
+  /** Link de checkout externo (CenterPag). Compra via POST /credits/purchase já retorna esta URL. */
+  checkoutUrl?: string | null;
   createdAt: string;
 }
 
@@ -1788,6 +1790,10 @@ export const api = {
     packages(accessToken: string, currency?: string) {
       const qs = currency ? `?currency=${encodeURIComponent(currency)}` : '';
       return authRequest<CreditPackage[]>(`/api/v1/credits/packages${qs}`, accessToken);
+    },
+    packagesPublic(currency?: string) {
+      const qs = currency ? `?currency=${encodeURIComponent(currency)}` : '';
+      return request<CreditPackage[]>(`/api/v1/credits/packages/public${qs}`);
     },
     estimate(accessToken: string, payload: CreditsEstimateRequest) {
       return authRequest<CreditsEstimateResponse>('/api/v1/credits/estimate', accessToken, {
