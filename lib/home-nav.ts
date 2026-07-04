@@ -10,7 +10,6 @@ import {
   Mic,
   PersonStanding,
   Replace,
-  Rss,
   ScanFace,
   Search,
   Shirt,
@@ -53,7 +52,6 @@ export const SCREEN_TITLES: Record<string, { id: string; icon: LucideIcon }> = {
   '/voice': { id: 'textoParaVoz', icon: Mic },
   '/avatar': { id: 'avatar', icon: ScanFace },
   '/tiktok-shop': { id: 'tiktokShop', icon: Flame },
-  '/community': { id: 'comunidade', icon: Rss },
   '/pricing': { id: 'precos', icon: BadgePercent },
   '/perfil': { id: 'perfil', icon: UserRound },
 };

@@ -784,65 +784,10 @@ export interface WorkspaceContentInput {
   thumbnailUrl?: string;
 }
 
-// ─── Community + Notifications ───────────────────────────────────────────────
-
-export type CommunityPostStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
-
-export interface CommunityFeedPost {
-  id: string;
-  kind: 'image' | 'video';
-  mediaUrl: string;
-  thumbnailUrl: string | null;
-  prompt: string;
-  /** tags exibidas no lightbox (aspecto, modelo) */
-  settings: string[] | null;
-  likesCount: number;
-  likedByMe: boolean;
-  createdAt: string;
-  author: {
-    id: string;
-    name: string;
-    avatarUrl: string | null;
-    isFollowing: boolean;
-    /** true quando o post é do próprio usuário */
-    isMe: boolean;
-  };
-}
-
-export interface MyCommunityPost {
-  id: string;
-  kind: 'image' | 'video';
-  mediaUrl: string;
-  thumbnailUrl: string | null;
-  prompt: string;
-  settings: string[] | null;
-  status: CommunityPostStatus;
-  likesCount: number;
-  rejectionReason: string | null;
-  createdAt: string;
-}
-
-export interface AdminCommunityPost extends MyCommunityPost {
-  user: { id: string; name: string; email: string };
-}
-
-export interface CommunityUser {
-  id: string;
-  name: string;
-  avatarUrl: string | null;
-  isFollowing: boolean;
-  isMe: boolean;
-}
-
-export interface PublicProfile extends CommunityUser {
-  followers: number;
-  following: number;
-  postsCount: number;
-}
+// ─── Notifications ───────────────────────────────────────────────────────────
 
 export interface AppNotification {
   id: string;
-  /** community-submitted | community-approved | community-rejected | ... */
   type: string;
   data: Record<string, unknown> | null;
   readAt: string | null;
@@ -982,75 +927,6 @@ export interface InworldVoice {
 
 export interface InworldVoiceListResponse {
   voices: InworldVoice[];
-}
-
-// ─── Affiliates (Admin) ─────────────────────────────────────────────────────
-
-export type AffiliateDiscountScope = 'FIRST_PURCHASE' | 'ALL_PURCHASES';
-export type PixKeyType = 'CPF' | 'CNPJ' | 'EMAIL' | 'PHONE' | 'RANDOM';
-
-export interface Affiliate {
-  id: string;
-  userId: string | null;
-  code: string;
-  name: string;
-  commissionPercent: number;
-  isActive: boolean;
-  discountPercent: number | null;
-  discountAppliesTo: AffiliateDiscountScope;
-  pixKey: string | null;
-  pixKeyType: PixKeyType | null;
-  createdAt: string;
-  user: { id: string; email: string; name: string } | null;
-  _count: { earnings: number };
-  totalEarningsCents: number;
-  pendingEarningsCents: number;
-  referralsCount: number;
-  referredUsersCount: number;
-}
-
-export interface AffiliateEarning {
-  id: string;
-  affiliateId: string;
-  paymentId: string;
-  userId: string;
-  amountCents: number;
-  commissionCents: number;
-  status: 'PENDING' | 'PAID';
-  paidAt: string | null;
-  createdAt: string;
-  user: { id: string; email: string; name: string };
-  payment: { id: string; type: string; amountCents: number; createdAt: string };
-}
-
-export interface AffiliateDashboard {
-  totalAffiliates: number;
-  activeAffiliates: number;
-  referredUsers: number;
-  totalPayments: number;
-  totalRevenueCents: number;
-  totalCommissionCents: number;
-  pendingCommissionCents: number;
-  paidCommissionCents: number;
-}
-
-export interface AffiliateReferredUser {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: string;
-  plan: string;
-}
-
-export interface AffiliateEarningsResponse {
-  affiliate: Omit<Affiliate, '_count' | 'totalEarningsCents' | 'pendingEarningsCents' | 'referralsCount'>;
-  earnings: AffiliateEarning[];
-  summary: {
-    totalRevenueCents: number;
-    totalCommissionCents: number;
-    pendingCommissionCents: number;
-    paidCommissionCents: number;
-  };
 }
 
 // ─── Admin ───────────────────────────────────────────────────────────────────
@@ -2113,76 +1989,6 @@ export const api = {
     },
   },
 
-  community: {
-    feed(accessToken: string, page = 1, limit = 30) {
-      return authRequest<{ data: CommunityFeedPost[]; meta: { page: number; limit: number; total: number } }>(
-        `/api/v1/community/posts?page=${page}&limit=${limit}`,
-        accessToken,
-      );
-    },
-    mine(accessToken: string) {
-      return authRequest<MyCommunityPost[]>('/api/v1/community/posts/mine', accessToken);
-    },
-    post(accessToken: string, postId: string) {
-      return authRequest<CommunityFeedPost>(`/api/v1/community/posts/${postId}`, accessToken);
-    },
-    submit(accessToken: string, payload: { generationId: string; outputUrl?: string }) {
-      return authRequest<MyCommunityPost>('/api/v1/community/posts', accessToken, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      });
-    },
-    like(accessToken: string, postId: string) {
-      return authRequest<{ liked: boolean; likesCount: number }>(
-        `/api/v1/community/posts/${postId}/like`,
-        accessToken,
-        { method: 'POST' },
-      );
-    },
-    unlike(accessToken: string, postId: string) {
-      return authRequest<{ liked: boolean; likesCount: number }>(
-        `/api/v1/community/posts/${postId}/like`,
-        accessToken,
-        { method: 'DELETE' },
-      );
-    },
-    followStats(accessToken: string) {
-      return authRequest<{ followers: number; following: number }>(
-        '/api/v1/community/me/follow-stats',
-        accessToken,
-      );
-    },
-    followers(accessToken: string) {
-      return authRequest<CommunityUser[]>('/api/v1/community/me/followers', accessToken);
-    },
-    followingList(accessToken: string) {
-      return authRequest<CommunityUser[]>('/api/v1/community/me/following', accessToken);
-    },
-    userProfile(accessToken: string, userId: string) {
-      return authRequest<PublicProfile>(`/api/v1/community/users/${userId}`, accessToken);
-    },
-    userPosts(accessToken: string, userId: string, page = 1, limit = 30) {
-      return authRequest<{ data: CommunityFeedPost[]; meta: { page: number; limit: number; total: number } }>(
-        `/api/v1/community/users/${userId}/posts?page=${page}&limit=${limit}`,
-        accessToken,
-      );
-    },
-    follow(accessToken: string, userId: string) {
-      return authRequest<{ following: boolean }>(
-        `/api/v1/community/users/${userId}/follow`,
-        accessToken,
-        { method: 'POST' },
-      );
-    },
-    unfollow(accessToken: string, userId: string) {
-      return authRequest<{ following: boolean }>(
-        `/api/v1/community/users/${userId}/follow`,
-        accessToken,
-        { method: 'DELETE' },
-      );
-    },
-  },
-
   notifications: {
     list(accessToken: string) {
       return authRequest<{ data: AppNotification[]; unreadCount: number }>(
@@ -2416,82 +2222,6 @@ export const api = {
         meta: { page: 1, limit: total, total },
       };
     },
-    affiliatesDashboard(accessToken: string) {
-      return authRequest<AffiliateDashboard>('/api/v1/admin/affiliates/dashboard', accessToken);
-    },
-    affiliatesList(accessToken: string) {
-      return authRequest<Affiliate[]>('/api/v1/admin/affiliates', accessToken);
-    },
-    affiliateById(accessToken: string, id: string) {
-      return authRequest<Affiliate>(`/api/v1/admin/affiliates/${id}`, accessToken);
-    },
-    affiliateEarnings(accessToken: string, id: string) {
-      return authRequest<AffiliateEarningsResponse>(`/api/v1/admin/affiliates/${id}/earnings`, accessToken);
-    },
-    affiliateReferredUsers(accessToken: string, id: string) {
-      return authRequest<AffiliateReferredUser[]>(`/api/v1/admin/affiliates/${id}/referred-users`, accessToken);
-    },
-    createAffiliate(
-      accessToken: string,
-      data: {
-        name: string;
-        code: string;
-        commissionPercent?: number;
-        userId?: string;
-        discountPercent?: number;
-        discountAppliesTo?: AffiliateDiscountScope;
-      },
-    ) {
-      return authRequest<Affiliate>('/api/v1/admin/affiliates', accessToken, {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
-    },
-    updateAffiliate(
-      accessToken: string,
-      id: string,
-      data: {
-        name?: string;
-        commissionPercent?: number;
-        userId?: string | null;
-        discountPercent?: number | null;
-        discountAppliesTo?: AffiliateDiscountScope;
-      },
-    ) {
-      return authRequest<Affiliate>(`/api/v1/admin/affiliates/${id}`, accessToken, {
-        method: 'PATCH',
-        body: JSON.stringify(data),
-      });
-    },
-    toggleAffiliate(accessToken: string, id: string) {
-      return authRequest<Affiliate>(`/api/v1/admin/affiliates/${id}/toggle-active`, accessToken, {
-        method: 'PATCH',
-      });
-    },
-    deleteAffiliate(accessToken: string, id: string) {
-      return authRequest<{ id: string; code: string; deletedEarnings: number }>(
-        `/api/v1/admin/affiliates/${id}`,
-        accessToken,
-        { method: 'DELETE' },
-      );
-    },
-    markEarningsPaid(
-      accessToken: string,
-      earningIds: string[],
-      receipt?: { base64: string; filename: string; mimeType: string },
-    ) {
-      return authRequest<{ updated: number }>('/api/v1/admin/affiliates/earnings/mark-paid', accessToken, {
-        method: 'POST',
-        body: JSON.stringify({
-          earningIds,
-          ...(receipt && {
-            receiptBase64: receipt.base64,
-            receiptFilename: receipt.filename,
-            receiptMimeType: receipt.mimeType,
-          }),
-        }),
-      });
-    },
     upload(accessToken: string, filename: string, contentType: string, folder: string) {
       return authRequest<{ uploadUrl: string; fileKey: string; publicUrl: string }>(
         '/api/v1/admin/upload',
@@ -2687,41 +2417,6 @@ export const api = {
         });
       },
     },
-
-    community: {
-      list(accessToken: string, status: CommunityPostStatus = 'PENDING', page = 1, limit = 30) {
-        const params = new URLSearchParams({ status, page: String(page), limit: String(limit) });
-        return authRequest<{ data: AdminCommunityPost[]; meta: { page: number; limit: number; total: number } }>(
-          `/api/v1/admin/community/posts?${params.toString()}`,
-          accessToken,
-        );
-      },
-      create(
-        accessToken: string,
-        payload: { kind: 'image' | 'video'; mediaUrl: string; thumbnailUrl?: string; prompt?: string },
-      ) {
-        return authRequest<AdminCommunityPost>('/api/v1/admin/community/posts', accessToken, {
-          method: 'POST',
-          body: JSON.stringify(payload),
-        });
-      },
-      approve(accessToken: string, id: string) {
-        return authRequest<MyCommunityPost>(`/api/v1/admin/community/posts/${id}/approve`, accessToken, {
-          method: 'POST',
-        });
-      },
-      reject(accessToken: string, id: string, reason?: string) {
-        return authRequest<MyCommunityPost>(`/api/v1/admin/community/posts/${id}/reject`, accessToken, {
-          method: 'POST',
-          body: JSON.stringify(reason ? { reason } : {}),
-        });
-      },
-      delete(accessToken: string, id: string) {
-        return authRequest<void>(`/api/v1/admin/community/posts/${id}`, accessToken, {
-          method: 'DELETE',
-        });
-      },
-    },
   },
 
   adminEmails: {
@@ -2857,7 +2552,7 @@ export const api = {
       });
     },
 
-    register(email: string, name: string, password: string, referralCode?: string) {
+    register(email: string, name: string, password: string) {
       const tracking = readAttribution();
       return request<AuthResponse>('/api/v1/auth/register', {
         method: 'POST',
@@ -2865,7 +2560,6 @@ export const api = {
           email,
           name,
           password,
-          ...(referralCode && { referralCode }),
           ...(tracking && { tracking }),
         }),
       });
@@ -2878,13 +2572,12 @@ export const api = {
       });
     },
 
-    google(googleToken: string, referralCode?: string) {
+    google(googleToken: string) {
       const tracking = readAttribution();
       return request<AuthResponse>('/api/v1/auth/google', {
         method: 'POST',
         body: JSON.stringify({
           googleToken,
-          ...(referralCode && { referralCode }),
           ...(tracking && { tracking }),
         }),
       });
@@ -2931,77 +2624,6 @@ export const api = {
       });
     },
 
-  },
-
-  affiliates: {
-    async me(accessToken: string) {
-      const result = await authRequest<{
-        affiliate: {
-          id: string;
-          code: string;
-          name: string;
-          commissionPercent: number;
-          isActive: boolean;
-          pixKey: string | null;
-          pixKeyType: PixKeyType | null;
-          createdAt: string;
-        };
-        summary: {
-          referredUsers: number;
-          totalPayments: number;
-          totalRevenueCents: number;
-          totalCommissionCents: number;
-          pendingCommissionCents: number;
-          availableCommissionCents: number;
-          maturingCommissionCents: number;
-          paidCommissionCents: number;
-          maturationDays: number;
-        };
-        earnings: {
-          id: string;
-          amountCents: number;
-          commissionCents: number;
-          status: 'PENDING' | 'PAID';
-          paidAt: string | null;
-          createdAt: string;
-          user: { name: string; email: string };
-          payment: {
-            type: string;
-            amountCents: number;
-            subscription: { plan: { name: string; slug: string } } | null;
-            creditPackage: { name: string; credits: number } | null;
-          };
-        }[];
-      } | null | undefined>('/api/v1/affiliates/me', accessToken);
-      return result ?? null;
-    },
-
-    createMe(accessToken: string, data: { pixKey: string; pixKeyType: PixKeyType }) {
-      return authRequest<{
-        id: string;
-        code: string;
-        name: string;
-        commissionPercent: number;
-        isActive: boolean;
-        pixKey: string | null;
-        pixKeyType: PixKeyType | null;
-        createdAt: string;
-      }>('/api/v1/affiliates/me', accessToken, {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
-    },
-
-    updateMyPixKey(accessToken: string, data: { pixKey: string; pixKeyType: PixKeyType }) {
-      return authRequest<{
-        id: string;
-        pixKey: string;
-        pixKeyType: PixKeyType;
-      }>('/api/v1/affiliates/me/pix-key', accessToken, {
-        method: 'PATCH',
-        body: JSON.stringify(data),
-      });
-    },
   },
 
   adminCrons: {

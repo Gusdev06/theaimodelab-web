@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Bell, CheckCircle2, Hourglass, Loader2, UserPlus, XCircle, type LucideIcon } from 'lucide-react';
+import { Bell, Loader2 } from 'lucide-react';
 import { cn, formatRelativeTime } from '@/lib/utils';
 import { api, type AppNotification } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
@@ -13,34 +13,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-const TYPE_ICONS: Record<string, { icon: LucideIcon; className: string }> = {
-  'community-submitted': { icon: Hourglass, className: 'text-app-text-2' },
-  'community-approved': { icon: CheckCircle2, className: 'text-app-lime' },
-  'community-rejected': { icon: XCircle, className: 'text-red-400' },
-  'user-followed': { icon: UserPlus, className: 'text-app-lime' },
-};
-
 function NotificationRow({ notification }: { notification: AppNotification }) {
   const t = useTranslations('home');
   const locale = useLocale();
-  const meta = TYPE_ICONS[notification.type] ?? {
-    icon: Bell,
-    className: 'text-app-text-2',
-  };
-  const Icon = meta.icon;
   const unread = !notification.readAt;
   const reason = (notification.data?.reason as string | undefined) ?? null;
-
-  // texto pelo tipo; tipos desconhecidos caem no genérico
-  const known = notification.type in TYPE_ICONS;
-  const text =
-    notification.type === 'user-followed'
-      ? t('notifications.types.user-followed', {
-          name: (notification.data?.followerName as string | undefined) || '',
-        })
-      : known
-        ? t(`notifications.types.${notification.type}` as 'notifications.types.community-approved')
-        : t('notifications.generic');
+  const text = t('notifications.generic');
 
   return (
     <div
@@ -50,7 +28,7 @@ function NotificationRow({ notification }: { notification: AppNotification }) {
       )}
     >
       <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg border border-app-hairline bg-app-bg">
-        <Icon className={cn('size-4', meta.className)} strokeWidth={1.8} />
+        <Bell className="size-4 text-app-text-2" strokeWidth={1.8} />
       </span>
       <div className="min-w-0 flex-1">
         <p className="text-[13px] leading-snug text-app-text">{text}</p>

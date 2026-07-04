@@ -23,7 +23,6 @@ async function loadPartials(locale: Locale): Promise<Record<string, unknown>> {
     'home',
     'workspace',
     'account',
-    'affiliate',
     'editor',
     'editor-plans',
     'editor-panels',

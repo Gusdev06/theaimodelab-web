@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -16,27 +15,19 @@ import {
   Crown,
   ExternalLink,
   Gift,
-  Heart,
-  ImageOff,
-  Images,
   Image as ImageIcon,
-  Link as LinkIcon,
   Loader2,
   Receipt,
   Settings,
   Sparkles,
   TrendingUp,
-  Users as UsersIcon,
   Video,
   Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PLANS_ENABLED } from '@/lib/features';
-import { api, type CommunityFeedPost, type CreditTransaction, type MyCommunityPost } from '@/lib/api';
+import { api, type CreditTransaction } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
-import { EmptyState } from '@/components/app/EmptyState';
-import { CommunityLightbox } from '@/components/community/CommunityLightbox';
-import { FollowListModal } from '@/components/profile/FollowListModal';
 import { ManageSubscriptionModal } from '@/components/editor/ManageSubscriptionModal';
 
 // ─── Avatar com anel de créditos ─────────────────────────────────────────────
@@ -83,81 +74,6 @@ function AvatarRing({
         )}
       </span>
     </div>
-  );
-}
-
-// ─── Card de publicação ──────────────────────────────────────────────────────
-
-const STATUS_STYLE: Record<MyCommunityPost['status'], { label: string; className: string }> = {
-  PENDING: { label: '', className: 'border-yellow-500/30 bg-yellow-500/15 text-yellow-400' },
-  APPROVED: { label: '', className: 'border-app-lime/30 bg-app-lime/15 text-app-lime' },
-  REJECTED: { label: '', className: 'border-red-500/30 bg-red-500/15 text-red-400' },
-};
-
-function MyPostCard({ post, onOpen }: { post: MyCommunityPost; onOpen: () => void }) {
-  const t = useTranslations('home');
-  const [mediaError, setMediaError] = useState(false);
-  const isVideo = post.kind === 'video';
-  const thumb = isVideo ? post.thumbnailUrl : post.mediaUrl;
-  const showMedia = !!thumb && !mediaError;
-  const status = STATUS_STYLE[post.status];
-
-  return (
-    <article className="group mb-5 break-inside-avoid">
-      <button
-        type="button"
-        onClick={onOpen}
-        className={cn(
-          'relative block w-full overflow-hidden rounded-[14px] border border-app-hairline bg-[linear-gradient(135deg,#1d2628,#161d1f)] text-left transition-colors duration-200 ease-app hover:border-app-hairline-2',
-          !showMedia && 'h-[200px]',
-        )}
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(225,29,42,0.08),transparent_55%)]" />
-        {showMedia ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={thumb!}
-            alt={post.prompt}
-            loading="lazy"
-            onError={() => setMediaError(true)}
-            className="relative block w-full transition-transform duration-300 ease-app group-hover:scale-[1.03]"
-          />
-        ) : isVideo && !mediaError ? (
-          <video
-            src={post.mediaUrl}
-            muted
-            playsInline
-            preload="metadata"
-            onError={() => setMediaError(true)}
-            className="relative block w-full transition-transform duration-300 ease-app group-hover:scale-[1.03]"
-          />
-        ) : (
-          <ImageOff className="absolute left-1/2 top-1/2 size-7 -translate-x-1/2 -translate-y-1/2 text-app-muted" strokeWidth={1.6} />
-        )}
-
-        {/* status (oculto quando aprovado) */}
-        {post.status !== 'APPROVED' && (
-          <span
-            className={cn(
-              'absolute left-2.5 top-2.5 rounded-full border px-2.5 py-1 text-[11px] font-bold backdrop-blur-md',
-              status.className,
-            )}
-          >
-            {t(`profile.status.${post.status === 'PENDING' ? 'pending' : 'rejected'}`)}
-          </span>
-        )}
-
-        {/* curtidas */}
-        <span className="absolute bottom-2.5 right-2.5 flex items-center gap-1 rounded-full bg-[rgba(13,16,17,0.65)] px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur-md">
-          <Heart className="size-3 text-app-lime" strokeWidth={2} fill="currentColor" />
-          {post.likesCount}
-        </span>
-      </button>
-
-      {post.status === 'REJECTED' && post.rejectionReason && (
-        <p className="mt-1.5 text-[12px] leading-snug text-red-400/80">{post.rejectionReason}</p>
-      )}
-    </article>
   );
 }
 
@@ -313,22 +229,16 @@ function UsageTab({ accessToken, dateLocale }: { accessToken: string; dateLocale
 
 // ─── View ────────────────────────────────────────────────────────────────────
 
-export type ProfileTab = 'account' | 'posts' | 'usage';
+export type ProfileTab = 'account' | 'usage';
 
 export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTab }) {
   const t = useTranslations('home');
   const tp = useTranslations('account.profile');
   const locale = useLocale();
-  const router = useRouter();
   const queryClient = useQueryClient();
   const { accessToken } = useAuth();
   const [tab, setTab] = useState<ProfileTab>(initialTab);
   const [showManageModal, setShowManageModal] = useState(false);
-  const [followModal, setFollowModal] = useState<'followers' | 'following' | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [lightboxClosing, setLightboxClosing] = useState(false);
-  const [likeOverrides, setLikeOverrides] = useState<Record<string, { liked: boolean; count: number }>>({});
-  const lightboxTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { data: profile } = useQuery({
     queryKey: ['user', 'me'],
@@ -338,21 +248,6 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
   const { data: balance } = useQuery({
     queryKey: ['credits', 'balance'],
     queryFn: () => api.credits.balance(accessToken!),
-    enabled: !!accessToken,
-  });
-  const { data: affiliate } = useQuery({
-    queryKey: ['affiliate', 'me'],
-    queryFn: () => api.affiliates.me(accessToken!),
-    enabled: !!accessToken,
-  });
-  const { data: posts, isPending: postsPending } = useQuery({
-    queryKey: ['community', 'mine'],
-    queryFn: () => api.community.mine(accessToken!),
-    enabled: !!accessToken,
-  });
-  const { data: followStats } = useQuery({
-    queryKey: ['community', 'follow-stats'],
-    queryFn: () => api.community.followStats(accessToken!),
     enabled: !!accessToken,
   });
 
@@ -367,12 +262,6 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
 
   const dateLocale = locale === 'pt-BR' ? 'pt-BR' : locale === 'es' ? 'es' : 'en-US';
   const numFmt = useMemo(() => new Intl.NumberFormat(dateLocale), [dateLocale]);
-
-  useEffect(() => {
-    return () => {
-      if (lightboxTimer.current) clearTimeout(lightboxTimer.current);
-    };
-  }, []);
 
   if (!profile) {
     return (
@@ -412,71 +301,6 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
     : '';
 
   const avatarUrl = typeof profile.avatarUrl === 'string' ? profile.avatarUrl : null;
-  const postCount = posts?.length ?? 0;
-
-  // posts adaptados ao formato do feed para reusar o CommunityLightbox
-  const feedPosts: CommunityFeedPost[] = (posts ?? []).map((p) => {
-    const ov = likeOverrides[p.id];
-    return {
-      id: p.id,
-      kind: p.kind,
-      mediaUrl: p.mediaUrl,
-      thumbnailUrl: p.thumbnailUrl,
-      prompt: p.prompt,
-      settings: p.settings,
-      likesCount: ov?.count ?? p.likesCount,
-      likedByMe: ov?.liked ?? false,
-      createdAt: p.createdAt,
-      author: { id: profile.id, name: profile.name, avatarUrl, isFollowing: false, isMe: true },
-    };
-  });
-
-  const selectedIndex = feedPosts.findIndex((p) => p.id === selectedId);
-  const selected = selectedIndex >= 0 ? feedPosts[selectedIndex] : null;
-
-  const openLightbox = (id: string) => {
-    if (lightboxTimer.current) clearTimeout(lightboxTimer.current);
-    setLightboxClosing(false);
-    setSelectedId(id);
-  };
-  const closeLightbox = () => {
-    setLightboxClosing(true);
-    lightboxTimer.current = setTimeout(() => {
-      setSelectedId(null);
-      setLightboxClosing(false);
-    }, 180);
-  };
-  const stepLightbox = (delta: number) => {
-    if (feedPosts.length === 0 || selectedIndex < 0) return;
-    const next = (selectedIndex + delta + feedPosts.length) % feedPosts.length;
-    setSelectedId(feedPosts[next].id);
-  };
-
-  const toggleLike = (p: CommunityFeedPost) => {
-    if (!accessToken) return;
-    const liked = p.likedByMe;
-    setLikeOverrides((prev) => ({
-      ...prev,
-      [p.id]: { liked: !liked, count: Math.max(0, p.likesCount + (liked ? -1 : 1)) },
-    }));
-    (liked ? api.community.unlike(accessToken, p.id) : api.community.like(accessToken, p.id)).catch(
-      () => setLikeOverrides((prev) => ({ ...prev, [p.id]: { liked, count: p.likesCount } })),
-    );
-  };
-
-  const stats = [
-    { id: 'posts' as const, label: t('profile.stats.posts'), value: numFmt.format(postCount) },
-    {
-      id: 'followers' as const,
-      label: t('profile.stats.followers'),
-      value: numFmt.format(followStats?.followers ?? 0),
-    },
-    {
-      id: 'following' as const,
-      label: t('profile.stats.following'),
-      value: numFmt.format(followStats?.following ?? 0),
-    },
-  ];
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto scrollbar-app">
@@ -500,39 +324,13 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
                 )}
               </div>
               <p className="mt-0.5 truncate text-[14px] text-app-text-2">{profile.email}</p>
-
-              {/* números (estilo Instagram) */}
-              <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-1.5">
-                {stats.map(({ id, label, value }) => {
-                  const clickable = id === 'followers' || id === 'following';
-                  const content = (
-                    <>
-                      <span className="font-bold text-app-text">{value}</span> {label}
-                    </>
-                  );
-                  return clickable ? (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => setFollowModal(id)}
-                      className="text-[13.5px] text-app-muted transition-colors duration-200 ease-app hover:text-app-text-2"
-                    >
-                      {content}
-                    </button>
-                  ) : (
-                    <span key={id} className="text-[13.5px] text-app-muted">
-                      {content}
-                    </span>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </div>
 
         {/* abas — roláveis no mobile */}
         <div className="mt-6 flex items-center gap-1 overflow-x-auto border-b border-app-hairline [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {(['account', 'posts', 'usage'] as const).map((id) => (
+          {(['account', 'usage'] as const).map((id) => (
             <button
               key={id}
               type="button"
@@ -549,34 +347,6 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
             </button>
           ))}
         </div>
-
-        {/* conteúdo — publicações */}
-        {tab === 'posts' && (
-          <div className="mt-6">
-            {postsPending ? (
-              <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 xl:columns-4">
-                {[220, 280, 180, 260, 200, 300, 240, 190].map((h, i) => (
-                  <div key={i} className="mb-5 break-inside-avoid">
-                    <div className="skeleton-app w-full rounded-[14px] bg-app-surface" style={{ height: h }} />
-                  </div>
-                ))}
-              </div>
-            ) : postCount === 0 ? (
-              <EmptyState
-                icon={Images}
-                title={t('profile.postsEmpty')}
-                hint={t('profile.postsEmptyHint')}
-                cta={{ label: t('community.post'), href: '/community' }}
-              />
-            ) : (
-              <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 xl:columns-4">
-                {posts!.map((post) => (
-                  <MyPostCard key={post.id} post={post} onOpen={() => openLightbox(post.id)} />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
 
         {/* conteúdo — uso */}
         {tab === 'usage' && accessToken && (
@@ -641,41 +411,6 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
             </div>
             )}
 
-            {/* afiliados */}
-            {affiliate?.affiliate ? (
-              <button
-                type="button"
-                onClick={() => router.push('/painel-afiliado')}
-                className="flex items-center gap-3 rounded-[14px] border border-app-lime/20 bg-app-lime/[0.06] px-4 py-3.5 text-left transition-colors duration-200 ease-app hover:bg-app-lime/[0.1]"
-              >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-app-lime/15">
-                  <LinkIcon className="size-4 text-app-lime" strokeWidth={1.8} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[14px] font-semibold text-app-text">{tp('affiliateDashboard')}</p>
-                  <p className="mt-0.5 text-[12px] text-app-muted">
-                    {tp('affiliateCodeLabel')}: <span className="font-mono text-app-lime/80">{affiliate.affiliate.code}</span>
-                  </p>
-                </div>
-                <ExternalLink className="size-4 shrink-0 text-app-muted" strokeWidth={1.8} />
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => router.push('/painel-afiliado')}
-                className="flex items-center gap-3 rounded-[14px] border border-app-hairline bg-app-surface px-4 py-3.5 text-left transition-colors duration-200 ease-app hover:border-app-hairline-2"
-              >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-app-card">
-                  <UsersIcon className="size-4 text-app-lime" strokeWidth={1.8} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[14px] font-semibold text-app-text">{tp('becomeAffiliate')}</p>
-                  <p className="mt-0.5 text-[12px] text-app-muted">{tp('affiliateTagline')}</p>
-                </div>
-                <ExternalLink className="size-4 shrink-0 text-app-muted" strokeWidth={1.8} />
-              </button>
-            )}
-
             {/* gerenciar assinatura — oculto enquanto planos estão desativados */}
             {PLANS_ENABLED && (
             <button
@@ -707,21 +442,6 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
           </div>
         )}
       </div>
-
-      {selected && (
-        <CommunityLightbox
-          post={selected}
-          closing={lightboxClosing}
-          onClose={closeLightbox}
-          onPrev={() => stepLightbox(-1)}
-          onNext={() => stepLightbox(1)}
-          onToggleLike={() => toggleLike(selected)}
-        />
-      )}
-
-      {followModal && accessToken && (
-        <FollowListModal mode={followModal} accessToken={accessToken} onClose={() => setFollowModal(null)} />
-      )}
 
       {PLANS_ENABLED && showManageModal && <ManageSubscriptionModal onClose={() => setShowManageModal(false)} />}
     </div>

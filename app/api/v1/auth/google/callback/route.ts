@@ -37,14 +37,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL('/login?error=google_no_token', origin));
     }
 
-    // Read referral code from cookie if present
-    const referralCode = request.cookies.get('theaimodelab-ref')?.value;
-
     // Send ID token to backend (same endpoint used before)
     const authRes = await fetch(`${BASE_URL}api/v1/auth/google`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ googleToken: idToken, ...(referralCode && { referralCode }) }),
+      body: JSON.stringify({ googleToken: idToken }),
     });
 
     if (!authRes.ok) {

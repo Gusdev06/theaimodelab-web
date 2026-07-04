@@ -36,7 +36,6 @@
       "signIn": "Sign in",
       "account": "Account",
       "profile": "Profile",
-      "posts": "Posts",
       "credits": "Credits",
       "usage": "My usage",
       "logout": "Log out"
@@ -51,7 +50,6 @@
     "nav": {
       "inicio": "Home",
       "pesquisar": "Search",
-      "comunidade": "Community",
       "galeria": "Gallery",
       "prompts": "Prompt Library",
       "todasFerramentas": "All tools",
@@ -69,60 +67,13 @@
       "perfil": "Profile"
     },
     "profile": {
-      "tabs": { "account": "Account", "posts": "Posts", "usage": "Usage" },
-      "stats": { "posts": "Posts", "followers": "Followers", "following": "Following", "likes": "Likes", "credits": "Credits" },
-      "status": { "pending": "Under review", "rejected": "Rejected" },
-      "postsEmpty": "You haven't posted anything yet",
-      "postsEmptyHint": "Share your creations with the community.",
-      "followersEmpty": "No one follows you yet.",
-      "followingEmpty": "You're not following anyone yet.",
-      "publicEmpty": "No posts yet"
-    },
-    "community": {
-      "subtitle": "Explore what the community is creating.",
-      "searchPlaceholder": "Search the community...",
-      "follow": "Follow",
-      "following": "Following",
-      "share": "Share",
-      "linkCopied": "Link copied!",
-      "linkCopiedShort": "Copied",
-      "shareError": "Could not share.",
-      "postNotFound": "Post not found",
-      "promptLabel": "Prompt",
-      "showMore": "see more",
-      "showLess": "see less",
-      "settingsLabel": "Settings",
-      "recreate": "Recreate",
-      "createVideo": "Create video",
-      "useAsReference": "Use as reference",
-      "prev": "Previous post",
-      "next": "Next post",
-      "back": "Back",
-      "post": "Post",
-      "submitTitle": "Post to the community",
-      "submitSubtitle": "Pick a creation from your gallery to submit.",
-      "submitCta": "Send for review",
-      "submitHint": "Your post goes through a quick review before everyone can see it.",
-      "filters": { "all": "All", "image": "Images", "video": "Videos" },
-      "submitSuccess": "Sent for review!",
-      "submitSuccessDesc": "You'll be notified when your post is approved.",
-      "submitError": "Could not submit. Please try again.",
-      "pickerEmpty": "You don't have any creations yet",
-      "pickerEmptyHint": "Generate an image or video first.",
-      "empty": "No posts yet",
-      "emptyHint": "Be the first to share a creation."
+      "tabs": { "account": "Account", "usage": "Usage" }
     },
     "notifications": {
       "title": "Notifications",
       "clear": "Clear",
       "empty": "Nothing here yet.",
-      "generic": "You have a new notification.",
-      "types": {
-        "community-submitted": "Your post is under review.",
-        "community-approved": "Your post was approved and is now live in the community!",
-        "community-rejected": "Your post was not approved.",
-        "user-followed": "{name} started following you."
-      }
+      "generic": "You have a new notification."
     },
     "workspaces": {
       "title": "Workspace",
@@ -433,7 +384,6 @@
         "tiktokShop": "TikTok Shop",
         "clonarPrompt": "Clone prompt",
         "bibliotecaPrompts": "Prompt Library",
-        "visitarComunidade": "Visit the community",
         "todasFerramentas": "All tools",
         "precos": "Plans & pricing",
         "perfil": "Profile"

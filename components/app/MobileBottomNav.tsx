@@ -9,7 +9,7 @@ import { useShell } from '@/components/app/shell-context';
 
 /**
  * Navegação inferior do mobile (visível abaixo de `lg`). Substitui a sidebar
- * vertical: Pesquisar · Comunidade · Galeria · Workspace · Ferramentas.
+ * vertical: Pesquisar · Galeria · Workspace · Ferramentas.
  * Barra flutuante fixa, no mesmo recuo dos cards do shell.
  */
 export function MobileBottomNav() {

@@ -36,7 +36,6 @@
       "signIn": "Entrar",
       "account": "Conta",
       "profile": "Perfil",
-      "posts": "Publicações",
       "credits": "Créditos",
       "usage": "Meu uso",
       "logout": "Sair"
@@ -51,7 +50,6 @@
     "nav": {
       "inicio": "Início",
       "pesquisar": "Pesquisar",
-      "comunidade": "Comunidade",
       "galeria": "Galeria",
       "prompts": "Biblioteca de Prompts",
       "todasFerramentas": "Todas as ferramentas",
@@ -69,60 +67,13 @@
       "perfil": "Perfil"
     },
     "profile": {
-      "tabs": { "account": "Conta", "posts": "Publicações", "usage": "Uso" },
-      "stats": { "posts": "Publicações", "followers": "Seguidores", "following": "Seguindo", "likes": "Curtidas", "credits": "Créditos" },
-      "status": { "pending": "Em análise", "rejected": "Rejeitado" },
-      "postsEmpty": "Você ainda não publicou nada",
-      "postsEmptyHint": "Compartilhe suas criações com a comunidade.",
-      "followersEmpty": "Ninguém te segue ainda.",
-      "followingEmpty": "Você ainda não segue ninguém.",
-      "publicEmpty": "Nenhuma publicação ainda"
-    },
-    "community": {
-      "subtitle": "Explore o que a comunidade está criando.",
-      "searchPlaceholder": "Buscar na comunidade...",
-      "follow": "Seguir",
-      "following": "Seguindo",
-      "share": "Compartilhar",
-      "linkCopied": "Link copiado!",
-      "linkCopiedShort": "Copiado",
-      "shareError": "Não foi possível compartilhar.",
-      "postNotFound": "Publicação não encontrada",
-      "promptLabel": "Prompt",
-      "showMore": "ver mais",
-      "showLess": "ver menos",
-      "settingsLabel": "Configurações",
-      "recreate": "Recriar",
-      "createVideo": "Criar vídeo",
-      "useAsReference": "Usar como referência",
-      "prev": "Post anterior",
-      "next": "Próximo post",
-      "back": "Voltar",
-      "post": "Publicar",
-      "submitTitle": "Publicar na comunidade",
-      "submitSubtitle": "Escolha uma criação da sua galeria para enviar.",
-      "submitCta": "Enviar para análise",
-      "submitHint": "Sua publicação passa por uma análise rápida antes de aparecer para todos.",
-      "filters": { "all": "Tudo", "image": "Imagens", "video": "Vídeos" },
-      "submitSuccess": "Enviado para análise!",
-      "submitSuccessDesc": "Você será notificado quando a publicação for aprovada.",
-      "submitError": "Não foi possível enviar. Tente novamente.",
-      "pickerEmpty": "Você ainda não tem criações",
-      "pickerEmptyHint": "Gere uma imagem ou vídeo primeiro.",
-      "empty": "Ainda não há publicações",
-      "emptyHint": "Seja o primeiro a publicar uma criação."
+      "tabs": { "account": "Conta", "usage": "Uso" }
     },
     "notifications": {
       "title": "Notificações",
       "clear": "Limpar",
       "empty": "Nenhuma notificação por aqui.",
-      "generic": "Você tem uma nova notificação.",
-      "types": {
-        "community-submitted": "Sua publicação está em análise.",
-        "community-approved": "Sua publicação foi aprovada e já está na comunidade!",
-        "community-rejected": "Sua publicação não foi aprovada.",
-        "user-followed": "{name} começou a seguir você."
-      }
+      "generic": "Você tem uma nova notificação."
     },
     "workspaces": {
       "title": "Workspace",
@@ -433,7 +384,6 @@
         "tiktokShop": "TikTok Shop",
         "clonarPrompt": "Clonar prompt",
         "bibliotecaPrompts": "Biblioteca de Prompts",
-        "visitarComunidade": "Visitar a comunidade",
         "todasFerramentas": "Todas as ferramentas",
         "precos": "Planos e preços",
         "perfil": "Perfil"

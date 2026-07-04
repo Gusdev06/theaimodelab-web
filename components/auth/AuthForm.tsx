@@ -12,7 +12,6 @@ export type AuthView = 'options' | 'email' | 'verify' | 'forgot' | 'reset';
 
 type AuthFormProps = {
   planParam?: string | null;
-  refParam?: string | null;
   resetToken?: string | null;
   googleError?: string | null;
   initialMode?: 'login' | 'register';
@@ -30,7 +29,6 @@ type AuthFormProps = {
  */
 export function AuthForm({
   planParam = null,
-  refParam = null,
   resetToken = null,
   googleError = null,
   initialMode = 'login',
@@ -203,8 +201,7 @@ export function AuthForm({
         await login(email, password);
         handleLoginSuccess();
       } else {
-        const referralCode = refParam || document.cookie.match(/(?:^|; )theaimodelab-ref=([^;]*)/)?.[1];
-        await api.auth.register(email, name, password, referralCode || undefined);
+        await api.auth.register(email, name, password);
         setView('verify');
       }
     } catch (err: unknown) {
@@ -242,8 +239,6 @@ export function AuthForm({
             onClick={() => {
               setGoogleLoading(true);
               if (planParam) document.cookie = `theaimodelab-plan-redirect=${planParam};path=/;max-age=600;samesite=lax`;
-              const ref = refParam || document.cookie.match(/(?:^|; )theaimodelab-ref=([^;]*)/)?.[1];
-              if (ref) document.cookie = `theaimodelab-ref=${ref};path=/;max-age=2592000;samesite=lax`;
               window.location.href = '/api/v1/auth/google';
             }}
             disabled={loading || googleLoading}

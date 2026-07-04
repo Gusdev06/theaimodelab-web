@@ -85,16 +85,16 @@ function useLoginMutation(onSuccess: (res: Awaited<ReturnType<typeof api.auth.lo
 
 function useRegisterMutation(onSuccess: (res: Awaited<ReturnType<typeof api.auth.register>>) => void) {
   return useMutation({
-    mutationFn: ({ email, name, password, referralCode }: { email: string; name: string; password: string; referralCode?: string }) =>
-      api.auth.register(email, name, password, referralCode),
+    mutationFn: ({ email, name, password }: { email: string; name: string; password: string }) =>
+      api.auth.register(email, name, password),
     onSuccess,
   });
 }
 
 function useGoogleLoginMutation(onSuccess: (res: Awaited<ReturnType<typeof api.auth.google>>) => void) {
   return useMutation({
-    mutationFn: ({ googleToken, referralCode }: { googleToken: string; referralCode?: string }) =>
-      api.auth.google(googleToken, referralCode),
+    mutationFn: ({ googleToken }: { googleToken: string }) =>
+      api.auth.google(googleToken),
     onSuccess,
   });
 }

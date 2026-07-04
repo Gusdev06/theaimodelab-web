@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, BadgePercent, BatteryCharging, Clapperboard, Coins, CreditCard, Gift, Loader2, LogIn, LogOut, Plus, Settings, User, Users, Wallet, X } from 'lucide-react';
+import { ArrowLeft, BadgePercent, BatteryCharging, Clapperboard, Coins, CreditCard, Gift, Loader2, LogIn, LogOut, Plus, Settings, User, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,17 +12,8 @@ import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
 import { PLANS_ENABLED } from '@/lib/features';
 import { PlansModal } from './PlansModal';
-import { AffiliateProgramModal } from './AffiliateProgramModal';
 import { WeeklyClaimWidget } from './WeeklyClaimWidget';
 import { useLoginModal } from '@/lib/login-modal-context';
-
-function formatCents(cents: number, locale: string) {
-  const intlLocale = locale === 'pt-BR' ? 'pt-BR' : locale === 'es' ? 'es' : 'en-US';
-  return (cents / 100).toLocaleString(intlLocale, {
-    style: 'currency',
-    currency: 'BRL',
-  });
-}
 
 export function TopNavbar() {
   const t = useTranslations('editorChrome.navbar');
@@ -35,18 +26,8 @@ export function TopNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [plansModalOpen, setPlansModalOpen] = useState(false);
-  const [affiliateMenuOpen, setAffiliateMenuOpen] = useState(false);
-  const [affiliateModalOpen, setAffiliateModalOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const asideRef = useRef<HTMLElement>(null);
-  const affiliateMenuRef = useRef<HTMLDivElement>(null);
-
-  const { data: affiliateData, isLoading: affiliateLoading, isFetched: affiliateFetched } = useQuery({
-    queryKey: ['affiliate', 'me'],
-    queryFn: () => api.affiliates.me(accessToken!),
-    enabled: !!user && !!accessToken,
-    staleTime: 30_000,
-  });
 
   const { data: userProfile } = useQuery({
     queryKey: ['user', 'me'],
@@ -80,17 +61,6 @@ export function TopNavbar() {
     document.addEventListener('mousedown', handleClick, true);
     return () => document.removeEventListener('mousedown', handleClick, true);
   }, [menuOpen]);
-
-  useEffect(() => {
-    if (!affiliateMenuOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (!affiliateMenuRef.current?.contains(e.target as Node)) {
-        setAffiliateMenuOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClick, true);
-    return () => document.removeEventListener('mousedown', handleClick, true);
-  }, [affiliateMenuOpen]);
 
   function handleLogout() {
     logout();
@@ -144,83 +114,6 @@ export function TopNavbar() {
 
                 <WeeklyClaimWidget />
 
-                <div ref={affiliateMenuRef} className="relative">
-                  <button
-                    onClick={() => {
-                      if (!affiliateFetched || affiliateLoading) {
-                        setAffiliateMenuOpen((v) => !v);
-                      } else if (affiliateData) {
-                        setAffiliateMenuOpen((v) => !v);
-                      } else {
-                        setAffiliateModalOpen(true);
-                      }
-                    }}
-                    title={t('becomeAffiliate')}
-                    className="flex h-7 w-7 items-center justify-center rounded-full text-[#f3f0ed]/45 transition-all hover:bg-[#f3f0ed]/[0.06] hover:text-[#f3f0ed]"
-                  >
-                    <Users className="h-3.5 w-3.5" />
-                  </button>
-
-                  {affiliateMenuOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl bg-[#111113] shadow-2xl backdrop-blur-md">
-                      {!affiliateFetched || affiliateLoading ? (
-                        <div className="flex items-center justify-center gap-2 px-4 py-8">
-                          <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e11d2a]" />
-                          <span className="text-xs text-[#f3f0ed]/50">{t('affiliateLoading')}</span>
-                        </div>
-                      ) : affiliateData ? (
-                        <>
-                          <div className="flex items-center justify-between px-4 py-3">
-                            <div>
-                              <p className="text-xs font-medium text-[#f3f0ed]/85">{t('affiliateMenuTitle')}</p>
-                              <p className="mt-0.5 font-mono text-[10px] tracking-wide text-[#e11d2a]">
-                                {affiliateData.affiliate.code}
-                              </p>
-                            </div>
-                            <span className="rounded-full bg-[#e11d2a]/10 px-2 py-0.5 text-[10px] font-semibold text-[#e11d2a]">
-                              {affiliateData.affiliate.commissionPercent}%
-                            </span>
-                          </div>
-                          <div className="grid grid-cols-2 gap-2 px-3 pb-3">
-                            <div className="flex flex-col gap-1 rounded-lg bg-[#f3f0ed]/[0.03] p-3">
-                              <div className="flex items-center gap-1.5">
-                                <Wallet className="h-3 w-3 text-red-400" />
-                                <span className="text-[9px] font-medium uppercase tracking-wide text-[#f3f0ed]/40">
-                                  {t('affiliateAvailable')}
-                                </span>
-                              </div>
-                              <p className="text-sm font-bold tabular-nums text-[#f3f0ed]">
-                                {formatCents(affiliateData.summary.availableCommissionCents ?? 0, locale)}
-                              </p>
-                            </div>
-                            <div className="flex flex-col gap-1 rounded-lg bg-[#f3f0ed]/[0.03] p-3">
-                              <div className="flex items-center gap-1.5">
-                                <Users className="h-3 w-3 text-blue-400" />
-                                <span className="text-[9px] font-medium uppercase tracking-wide text-[#f3f0ed]/40">
-                                  {t('affiliateReferrals')}
-                                </span>
-                              </div>
-                              <p className="text-sm font-bold tabular-nums text-[#f3f0ed]">
-                                {(affiliateData.summary.referredUsers ?? 0).toLocaleString(locale)}
-                              </p>
-                            </div>
-                          </div>
-                          <button
-                            onClick={() => {
-                              setAffiliateMenuOpen(false);
-                              router.push('/painel-afiliado');
-                            }}
-                            className="flex w-full items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-medium text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/5"
-                          >
-                            {t('affiliateViewPanel')}
-                            <ArrowRight className="h-3 w-3" />
-                          </button>
-                        </>
-                      ) : null}
-                    </div>
-                  )}
-                </div>
-
                 <button
                   onClick={toggleStudioMode}
                   aria-pressed={studioMode}
@@ -268,7 +161,6 @@ export function TopNavbar() {
                         <DropdownItem icon={CreditCard} label={tMenu('credits')} onClick={() => { setMenuOpen(false); router.push('/creditos'); }} />
                         {PLANS_ENABLED && <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />}
                         <DropdownItem icon={BatteryCharging} label={tMenu('usage')} onClick={() => { setMenuOpen(false); router.push('/uso'); }} />
-                        <DropdownItem icon={Users} label={tMenu('affiliate')} onClick={() => { setMenuOpen(false); router.push('/painel-afiliado'); }} />
                       </div>
                       <div className="flex items-center pr-2">
                         <div className="flex-1 min-w-0">
@@ -292,7 +184,6 @@ export function TopNavbar() {
         </header>
 
         {plansModalOpen && <PlansModal onClose={() => setPlansModalOpen(false)} />}
-        {affiliateModalOpen && <AffiliateProgramModal onClose={() => setAffiliateModalOpen(false)} />}
       </>
     );
   }
@@ -351,84 +242,6 @@ export function TopNavbar() {
                 <Plus className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">{t('buyCredits')}</span>
               </button>
-
-              {/* Affiliate button — hidden on mobile */}
-              <div ref={affiliateMenuRef} className="relative hidden sm:block">
-                <button
-                  onClick={() => {
-                    if (!affiliateFetched || affiliateLoading) {
-                      setAffiliateMenuOpen((v) => !v);
-                    } else if (affiliateData) {
-                      setAffiliateMenuOpen((v) => !v);
-                    } else {
-                      setAffiliateModalOpen(true);
-                    }
-                  }}
-                  className="flex items-center gap-1.5 rounded-full bg-white/[0.04] ring-1 ring-inset ring-white/[0.07] backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_4px_12px_-4px_rgba(0,0,0,0.4)] px-4 py-1.5 text-xs font-semibold text-[#f3f0ed]/80 transition-all hover:bg-white/[0.08] hover:ring-white/[0.12] hover:text-[#f3f0ed]"
-                >
-                  <Users className="h-3.5 w-3.5" />
-                  {t('becomeAffiliate')}
-                </button>
-
-                {affiliateMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl border border-[#f3f0ed]/8 bg-[#111113] shadow-2xl">
-                    {!affiliateFetched || affiliateLoading ? (
-                      <div className="flex items-center justify-center gap-2 px-4 py-8">
-                        <Loader2 className="h-3.5 w-3.5 animate-spin text-[#e11d2a]" />
-                        <span className="text-xs text-[#f3f0ed]/50">{t('affiliateLoading')}</span>
-                      </div>
-                    ) : affiliateData ? (
-                      <>
-                        <div className="flex items-center justify-between border-b border-[#f3f0ed]/6 px-4 py-3">
-                          <div>
-                            <p className="text-xs font-semibold text-[#f3f0ed]">{t('affiliateMenuTitle')}</p>
-                            <p className="mt-0.5 font-mono text-[10px] tracking-wide text-[#e11d2a]">
-                              {affiliateData.affiliate.code}
-                            </p>
-                          </div>
-                          <span className="rounded-full border border-[#e11d2a]/30 bg-[#e11d2a]/10 px-2 py-0.5 text-[10px] font-semibold text-[#e11d2a]">
-                            {affiliateData.affiliate.commissionPercent}%
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2 p-3">
-                          <div className="flex flex-col gap-1 rounded-lg border border-[#f3f0ed]/6 bg-[#f3f0ed]/3 p-3">
-                            <div className="flex items-center gap-1.5">
-                              <Wallet className="h-3 w-3 text-red-400" />
-                              <span className="text-[9px] font-bold uppercase tracking-wide text-[#f3f0ed]/40">
-                                {t('affiliateAvailable')}
-                              </span>
-                            </div>
-                            <p className="text-sm font-bold tabular-nums text-[#f3f0ed]">
-                              {formatCents(affiliateData.summary.availableCommissionCents ?? 0, locale)}
-                            </p>
-                          </div>
-                          <div className="flex flex-col gap-1 rounded-lg border border-[#f3f0ed]/6 bg-[#f3f0ed]/3 p-3">
-                            <div className="flex items-center gap-1.5">
-                              <Users className="h-3 w-3 text-blue-400" />
-                              <span className="text-[9px] font-bold uppercase tracking-wide text-[#f3f0ed]/40">
-                                {t('affiliateReferrals')}
-                              </span>
-                            </div>
-                            <p className="text-sm font-bold tabular-nums text-[#f3f0ed]">
-                              {(affiliateData.summary.referredUsers ?? 0).toLocaleString(locale)}
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => {
-                            setAffiliateMenuOpen(false);
-                            router.push('/painel-afiliado');
-                          }}
-                          className="flex w-full items-center justify-center gap-1.5 border-t border-[#f3f0ed]/6 px-4 py-2.5 text-xs font-semibold text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/5"
-                        >
-                          {t('affiliateViewPanel')}
-                          <ArrowRight className="h-3 w-3" />
-                        </button>
-                      </>
-                    ) : null}
-                  </div>
-                )}
-              </div>
 
               {/* Feedback reward — only for paid users who haven't submitted yet */}
               {showFeedbackReward && (
@@ -571,7 +384,6 @@ export function TopNavbar() {
                   <DropdownItem icon={CreditCard} label={tMenu('credits')} onClick={() => { setMenuOpen(false); router.push('/creditos'); }} />
                   {PLANS_ENABLED && <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />}
                   <DropdownItem icon={BatteryCharging} label={tMenu('usage')} onClick={() => { setMenuOpen(false); router.push('/uso'); }} />
-                  <DropdownItem icon={Users} label={tMenu('affiliate')} onClick={() => { setMenuOpen(false); router.push('/painel-afiliado'); }} />
                 </div>
                 <div className="border-t border-landing-text/6 flex items-center pr-3">
                   <div className="flex-1 min-w-0">
@@ -660,7 +472,6 @@ export function TopNavbar() {
               <DropdownItem icon={CreditCard} label={tMenu('credits')} onClick={() => { setMenuOpen(false); router.push('/creditos'); }} />
               {PLANS_ENABLED && <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />}
               <DropdownItem icon={BatteryCharging} label={tMenu('usage')} onClick={() => { setMenuOpen(false); router.push('/uso'); }} />
-              <DropdownItem icon={Users} label={tMenu('affiliate')} onClick={() => { setMenuOpen(false); router.push('/painel-afiliado'); }} />
             </div>
             <div className="border-t border-landing-text/6 flex items-center pr-4 py-1">
               <div className="flex-1 min-w-0">
@@ -672,7 +483,6 @@ export function TopNavbar() {
       )}
 
       {plansModalOpen && <PlansModal onClose={() => setPlansModalOpen(false)} />}
-      {affiliateModalOpen && <AffiliateProgramModal onClose={() => setAffiliateModalOpen(false)} />}
     </>
   );
 }

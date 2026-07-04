@@ -12,12 +12,10 @@ import {
   ArrowLeft,
   Loader2,
   Shield,
-  Handshake,
   FileText,
   Banknote,
   MessageSquareHeart,
   ThumbsUp,
-  Rss,
   BrainCircuit,
   Megaphone,
   Mail,
@@ -65,7 +63,6 @@ const NAV_GROUPS: NavGroup[] = [
       { href: '/admin/prompts', label: 'Prompts', icon: FileText },
       { href: '/admin/prompt-posts', label: 'Posts Públicos', icon: ThumbsUp },
       { href: '/admin/avisos', label: 'Avisos', icon: Megaphone },
-      { href: '/admin/comunidade', label: 'Comunidade', icon: Rss },
     ],
   },
   {
@@ -76,7 +73,6 @@ const NAV_GROUPS: NavGroup[] = [
       { href: '/admin/assinaturas', label: 'Assinaturas', icon: CreditCard },
       { href: '/admin/stripe', label: 'Stripe', icon: Banknote },
       { href: '/admin/precificacao', label: 'Precificação', icon: Tags },
-      { href: '/admin/afiliados', label: 'Afiliados', icon: Handshake },
     ],
   },
   {

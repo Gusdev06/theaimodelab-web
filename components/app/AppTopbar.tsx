@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
-import { BarChart3, Coins, Images, LogOut, UserRound } from 'lucide-react';
+import { BarChart3, Coins, LogOut, UserRound } from 'lucide-react';
 import { SCREEN_TITLES, stripLocalePrefix } from '@/lib/home-nav';
 import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
@@ -156,12 +156,6 @@ export function AppTopbar() {
                 <Link href="/perfil">
                   <UserRound className="size-4" strokeWidth={1.8} />
                   {t('shell.profile')}
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className={itemClass}>
-                <Link href="/perfil?tab=posts">
-                  <Images className="size-4" strokeWidth={1.8} />
-                  {t('shell.posts')}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className={itemClass}>

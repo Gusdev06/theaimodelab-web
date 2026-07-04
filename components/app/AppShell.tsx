@@ -12,7 +12,7 @@ import { CommandPalette } from '@/components/app/CommandPalette';
 /**
  * Shell da plataforma logada (The AI Model Lab 2.0): dois "cards gigantes" (sidebar +
  * área principal) flutuando sobre o fundo profundo. As telas internas
- * (Início, Comunidade, Galeria…) renderizam dentro do card principal.
+ * (Início, Galeria…) renderizam dentro do card principal.
  */
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();

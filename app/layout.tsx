@@ -38,8 +38,6 @@ import { GoogleAuthWrapper } from "@/lib/google-auth-wrapper";
 import { LoginModalProvider } from "@/lib/login-modal-context";
 import { LoginModal } from "@/components/LoginModal";
 import { Toaster } from "sonner";
-import { Suspense } from "react";
-import { ReferralCapture } from "@/components/ReferralCapture";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
@@ -61,7 +59,6 @@ export default async function RootLayout({
           <AuthProvider>
             <LoginModalProvider>
             <TooltipProvider delayDuration={0}>
-              <Suspense fallback={null}><ReferralCapture /></Suspense>
               {children}
               <LoginModal />
               <Toaster
