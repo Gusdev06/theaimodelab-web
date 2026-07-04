@@ -384,7 +384,7 @@ export function TikTokShopView() {
               </div>
               <button
                 type="button"
-                onClick={() => router.push('/pricing')}
+                onClick={() => router.push('/creditos')}
                 className="app-btn bg-app-lime px-5 py-2.5 text-[13px] font-semibold text-app-lime-ink"
               >
                 {t('viewPlans')}

@@ -21,6 +21,7 @@ import { PlansGrid } from '@/components/editor/PlansGrid';
 import { PixAutoCheckoutModal } from '@/components/editor/PixAutoCheckoutModal';
 import type { Plan } from '@/lib/api';
 import { PLAN_ORDER, getPlanFeatureKeys } from '@/lib/plans';
+import { PLANS_ENABLED } from '@/lib/features';
 
 interface PlansModalProps {
   onClose: () => void;
@@ -203,7 +204,8 @@ export function PlansModal({ onClose }: PlansModalProps) {
           </div>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs — ocultas enquanto planos estão desativados */}
+        {PLANS_ENABLED && (
         <div className="flex items-center justify-center mb-2 mt-2">
           {isLoading ? (
             <div className="flex rounded-xl border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.03] p-1 gap-1">
@@ -237,9 +239,10 @@ export function PlansModal({ onClose }: PlansModalProps) {
             </div>
           ) : null}
         </div>
+        )}
 
         {/* Plans tab */}
-        {activeTab === 'plans' && (
+        {PLANS_ENABLED && activeTab === 'plans' && (
           <>
             <PlansGrid
               plans={plans ?? []}

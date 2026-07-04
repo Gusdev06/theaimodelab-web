@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEditor } from '@/lib/editor-context';
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
+import { PLANS_ENABLED } from '@/lib/features';
 import { PlansModal } from './PlansModal';
 import { AffiliateProgramModal } from './AffiliateProgramModal';
 import { WeeklyClaimWidget } from './WeeklyClaimWidget';
@@ -249,7 +250,7 @@ export function TopNavbar() {
                       <div className="px-3 py-2.5">
                         <div className="flex items-center gap-2">
                           <p className="truncate text-[11px] font-medium text-[#f3f0ed]/80">{user?.name || t('defaultUser')}</p>
-                          {planName && (
+                          {PLANS_ENABLED && planName && (
                             <span
                               className={`shrink-0 rounded-full px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide ${isFreePlan
                                 ? 'bg-[#f3f0ed]/5 text-[#f3f0ed]/50'
@@ -265,7 +266,7 @@ export function TopNavbar() {
                       <div className="py-1">
                         <DropdownItem icon={User} label={tMenu('profile')} onClick={() => { setMenuOpen(false); router.push('/perfil'); }} />
                         <DropdownItem icon={CreditCard} label={tMenu('credits')} onClick={() => { setMenuOpen(false); router.push('/creditos'); }} />
-                        <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />
+                        {PLANS_ENABLED && <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />}
                         <DropdownItem icon={BatteryCharging} label={tMenu('usage')} onClick={() => { setMenuOpen(false); router.push('/uso'); }} />
                         <DropdownItem icon={Users} label={tMenu('affiliate')} onClick={() => { setMenuOpen(false); router.push('/painel-afiliado'); }} />
                       </div>
@@ -552,7 +553,7 @@ export function TopNavbar() {
                 <div className="border-b border-landing-text/6 px-4 py-3">
                   <div className="flex items-center gap-2">
                     <p className="truncate text-xs font-semibold text-landing-text">{user?.name || t('defaultUser')}</p>
-                    {planName && (
+                    {PLANS_ENABLED && planName && (
                       <span
                         className={`shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ${isFreePlan
                           ? 'border border-[#f3f0ed]/15 bg-[#f3f0ed]/5 text-[#f3f0ed]/60'
@@ -568,7 +569,7 @@ export function TopNavbar() {
                 <div className="py-1.5">
                   <DropdownItem icon={User} label={tMenu('profile')} onClick={() => { setMenuOpen(false); router.push('/perfil'); }} />
                   <DropdownItem icon={CreditCard} label={tMenu('credits')} onClick={() => { setMenuOpen(false); router.push('/creditos'); }} />
-                  <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />
+                  {PLANS_ENABLED && <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />}
                   <DropdownItem icon={BatteryCharging} label={tMenu('usage')} onClick={() => { setMenuOpen(false); router.push('/uso'); }} />
                   <DropdownItem icon={Users} label={tMenu('affiliate')} onClick={() => { setMenuOpen(false); router.push('/painel-afiliado'); }} />
                 </div>
@@ -637,7 +638,7 @@ export function TopNavbar() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <p className="truncate text-sm font-semibold text-landing-text">{user?.name || t('defaultUser')}</p>
-                  {planName && (
+                  {PLANS_ENABLED && planName && (
                     <span
                       className={`shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ${isFreePlan
                         ? 'border border-[#f3f0ed]/15 bg-[#f3f0ed]/5 text-[#f3f0ed]/60'
@@ -657,7 +658,7 @@ export function TopNavbar() {
             <div className="flex-1 py-2">
               <DropdownItem icon={User} label={tMenu('profile')} onClick={() => { setMenuOpen(false); router.push('/perfil'); }} />
               <DropdownItem icon={CreditCard} label={tMenu('credits')} onClick={() => { setMenuOpen(false); router.push('/creditos'); }} />
-              <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />
+              {PLANS_ENABLED && <DropdownItem icon={BadgePercent} label={tMenu('plans')} onClick={() => { setMenuOpen(false); setPlansModalOpen(true); }} />}
               <DropdownItem icon={BatteryCharging} label={tMenu('usage')} onClick={() => { setMenuOpen(false); router.push('/uso'); }} />
               <DropdownItem icon={Users} label={tMenu('affiliate')} onClick={() => { setMenuOpen(false); router.push('/painel-afiliado'); }} />
             </div>

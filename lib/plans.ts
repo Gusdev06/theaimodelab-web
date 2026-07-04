@@ -312,6 +312,40 @@ export function formatCurrency(priceCents: number, currency: string, locale: str
   }).format(priceCents / 100);
 }
 
+/**
+ * Custo em créditos (mirror do backend `credit_costs`) usado para estimar
+ * quantas gerações cada pacote de créditos rende. Exibido nos cards de
+ * pacote como "Até X ...".
+ *
+ * - imageHQ: Nano Banana 2 em 1K (TEXT/IMAGE_TO_IMAGE RES_1K)
+ * - motionVideo: Motion Control 720p (70 créd/seg) × 10s = 700
+ * - upscale4k: upscale cobra como IMAGE_TO_IMAGE 2K do NB2 (130)
+ */
+export const PACKAGE_PERK_COSTS = {
+  imageHQ: 90,
+  motionVideo: 700,
+  upscale4k: 130,
+} as const;
+
+export type PackageGenerationPerkKey = 'imagesHQ' | 'motionVideos' | 'upscales4k';
+
+export interface PackageGenerationPerk {
+  key: PackageGenerationPerkKey;
+  count: number;
+}
+
+/**
+ * Estima quantas gerações de cada tipo o pacote rende, a partir dos créditos.
+ * Usado com `useTranslations('editorPlans')` → `packages.perks.<key>` (ICU count).
+ */
+export function getPackageGenerationPerks(credits: number): PackageGenerationPerk[] {
+  return [
+    { key: 'imagesHQ', count: Math.floor(credits / PACKAGE_PERK_COSTS.imageHQ) },
+    { key: 'motionVideos', count: Math.floor(credits / PACKAGE_PERK_COSTS.motionVideo) },
+    { key: 'upscales4k', count: Math.floor(credits / PACKAGE_PERK_COSTS.upscale4k) },
+  ];
+}
+
 /** @deprecated Use locale-aware translated perks in the component. */
 export function getPackagePerks(pkg: CreditPackage): string[] {
   return [

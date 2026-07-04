@@ -18,7 +18,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
 import type { CreditPackage } from '@/lib/api';
-import { formatCurrency, getBoostMetaKey, getPackageBadge } from '@/lib/plans';
+import { formatCurrency, getBoostMetaKey, getPackageBadge, getPackageGenerationPerks } from '@/lib/plans';
 import { PixCheckoutModal } from './PixCheckoutModal';
 import { PixIcon } from '@/components/icons/PixIcon';
 
@@ -216,9 +216,22 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
                       {/* Divider */}
                       <div className={`h-px w-full bg-[#f3f0ed]/[0.06] ${compact ? 'my-2.5' : 'my-4'}`} />
 
-                      {/* Perks */}
-                      <ul className={`flex flex-col ${compact ? 'min-h-[55px] gap-1.5' : 'min-h-[80px] gap-2.5'}`}>
-                        {(['instant', 'neverExpire', 'stackWithPlan'] as const).map((perkKey) => (
+                      {/* Perks — o que dá pra gerar com o pacote + garantias */}
+                      <ul className={`flex flex-col ${compact ? 'gap-1.5' : 'gap-2.5'}`}>
+                        {getPackageGenerationPerks(pkg.credits).map((perk) => (
+                          <li key={perk.key} className="flex items-start gap-2">
+                            <div
+                              className={`mt-[1px] flex shrink-0 items-center justify-center rounded-full ${compact ? 'h-[13px] w-[13px]' : 'h-[16px] w-[16px] mt-[2px]'} ${isBest ? 'bg-[#e11d2a]/20' : 'bg-[#f3f0ed]/[0.06]'
+                                }`}
+                            >
+                              <Check className={`${compact ? 'h-2 w-2' : 'h-2.5 w-2.5'} ${isBest ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/45'}`} />
+                            </div>
+                            <span className={`leading-snug text-[#f3f0ed]/55 ${compact ? 'text-[12px]' : 'text-[12px]'}`}>
+                              {t(`packages.perks.${perk.key}` as 'packages.perks.imagesHQ', { count: perk.count })}
+                            </span>
+                          </li>
+                        ))}
+                        {(['intenseProduction', 'creditsNeverExpire'] as const).map((perkKey) => (
                           <li key={perkKey} className="flex items-start gap-2">
                             <div
                               className={`mt-[1px] flex shrink-0 items-center justify-center rounded-full ${compact ? 'h-[13px] w-[13px]' : 'h-[16px] w-[16px] mt-[2px]'} ${isBest ? 'bg-[#e11d2a]/20' : 'bg-[#f3f0ed]/[0.06]'
@@ -227,7 +240,7 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
                               <Check className={`${compact ? 'h-2 w-2' : 'h-2.5 w-2.5'} ${isBest ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/45'}`} />
                             </div>
                             <span className={`leading-snug text-[#f3f0ed]/55 ${compact ? 'text-[12px]' : 'text-[12px]'}`}>
-                              {t(`packages.perks.${perkKey}` as 'packages.perks.instant')}
+                              {t(`packages.perks.${perkKey}` as 'packages.perks.intenseProduction')}
                             </span>
                           </li>
                         ))}

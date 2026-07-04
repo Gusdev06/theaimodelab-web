@@ -90,7 +90,12 @@
       "perks": {
         "instant": "Credits available instantly",
         "neverExpire": "Never expire",
-        "stackWithPlan": "Stack with your plan credits"
+        "stackWithPlan": "Stack with your plan credits",
+        "imagesHQ": "Up to {count, number} high-quality images",
+        "motionVideos": "Up to {count, number} motion-mimicking videos",
+        "upscales4k": "Up to {count, number} 4K upscales",
+        "intenseProduction": "Intense production, worry-free",
+        "creditsNeverExpire": "Credits never expire"
       },
       "trust": "One-time payment · No subscription"
     },

@@ -20,6 +20,7 @@ import { toast } from 'sonner';
 import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { formatCurrency } from '@/lib/plans';
+import { PLANS_ENABLED } from '@/lib/features';
 
 interface UnlimitedUpgradeModalProps {
   onClose: () => void;
@@ -106,6 +107,9 @@ export function UnlimitedUpgradeModal({ onClose }: UnlimitedUpgradeModalProps) {
       }
     }
   }
+
+  // Modo ilimitado (assinatura) desativado — nada é renderizado.
+  if (!PLANS_ENABLED) return null;
 
   return (
     <div

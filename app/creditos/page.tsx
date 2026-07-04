@@ -26,6 +26,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useLoginModal } from '@/lib/login-modal-context';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { PLAN_ORDER, getPlanFeatures } from '@/lib/plans';
+import { PLANS_ENABLED } from '@/lib/features';
 import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
 import { CancelRetentionModal } from '@/components/editor/CancelRetentionModal';
 import { PlansGrid } from '@/components/editor/PlansGrid';
@@ -148,6 +149,7 @@ function CreditosPageContent() {
   const planFromUrl = searchParams.get('plan');
   useEffect(() => {
     if (
+      !PLANS_ENABLED ||
       !planFromUrl ||
       autoSubscribeTriggered.current ||
       !accessToken ||
@@ -249,21 +251,23 @@ function CreditosPageContent() {
               </p>
             </div>
             <div className="flex w-full flex-col gap-2">
-              <button
-                onClick={() => {
-                  const plansSection = document.getElementById('plans-section');
-                  plansSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
-              >
-                {t('renewNow')}
-              </button>
+              {PLANS_ENABLED && (
+                <button
+                  onClick={() => {
+                    const plansSection = document.getElementById('plans-section');
+                    plansSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
+                >
+                  {t('renewNow')}
+                </button>
+              )}
               <button
                 onClick={() => {
                   const boostSection = document.getElementById('boost-section');
                   boostSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#f3f0ed]/15 text-sm font-medium text-[#f3f0ed]/70 transition-colors hover:bg-[#f3f0ed]/5"
+                className={`app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-colors ${PLANS_ENABLED ? 'border border-[#f3f0ed]/15 font-medium text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/5' : 'bg-[#e11d2a] text-[#111113] hover:bg-[#f75fae]'}`}
               >
                 {t('buyExtraCredits')}
               </button>
@@ -299,19 +303,21 @@ function CreditosPageContent() {
                   const boostSection = document.getElementById('boost-section');
                   boostSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="text-xs font-medium text-yellow-300/70 transition-colors hover:text-yellow-300"
+                className={PLANS_ENABLED ? 'text-xs font-medium text-yellow-300/70 transition-colors hover:text-yellow-300' : 'text-xs font-bold text-[#e11d2a] transition-colors hover:text-[#f75fae]'}
               >
                 {t('buyBoost')}
               </button>
-              <button
-                onClick={() => {
-                  const plansSection = document.getElementById('plans-section');
-                  plansSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="text-xs font-bold text-[#e11d2a] transition-colors hover:text-[#f75fae]"
-              >
-                {t('renewPlan')}
-              </button>
+              {PLANS_ENABLED && (
+                <button
+                  onClick={() => {
+                    const plansSection = document.getElementById('plans-section');
+                    plansSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="text-xs font-bold text-[#e11d2a] transition-colors hover:text-[#f75fae]"
+                >
+                  {t('renewPlan')}
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -461,8 +467,8 @@ function CreditosPageContent() {
               </div>
             </div>
 
-            {/* Tab toggle */}
-            {packages && packages.length > 0 && (
+            {/* Tab toggle — oculto enquanto planos estão desativados */}
+            {PLANS_ENABLED && packages && packages.length > 0 && (
               <div className="flex justify-center">
                 <div className="flex rounded-xl border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.03] p-1 gap-1">
                   {sortedPlans.length > 0 && (
@@ -486,7 +492,7 @@ function CreditosPageContent() {
             )}
 
             {/* Plans tab */}
-            {activeTab === 'plans' && sortedPlans.length > 0 && (
+            {PLANS_ENABLED && activeTab === 'plans' && sortedPlans.length > 0 && (
               <>
                 <PlansGrid
                   plans={sortedPlans}

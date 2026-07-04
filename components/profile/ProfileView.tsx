@@ -31,6 +31,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { PLANS_ENABLED } from '@/lib/features';
 import { api, type CommunityFeedPost, type CreditTransaction, type MyCommunityPost } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { EmptyState } from '@/components/app/EmptyState';
@@ -615,7 +616,8 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
               </section>
             )}
 
-            {/* plano + assinatura */}
+            {/* plano + assinatura — oculto enquanto planos estão desativados */}
+            {PLANS_ENABLED && (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="rounded-[14px] border border-app-hairline bg-app-surface p-4">
                 <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em] text-app-muted">
@@ -637,6 +639,7 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
                 )}
               </div>
             </div>
+            )}
 
             {/* afiliados */}
             {affiliate?.affiliate ? (
@@ -673,7 +676,8 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
               </button>
             )}
 
-            {/* gerenciar assinatura */}
+            {/* gerenciar assinatura — oculto enquanto planos estão desativados */}
+            {PLANS_ENABLED && (
             <button
               type="button"
               onClick={() => setShowManageModal(true)}
@@ -683,9 +687,10 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
               <span className="flex-1 text-[14px] font-semibold text-app-text">{tp('manageSubscription')}</span>
               <ExternalLink className="size-4 text-app-muted" strokeWidth={1.8} />
             </button>
+            )}
 
             {/* reativar (cancelamento agendado) */}
-            {subStatus?.toLowerCase() === 'active' && cancelAtPeriodEnd && (
+            {PLANS_ENABLED && subStatus?.toLowerCase() === 'active' && cancelAtPeriodEnd && (
               <div className="flex flex-col gap-3 rounded-[14px] border border-app-hairline bg-app-surface p-4">
                 <p className="text-[14px] font-medium text-app-text-2">{tp('scheduledToCancel')}</p>
                 <button
@@ -718,7 +723,7 @@ export function ProfileView({ initialTab = 'account' }: { initialTab?: ProfileTa
         <FollowListModal mode={followModal} accessToken={accessToken} onClose={() => setFollowModal(null)} />
       )}
 
-      {showManageModal && <ManageSubscriptionModal onClose={() => setShowManageModal(false)} />}
+      {PLANS_ENABLED && showManageModal && <ManageSubscriptionModal onClose={() => setShowManageModal(false)} />}
     </div>
   );
 }

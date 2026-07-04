@@ -3,6 +3,7 @@
 import { Infinity as InfinityIcon, Lock, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
+import { PLANS_ENABLED } from '@/lib/features';
 
 interface UnlimitedToggleProps {
   enabled: boolean;
@@ -29,6 +30,10 @@ export function UnlimitedToggle({
   className,
 }: UnlimitedToggleProps) {
   const t = useTranslations('editorPanels.unlimited');
+
+  // Modo ilimitado (assinatura) desativado — nada é renderizado.
+  if (!PLANS_ENABLED) return null;
+
   const accentColor = '#a855f7'; // violeta — distingue de outros toggles (#e11d2a)
   const inactiveColor = 'rgba(243,240,237,0.4)';
 

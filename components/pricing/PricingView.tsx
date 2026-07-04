@@ -15,6 +15,7 @@ import { PlansGrid } from '@/components/editor/PlansGrid';
 import { PixAutoCheckoutModal } from '@/components/editor/PixAutoCheckoutModal';
 import type { Plan } from '@/lib/api';
 import { PLAN_ORDER, getPlanFeatureKeys } from '@/lib/plans';
+import { PLANS_ENABLED } from '@/lib/features';
 
 /** Faixa de confiança exibida abaixo dos cards (garantias do plano). */
 function TrustBar({ items }: { items: { icon: LucideIcon; label: string }[] }) {
@@ -167,7 +168,8 @@ export function PricingView() {
           </p>
         </div>
 
-        {/* abas Planos / Créditos */}
+        {/* abas Planos / Créditos — ocultas enquanto planos estão desativados */}
+        {PLANS_ENABLED && (
         <div className="flex items-center justify-start border-b border-app-hairline pb-5">
           {isLoading ? (
             <div className="flex gap-1 rounded-[10px] border border-app-hairline bg-app-bg p-1">
@@ -207,9 +209,10 @@ export function PricingView() {
             </div>
           ) : null}
         </div>
+        )}
 
         {/* planos */}
-        {activeTab === 'plans' && (
+        {PLANS_ENABLED && activeTab === 'plans' && (
           <>
             <PlansGrid
               plans={plans ?? []}

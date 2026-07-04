@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Coins, Infinity as InfinityIcon } from 'lucide-react';
+import { PLANS_ENABLED } from '@/lib/features';
 
 interface GenerationCostEstimateProps {
   /** créditos por geração (vindo do endpoint /credits/estimate) */
@@ -34,7 +35,8 @@ export function GenerationCostEstimate({
   const total = typeof credits === 'number' ? credits * Math.max(1, count) : null;
 
   // modo ilimitado — destaque violeta, sem consumo de créditos
-  if (unlimited) {
+  // (oculto enquanto planos estão desativados)
+  if (unlimited && PLANS_ENABLED) {
     return (
       <div className="rounded-xl border border-[#a855f7]/30 bg-[#a855f7]/[0.07] px-3.5 py-3">
         <div className="flex items-center justify-between">
