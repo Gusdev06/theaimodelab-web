@@ -143,9 +143,8 @@ export function ClonePromptView() {
     setTimeout(() => setCopied(false), 1500);
   };
 
-  const useInGenerator = result
-    ? `/workspace?${new URLSearchParams({ prompt: result.compiledPrompt, panel: 'generate-image' }).toString()}`
-    : '#';
+  // Workspace oculto do usuário: leva para a página de criação dedicada.
+  const useInGenerator = result ? '/image' : '#';
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">

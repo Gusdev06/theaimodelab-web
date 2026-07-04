@@ -138,7 +138,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!loading && (!user || user.role !== 'ADMIN')) {
-      router.push('/workspace');
+      router.push('/home');
     }
   }, [loading, user, router]);
 
@@ -216,7 +216,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Back to app */}
         <div className="shrink-0 border-t border-[#f3f0ed]/[0.06] p-2 md:p-3">
           <Link
-            href="/workspace"
+            href="/home"
             title="Voltar ao app"
             className="app-ease group/back flex items-center justify-center rounded-lg p-2.5 text-[13px] font-medium text-[#f3f0ed]/45 transition-colors hover:bg-[#f3f0ed]/[0.04] hover:text-[#f3f0ed]/80 md:justify-start md:gap-2.5 md:px-2.5 md:py-2"
           >

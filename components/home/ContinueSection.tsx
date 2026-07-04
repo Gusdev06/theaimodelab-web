@@ -49,7 +49,7 @@ function ItemCard({ item }: { item: GalleryItem }) {
 
   return (
     <Link
-      href="/workspace"
+      href="/gallery"
       draggable={false}
       className="group w-[232px] shrink-0 select-none sm:w-[252px]"
     >
@@ -171,7 +171,7 @@ export function ContinueSection() {
         <EmptyState
           icon={FolderOpen}
           title={t('continue.emptyTitle')}
-          cta={{ label: t('continue.emptyCta'), href: '/workspace' }}
+          cta={{ label: t('continue.emptyCta'), href: '/home' }}
           className="py-10"
         />
       ) : (

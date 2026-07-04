@@ -7,10 +7,9 @@ import type { ApiPromptSection } from '@/lib/api';
 
 const VIDEO_TYPES = new Set(['text_to_video', 'image_to_video', 'motion_control']);
 
-function buildWorkspaceHref(prompt: string, type: string) {
-  const panel = VIDEO_TYPES.has(type) ? 'generate-video' : 'generate-image';
-  const qs = new URLSearchParams({ prompt, panel });
-  return `/workspace?${qs.toString()}`;
+function buildWorkspaceHref(_prompt: string, type: string) {
+  // Workspace oculto do usuário: leva para a página de criação dedicada.
+  return VIDEO_TYPES.has(type) ? '/video' : '/image';
 }
 
 interface CardPrompt {

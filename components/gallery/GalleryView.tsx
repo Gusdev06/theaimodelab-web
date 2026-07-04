@@ -147,7 +147,7 @@ export function GalleryView() {
           <EmptyState
             icon={FolderOpen}
             title={t('gallery.empty')}
-            cta={{ label: t('gallery.emptyCta'), href: '/workspace' }}
+            cta={{ label: t('gallery.emptyCta'), href: '/home' }}
           />
         ) : (
           <div className="flex gap-5">

@@ -126,13 +126,11 @@ export function PostInteractive({
 
   const handleUse = () => {
     track(slug, 'use', index);
-    const panel =
+    // Workspace oculto do usuário: leva para a página de criação dedicada.
+    const isVideo =
       activeSlide.generationType.startsWith('TEXT_TO_VIDEO') ||
-      activeSlide.generationType.startsWith('IMAGE_TO_VIDEO')
-        ? 'generate-video'
-        : 'generate-image';
-    const params = new URLSearchParams({ prompt: activeSlide.prompt, panel });
-    router.push(`/workspace?${params.toString()}`);
+      activeSlide.generationType.startsWith('IMAGE_TO_VIDEO');
+    router.push(isVideo ? '/video' : '/image');
   };
 
   const handleShare = async () => {

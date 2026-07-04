@@ -148,7 +148,7 @@ export default function FeedbackPage() {
       toast.info(t('alreadySubmittedTitle'), {
         description: t('alreadySubmittedDesc'),
       });
-      router.replace('/workspace');
+      router.replace('/home');
     }
   }, [profile, submitted, router, t]);
 
@@ -166,7 +166,7 @@ export default function FeedbackPage() {
       toast.error(t('accessDeniedTitle'), {
         description: t('accessDeniedDesc'),
       });
-      router.replace('/workspace');
+      router.replace('/home');
     }
   }, [profile, router, t]);
 
@@ -253,7 +253,7 @@ export default function FeedbackPage() {
           </div>
 
           <Button
-            onClick={() => router.push('/workspace')}
+            onClick={() => router.push('/home')}
             className="h-11 bg-[#e11d2a] px-6 font-semibold text-[#1c1917] hover:bg-[#ff5964]"
           >
             {t('success.backCta')}
@@ -273,7 +273,7 @@ export default function FeedbackPage() {
     <div className="min-h-screen bg-[#111113] px-4 py-10 text-[#f3f0ed]">
       <div className="mx-auto max-w-2xl">
         <button
-          onClick={() => router.push('/workspace')}
+          onClick={() => router.push('/home')}
           className="app-press app-ease mb-8 inline-flex items-center gap-2 text-sm text-[#f3f0ed]/60 transition-colors hover:text-[#e11d2a]"
         >
           <ArrowLeft className="h-4 w-4" />

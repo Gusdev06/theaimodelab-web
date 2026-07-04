@@ -28,7 +28,7 @@ export default function PaymentSuccessPage() {
         </p>
       </div>
       <button
-        onClick={() => router.push('/workspace')}
+        onClick={() => router.push('/home')}
         className="app-btn flex items-center gap-2 bg-[#e11d2a] px-6 py-3 text-sm font-bold text-[#111113]"
       >
         {t('cta')}

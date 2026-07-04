@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { QUICK_ACTIONS } from '@/lib/home-nav';
 
-/** Grade de atalhos de criação (Workspace, Imagem, Vídeo, Áudio, Avatares, TikTok Shop). */
+/** Grade de atalhos de criação (Imagem, Vídeo, Áudio, Avatares, TikTok Shop). */
 export function QuickActions() {
   const t = useTranslations('home');
 
