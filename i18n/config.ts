@@ -1,7 +1,7 @@
-export const locales = ['pt-BR', 'en', 'es'] as const;
+export const locales = ['en', 'es'] as const;
 export type Locale = (typeof locales)[number];
 
-export const URL_LOCALES = ['pt-br', 'en', 'es'] as const;
+export const URL_LOCALES = ['en', 'es'] as const;
 export type UrlLocale = (typeof URL_LOCALES)[number];
 
 export const defaultLocale: Locale = 'en';

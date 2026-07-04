@@ -59,8 +59,8 @@ export const SCREEN_TITLES: Record<string, { id: string; icon: LucideIcon }> = {
 };
 
 /**
- * O proxy de i18n prefixa as URLs do browser com o locale (/pt-br/..., /en/...,
- * /es/...). Remove o prefixo para comparar com as rotas internas do shell.
+ * O proxy de i18n prefixa as URLs do browser com o locale (/en/..., /es/...).
+ * Remove o prefixo para comparar com as rotas internas do shell.
  */
 export function stripLocalePrefix(pathname: string): string {
   const segments = pathname.split('/');

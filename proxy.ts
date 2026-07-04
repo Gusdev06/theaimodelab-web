@@ -2,13 +2,18 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { LOCALE_COOKIE, LOCALE_HEADER, URL_LOCALES, type UrlLocale } from '@/i18n/config';
 
 const URL_TO_INTERNAL: Record<UrlLocale, string> = {
-  'pt-br': 'pt-BR',
   en: 'en',
   es: 'es',
 };
 
 function detectFromCountry(country: string | null): UrlLocale {
-  if (country && country.toUpperCase() === 'BR') return 'pt-br';
+  // pt-BR descontinuado: preços 100% em dólar. Só existem /en e /es.
+  // Países de língua espanhola caem em /es; o resto (inclusive BR) em /en.
+  const SPANISH_COUNTRIES = new Set([
+    'ES', 'MX', 'AR', 'CO', 'CL', 'PE', 'VE', 'EC', 'GT', 'CU', 'BO',
+    'DO', 'HN', 'PY', 'SV', 'NI', 'CR', 'PA', 'UY', 'PR', 'GQ',
+  ]);
+  if (country && SPANISH_COUNTRIES.has(country.toUpperCase())) return 'es';
   return 'en';
 }
 
