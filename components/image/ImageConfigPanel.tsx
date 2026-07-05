@@ -17,6 +17,7 @@ import {
   Replace,
   ScanFace,
   Shirt,
+  Sparkles,
   UserRound,
   Wand2,
   X,
@@ -74,14 +75,18 @@ const R4K = { value: 'RES_4K', label: '4K' };
 const ASPECTS_DEFAULT = ['9:16', '1:1', '4:3', '16:9'];
 const ASPECTS_SEEDREAM = ['1:1', '4:3', '3:4', '16:9', '9:16', '2:3', '3:2', '21:9'];
 
-type ToolId = 'generate' | 'try-on' | 'face-swap' | 'upscale';
+type ToolId = 'generate' | 'try-on' | 'face-swap' | 'upscale' | 'deepdeep';
 
 const TOOLS: { id: ToolId; labelKey: string; icon: LucideIcon }[] = [
   { id: 'generate', labelKey: 'toolGenerateImages', icon: ImageIcon },
   { id: 'try-on', labelKey: 'toolTryon', icon: Shirt },
   { id: 'face-swap', labelKey: 'toolFaceSwap', icon: Replace },
+  { id: 'deepdeep', labelKey: 'toolDeepDeep', icon: Sparkles },
   { id: 'upscale', labelKey: 'toolUpscale', icon: Wand2 },
 ];
+
+/** Modelo usado internamente pela tool DeepDeep (não aparece no seletor de modelos). */
+const DEEPDEEP_MODEL = 'deepdeep';
 
 interface ImageModelConfig {
   value: string;
@@ -315,6 +320,9 @@ export function ImageConfigPanel({
   // upscale
   const [upscaleImage, setUpscaleImage] = useState<UploadedImage | null>(null);
 
+  // deepdeep (tool image-to-image — transforma uma única imagem)
+  const [deepdeepImage, setDeepdeepImage] = useState<UploadedImage | null>(null);
+
   const [submitting, setSubmitting] = useState(false);
   // banner de erro acima do botão Gerar — só some ao gerar de novo
   const [generationError, setGenerationError] = useState<string | null>(null);
@@ -384,7 +392,9 @@ export function ImageConfigPanel({
             ? { type: 'IMAGE_TO_IMAGE', resolution: tryonResolution, hasAudio: false, freeGenerationType: 'VIRTUAL_TRY_ON' }
             : tool === 'face-swap'
               ? { type: 'IMAGE_TO_IMAGE', resolution: FACESWAP_RES_TO_DB[fsResolution] ?? 'RES_2K', hasAudio: false, freeGenerationType: 'FACE_SWAP' }
-              : { type: 'IMAGE_TO_IMAGE', resolution: 'RES_2K', modelVariant: 'NBP', freeGenerationType: 'UPSCALE' };
+              : tool === 'deepdeep'
+                ? { type: 'IMAGE_TO_IMAGE', resolution: 'RES_2K', modelVariant: 'DEEPDEEP' }
+                : { type: 'IMAGE_TO_IMAGE', resolution: 'RES_2K', modelVariant: 'NBP', freeGenerationType: 'UPSCALE' };
       return api.credits.estimate(accessToken!, req);
     },
     enabled: !!accessToken && !!user,
@@ -485,6 +495,8 @@ export function ImageConfigPanel({
         return !!tryonPerson && !!tryonClothing;
       case 'face-swap':
         return !!fsSource && !!fsTarget;
+      case 'deepdeep':
+        return !!deepdeepImage;
       case 'upscale':
         return !!upscaleImage;
     }
@@ -580,6 +592,23 @@ export function ImageConfigPanel({
           resolution: fsResolution,
         });
         track(id, t('image.toolFaceSwap'));
+        return;
+      }
+
+      if (tool === 'deepdeep') {
+        // DeepDeep é uma transformação image-to-image: usa o modelo 'deepdeep' no
+        // backend, sem prompt, com a imagem enviada como referência única.
+        const { id } = await api.generations.generateImage(accessToken, {
+          prompt: '',
+          model: DEEPDEEP_MODEL,
+          resolution: 'RES_2K',
+          aspect_ratio: '1:1',
+          mime_type: 'image/png',
+          images: [
+            { base64: deepdeepImage!.base64, mime_type: deepdeepImage!.mime_type },
+          ],
+        });
+        track(id, t('image.toolDeepDeep'));
         return;
       }
 
@@ -969,6 +998,23 @@ export function ImageConfigPanel({
               </Select>
             </div>
           </>
+        )}
+
+        {/* ── DeepDeep ── */}
+        {tool === 'deepdeep' && (
+          <div className="flex flex-col gap-2">
+            <FieldLabel>{t('image.deepdeepImage')}</FieldLabel>
+            <ImageDropTile
+              label={t('image.deepdeepImage')}
+              value={deepdeepImage}
+              onChange={setDeepdeepImage}
+              accept={['image/jpeg', 'image/png']}
+              className="h-[160px]"
+            />
+            <p className="text-[12px] leading-relaxed text-app-muted">
+              {t('image.deepdeepHint')}
+            </p>
+          </div>
         )}
 
         {/* ── Upscale ── */}
