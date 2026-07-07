@@ -439,7 +439,7 @@ export function SalesQuiz() {
                   {displayName(name)}, your angle is ready
                 </p>
                 <h2 className="mt-2 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
-                  Where should we send the sales map?
+                  Unlock the sales map.
                 </h2>
                 <p className="mt-2 text-[13px] leading-relaxed text-landing-text-secondary sm:text-[14px]">
                   The next screen shows the offer, proof angle and credit test to run first.

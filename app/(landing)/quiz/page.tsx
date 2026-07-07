@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SalesQuiz } from "@/components/landing/sales-quiz";
+import { QuizOfferBridge } from "@/components/landing/quiz-offer-bridge";
 import { Pricing } from "@/components/landing/pricing";
 import { Footer } from "@/components/landing/footer";
 import { SupportButton } from "@/components/editor/SupportButton";
@@ -24,6 +25,7 @@ export default function QuizLandingPage() {
   return (
     <main>
       <SalesQuiz />
+      <QuizOfferBridge />
       <Pricing />
       <Footer />
       <SupportButton />
