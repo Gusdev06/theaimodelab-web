@@ -128,7 +128,7 @@ const RESULTS: Record<ResultKey, QuizResult> = {
   consistency: {
     key: "consistency",
     icon: Target,
-    label: "Identity Opportunity",
+    label: "Identity Sales Angle",
     title: "Your fastest win is a recognizable AI model.",
     summary:
       "Start by locking one face, one visual universe and a repeatable prompt system before you spend credits on volume.",
@@ -142,7 +142,7 @@ const RESULTS: Record<ResultKey, QuizResult> = {
   volume: {
     key: "volume",
     icon: Video,
-    label: "Content Volume Opportunity",
+    label: "Content Volume Angle",
     title: "Your biggest upside is a daily content engine.",
     summary:
       "You do not need more photoshoots. You need a repeatable flow for images, motion and short clips across every account.",
@@ -156,8 +156,8 @@ const RESULTS: Record<ResultKey, QuizResult> = {
   margin: {
     key: "margin",
     icon: DollarSign,
-    label: "Margin Opportunity",
-    title: "Your opportunity is replacing a bloated tool stack.",
+    label: "Margin Angle",
+    title: "Your strongest sales angle is replacing a bloated tool stack.",
     summary:
       "The money leak is usually not one generation. It is paying for separate tools before the persona has proven revenue.",
     opportunities: [
@@ -170,10 +170,10 @@ const RESULTS: Record<ResultKey, QuizResult> = {
   agency: {
     key: "agency",
     icon: Layers,
-    label: "Agency Scale Opportunity",
+    label: "Agency Scale Angle",
     title: "You are ready for a repeatable model factory.",
     summary:
-      "The opportunity is no longer one model. It is a system for creating, testing and feeding many personas without adding headcount.",
+      "The sale is no longer one model. It is a system for creating, testing and feeding many personas without adding headcount.",
     opportunities: [
       "Launch multiple personas from one production workflow.",
       "Separate creative testing from account management.",
@@ -223,7 +223,7 @@ export function SalesQuiz() {
     setStarted(true);
     setStep(0);
     trackViewContent({
-      content_name: "ai_opportunity_quiz",
+      content_name: "ai_model_sales_quiz",
       content_category: "sales_quiz",
       quiz_stage: "start",
     });
@@ -250,11 +250,11 @@ export function SalesQuiz() {
     const normalizedEmail = email.trim().toLowerCase();
 
     if (!normalizedName) {
-      setError("Enter your name to unlock the opportunity map.");
+      setError("Enter your name to unlock the sales map.");
       return;
     }
     if (!isValidEmail(normalizedEmail)) {
-      setError("Enter a valid email to unlock the opportunity map.");
+      setError("Enter a valid email to unlock the sales map.");
       return;
     }
 
@@ -263,7 +263,7 @@ export function SalesQuiz() {
     if (!leadTracked) {
       trackLeadEvent(
         {
-          content_name: "ai_opportunity_quiz",
+          content_name: "ai_model_sales_quiz",
           content_category: "sales_quiz",
           quiz_result: result.key,
           quiz_operation: answers.operation,
@@ -284,7 +284,7 @@ export function SalesQuiz() {
 
   return (
     <section
-      id="ai-opportunity-quiz"
+      id="ai-model-sales-quiz"
       className="relative overflow-hidden bg-[#101214] py-14 sm:py-24 lg:py-32"
     >
       <div
@@ -300,13 +300,13 @@ export function SalesQuiz() {
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-landing-accent">
             <Sparkles className="h-3.5 w-3.5" />
-            AI Revenue Diagnostic
+            AI Model Sales Quiz
           </span>
           <h2 className="mt-5 max-w-xl font-sora text-[28px] font-bold leading-[1.08] text-landing-text sm:text-[42px] lg:text-[52px]">
-            Find the AI model opportunity you should monetize first.
+            Find the AI model offer you should sell first.
           </h2>
           <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-landing-text-secondary sm:text-[17px]">
-            Answer 3 quick questions and get a sales-focused action map for your Fanvue or OFM operation.
+            Answer 3 quick questions and get a sales page that frames the right opportunity, shows the value, and pushes to credits.
           </p>
 
           <div className="mt-6 grid max-w-lg grid-cols-1 gap-2.5 sm:grid-cols-3">
@@ -341,20 +341,20 @@ export function SalesQuiz() {
                   <Gauge className="h-6 w-6" />
                 </div>
                 <p className="mt-6 text-[12px] font-bold uppercase tracking-[0.18em] text-landing-accent">
-                  Opportunity score
+                  Sales angle
                 </p>
                 <h3 className="mt-3 font-sora text-[26px] font-bold leading-tight text-landing-text sm:text-[34px]">
-                  See where The AI Model Lab can create leverage in your operation.
+                  Package the right AI model opportunity before you spend on content volume.
                 </h3>
                 <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-landing-text-secondary sm:text-[15px]">
-                  The result points to the first production opportunity worth testing with credits.
+                  The result points to the model, content and credit pack worth testing first.
                 </p>
                 <button
                   type="button"
                   onClick={startQuiz}
                   className="landing-btn mt-8 inline-flex w-full items-center justify-center gap-2 bg-landing-accent px-6 py-4 text-[14px] font-bold text-[#101214] sm:w-auto"
                 >
-                  Start diagnostic
+                  Start the quiz
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -416,13 +416,13 @@ export function SalesQuiz() {
                   <Mail className="h-5 w-5" />
                 </div>
                 <p className="mt-6 text-[12px] font-bold uppercase tracking-[0.18em] text-landing-accent">
-                  Your opportunity map is ready
+                  Your sales map is ready
                 </p>
                 <h3 className="mt-3 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
-                  Where should we attach the result?
+                  Where should we send the result?
                 </h3>
                 <p className="mt-3 text-[14px] leading-relaxed text-landing-text-secondary">
-                  Unlock the diagnosis and see what to test first inside The AI Model Lab.
+                  Unlock the offer angle and see what to test first inside The AI Model Lab.
                 </p>
 
                 <div className="mt-7 grid gap-3">
@@ -457,7 +457,7 @@ export function SalesQuiz() {
                   type="submit"
                   className="landing-btn mt-6 inline-flex w-full items-center justify-center gap-2 bg-landing-accent px-6 py-4 text-[14px] font-bold text-[#101214]"
                 >
-                  Show my opportunity
+                  Show my sales angle
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </form>
@@ -506,7 +506,7 @@ export function SalesQuiz() {
                   href="#precos"
                   onClick={() =>
                     trackViewContent({
-                      content_name: "quiz_result_pricing_click",
+                      content_name: "sales_quiz_result_pricing_click",
                       content_category: "sales_quiz",
                       quiz_result: result.key,
                     })
