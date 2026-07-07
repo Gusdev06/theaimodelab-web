@@ -1,17 +1,17 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   Check,
   ChevronLeft,
   DollarSign,
-  Gauge,
   Layers,
   LineChart,
   Mail,
   Sparkles,
   Target,
+  User,
   Video,
   type LucideIcon,
 } from "lucide-react";
@@ -33,162 +33,151 @@ type QuizQuestion = {
   options: QuizOption[];
 };
 
-type ResultKey = "consistency" | "volume" | "margin" | "agency";
+type ResultKey = "identity" | "volume" | "margin" | "agency";
 
 type QuizResult = {
   key: ResultKey;
   icon: LucideIcon;
-  label: string;
-  title: string;
-  summary: string;
-  opportunities: string[];
-  nextMove: string;
+  badge: string;
+  headline: string;
+  mirror: string;
+  offer: string;
+  proof: string;
+  creditPlan: string;
+  bullets: string[];
 };
 
 const QUESTIONS: QuizQuestion[] = [
   {
     id: "operation",
-    eyebrow: "1/3 · Operation",
-    title: "What are you trying to build right now?",
+    eyebrow: "1/3",
+    title: "Which AI model business are you trying to sell first?",
     options: [
       {
         value: "solo",
-        label: "My first AI model",
-        helper: "Validate one persona and learn what converts.",
+        label: "One paid AI model",
+        helper: "I want one persona that can earn before I scale.",
       },
       {
         value: "operator",
         label: "A small OFM operation",
-        helper: "Feed multiple accounts without hiring more creators.",
+        helper: "I need content volume for several accounts.",
       },
       {
         value: "agency",
-        label: "An agency-scale machine",
-        helper: "Launch and manage many personas with repeatable production.",
+        label: "An agency model factory",
+        helper: "I want a repeatable offer for many personas.",
       },
     ],
   },
   {
     id: "bottleneck",
-    eyebrow: "2/3 · Bottleneck",
-    title: "What is the biggest thing slowing revenue down?",
+    eyebrow: "2/3",
+    title: "What would make people buy or subscribe faster?",
     options: [
       {
-        value: "consistency",
-        label: "The same face is hard to keep",
-        helper: "Subscribers need to recognize the model every time.",
+        value: "identity",
+        label: "A model that feels real",
+        helper: "Same face, same vibe, no obvious AI drift.",
       },
       {
         value: "volume",
-        label: "Not enough daily content",
-        helper: "Accounts need fresh photos, motion and short clips.",
+        label: "Fresh content every day",
+        helper: "Photos, clips and motion without waiting on shoots.",
       },
       {
         value: "margin",
-        label: "Too many paid tools",
-        helper: "The stack gets expensive before the account proves itself.",
+        label: "Lower production cost",
+        helper: "Replace scattered tools before the model proves revenue.",
       },
       {
-        value: "launch",
-        label: "I need to launch faster",
-        helper: "Go from idea to a testable persona without a long setup.",
+        value: "speed",
+        label: "Launch a test this week",
+        helper: "Get a sellable concept live before overbuilding.",
       },
     ],
   },
   {
     id: "scale",
-    eyebrow: "3/3 · Scale",
-    title: "What would make the next 30 days a win?",
+    eyebrow: "3/3",
+    title: "How aggressive is the first test?",
     options: [
       {
         value: "validate",
-        label: "Validate one model",
-        helper: "Find a look, niche and first content angle.",
+        label: "Validate 1 model",
+        helper: "Find the face, niche and first content angle.",
       },
       {
-        value: "three-five",
-        label: "Run 3-5 models",
-        helper: "Build a small portfolio and see what earns attention.",
+        value: "portfolio",
+        label: "Test 3-5 models",
+        helper: "Compare concepts and keep the winners.",
       },
       {
-        value: "six-fifteen",
+        value: "machine",
         label: "Scale 6-15 accounts",
-        helper: "Turn content production into an operating system.",
+        helper: "Build a repeatable production workflow.",
       },
       {
-        value: "sixteen-plus",
-        label: "Build the agency machine",
-        helper: "Standardize personas, prompts, video and publishing flow.",
+        value: "agency",
+        label: "Launch the agency offer",
+        helper: "Standardize personas, prompts, clips and delivery.",
       },
     ],
   },
 ];
 
 const RESULTS: Record<ResultKey, QuizResult> = {
-  consistency: {
-    key: "consistency",
+  identity: {
+    key: "identity",
     icon: Target,
-    label: "Identity Sales Angle",
-    title: "Your fastest win is a recognizable AI model.",
-    summary:
-      "Start by locking one face, one visual universe and a repeatable prompt system before you spend credits on volume.",
-    opportunities: [
-      "Create a model identity subscribers can recognize.",
-      "Turn winning prompts into reusable production templates.",
-      "Stop wasting generations on faces that drift.",
-    ],
-    nextMove: "Buy enough credits to test face, image and video consistency in one sprint.",
+    badge: "Identity offer",
+    headline: "Sell one believable AI model before selling a big operation.",
+    mirror: "Your buyer needs to trust the character before they care about output volume.",
+    offer: "A consistent-face AI model pack: identity, look, first content angles and reusable prompts.",
+    proof: "The value is not just generation. It is making the model recognizable enough to monetize.",
+    creditPlan: "Start with enough credits to test face consistency, 20-30 images and first short clips.",
+    bullets: ["Same face", "Repeatable prompts", "First paid concept"],
   },
   volume: {
     key: "volume",
     icon: Video,
-    label: "Content Volume Angle",
-    title: "Your biggest upside is a daily content engine.",
-    summary:
-      "You do not need more photoshoots. You need a repeatable flow for images, motion and short clips across every account.",
-    opportunities: [
-      "Fill daily feeds without waiting on real creators.",
-      "Repurpose one model into photo, video and motion angles.",
-      "Keep accounts active while your team stays lean.",
-    ],
-    nextMove: "Start with a credit pack that lets you produce multiple angles per model.",
+    badge: "Content engine",
+    headline: "Sell daily content production, not another AI toy.",
+    mirror: "Your strongest pitch is feeding accounts without real shoots, extra creators or tool hopping.",
+    offer: "A 30-day AI content engine: images, motion, clips and variations for every active model.",
+    proof: "The buyer pays for freshness and speed, not for the prompt box itself.",
+    creditPlan: "Choose a pack that lets you produce multiple angles per model, not one-off samples.",
+    bullets: ["Daily feed", "Motion angles", "Lean team"],
   },
   margin: {
     key: "margin",
     icon: DollarSign,
-    label: "Margin Angle",
-    title: "Your strongest sales angle is replacing a bloated tool stack.",
-    summary:
-      "The money leak is usually not one generation. It is paying for separate tools before the persona has proven revenue.",
-    opportunities: [
-      "Replace fragmented image, video, motion and upscale tools.",
-      "Test more concepts before committing to a large account build.",
-      "Protect margin while you validate what actually sells.",
-    ],
-    nextMove: "Use one platform first, then scale spend only on models that show traction.",
+    badge: "Margin play",
+    headline: "Sell the cheaper production stack.",
+    mirror: "The pain is paying for separate tools before the persona has proven revenue.",
+    offer: "A single-stack AI model test that replaces image, video, motion and upscale subscriptions.",
+    proof: "Lower fixed cost means more concepts tested before committing to a larger account build.",
+    creditPlan: "Start with credits, prove cost per usable asset, then scale only the winning model.",
+    bullets: ["One stack", "Lower fixed cost", "More tests"],
   },
   agency: {
     key: "agency",
     icon: Layers,
-    label: "Agency Scale Angle",
-    title: "You are ready for a repeatable model factory.",
-    summary:
-      "The sale is no longer one model. It is a system for creating, testing and feeding many personas without adding headcount.",
-    opportunities: [
-      "Launch multiple personas from one production workflow.",
-      "Separate creative testing from account management.",
-      "Standardize prompts, motion and export quality for the team.",
-    ],
-    nextMove: "Buy credits for a multi-model test and benchmark cost per usable asset.",
+    badge: "Model factory",
+    headline: "Sell the system for launching many AI models.",
+    mirror: "Your buyer is not buying one character. They are buying a repeatable production machine.",
+    offer: "An AI model factory: persona creation, content templates, motion workflow and export standards.",
+    proof: "Agencies win when output scales without hiring a bigger production team.",
+    creditPlan: "Use a larger credit pack to benchmark multiple personas and cost per usable asset.",
+    bullets: ["Many personas", "Standardized workflow", "Agency margin"],
   },
 };
 
-function getResult(answers: Answers): QuizResult {
-  if (answers.scale === "sixteen-plus" || answers.operation === "agency") {
-    return RESULTS.agency;
-  }
+const STAGE_COUNT = 5;
 
-  if (answers.bottleneck === "consistency") return RESULTS.consistency;
+function resolveResult(answers: Answers): QuizResult {
+  if (answers.operation === "agency" || answers.scale === "agency") return RESULTS.agency;
+  if (answers.bottleneck === "identity") return RESULTS.identity;
   if (answers.bottleneck === "margin") return RESULTS.margin;
   return RESULTS.volume;
 }
@@ -201,64 +190,67 @@ function normalizeName(value: string): string {
   return value.trim().replace(/\s+/g, " ");
 }
 
+function displayName(value: string): string {
+  const normalized = normalizeName(value);
+  if (!normalized) return "you";
+  return normalized[0].toUpperCase() + normalized.slice(1);
+}
+
 export function SalesQuiz() {
-  const [started, setStarted] = useState(false);
-  const [step, setStep] = useState(0);
+  const [stage, setStage] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [leadTracked, setLeadTracked] = useState(false);
+  const trackedStartRef = useRef(false);
+  const result = useMemo(() => resolveResult(answers), [answers]);
+  const progress = Math.min(((stage + 1) / STAGE_COUNT) * 100, 100);
 
-  const currentQuestion = QUESTIONS[step];
-  const result = useMemo(() => getResult(answers), [answers]);
-  const ResultIcon = result.icon;
-  const isCaptureStep = started && step === QUESTIONS.length;
-  const isResultStep = started && step > QUESTIONS.length;
-  const progress = started
-    ? Math.min(((step + 1) / (QUESTIONS.length + 1)) * 100, 100)
-    : 0;
-
-  function startQuiz() {
-    setStarted(true);
-    setStep(0);
+  useEffect(() => {
+    if (trackedStartRef.current) return;
+    trackedStartRef.current = true;
     trackViewContent({
       content_name: "ai_model_sales_quiz",
       content_category: "sales_quiz",
-      quiz_stage: "start",
+      quiz_stage: "first_question",
     });
-  }
+  }, []);
+
+  const currentQuestion =
+    stage === 0 ? QUESTIONS[0] : stage === 1 ? QUESTIONS[1] : stage === 3 ? QUESTIONS[2] : null;
+  const ResultIcon = result.icon;
 
   function chooseAnswer(questionId: QuestionId, value: string) {
     setAnswers((current) => ({ ...current, [questionId]: value }));
-    setStep((current) => Math.min(current + 1, QUESTIONS.length));
+    setError("");
+    setStage((current) => Math.min(current + 1, STAGE_COUNT));
   }
 
   function goBack() {
     setError("");
-    if (!started) return;
-    if (step === 0) {
-      setStarted(false);
-      return;
-    }
-    setStep((current) => Math.max(0, current - 1));
+    setStage((current) => Math.max(0, current - 1));
   }
 
-  function submitLead(event: FormEvent<HTMLFormElement>) {
+  function submitName(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!normalizeName(name)) {
+      setError("Add your name to personalize the sales map.");
+      return;
+    }
+    setError("");
+    setStage(3);
+  }
+
+  function submitEmail(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const normalizedName = normalizeName(name);
     const normalizedEmail = email.trim().toLowerCase();
 
-    if (!normalizedName) {
-      setError("Enter your name to unlock the sales map.");
-      return;
-    }
     if (!isValidEmail(normalizedEmail)) {
-      setError("Enter a valid email to unlock the sales map.");
+      setError("Enter a valid email to unlock your sales angle.");
       return;
     }
-
-    setError("");
 
     if (!leadTracked) {
       trackLeadEvent(
@@ -279,54 +271,53 @@ export function SalesQuiz() {
       setLeadTracked(true);
     }
 
-    setStep(QUESTIONS.length + 1);
+    setError("");
+    setStage(5);
   }
 
   return (
     <section
       id="ai-model-sales-quiz"
-      className="relative overflow-hidden bg-[#101214] py-14 sm:py-24 lg:py-32"
+      className="relative min-h-screen overflow-hidden bg-[#101214] px-4 py-5 sm:px-8 sm:py-10 lg:py-16"
     >
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 0%, rgba(225,29,42,0.12) 0%, transparent 65%)",
+            "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(225,29,42,0.13) 0%, transparent 68%)",
         }}
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-8 px-5 sm:px-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-landing-accent">
+      <div className="relative mx-auto grid max-w-7xl gap-5 lg:min-h-[calc(100vh-8rem)] lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-10">
+        <div className="pt-3 lg:pt-0">
+          <span className="inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[10px] font-black uppercase text-landing-accent">
             <Sparkles className="h-3.5 w-3.5" />
             AI Model Sales Quiz
           </span>
-          <h2 className="mt-5 max-w-xl font-sora text-[28px] font-bold leading-[1.08] text-landing-text sm:text-[42px] lg:text-[52px]">
-            Find the AI model offer you should sell first.
-          </h2>
-          <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-landing-text-secondary sm:text-[17px]">
-            Answer 3 quick questions and get a sales page that frames the right opportunity, shows the value, and pushes to credits.
+
+          <h1 className="mt-4 max-w-xl font-sora text-[31px] font-extrabold leading-[1.04] text-landing-text sm:text-[52px] lg:text-[64px]">
+            Which AI model offer should you sell first?
+          </h1>
+
+          <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-landing-text-secondary sm:text-[17px]">
+            Find the fastest path to a sellable AI model: identity, content volume, margin, or agency scale.
           </p>
 
-          <div className="mt-6 grid max-w-lg grid-cols-1 gap-2.5 sm:grid-cols-3">
-            {[
-              "No generic form",
-              "Built for selling",
-              "Result in 60 sec",
-            ].map((item) => (
-              <div
+          <div className="mt-4 flex flex-wrap gap-2">
+            {["3 questions", "No checkbox", "Result first"].map((item) => (
+              <span
                 key={item}
-                className="flex items-center gap-2 rounded-lg border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.03] px-3 py-2 text-[12px] font-semibold text-[#f3f0ed]/70"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] px-3 py-1.5 text-[11px] font-bold text-[#f3f0ed]/70"
               >
-                <Check className="h-3.5 w-3.5 text-landing-accent" />
+                <Check className="h-3 w-3 text-landing-accent" />
                 {item}
-              </div>
+              </span>
             ))}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#171a1d] p-3 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-4">
+        <div className="rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#171a1d] p-2.5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-4">
           <div className="rounded-xl border border-[#f3f0ed]/[0.06] bg-[#0d0f11] p-4 sm:p-6">
             <div className="mb-5 h-1.5 overflow-hidden rounded-full bg-[#f3f0ed]/[0.06]">
               <div
@@ -335,66 +326,44 @@ export function SalesQuiz() {
               />
             </div>
 
-            {!started && (
-              <div className="min-h-[420px] content-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-landing-accent text-[#101214]">
-                  <Gauge className="h-6 w-6" />
-                </div>
-                <p className="mt-6 text-[12px] font-bold uppercase tracking-[0.18em] text-landing-accent">
-                  Sales angle
-                </p>
-                <h3 className="mt-3 font-sora text-[26px] font-bold leading-tight text-landing-text sm:text-[34px]">
-                  Package the right AI model opportunity before you spend on content volume.
-                </h3>
-                <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-landing-text-secondary sm:text-[15px]">
-                  The result points to the model, content and credit pack worth testing first.
-                </p>
-                <button
-                  type="button"
-                  onClick={startQuiz}
-                  className="landing-btn mt-8 inline-flex w-full items-center justify-center gap-2 bg-landing-accent px-6 py-4 text-[14px] font-bold text-[#101214] sm:w-auto"
-                >
-                  Start the quiz
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            )}
+            {currentQuestion && (
+              <div className="min-h-[390px]">
+                {stage > 0 && (
+                  <button
+                    type="button"
+                    onClick={goBack}
+                    className="mb-5 inline-flex min-h-9 items-center gap-1.5 text-[12px] font-bold text-[#f3f0ed]/45 transition-colors hover:text-[#f3f0ed]/75"
+                  >
+                    <ChevronLeft className="h-3.5 w-3.5" />
+                    Back
+                  </button>
+                )}
 
-            {started && currentQuestion && step < QUESTIONS.length && (
-              <div className="min-h-[420px]">
-                <button
-                  type="button"
-                  onClick={goBack}
-                  className="mb-6 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#f3f0ed]/45 transition-colors hover:text-[#f3f0ed]/75"
-                >
-                  <ChevronLeft className="h-3.5 w-3.5" />
-                  Back
-                </button>
-                <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-landing-accent">
+                <p className="text-[12px] font-black uppercase text-landing-accent">
                   {currentQuestion.eyebrow}
                 </p>
-                <h3 className="mt-3 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
+                <h2 className="mt-2 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
                   {currentQuestion.title}
-                </h3>
+                </h2>
 
-                <div className="mt-7 space-y-3">
+                <div className="mt-5 space-y-2.5">
                   {currentQuestion.options.map((option) => (
                     <button
                       key={option.value}
                       type="button"
                       onClick={() => chooseAnswer(currentQuestion.id, option.value)}
-                      className="group w-full rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.035] p-4 text-left transition-all duration-200 hover:border-landing-accent/35 hover:bg-landing-accent/[0.06]"
+                      className="group min-h-[64px] w-full rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.035] p-3.5 text-left transition-all duration-200 hover:border-landing-accent/35 hover:bg-landing-accent/[0.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-landing-accent sm:p-4"
                     >
-                      <span className="flex items-start justify-between gap-4">
+                      <span className="flex items-start justify-between gap-3">
                         <span>
-                          <span className="block text-[15px] font-bold text-landing-text">
+                          <span className="block text-[14px] font-black text-landing-text sm:text-[15px]">
                             {option.label}
                           </span>
-                          <span className="mt-1.5 block text-[13px] leading-relaxed text-landing-text-secondary">
+                          <span className="mt-1 block text-[12px] leading-relaxed text-landing-text-secondary sm:text-[13px]">
                             {option.helper}
                           </span>
                         </span>
-                        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-landing-accent opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100" />
+                        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-landing-accent opacity-70 transition-transform duration-200 group-hover:translate-x-0.5" />
                       </span>
                     </button>
                   ))}
@@ -402,60 +371,100 @@ export function SalesQuiz() {
               </div>
             )}
 
-            {isCaptureStep && (
-              <form onSubmit={submitLead} className="min-h-[420px]">
+            {stage === 2 && (
+              <form onSubmit={submitName} className="min-h-[390px]">
                 <button
                   type="button"
                   onClick={goBack}
-                  className="mb-6 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#f3f0ed]/45 transition-colors hover:text-[#f3f0ed]/75"
+                  className="mb-5 inline-flex min-h-9 items-center gap-1.5 text-[12px] font-bold text-[#f3f0ed]/45 transition-colors hover:text-[#f3f0ed]/75"
                 >
                   <ChevronLeft className="h-3.5 w-3.5" />
                   Back
                 </button>
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-landing-accent/[0.12] text-landing-accent">
-                  <Mail className="h-5 w-5" />
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-landing-accent/[0.12] text-landing-accent">
+                  <User className="h-5 w-5" />
                 </div>
-                <p className="mt-6 text-[12px] font-bold uppercase tracking-[0.18em] text-landing-accent">
-                  Your sales map is ready
+                <p className="mt-5 text-[12px] font-black uppercase text-landing-accent">
+                  Sales map loading
                 </p>
-                <h3 className="mt-3 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
-                  Where should we send the result?
-                </h3>
-                <p className="mt-3 text-[14px] leading-relaxed text-landing-text-secondary">
-                  Unlock the offer angle and see what to test first inside The AI Model Lab.
+                <h2 className="mt-2 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
+                  Who is this offer map for?
+                </h2>
+                <p className="mt-2 text-[13px] leading-relaxed text-landing-text-secondary sm:text-[14px]">
+                  One more question after this. Then you get the angle to test first.
                 </p>
 
-                <div className="mt-7 grid gap-3">
-                  <label className="grid gap-2 text-[12px] font-semibold text-[#f3f0ed]/55">
-                    Name
-                    <input
-                      value={name}
-                      onChange={(event) => setName(event.target.value)}
-                      className="h-12 rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.04] px-4 text-[14px] text-landing-text outline-none transition-colors placeholder:text-[#f3f0ed]/25 focus:border-landing-accent/45"
-                      placeholder="Alex"
-                    />
-                  </label>
-                  <label className="grid gap-2 text-[12px] font-semibold text-[#f3f0ed]/55">
-                    Email
-                    <input
-                      value={email}
-                      onChange={(event) => setEmail(event.target.value)}
-                      className="h-12 rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.04] px-4 text-[14px] text-landing-text outline-none transition-colors placeholder:text-[#f3f0ed]/25 focus:border-landing-accent/45"
-                      placeholder="alex@agency.com"
-                      inputMode="email"
-                    />
-                  </label>
-                </div>
+                <label className="mt-6 grid gap-2 text-[12px] font-bold text-[#f3f0ed]/55">
+                  Name
+                  <input
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    className="h-12 rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.04] px-4 text-[14px] text-landing-text outline-none transition-colors placeholder:text-[#f3f0ed]/25 focus:border-landing-accent/45"
+                    placeholder="Alex"
+                  />
+                </label>
 
                 {error && (
-                  <p className="mt-3 rounded-lg border border-red-400/15 bg-red-400/[0.08] px-3 py-2 text-[12px] font-semibold text-red-200">
+                  <p role="alert" className="mt-3 rounded-lg border border-red-400/15 bg-red-400/[0.08] px-3 py-2 text-[12px] font-bold text-red-200">
                     {error}
                   </p>
                 )}
 
                 <button
                   type="submit"
-                  className="landing-btn mt-6 inline-flex w-full items-center justify-center gap-2 bg-landing-accent px-6 py-4 text-[14px] font-bold text-[#101214]"
+                  className="landing-btn mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-landing-accent px-6 py-3.5 text-[14px] font-black text-[#101214]"
+                >
+                  Continue
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </form>
+            )}
+
+            {stage === 4 && (
+              <form onSubmit={submitEmail} className="min-h-[390px]">
+                <button
+                  type="button"
+                  onClick={goBack}
+                  className="mb-5 inline-flex min-h-9 items-center gap-1.5 text-[12px] font-bold text-[#f3f0ed]/45 transition-colors hover:text-[#f3f0ed]/75"
+                >
+                  <ChevronLeft className="h-3.5 w-3.5" />
+                  Back
+                </button>
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-landing-accent/[0.12] text-landing-accent">
+                  <Mail className="h-5 w-5" />
+                </div>
+                <p className="mt-5 text-[12px] font-black uppercase text-landing-accent">
+                  {displayName(name)}, your angle is ready
+                </p>
+                <h2 className="mt-2 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
+                  Where should we send the sales map?
+                </h2>
+                <p className="mt-2 text-[13px] leading-relaxed text-landing-text-secondary sm:text-[14px]">
+                  The next screen shows the offer, proof angle and credit test to run first.
+                </p>
+
+                <label className="mt-6 grid gap-2 text-[12px] font-bold text-[#f3f0ed]/55">
+                  Email
+                  <input
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    className="h-12 rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.04] px-4 text-[14px] text-landing-text outline-none transition-colors placeholder:text-[#f3f0ed]/25 focus:border-landing-accent/45"
+                    placeholder="alex@agency.com"
+                    inputMode="email"
+                  />
+                </label>
+
+                {error && (
+                  <p role="alert" className="mt-3 rounded-lg border border-red-400/15 bg-red-400/[0.08] px-3 py-2 text-[12px] font-bold text-red-200">
+                    {error}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  className="landing-btn mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-landing-accent px-6 py-3.5 text-[14px] font-black text-[#101214]"
                 >
                   Show my sales angle
                   <ArrowRight className="h-4 w-4" />
@@ -463,43 +472,39 @@ export function SalesQuiz() {
               </form>
             )}
 
-            {isResultStep && (
-              <div className="min-h-[420px]">
+            {stage >= 5 && (
+              <div className="min-h-[390px]">
                 <div className="flex flex-wrap items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-landing-accent text-[#101214]">
-                    <ResultIcon className="h-6 w-6" />
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-landing-accent text-[#101214]">
+                    <ResultIcon className="h-5 w-5" />
                   </div>
-                  <span className="rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-landing-accent">
-                    {result.label}
+                  <span className="rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[10px] font-black uppercase text-landing-accent">
+                    {result.badge}
                   </span>
                 </div>
 
-                <h3 className="mt-5 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
-                  {result.title}
-                </h3>
-                <p className="mt-3 text-[14px] leading-relaxed text-landing-text-secondary sm:text-[15px]">
-                  {result.summary}
+                <h2 className="mt-5 font-sora text-[24px] font-bold leading-tight text-landing-text sm:text-[32px]">
+                  {result.headline}
+                </h2>
+                <p className="mt-3 text-[14px] leading-relaxed text-landing-text-secondary">
+                  {result.mirror}
                 </p>
 
-                <div className="mt-6 grid gap-2.5">
-                  {result.opportunities.map((opportunity) => (
-                    <div
-                      key={opportunity}
-                      className="flex items-start gap-3 rounded-lg border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] px-3.5 py-3 text-[13px] font-semibold leading-relaxed text-[#f3f0ed]/75"
+                <div className="mt-5 grid gap-2 sm:grid-cols-3">
+                  {result.bullets.map((bullet) => (
+                    <span
+                      key={bullet}
+                      className="rounded-lg border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] px-3 py-2 text-[12px] font-black text-[#f3f0ed]/75"
                     >
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-landing-accent" />
-                      {opportunity}
-                    </div>
+                      {bullet}
+                    </span>
                   ))}
                 </div>
 
-                <div className="mt-6 rounded-lg border border-landing-accent/15 bg-landing-accent/[0.06] p-4">
-                  <div className="flex items-start gap-3">
-                    <LineChart className="mt-0.5 h-4 w-4 shrink-0 text-landing-accent" />
-                    <p className="text-[13px] font-semibold leading-relaxed text-[#f3f0ed]/75">
-                      {result.nextMove}
-                    </p>
-                  </div>
+                <div className="mt-5 space-y-3">
+                  <ResultBlock title="Offer to sell" body={result.offer} />
+                  <ResultBlock title="Proof angle" body={result.proof} />
+                  <ResultBlock title="Credit test" body={result.creditPlan} />
                 </div>
 
                 <a
@@ -511,9 +516,9 @@ export function SalesQuiz() {
                       quiz_result: result.key,
                     })
                   }
-                  className="landing-btn mt-6 inline-flex w-full items-center justify-center gap-2 bg-landing-accent px-6 py-4 text-[14px] font-bold text-[#101214] sm:w-auto"
+                  className="landing-btn mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-landing-accent px-6 py-3.5 text-[14px] font-black text-[#101214] sm:w-auto"
                 >
-                  See credit packs
+                  Pick a credit pack
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
@@ -522,5 +527,21 @@ export function SalesQuiz() {
         </div>
       </div>
     </section>
+  );
+}
+
+function ResultBlock({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-lg border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] p-3.5">
+      <div className="flex items-start gap-3">
+        <LineChart className="mt-0.5 h-4 w-4 shrink-0 text-landing-accent" />
+        <div>
+          <p className="text-[11px] font-black uppercase text-landing-accent">{title}</p>
+          <p className="mt-1 text-[13px] font-semibold leading-relaxed text-[#f3f0ed]/75">
+            {body}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
