@@ -1025,6 +1025,35 @@ export interface AdminFeedbackStats {
   npsDetractors: number;
 }
 
+export interface AdminMarketingLead {
+  id: string;
+  email: string;
+  name: string | null;
+  phone: string | null;
+  source: string;
+  quizResult: string | null;
+  quizAnswers: Record<string, unknown> | null;
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  utmContent: string | null;
+  utmTerm: string | null;
+  fbclid: string | null;
+  fbp: string | null;
+  fbc: string | null;
+  gclid: string | null;
+  landingPage: string | null;
+  referrer: string | null;
+  eventId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AdminMarketingLeadStats {
+  total: number;
+  sources: { source: string; count: number }[];
+}
+
 export interface AdminUserDetail {
   id: string;
   email: string;
@@ -2248,6 +2277,19 @@ export const api = {
         data: [...first.data, ...rest.flatMap((r) => r.data)],
         meta: { page: 1, limit: total, total },
       };
+    },
+    marketingLeads(accessToken: string, page = 1, limit = 20, search?: string, source?: string) {
+      const params = new URLSearchParams({
+        page: String(page),
+        limit: String(limit),
+      });
+      if (search) params.set('search', search);
+      if (source) params.set('source', source);
+      return authRequest<{
+        data: AdminMarketingLead[];
+        meta: { page: number; limit: number; total: number; totalPages: number };
+        stats: AdminMarketingLeadStats;
+      }>(`/api/v1/admin/marketing-leads?${params.toString()}`, accessToken);
     },
     upload(accessToken: string, filename: string, contentType: string, folder: string) {
       return authRequest<{ uploadUrl: string; fileKey: string; publicUrl: string }>(

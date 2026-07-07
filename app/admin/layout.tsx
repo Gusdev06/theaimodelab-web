@@ -26,6 +26,7 @@ import {
   Tags,
   ChevronDown,
   Settings,
+  Target,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -43,6 +44,7 @@ const NAV_GROUPS: NavGroup[] = [
       { href: '/admin/usuarios', label: 'Usuários', icon: Users },
       { href: '/admin/geracoes', label: 'Gerações', icon: Image },
       { href: '/admin/filas-ilimitado', label: 'Fila Ilimitada', icon: InfinityIcon },
+      { href: '/admin/leads', label: 'Leads', icon: Target },
       { href: '/admin/feedback', label: 'Feedback', icon: MessageSquareHeart },
     ],
   },
