@@ -185,6 +185,21 @@ const RESULTS: Record<ResultKey, QuizResult> = {
 
 const STAGE_COUNT = 5;
 
+const ASPIRATIONAL_PROOF = [
+  {
+    label: "Identity",
+    quote: "I can show one model with the same face, not a folder of random AI images.",
+  },
+  {
+    label: "Output",
+    quote: "I know what to produce this week instead of guessing prompts every day.",
+  },
+  {
+    label: "Offer",
+    quote: "I have a first package to sell before I build a full model factory.",
+  },
+];
+
 function resolveResult(answers: Answers): QuizResult {
   if (answers.operation === "agency" || answers.scale === "agency") return RESULTS.agency;
   if (answers.bottleneck === "identity") return RESULTS.identity;
@@ -333,6 +348,22 @@ export function SalesQuiz() {
                 <Check className="h-3 w-3 text-landing-accent" />
                 {item}
               </span>
+            ))}
+          </div>
+
+          <div className="mt-5 flex gap-2 overflow-x-auto pb-1 sm:grid sm:max-w-xl sm:grid-cols-3 sm:overflow-visible sm:pb-0 lg:mt-7">
+            {ASPIRATIONAL_PROOF.map((item) => (
+              <div
+                key={item.label}
+                className="min-w-[210px] rounded-lg border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] p-3 sm:min-w-0"
+              >
+                <p className="text-[10px] font-black uppercase text-landing-accent">
+                  {item.label}
+                </p>
+                <p className="mt-1 text-[11px] font-semibold leading-snug text-[#f3f0ed]/65">
+                  “{item.quote}”
+                </p>
+              </div>
             ))}
           </div>
         </div>
@@ -537,6 +568,15 @@ export function SalesQuiz() {
                   <ResultBlock title="Monthly production plan" body={result.productionPlan} />
                   <ResultBlock title="First 7 days" body={result.firstWeek} />
                   <ResultBlock title="Plan fit" body={result.planHint} />
+                </div>
+
+                <div className="mt-5 rounded-lg border border-landing-accent/20 bg-landing-accent/[0.07] p-3.5">
+                  <p className="text-[10px] font-black uppercase text-landing-accent">
+                    What you should be able to pitch
+                  </p>
+                  <p className="mt-1 text-[13px] font-semibold leading-relaxed text-[#f3f0ed]/80">
+                    “We can launch a believable AI model, feed it for 7 days, and know which angle is worth selling before building the full operation.”
+                  </p>
                 </div>
 
                 <a
