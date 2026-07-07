@@ -8,14 +8,14 @@ import { SupportButton } from "@/components/editor/SupportButton";
 export const metadata: Metadata = {
   title: "AI Model Sales Quiz — The AI Model Lab",
   description:
-    "Find the AI model offer you should sell first, then pick the credit pack to test it.",
+    "Find the AI model offer you should sell first, then choose the monthly production plan to launch it.",
   alternates: {
     canonical: "https://theaimodelab.ai/quiz",
   },
   openGraph: {
     title: "AI Model Sales Quiz — The AI Model Lab",
     description:
-      "Answer 3 questions and find the AI model sales angle worth testing first.",
+      "Answer 3 questions and find the AI model sales angle and monthly plan worth testing first.",
     type: "website",
     url: "https://theaimodelab.ai/quiz",
   },
@@ -30,7 +30,7 @@ const quizJsonLd = {
   name: "AI Model Sales Quiz",
   url: "https://theaimodelab.ai/quiz",
   description:
-    "Find the AI model offer to sell first and choose the credit pack to test it.",
+    "Find the AI model offer to sell first and choose the monthly production plan to launch it.",
   isPartOf: {
     "@type": "WebSite",
     name: "The AI Model Lab",

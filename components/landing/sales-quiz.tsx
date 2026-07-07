@@ -43,7 +43,9 @@ type QuizResult = {
   mirror: string;
   offer: string;
   proof: string;
-  creditPlan: string;
+  productionPlan: string;
+  firstWeek: string;
+  planHint: string;
   bullets: string[];
 };
 
@@ -51,75 +53,75 @@ const QUESTIONS: QuizQuestion[] = [
   {
     id: "operation",
     eyebrow: "1/3",
-    title: "Which AI model business are you trying to sell first?",
+    title: "Where will the first AI model revenue come from?",
     options: [
       {
         value: "solo",
-        label: "One paid AI model",
-        helper: "I want one persona that can earn before I scale.",
+        label: "One paid persona",
+        helper: "I need one believable model that can start earning.",
       },
       {
         value: "operator",
-        label: "A small OFM operation",
-        helper: "I need content volume for several accounts.",
+        label: "A small model operation",
+        helper: "I need enough output to feed several accounts.",
       },
       {
         value: "agency",
-        label: "An agency model factory",
-        helper: "I want a repeatable offer for many personas.",
+        label: "A model factory offer",
+        helper: "I want to sell repeatable AI model production to clients.",
       },
     ],
   },
   {
     id: "bottleneck",
     eyebrow: "2/3",
-    title: "What would make people buy or subscribe faster?",
+    title: "What is most likely to make the buyer say yes?",
     options: [
       {
         value: "identity",
-        label: "A model that feels real",
+        label: "Believable identity",
         helper: "Same face, same vibe, no obvious AI drift.",
       },
       {
         value: "volume",
-        label: "Fresh content every day",
+        label: "Daily content supply",
         helper: "Photos, clips and motion without waiting on shoots.",
       },
       {
         value: "margin",
         label: "Lower production cost",
-        helper: "Replace scattered tools before the model proves revenue.",
+        helper: "Stop paying scattered tools before revenue is proven.",
       },
       {
         value: "speed",
-        label: "Launch a test this week",
-        helper: "Get a sellable concept live before overbuilding.",
+        label: "Speed to first test",
+        helper: "Get one sellable concept live before overbuilding.",
       },
     ],
   },
   {
     id: "scale",
     eyebrow: "3/3",
-    title: "How aggressive is the first test?",
+    title: "What production pace can you actually commit to?",
     options: [
       {
         value: "validate",
-        label: "Validate 1 model",
-        helper: "Find the face, niche and first content angle.",
+        label: "Validate one model",
+        helper: "Find the face, niche and first paid angle.",
       },
       {
         value: "portfolio",
-        label: "Test 3-5 models",
-        helper: "Compare concepts and keep the winners.",
+        label: "Compare 3-5 models",
+        helper: "Benchmark concepts and keep the winners.",
       },
       {
         value: "machine",
-        label: "Scale 6-15 accounts",
+        label: "Feed 6-15 accounts",
         helper: "Build a repeatable production workflow.",
       },
       {
         value: "agency",
-        label: "Launch the agency offer",
+        label: "Sell the agency offer",
         helper: "Standardize personas, prompts, clips and delivery.",
       },
     ],
@@ -131,45 +133,53 @@ const RESULTS: Record<ResultKey, QuizResult> = {
     key: "identity",
     icon: Target,
     badge: "Identity offer",
-    headline: "Sell one believable AI model before selling a big operation.",
-    mirror: "Your buyer needs to trust the character before they care about output volume.",
-    offer: "A consistent-face AI model pack: identity, look, first content angles and reusable prompts.",
-    proof: "The value is not just generation. It is making the model recognizable enough to monetize.",
-    creditPlan: "Start with enough credits to test face consistency, 20-30 images and first short clips.",
-    bullets: ["Same face", "Repeatable prompts", "First paid concept"],
+    headline: "Start with the identity offer: one model people can believe.",
+    mirror: "The buyer does not need a giant operation yet. They need proof that one character can look consistent enough to sell.",
+    offer: "Sell a launch pack: face system, visual niche, first paid angles and reusable prompts for one AI model.",
+    proof: "The value is recognizability. If the face drifts, the offer dies before content volume matters.",
+    productionPlan: "Pick a monthly plan that lets you produce identity tests, 20-30 usable images and first short clips without switching tools.",
+    firstWeek: "Day 1-2: lock face and visual niche. Day 3-5: produce the first content set. Day 6-7: test which angle gets saves, clicks or paid interest.",
+    planHint: "Best fit: Creator or Pro if this is the first monetized persona.",
+    bullets: ["Consistent face", "Paid niche angle", "Reusable prompt set"],
   },
   volume: {
     key: "volume",
     icon: Video,
     badge: "Content engine",
-    headline: "Sell daily content production, not another AI toy.",
-    mirror: "Your strongest pitch is feeding accounts without real shoots, extra creators or tool hopping.",
-    offer: "A 30-day AI content engine: images, motion, clips and variations for every active model.",
-    proof: "The buyer pays for freshness and speed, not for the prompt box itself.",
-    creditPlan: "Choose a pack that lets you produce multiple angles per model, not one-off samples.",
-    bullets: ["Daily feed", "Motion angles", "Lean team"],
+    headline: "Sell the content engine: daily output without daily shoots.",
+    mirror: "Your strongest buyer cares about keeping accounts fed, not about owning another prompt box.",
+    offer: "Sell a 30-day content engine: images, motion, clips and variations for every active model.",
+    proof: "The buyer pays for freshness, speed and fewer production handoffs.",
+    productionPlan: "Choose a monthly plan with enough credits to produce multiple angles per model every week, not one-off samples.",
+    firstWeek: "Day 1: choose content pillars. Day 2-4: produce feed and motion variations. Day 5-7: publish, measure saves, replies and subscription intent.",
+    planHint: "Best fit: Pro or Advanced if you are feeding more than one active account.",
+    bullets: ["Daily feed", "Motion angles", "Lean production"],
   },
   margin: {
     key: "margin",
     icon: DollarSign,
     badge: "Margin play",
-    headline: "Sell the cheaper production stack.",
-    mirror: "The pain is paying for separate tools before the persona has proven revenue.",
-    offer: "A single-stack AI model test that replaces image, video, motion and upscale subscriptions.",
+    headline: "Sell the margin play: one production stack before the model scales.",
+    mirror: "The buyer is tired of paying separate tools before a persona has proven revenue.",
+    offer: "Sell a single-stack AI model test that covers image, video, motion and upscale work in one workflow.",
     proof: "Lower fixed cost means more concepts tested before committing to a larger account build.",
-    creditPlan: "Start with credits, prove cost per usable asset, then scale only the winning model.",
+    productionPlan: "Start on the lowest monthly plan that can produce a real batch, then upgrade only after the winner is obvious.",
+    firstWeek: "Day 1: list the tools you replace. Day 2-5: produce one complete batch inside one stack. Day 6-7: compare cost per usable asset.",
+    planHint: "Best fit: Creator for one concept, Pro once output volume becomes the constraint.",
     bullets: ["One stack", "Lower fixed cost", "More tests"],
   },
   agency: {
     key: "agency",
     icon: Layers,
     badge: "Model factory",
-    headline: "Sell the system for launching many AI models.",
-    mirror: "Your buyer is not buying one character. They are buying a repeatable production machine.",
-    offer: "An AI model factory: persona creation, content templates, motion workflow and export standards.",
+    headline: "Sell the model factory: a repeatable system for many personas.",
+    mirror: "This buyer is not buying one character. They are buying a production machine they can resell.",
+    offer: "Sell a model factory: persona creation, content templates, motion workflow, export standards and delivery rhythm.",
     proof: "Agencies win when output scales without hiring a bigger production team.",
-    creditPlan: "Use a larger credit pack to benchmark multiple personas and cost per usable asset.",
-    bullets: ["Many personas", "Standardized workflow", "Agency margin"],
+    productionPlan: "Use a higher monthly plan to benchmark multiple personas and know cost per usable asset before selling retainers.",
+    firstWeek: "Day 1: define the model factory offer. Day 2-5: benchmark 3 personas. Day 6-7: package delivery standards and retainer pricing.",
+    planHint: "Best fit: Advanced or Studio if the offer is for clients or multiple accounts.",
+    bullets: ["Many personas", "Delivery rhythm", "Agency margin"],
   },
 };
 
@@ -303,19 +313,19 @@ export function SalesQuiz() {
         <div className="pt-3 lg:pt-0">
           <span className="inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[10px] font-black uppercase text-landing-accent">
             <Sparkles className="h-3.5 w-3.5" />
-            AI Model Sales Quiz
+            Built for model operators
           </span>
 
           <h1 className="mt-4 max-w-xl font-sora text-[31px] font-extrabold leading-[1.04] text-landing-text sm:text-[52px] lg:text-[64px]">
-            Which AI model offer should you sell first?
+            Find the first AI model offer worth selling.
           </h1>
 
           <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-landing-text-secondary sm:text-[17px]">
-            Find the fastest path to a sellable AI model: identity, content volume, margin, or agency scale.
+            For creators, OFM teams and agencies who need one AI model offer to sell before they scale production.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            {["3 questions", "No checkbox", "Result first"].map((item) => (
+            {["3 questions", "No checkbox", "7-day launch map"].map((item) => (
               <span
                 key={item}
                 className="inline-flex items-center gap-1.5 rounded-full border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] px-3 py-1.5 text-[11px] font-bold text-[#f3f0ed]/70"
@@ -457,7 +467,7 @@ export function SalesQuiz() {
                   Unlock the sales map.
                 </h2>
                 <p className="mt-2 text-[13px] leading-relaxed text-landing-text-secondary sm:text-[14px]">
-                  The next screen shows the offer, proof angle and credit test to run first.
+                  The next screen shows the offer, proof angle and monthly production plan to run first.
                 </p>
 
                 <label
@@ -524,7 +534,9 @@ export function SalesQuiz() {
                 <div className="mt-5 space-y-3">
                   <ResultBlock title="Offer to sell" body={result.offer} />
                   <ResultBlock title="Proof angle" body={result.proof} />
-                  <ResultBlock title="Credit test" body={result.creditPlan} />
+                  <ResultBlock title="Monthly production plan" body={result.productionPlan} />
+                  <ResultBlock title="First 7 days" body={result.firstWeek} />
+                  <ResultBlock title="Plan fit" body={result.planHint} />
                 </div>
 
                 <a
@@ -538,7 +550,7 @@ export function SalesQuiz() {
                   }
                   className="landing-btn mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 bg-landing-accent px-6 py-3.5 text-[14px] font-black text-[#101214] sm:w-auto"
                 >
-                  Pick a credit pack
+                  See monthly plans
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
