@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "AI Model Sales Quiz — The AI Model Lab",
   description:
     "Find the AI model offer you should sell first, then pick the credit pack to test it.",
+  alternates: {
+    canonical: "https://theaimodelab.ai/quiz",
+  },
   openGraph: {
     title: "AI Model Sales Quiz — The AI Model Lab",
     description:
@@ -21,9 +24,33 @@ export const metadata: Metadata = {
   },
 };
 
+const quizJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "AI Model Sales Quiz",
+  url: "https://theaimodelab.ai/quiz",
+  description:
+    "Find the AI model offer to sell first and choose the credit pack to test it.",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "The AI Model Lab",
+    url: "https://theaimodelab.ai",
+  },
+  about: {
+    "@type": "SoftwareApplication",
+    name: "The AI Model Lab",
+    applicationCategory: "MultimediaApplication",
+    operatingSystem: "Web",
+  },
+};
+
 export default function QuizLandingPage() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(quizJsonLd) }}
+      />
       <SalesQuiz />
       <QuizOfferBridge />
       <Pricing />
