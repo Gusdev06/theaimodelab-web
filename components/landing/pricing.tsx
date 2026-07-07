@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Shield, Loader2 } from "lucide-react";
+import { AlertTriangle, Check, Shield, Loader2 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { useScrollReveal } from "./use-scroll-reveal";
 import { useEffect, useState } from "react";
@@ -18,13 +18,20 @@ export function Pricing() {
   const { ref, isVisible } = useScrollReveal();
   const [packages, setPackages] = useState<CreditPackage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
   const { openLoginModal } = useLoginModal();
 
   useEffect(() => {
     api.credits
       .packagesPublic(currency)
-      .then((data) => setPackages(data))
-      .catch(() => { })
+      .then((data) => {
+        setPackages(data);
+        setLoadFailed(false);
+      })
+      .catch(() => {
+        setPackages([]);
+        setLoadFailed(true);
+      })
       .finally(() => setLoading(false));
   }, [currency]);
 
@@ -80,7 +87,26 @@ export function Pricing() {
               onUnauthenticated={() => openLoginModal({ mode: "register" })}
             />
           </div>
-        ) : null}
+        ) : (
+          <div className="mx-auto mt-10 max-w-xl rounded-2xl border border-[#f3f0ed]/[0.07] bg-[#16161a] p-5 text-center sm:mt-16 sm:p-7">
+            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl border border-landing-accent/15 bg-landing-accent/[0.08] text-landing-accent">
+              <AlertTriangle className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-sora text-[18px] font-bold text-landing-text">
+              {loadFailed ? "Credit packs are taking longer to load." : "Credit packs are being prepared."}
+            </h3>
+            <p className="mt-2 text-[13px] leading-relaxed text-landing-text-secondary">
+              Create your account now and pick the right credit pack inside the platform.
+            </p>
+            <button
+              type="button"
+              onClick={() => openLoginModal({ mode: "register" })}
+              className="landing-btn mt-5 inline-flex min-h-11 items-center justify-center bg-landing-accent px-5 text-[13px] font-black text-[#111113]"
+            >
+              Create account
+            </button>
+          </div>
+        )}
 
         {/* Guarantee */}
         <div className="mx-auto mt-12 max-w-2xl sm:mt-16 lg:mt-20">
