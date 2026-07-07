@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useLoginModal } from "@/lib/login-modal-context";
 import { useAuth } from "@/lib/auth-context";
 import { api, Plan } from "@/lib/api";
+import { PLAN_GENERATION_ENTRIES } from "@/lib/plans";
 
 // Monetização por assinatura mensal (PerfectPay). A landing lista os planos ativos
 // (endpoint público GET /api/v1/plans) e o CTA redireciona para o checkout recorrente
@@ -15,7 +16,8 @@ import { api, Plan } from "@/lib/api";
 export function Pricing() {
   const t = useTranslations("pricing");
   const locale = useLocale();
-  const currency = locale === "pt-BR" ? "BRL" : "USD";
+  // Preços dos planos são cobrados em dólar (USD).
+  const currency = "USD";
   const { ref, isVisible } = useScrollReveal();
   const { accessToken } = useAuth();
   const { openLoginModal } = useLoginModal();
@@ -126,10 +128,28 @@ export function Pricing() {
                     </span>
                     <span className="text-[13px] text-[#f3f0ed]/40">{t("perMonth")}</span>
                   </div>
-                  <p className="mt-4 flex items-center gap-2 text-[14px] text-landing-text-secondary">
-                    <Check className="h-3.5 w-3.5 shrink-0 text-landing-accent/70" />
+                  <p className="mt-4 text-[13px] font-semibold text-landing-text">
                     {t("creditsPerMonth", { credits: formatCredits(plan.creditsPerMonth) })}
                   </p>
+                  <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#f3f0ed]/35">
+                    {t("generationEstimate")}
+                  </p>
+                  <ul className="mt-2.5 space-y-1.5 text-[13px] text-[#f3f0ed]/55">
+                    {(PLAN_GENERATION_ENTRIES[plan.slug] ?? [])
+                      .filter((e) => !e.blocked && e.countNumber > 0)
+                      .slice(0, 6)
+                      .map((e) => (
+                        <li key={e.label} className="flex items-center gap-2">
+                          <Check className="h-3.5 w-3.5 shrink-0 text-landing-accent/70" />
+                          <span>
+                            <span className="font-semibold text-landing-text">
+                              {formatCredits(e.countNumber)}
+                            </span>{" "}
+                            {e.label}
+                          </span>
+                        </li>
+                      ))}
+                  </ul>
                   <div className="flex-1" />
                   <button
                     type="button"
