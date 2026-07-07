@@ -37,6 +37,7 @@ import { QueryProvider } from "@/lib/query-provider";
 import { GoogleAuthWrapper } from "@/lib/google-auth-wrapper";
 import { LoginModalProvider } from "@/lib/login-modal-context";
 import { LoginModal } from "@/components/LoginModal";
+import { MetaPixel } from "@/components/MetaPixel";
 import { Toaster } from "sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -61,6 +62,7 @@ export default async function RootLayout({
             <TooltipProvider delayDuration={0}>
               {children}
               <LoginModal />
+              <MetaPixel />
               <Toaster
                 theme="dark"
                 position="bottom-right"

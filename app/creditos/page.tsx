@@ -33,6 +33,7 @@ import { PlansGrid } from '@/components/editor/PlansGrid';
 import { PixAutoCheckoutModal } from '@/components/editor/PixAutoCheckoutModal';
 import type { Plan } from '@/lib/api';
 import { useLocale, useTranslations } from 'next-intl';
+import { buildMetaEventContext, generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
 
 function CreditosPageContent() {
   const router = useRouter();
@@ -85,21 +86,43 @@ function CreditosPageContent() {
     try {
 
       let checkoutUrl: string;
+      const targetPlan = plans?.find((plan) => plan.slug === planSlug);
+      const eventId = generateMetaEventId('initiate_checkout_plan');
+      const meta = buildMetaEventContext(eventId);
       if (action === 'create') {
         const recoveryPromo = getStoredRecoveryPromo();
-        const res = await api.subscriptions.create(accessToken, planSlug, undefined, recoveryPromo);
+        const res = await api.subscriptions.create(accessToken, planSlug, undefined, recoveryPromo, meta);
         if (recoveryPromo) clearRecoveryPromo();
         checkoutUrl = res.checkoutUrl;
       } else {
-        const res = await api.subscriptions.upgrade(accessToken, planSlug);
+        const res = await api.subscriptions.upgrade(accessToken, planSlug, undefined, meta);
         checkoutUrl = res.checkoutUrl;
       }
+      trackMetaPixelEvent('InitiateCheckout', {
+        content_ids: [planSlug],
+        content_name: targetPlan?.name ?? planSlug,
+        content_type: 'product',
+        currency: targetPlan?.currency ?? uiCurrency,
+        value: (targetPlan?.priceCents ?? 0) / 100,
+        checkout_type: 'subscription',
+      }, eventId);
       window.location.href = checkoutUrl;
     } catch (err: unknown) {
       const status = (err as { status?: number })?.status;
       if (status === 409) {
         try {
-          const res = await api.subscriptions.upgrade(accessToken, planSlug);
+          const targetPlan = plans?.find((plan) => plan.slug === planSlug);
+          const eventId = generateMetaEventId('initiate_checkout_plan');
+          const meta = buildMetaEventContext(eventId);
+          const res = await api.subscriptions.upgrade(accessToken, planSlug, undefined, meta);
+          trackMetaPixelEvent('InitiateCheckout', {
+            content_ids: [planSlug],
+            content_name: targetPlan?.name ?? planSlug,
+            content_type: 'product',
+            currency: targetPlan?.currency ?? uiCurrency,
+            value: (targetPlan?.priceCents ?? 0) / 100,
+            checkout_type: 'subscription',
+          }, eventId);
           window.location.href = res.checkoutUrl;
         } catch {
           toast.error(t('changePlanErrorTitle'), { description: t('changePlanErrorDescription') });

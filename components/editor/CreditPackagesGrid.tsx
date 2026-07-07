@@ -19,6 +19,7 @@ import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
 import type { CreditPackage } from '@/lib/api';
 import { formatCurrency, getBoostMetaKey, getPackageBadge, getPackageGenerationPerks } from '@/lib/plans';
+import { buildMetaEventContext, generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
 import { PixCheckoutModal } from './PixCheckoutModal';
 import { PixIcon } from '@/components/icons/PixIcon';
 
@@ -54,15 +55,25 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
       ? Math.max(...activePackages.map((p) => p.priceCents / p.credits))
       : 0;
 
-  async function handlePurchase(packageId: string) {
+  async function handlePurchase(pkg: CreditPackage) {
     if (purchasingId) return;
     if (!accessToken) {
       onUnauthenticated?.();
       return;
     }
-    setPurchasingId(packageId);
+    const eventId = generateMetaEventId('initiate_checkout_credit');
+    const meta = buildMetaEventContext(eventId);
+    setPurchasingId(pkg.id);
     try {
-      const { checkoutUrl } = await api.credits.purchase(accessToken, packageId, currency);
+      const { checkoutUrl } = await api.credits.purchase(accessToken, pkg.id, currency, meta);
+      trackMetaPixelEvent('InitiateCheckout', {
+        content_ids: [pkg.id],
+        content_name: pkg.name,
+        content_type: 'product',
+        currency,
+        value: pkg.priceCents / 100,
+        checkout_type: 'credit_package',
+      }, eventId);
       window.location.href = checkoutUrl;
     } catch {
       setPurchasingId(null);
@@ -250,7 +261,7 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
 
                       {/* CTA */}
                       <button
-                        onClick={() => handlePurchase(pkg.id)}
+                          onClick={() => handlePurchase(pkg)}
                         disabled={!!purchasingId}
                         className={`app-ease flex w-full items-center justify-center gap-2 rounded-xl font-bold transition-all duration-300 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 ${compact ? 'mt-3 h-9 text-[13px]' : 'mt-6 h-11 text-[13px]'} ${isBest
                           ? 'bg-[#e11d2a] text-[#0a0a0b] shadow-[0_4px_20px_rgba(225,29,42,0.3)] hover:shadow-[0_4px_30px_rgba(225,29,42,0.4)] hover:brightness-110'

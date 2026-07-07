@@ -1,4 +1,9 @@
-import { readAttribution } from './tracking';
+import {
+  buildTrackingPayload,
+  generateMetaEventId,
+  MetaEventContext,
+  trackMetaPixelEvent,
+} from './tracking';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -28,6 +33,7 @@ export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
   user: AuthUser;
+  isNewUser?: boolean;
 }
 
 export class ApiError extends Error {
@@ -1677,10 +1683,14 @@ export const api = {
         body: JSON.stringify(payload),
       });
     },
-    purchase(accessToken: string, packageId: string, currency?: string) {
+    purchase(accessToken: string, packageId: string, currency?: string, meta?: MetaEventContext) {
       return authRequest<{ checkoutUrl: string }>('/api/v1/credits/purchase', accessToken, {
         method: 'POST',
-        body: JSON.stringify({ packageId, ...(currency ? { currency } : {}) }),
+        body: JSON.stringify({
+          packageId,
+          ...(currency ? { currency } : {}),
+          ...(meta ? { meta } : {}),
+        }),
       });
     },
     transactions(accessToken: string, page = 1, limit = 20) {
@@ -1807,13 +1817,20 @@ export const api = {
   },
 
   subscriptions: {
-    create(accessToken: string, planSlug: string, currency?: string, recoveryPromoCode?: string) {
+    create(
+      accessToken: string,
+      planSlug: string,
+      currency?: string,
+      recoveryPromoCode?: string,
+      meta?: MetaEventContext,
+    ) {
       return authRequest<{ checkoutUrl: string }>('/api/v1/subscriptions', accessToken, {
         method: 'POST',
         body: JSON.stringify({
           planSlug,
           ...(currency ? { currency } : {}),
           ...(recoveryPromoCode ? { recoveryPromoCode } : {}),
+          ...(meta ? { meta } : {}),
         }),
       });
     },
@@ -1841,10 +1858,14 @@ export const api = {
         body: JSON.stringify({ reason }),
       });
     },
-    upgrade(accessToken: string, planSlug: string, currency?: string) {
+    upgrade(accessToken: string, planSlug: string, currency?: string, meta?: MetaEventContext) {
       return authRequest<{ checkoutUrl: string }>('/api/v1/subscriptions/upgrade', accessToken, {
         method: 'PATCH',
-        body: JSON.stringify({ planSlug, ...(currency ? { currency } : {}) }),
+        body: JSON.stringify({
+          planSlug,
+          ...(currency ? { currency } : {}),
+          ...(meta ? { meta } : {}),
+        }),
       });
     },
     downgrade(accessToken: string, planSlug: string) {
@@ -2553,7 +2574,8 @@ export const api = {
     },
 
     register(email: string, name: string, password: string) {
-      const tracking = readAttribution();
+      const eventId = generateMetaEventId('lead');
+      const tracking = buildTrackingPayload(eventId);
       return request<AuthResponse>('/api/v1/auth/register', {
         method: 'POST',
         body: JSON.stringify({
@@ -2562,6 +2584,13 @@ export const api = {
           password,
           ...(tracking && { tracking }),
         }),
+      }).then((response) => {
+        trackMetaPixelEvent('Lead', {
+          content_name: 'account_signup',
+          method: 'email',
+          status: true,
+        }, eventId);
+        return response;
       });
     },
 
@@ -2573,13 +2602,23 @@ export const api = {
     },
 
     google(googleToken: string) {
-      const tracking = readAttribution();
+      const eventId = generateMetaEventId('lead_google');
+      const tracking = buildTrackingPayload(eventId);
       return request<AuthResponse>('/api/v1/auth/google', {
         method: 'POST',
         body: JSON.stringify({
           googleToken,
           ...(tracking && { tracking }),
         }),
+      }).then((response) => {
+        if (response.isNewUser) {
+          trackMetaPixelEvent('Lead', {
+            content_name: 'account_signup',
+            method: 'google',
+            status: true,
+          }, eventId);
+        }
+        return response;
       });
     },
 

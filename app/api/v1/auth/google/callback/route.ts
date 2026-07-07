@@ -2,6 +2,36 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '');
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+const PENDING_META_LEAD_COOKIE = 'theaimodelab_meta_pending_lead';
+
+function safeJsonParse(value?: string) {
+  if (!value) return null;
+  try {
+    return JSON.parse(value) as Record<string, unknown>;
+  } catch {
+    return null;
+  }
+}
+
+function buildGoogleTracking(request: NextRequest, eventId: string, origin: string) {
+  const attribution = safeJsonParse(request.cookies.get('theaimodelab_attribution')?.value) ?? {};
+  const landingPage = typeof attribution.landing_page === 'string' ? attribution.landing_page : '/';
+  const eventSourceUrl = (() => {
+    try {
+      return new URL(landingPage, origin).toString();
+    } catch {
+      return origin;
+    }
+  })();
+
+  return {
+    ...attribution,
+    fbp: request.cookies.get('_fbp')?.value ?? attribution.fbp,
+    fbc: request.cookies.get('_fbc')?.value ?? attribution.fbc,
+    event_id: eventId,
+    event_source_url: eventSourceUrl,
+  };
+}
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get('code');
@@ -48,10 +78,14 @@ export async function GET(request: NextRequest) {
 
     // Send ID token to backend (same endpoint used before)
     const authUrl = `${BASE_URL}/api/v1/auth/google`;
+    const metaLeadEventId = `lead_google-${crypto.randomUUID()}`;
     const authRes = await fetch(authUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ googleToken: idToken }),
+      body: JSON.stringify({
+        googleToken: idToken,
+        tracking: buildGoogleTracking(request, metaLeadEventId, origin),
+      }),
     });
 
     if (!authRes.ok) {
@@ -72,6 +106,17 @@ export async function GET(request: NextRequest) {
     // Clear the plan redirect cookie
     if (planRedirect) {
       response.cookies.set('theaimodelab-plan-redirect', '', { path: '/', maxAge: 0 });
+    }
+
+    if (authData.isNewUser) {
+      response.cookies.set(PENDING_META_LEAD_COOKIE, JSON.stringify({
+        eventId: metaLeadEventId,
+        method: 'google',
+      }), {
+        path: '/',
+        maxAge: 300,
+        sameSite: 'lax',
+      });
     }
 
     response.cookies.set('theaimodelab-access-token', authData.accessToken, {
