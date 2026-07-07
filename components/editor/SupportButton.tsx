@@ -5,7 +5,7 @@ import { useState } from 'react';
 export function SupportButton() {
   const [dismissed, setDismissed] = useState(false);
   const message = encodeURIComponent('Olá! Preciso de ajuda com a AI Model Lab.');
-  const href = `https://wa.me/5551997053222?text=${message}`;
+  const href = `https://wa.me/5511943735978?text=${message}`;
 
   if (dismissed) return null;
 

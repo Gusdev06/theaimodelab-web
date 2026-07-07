@@ -1,13 +1,13 @@
 "use client";
 
-import { AlertTriangle, Check, Shield, Loader2 } from "lucide-react";
+import { AlertTriangle, Check, Shield, Loader2, Infinity as InfinityIcon } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { useScrollReveal } from "./use-scroll-reveal";
 import { useEffect, useState } from "react";
 import { useLoginModal } from "@/lib/login-modal-context";
 import { useAuth } from "@/lib/auth-context";
 import { api, Plan } from "@/lib/api";
-import { PLAN_GENERATION_ENTRIES } from "@/lib/plans";
+import { PLAN_GENERATION_ENTRIES, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
 
 // Monetização por assinatura mensal (PerfectPay). A landing lista os planos ativos
 // (endpoint público GET /api/v1/plans) e o CTA redireciona para o checkout recorrente
@@ -15,6 +15,7 @@ import { PLAN_GENERATION_ENTRIES } from "@/lib/plans";
 // primeiro — a ativação da assinatura casa a compra pelo email da conta.
 export function Pricing() {
   const t = useTranslations("pricing");
+  const tUnlimited = useTranslations("editorPlans.unlimited");
   const locale = useLocale();
   // Preços dos planos são cobrados em dólar (USD).
   const currency = "USD";
@@ -150,6 +151,27 @@ export function Pricing() {
                         </li>
                       ))}
                   </ul>
+                  {(PLAN_UNLIMITED_FEATURE_KEYS[plan.slug]?.length ?? 0) > 0 && (
+                    <div className="mt-4 rounded-2xl border border-landing-accent/20 bg-landing-accent/[0.05] p-3.5">
+                      <div className="flex items-center gap-2">
+                        <InfinityIcon className="h-4 w-4 shrink-0 text-landing-accent" />
+                        <span className="text-[13px] font-semibold text-landing-text">
+                          {t("unlimitedTitle")}
+                        </span>
+                        <span className="ml-auto rounded-full bg-landing-accent/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-landing-accent">
+                          {t("unlimitedBadge")}
+                        </span>
+                      </div>
+                      <ul className="mt-2.5 space-y-1.5 text-[13px] text-[#f3f0ed]/55">
+                        {(PLAN_UNLIMITED_FEATURE_KEYS[plan.slug] ?? []).map((key) => (
+                          <li key={key} className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 shrink-0 text-landing-accent/70" />
+                            <span>{tUnlimited(`features.${key}`)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <div className="flex-1" />
                   <button
                     type="button"

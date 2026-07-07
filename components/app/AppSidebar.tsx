@@ -79,7 +79,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-const WHATSAPP_SUPPORT_HREF = `https://wa.me/5551997053222?text=${encodeURIComponent('Olá! Preciso de ajuda com a AI Model Lab.')}`;
+const WHATSAPP_SUPPORT_HREF = `https://wa.me/5511943735978?text=${encodeURIComponent('Olá! Preciso de ajuda com a AI Model Lab.')}`;
 
 export function AppSidebar() {
   const t = useTranslations('home');
