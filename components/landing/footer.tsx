@@ -87,7 +87,7 @@ export function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="landing-ease text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
+                    className="landing-ease inline-flex min-h-8 min-w-8 items-center text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
                   >
                     {l.label}
                   </a>
@@ -106,7 +106,7 @@ export function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="landing-ease text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
+                    className="landing-ease inline-flex min-h-8 min-w-8 items-center text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
                   >
                     {l.label}
                   </a>
@@ -125,7 +125,7 @@ export function Footer() {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="landing-ease text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
+                    className="landing-ease inline-flex min-h-8 min-w-8 items-center text-[13px] text-landing-text-muted transition-colors duration-300 hover:text-landing-text"
                   >
                     {l.label}
                   </a>
