@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/landing/navbar";
 import { HeroSection } from "@/components/landing/hero-section";
 import { SocialProof } from "@/components/landing/social-proof";
-import { HowItWorks } from "@/components/landing/how-it-works";
+import { SalesQuiz } from "@/components/landing/sales-quiz";
 import { Features } from "@/components/landing/features";
 import { Comparison } from "@/components/landing/comparison";
 import { UseCases } from "@/components/landing/use-cases";
@@ -18,6 +18,7 @@ export default function LandingPage() {
       <Navbar />
       <HeroSection />
       <SocialProof />
+      <SalesQuiz />
       {/* <HowItWorks /> */}
       <Features />
       <Comparison />

@@ -28,6 +28,15 @@ type MetaStandardEvent =
   | 'InitiateCheckout'
   | 'Purchase';
 
+type MetaServerEvent = 'PageView' | 'ViewContent' | 'Lead';
+
+type MetaServerUserData = {
+  name?: string;
+  email?: string;
+  phone?: string;
+  country?: string;
+};
+
 type FbqFunction = (
   command: 'track' | 'init',
   eventOrPixelId: string,
@@ -203,6 +212,15 @@ export function trackViewContent(parameters: Record<string, unknown>): string {
   return eventId;
 }
 
+export function trackLeadEvent(
+  parameters: Record<string, unknown>,
+  userData?: MetaServerUserData,
+): string {
+  const eventId = trackMetaPixelEvent('Lead', parameters);
+  void sendMetaServerEvent('Lead', parameters, eventId, userData);
+  return eventId;
+}
+
 export function flushPendingMetaLead(): void {
   const rawValue = readCookie(PENDING_META_LEAD_COOKIE_NAME);
   if (!rawValue) return;
@@ -225,9 +243,10 @@ export function flushPendingMetaLead(): void {
 }
 
 async function sendMetaServerEvent(
-  eventName: 'PageView' | 'ViewContent',
+  eventName: MetaServerEvent,
   customData: Record<string, unknown>,
   eventId: string,
+  userData?: MetaServerUserData,
 ): Promise<void> {
   if (!API_BASE_URL || typeof window === 'undefined') return;
   const metaIds = getMetaBrowserIds(readAttribution()?.fbclid);
@@ -244,6 +263,7 @@ async function sendMetaServerEvent(
         fbp: metaIds.fbp,
         fbc: metaIds.fbc,
         customData,
+        ...userData,
       }),
     });
   } catch {

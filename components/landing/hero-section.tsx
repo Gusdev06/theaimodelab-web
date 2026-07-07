@@ -180,10 +180,10 @@ export function HeroSection() {
               <div className="h-12 w-44 animate-pulse rounded-full bg-landing-text/8 sm:h-[52px] sm:w-48" />
             ) : (
               <a
-                href="#precos"
+                href={isLoggedIn ? "/home" : "#ai-opportunity-quiz"}
                 className="landing-btn group inline-flex items-center gap-2.5 bg-landing-accent px-7 py-3.5 text-[14px] font-bold text-landing-bg-secondary shadow-[0_8px_24px_rgba(225,29,42,0.24)] sm:px-8 sm:py-4 sm:text-[15px]"
               >
-                {isLoggedIn ? tNav("tryFree") : t("cta")}
+                {isLoggedIn ? tNav("accessPlatform") : t("cta")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </a>
             )}
