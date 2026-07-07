@@ -203,6 +203,7 @@ export function SalesQuiz() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [leadTracked, setLeadTracked] = useState(false);
+  const leadTrackedRef = useRef(false);
   const trackedStartRef = useRef(false);
   const result = useMemo(() => resolveResult(answers), [answers]);
   const progress = Math.min(((stage + 1) / STAGE_COUNT) * 100, 100);
@@ -252,7 +253,8 @@ export function SalesQuiz() {
       return;
     }
 
-    if (!leadTracked) {
+    if (!leadTrackedRef.current && !leadTracked) {
+      leadTrackedRef.current = true;
       trackLeadEvent(
         {
           content_name: "ai_model_sales_quiz",
@@ -395,13 +397,18 @@ export function SalesQuiz() {
                   One more question after this. Then you get the angle to test first.
                 </p>
 
-                <label className="mt-6 grid gap-2 text-[12px] font-bold text-[#f3f0ed]/55">
+                <label
+                  htmlFor="quiz-lead-name"
+                  className="mt-6 grid gap-2 text-[12px] font-bold text-[#f3f0ed]/55"
+                >
                   Name
                   <input
+                    id="quiz-lead-name"
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                     className="h-12 rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.04] px-4 text-[14px] text-landing-text outline-none transition-colors placeholder:text-[#f3f0ed]/25 focus:border-landing-accent/45"
                     placeholder="Alex"
+                    autoComplete="given-name"
                   />
                 </label>
 
@@ -445,14 +452,19 @@ export function SalesQuiz() {
                   The next screen shows the offer, proof angle and credit test to run first.
                 </p>
 
-                <label className="mt-6 grid gap-2 text-[12px] font-bold text-[#f3f0ed]/55">
+                <label
+                  htmlFor="quiz-lead-email"
+                  className="mt-6 grid gap-2 text-[12px] font-bold text-[#f3f0ed]/55"
+                >
                   Email
                   <input
+                    id="quiz-lead-email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     className="h-12 rounded-lg border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.04] px-4 text-[14px] text-landing-text outline-none transition-colors placeholder:text-[#f3f0ed]/25 focus:border-landing-accent/45"
                     placeholder="alex@agency.com"
                     inputMode="email"
+                    autoComplete="email"
                   />
                 </label>
 
@@ -473,7 +485,7 @@ export function SalesQuiz() {
             )}
 
             {stage >= 5 && (
-              <div className="min-h-[390px]">
+              <div className="min-h-[390px]" aria-live="polite">
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-landing-accent text-[#101214]">
                     <ResultIcon className="h-5 w-5" />
