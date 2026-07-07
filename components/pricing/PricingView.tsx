@@ -1,22 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Check, CircleOff, Coins, Flame, type LucideIcon } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
-import { toast } from 'sonner';
-import { BadgePercent, Check, CircleOff, Coins, Flame, Infinity as InfinityIcon, Zap, type LucideIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
-import { clearRecoveryPromo, getStoredRecoveryPromo } from '@/lib/recovery-promo';
-import { CancelRetentionModal } from '@/components/editor/CancelRetentionModal';
-import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
 import { PlansGrid } from '@/components/editor/PlansGrid';
-import { PixAutoCheckoutModal } from '@/components/editor/PixAutoCheckoutModal';
-import type { Plan } from '@/lib/api';
-import { PLAN_ORDER, getPlanFeatureKeys } from '@/lib/plans';
-import { PLANS_ENABLED } from '@/lib/features';
-import { buildMetaEventContext, generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
+import { PLAN_ORDER } from '@/lib/plans';
+import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
 
 /** Faixa de confiança exibida abaixo dos cards (garantias do plano). */
 function TrustBar({ items }: { items: { icon: LucideIcon; label: string }[] }) {
@@ -41,24 +33,11 @@ export function PricingView() {
   const locale = useLocale();
   const uiCurrency = locale === 'pt-BR' ? 'BRL' : 'USD';
   const { accessToken } = useAuth();
-  const queryClient = useQueryClient();
-  // Assinaturas descontinuadas: monetização é 100% via pacotes de crédito.
-  const [activeTab, setActiveTab] = useState<'plans' | 'credits'>('credits');
   const [subscribingSlug, setSubscribingSlug] = useState<string | null>(null);
-  const [pendingDowngradeSlug, setPendingDowngradeSlug] = useState<string | null>(null);
-  const [isDowngrading, setIsDowngrading] = useState(false);
-  const [pixAutoPlan, setPixAutoPlan] = useState<Plan | null>(null);
 
   const { data: plans, isLoading: plansLoading } = useQuery({
     queryKey: ['plans', uiCurrency],
     queryFn: () => api.plans.list(accessToken!, uiCurrency),
-    enabled: !!accessToken,
-    staleTime: 5 * 60_000,
-  });
-
-  const { data: packages } = useQuery({
-    queryKey: ['credits', 'packages', uiCurrency],
-    queryFn: () => api.credits.packages(accessToken!, uiCurrency),
     enabled: !!accessToken,
     staleTime: 5 * 60_000,
   });
@@ -83,90 +62,23 @@ export function PricingView() {
     .slice()
     .sort((a, b) => PLAN_ORDER.indexOf(b.slug) - PLAN_ORDER.indexOf(a.slug));
 
-  function getPlanAction(targetSlug: string): 'upgrade' | 'downgrade' | 'create' {
-    if (!hasActiveSub || !currentPlanSlug || currentPlanSlug === 'free') return 'create';
-    const currentIdx = PLAN_ORDER.indexOf(currentPlanSlug);
-    const targetIdx = PLAN_ORDER.indexOf(targetSlug);
-    return targetIdx > currentIdx ? 'upgrade' : 'downgrade';
-  }
-
-  async function executeDowngrade(planSlug: string) {
-    if (!accessToken) return;
-    setIsDowngrading(true);
-    try {
-      await api.subscriptions.downgrade(accessToken, planSlug);
-      toast.success(t('manage.toasts.downgradeScheduled'), {
-        description: t('manage.toasts.downgradeScheduledDesc'),
-      });
-      queryClient.invalidateQueries({ queryKey: ['user', 'me'] });
-      setPendingDowngradeSlug(null);
-    } catch {
-      toast.error(t('manage.toasts.downgradeError'), { description: t('manage.toasts.tryAgain') });
-    } finally {
-      setIsDowngrading(false);
-    }
-  }
-
-  async function handleSubscribe(planSlug: string) {
-    if (!accessToken || subscribingSlug) return;
-    const action = getPlanAction(planSlug);
-
-    if (action === 'downgrade') {
-      setPendingDowngradeSlug(planSlug);
-      return;
-    }
+  // Assinar = redirecionar para o checkout da PerfectPay (assinatura mensal).
+  function handleSubscribe(planSlug: string) {
+    if (subscribingSlug) return;
+    const targetPlan = sorted.find((plan) => plan.slug === planSlug);
+    if (!targetPlan?.checkoutUrl) return;
 
     setSubscribingSlug(planSlug);
-
-    try {
-      let checkoutUrl: string;
-      const targetPlan = sorted.find((plan) => plan.slug === planSlug);
-      const eventId = generateMetaEventId('initiate_checkout_plan');
-      const meta = buildMetaEventContext(eventId);
-      if (action === 'create') {
-        const recoveryPromo = getStoredRecoveryPromo();
-        const res = await api.subscriptions.create(accessToken, planSlug, uiCurrency, recoveryPromo, meta);
-        if (recoveryPromo) clearRecoveryPromo();
-        checkoutUrl = res.checkoutUrl;
-      } else {
-        const res = await api.subscriptions.upgrade(accessToken, planSlug, uiCurrency, meta);
-        checkoutUrl = res.checkoutUrl;
-      }
-      trackMetaPixelEvent('InitiateCheckout', {
-        content_ids: [planSlug],
-        content_name: targetPlan?.name ?? planSlug,
-        content_type: 'product',
-        currency: targetPlan?.currency ?? uiCurrency,
-        value: (targetPlan?.priceCents ?? 0) / 100,
-        checkout_type: 'subscription',
-      }, eventId);
-      window.location.href = checkoutUrl;
-    } catch (err: unknown) {
-      const status = (err as { status?: number })?.status;
-      if (status === 409) {
-        try {
-          const targetPlan = sorted.find((plan) => plan.slug === planSlug);
-          const eventId = generateMetaEventId('initiate_checkout_plan');
-          const meta = buildMetaEventContext(eventId);
-          const res = await api.subscriptions.upgrade(accessToken, planSlug, uiCurrency, meta);
-          trackMetaPixelEvent('InitiateCheckout', {
-            content_ids: [planSlug],
-            content_name: targetPlan?.name ?? planSlug,
-            content_type: 'product',
-            currency: targetPlan?.currency ?? uiCurrency,
-            value: (targetPlan?.priceCents ?? 0) / 100,
-            checkout_type: 'subscription',
-          }, eventId);
-          window.location.href = res.checkoutUrl;
-        } catch {
-          toast.error(t('manage.toasts.changePlanError'), { description: t('manage.toasts.tryAgain') });
-          setSubscribingSlug(null);
-        }
-      } else {
-        toast.error(t('manage.toasts.changePlanError'), { description: t('manage.toasts.tryAgain') });
-        setSubscribingSlug(null);
-      }
-    }
+    const eventId = generateMetaEventId('initiate_checkout_plan');
+    trackMetaPixelEvent('InitiateCheckout', {
+      content_ids: [planSlug],
+      content_name: targetPlan.name ?? planSlug,
+      content_type: 'product',
+      currency: targetPlan.currency ?? uiCurrency,
+      value: (targetPlan.priceCents ?? 0) / 100,
+      checkout_type: 'subscription',
+    }, eventId);
+    window.location.href = targetPlan.checkoutUrl;
   }
 
   return (
@@ -182,147 +94,33 @@ export function PricingView() {
             </span>
           </div>
           <h2 className="app-reveal text-[26px] font-bold tracking-[-0.3px] text-app-text">
-            {activeTab === 'plans' ? t('plansModal.titlePlans') : t('plansModal.titleCredits')}
+            {t('plansModal.titlePlans')}
           </h2>
           <p className="app-reveal max-w-xl text-[14px] leading-relaxed text-app-text-2" style={{ animationDelay: '0.08s' }}>
-            {activeTab === 'plans'
-              ? t('plansModal.plansSubtitle', { count: t('plansModal.creatorsCount') })
-              : t('plansModal.creditsSubtitle')}
+            {t('plansModal.plansSubtitle', { count: t('plansModal.creatorsCount') })}
           </p>
         </div>
 
-        {/* abas Planos / Créditos — ocultas enquanto planos estão desativados */}
-        {PLANS_ENABLED && (
-        <div className="flex items-center justify-start border-b border-app-hairline pb-5">
-          {isLoading ? (
-            <div className="flex gap-1 rounded-[10px] border border-app-hairline bg-app-bg p-1">
-              <div className="h-9 w-28 skeleton-app rounded-lg bg-app-surface" />
-              <div className="h-9 w-40 skeleton-app rounded-lg bg-app-surface" />
-            </div>
-          ) : packages && packages.length > 0 ? (
-            <div className="flex gap-1 rounded-[10px] border border-app-hairline bg-app-bg p-1">
-              {sorted.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('plans')}
-                  className={cn(
-                    'flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-colors duration-200 ease-app',
-                    activeTab === 'plans'
-                      ? 'bg-app-surface text-app-text'
-                      : 'text-app-muted hover:text-app-text-2',
-                  )}
-                >
-                  <BadgePercent className="size-3.5" strokeWidth={1.8} />
-                  {t('plansModal.tabPlans')}
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => setActiveTab('credits')}
-                className={cn(
-                  'flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-colors duration-200 ease-app',
-                  activeTab === 'credits'
-                    ? 'bg-app-surface text-app-text'
-                    : 'text-app-muted hover:text-app-text-2',
-                )}
-              >
-                <Coins className="size-3.5" strokeWidth={1.8} />
-                {t('plansModal.tabCredits')}
-              </button>
-            </div>
-          ) : null}
-        </div>
-        )}
-
         {/* planos */}
-        {PLANS_ENABLED && activeTab === 'plans' && (
-          <>
-            <PlansGrid
-              plans={plans ?? []}
-              currentPlanSlug={currentPlanSlug}
-              hasActiveSub={hasActiveSub}
-              subscribingSlug={subscribingSlug}
-              onSubscribe={handleSubscribe}
-              onSubscribePix={(plan) => setPixAutoPlan(plan)}
-              compact
-              isLoading={isLoading}
-            />
-            {!isLoading && (
-              <TrustBar
-                items={[
-                  { icon: CircleOff, label: t('plansModal.cancelAnytime') },
-                  { icon: Check, label: t('plansModal.noCancelFee') },
-                  { icon: Coins, label: t('plansModal.creditsRenew') },
-                ]}
-              />
-            )}
-          </>
-        )}
-
-        {/* créditos avulsos */}
-        {!isLoading && activeTab === 'credits' && packages && packages.length > 0 && (
-          <>
-            <CreditPackagesGrid packages={packages} currency={uiCurrency} compact />
-            <TrustBar
-              items={[
-                { icon: Coins, label: t('plansModal.stackWithPlan') },
-                { icon: Zap, label: t('plansModal.instant') },
-                { icon: InfinityIcon, label: t('plansModal.neverExpire') },
-              ]}
-            />
-          </>
+        <PlansGrid
+          plans={plans ?? []}
+          currentPlanSlug={currentPlanSlug}
+          hasActiveSub={hasActiveSub}
+          subscribingSlug={subscribingSlug}
+          onSubscribe={handleSubscribe}
+          compact
+          isLoading={isLoading}
+        />
+        {!isLoading && (
+          <TrustBar
+            items={[
+              { icon: CircleOff, label: t('plansModal.cancelAnytime') },
+              { icon: Check, label: t('plansModal.noCancelFee') },
+              { icon: Coins, label: t('plansModal.creditsRenew') },
+            ]}
+          />
         )}
       </div>
-
-      {/* PIX Automático checkout */}
-      {pixAutoPlan && (
-        <PixAutoCheckoutModal
-          planSlug={pixAutoPlan.slug}
-          planName={pixAutoPlan.name}
-          priceCents={pixAutoPlan.priceCents}
-          onClose={() => setPixAutoPlan(null)}
-          onSuccess={() => {
-            queryClient.invalidateQueries({ queryKey: ['user', 'me'] });
-            queryClient.invalidateQueries({ queryKey: ['credits', 'balance'] });
-          }}
-        />
-      )}
-
-      {/* retenção no downgrade */}
-      {pendingDowngradeSlug &&
-        (() => {
-          const currentPlan = sorted.find((p) => p.slug === currentPlanSlug);
-          const targetPlan = sorted.find((p) => p.slug === pendingDowngradeSlug);
-          const currentFeatureKeys = currentPlan ? getPlanFeatureKeys(currentPlan) : [];
-          const targetFeatureKeys = targetPlan ? getPlanFeatureKeys(targetPlan) : [];
-          const targetKeySet = new Set(targetFeatureKeys.map((e) => e.key));
-          const lostBenefits = currentFeatureKeys
-            .filter((e) => !targetKeySet.has(e.key))
-            .map((e) =>
-              t(e.key as 'features.emailSupport', e.values as Record<string, number | string> | undefined),
-            );
-          if (currentPlan && targetPlan) {
-            const creditDiff = currentPlan.creditsPerMonth - targetPlan.creditsPerMonth;
-            if (creditDiff > 0) {
-              lostBenefits.unshift(t('manage.retentionLostBenefits.creditsLess', { count: creditDiff }));
-            }
-          }
-          return (
-            <CancelRetentionModal
-              action="downgrade"
-              onClose={() => setPendingDowngradeSlug(null)}
-              onConfirm={() => executeDowngrade(pendingDowngradeSlug)}
-              isLoading={isDowngrading}
-              currentPlanName={currentPlan?.name}
-              targetPlanName={targetPlan?.name}
-              lostBenefits={
-                lostBenefits.length > 0
-                  ? lostBenefits
-                  : [t('manage.retentionLostBenefits.currentPlanBenefits')]
-              }
-            />
-          );
-        })()}
     </div>
   );
 }

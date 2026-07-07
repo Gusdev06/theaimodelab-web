@@ -5,28 +5,48 @@ import { useTranslations, useLocale } from "next-intl";
 import { useScrollReveal } from "./use-scroll-reveal";
 import { useEffect, useState } from "react";
 import { useLoginModal } from "@/lib/login-modal-context";
-import { api, CreditPackage } from "@/lib/api";
-import { CreditPackagesGrid } from "@/components/editor/CreditPackagesGrid";
+import { useAuth } from "@/lib/auth-context";
+import { api, Plan } from "@/lib/api";
 
-// Assinaturas descontinuadas: a landing exibe os pacotes de crédito avulsos
-// (endpoint público GET /credits/packages/public). Usuários deslogados que
-// clicam em comprar caem no modal de registro.
+// Monetização por assinatura mensal (PerfectPay). A landing lista os planos ativos
+// (endpoint público GET /api/v1/plans) e o CTA redireciona para o checkout recorrente
+// da PerfectPay (plan.checkoutUrl). Visitantes deslogados caem no modal de registro
+// primeiro — a ativação da assinatura casa a compra pelo email da conta.
 export function Pricing() {
   const t = useTranslations("pricing");
   const locale = useLocale();
-  const currency = locale === 'pt-BR' ? 'BRL' : 'USD';
+  const currency = locale === "pt-BR" ? "BRL" : "USD";
   const { ref, isVisible } = useScrollReveal();
-  const [packages, setPackages] = useState<CreditPackage[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { accessToken } = useAuth();
   const { openLoginModal } = useLoginModal();
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.credits
-      .packagesPublic(currency)
-      .then((data) => setPackages(data))
-      .catch(() => { })
+    api.plans
+      .listPublic(currency)
+      .then((data) => setPlans(data))
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, [currency]);
+
+  function handleSubscribe(plan: Plan) {
+    if (!plan.checkoutUrl) return;
+    if (!accessToken) {
+      openLoginModal({ mode: "register" });
+      return;
+    }
+    window.location.href = plan.checkoutUrl;
+  }
+
+  const formatPrice = (cents: number, cur: string) =>
+    new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: cur || "BRL",
+      minimumFractionDigits: 2,
+    }).format(cents / 100);
+
+  const formatCredits = (n: number) => new Intl.NumberFormat(locale).format(n);
 
   const badges = [
     t("badges.noCancelFee"),
@@ -67,18 +87,58 @@ export function Pricing() {
           </p>
         </div>
 
-        {/* Packages grid */}
+        {/* Plans grid */}
         {loading ? (
           <div className="mt-16 flex justify-center lg:mt-20">
             <Loader2 className="h-6 w-6 animate-spin text-landing-accent" />
           </div>
-        ) : packages.length > 0 ? (
-          <div className="mt-10 sm:mt-16 lg:mt-20">
-            <CreditPackagesGrid
-              packages={packages}
-              currency={currency}
-              onUnauthenticated={() => openLoginModal({ mode: "register" })}
-            />
+        ) : plans.length > 0 ? (
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
+            {plans.map((plan) => {
+              const highlighted = plan.slug === "pro";
+              return (
+                <div
+                  key={plan.id}
+                  className={`flex flex-col rounded-[20px] border bg-[#16161a] p-6 transition-colors ${
+                    highlighted
+                      ? "border-landing-accent/40"
+                      : "border-[#f3f0ed]/[0.06]"
+                  }`}
+                >
+                  {highlighted && (
+                    <span className="mb-3 inline-flex w-fit rounded-full bg-landing-accent/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-landing-accent">
+                      {t("mostPopular")}
+                    </span>
+                  )}
+                  <h3 className="font-sora text-lg font-bold text-landing-text">
+                    {plan.name}
+                  </h3>
+                  <div className="mt-3 flex items-baseline gap-1.5">
+                    <span className="font-sora text-3xl font-bold text-landing-text">
+                      {formatPrice(plan.priceCents, plan.currency)}
+                    </span>
+                    <span className="text-[13px] text-[#f3f0ed]/40">{t("perMonth")}</span>
+                  </div>
+                  <p className="mt-4 flex items-center gap-2 text-[14px] text-landing-text-secondary">
+                    <Check className="h-3.5 w-3.5 shrink-0 text-landing-accent/70" />
+                    {t("creditsPerMonth", { credits: formatCredits(plan.creditsPerMonth) })}
+                  </p>
+                  <div className="flex-1" />
+                  <button
+                    type="button"
+                    onClick={() => handleSubscribe(plan)}
+                    disabled={!plan.checkoutUrl}
+                    className={`mt-6 w-full rounded-full px-4 py-3 text-[14px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+                      highlighted
+                        ? "bg-landing-accent text-white hover:bg-landing-accent/90"
+                        : "border border-[#f3f0ed]/[0.12] text-landing-text hover:bg-[#f3f0ed]/[0.04]"
+                    }`}
+                  >
+                    {t("subscribe", { plan: plan.name })}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         ) : null}
 

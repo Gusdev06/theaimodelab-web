@@ -2,8 +2,7 @@
 
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
-import { clearRecoveryPromo, getStoredRecoveryPromo } from '@/lib/recovery-promo';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useLoadingMessage } from '@/lib/loading-messages';
 import {
@@ -16,24 +15,17 @@ import {
   Check,
   Lock,
   AlertTriangle,
-  Zap,
-  Shield,
   Flame,
-  BadgePercent,
   CircleOff,
 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useLoginModal } from '@/lib/login-modal-context';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { PLAN_ORDER, getPlanFeatures } from '@/lib/plans';
+import { PLAN_ORDER } from '@/lib/plans';
 import { PLANS_ENABLED } from '@/lib/features';
-import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
-import { CancelRetentionModal } from '@/components/editor/CancelRetentionModal';
 import { PlansGrid } from '@/components/editor/PlansGrid';
-import { PixAutoCheckoutModal } from '@/components/editor/PixAutoCheckoutModal';
-import type { Plan } from '@/lib/api';
 import { useLocale, useTranslations } from 'next-intl';
-import { buildMetaEventContext, generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
+import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
 
 function CreditosPageContent() {
   const router = useRouter();
@@ -42,97 +34,30 @@ function CreditosPageContent() {
   const { openLoginModal } = useLoginModal();
   const autoSubscribeTriggered = useRef(false);
   const loadingMsg = useLoadingMessage('creditos');
-  const queryClient = useQueryClient();
-  // Assinaturas descontinuadas: monetização é 100% via pacotes de crédito.
-  const [activeTab, setActiveTab] = useState<'plans' | 'credits'>('credits');
   const [subscribingSlug, setSubscribingSlug] = useState<string | null>(null);
-  const [pendingDowngradeSlug, setPendingDowngradeSlug] = useState<string | null>(null);
-  const [isDowngrading, setIsDowngrading] = useState(false);
-  const [pixAutoPlan, setPixAutoPlan] = useState<Plan | null>(null);
   const t = useTranslations('account.credits');
   const tCommon = useTranslations('account.common');
   const locale = useLocale();
   const dateLocale = locale === 'pt-BR' ? 'pt-BR' : locale === 'es' ? 'es' : 'en-US';
   const numFmt = new Intl.NumberFormat(dateLocale);
 
-  async function executeDowngrade(planSlug: string) {
-    if (!accessToken) return;
-    setIsDowngrading(true);
-    try {
-      await api.subscriptions.downgrade(accessToken, planSlug);
-      toast.success(t('downgradeScheduledTitle'), {
-        description: t('downgradeScheduledDescription'),
-      });
-      queryClient.invalidateQueries({ queryKey: ['user', 'me'] });
-      setPendingDowngradeSlug(null);
-    } catch {
-      toast.error(t('downgradeErrorTitle'), { description: t('downgradeErrorDescription') });
-    } finally {
-      setIsDowngrading(false);
-    }
-  }
-
-  async function handleSubscribe(planSlug: string) {
-    if (!accessToken || subscribingSlug) return;
-    const action = getPlanAction(planSlug);
-
-    if (action === 'downgrade') {
-      setPendingDowngradeSlug(planSlug);
-      return;
-    }
+  // Assinar = redirecionar para o checkout da PerfectPay (assinatura mensal).
+  function handleSubscribe(planSlug: string) {
+    if (subscribingSlug) return;
+    const targetPlan = plans?.find((plan) => plan.slug === planSlug);
+    if (!targetPlan?.checkoutUrl) return;
 
     setSubscribingSlug(planSlug);
-
-    try {
-
-      let checkoutUrl: string;
-      const targetPlan = plans?.find((plan) => plan.slug === planSlug);
-      const eventId = generateMetaEventId('initiate_checkout_plan');
-      const meta = buildMetaEventContext(eventId);
-      if (action === 'create') {
-        const recoveryPromo = getStoredRecoveryPromo();
-        const res = await api.subscriptions.create(accessToken, planSlug, undefined, recoveryPromo, meta);
-        if (recoveryPromo) clearRecoveryPromo();
-        checkoutUrl = res.checkoutUrl;
-      } else {
-        const res = await api.subscriptions.upgrade(accessToken, planSlug, undefined, meta);
-        checkoutUrl = res.checkoutUrl;
-      }
-      trackMetaPixelEvent('InitiateCheckout', {
-        content_ids: [planSlug],
-        content_name: targetPlan?.name ?? planSlug,
-        content_type: 'product',
-        currency: targetPlan?.currency ?? uiCurrency,
-        value: (targetPlan?.priceCents ?? 0) / 100,
-        checkout_type: 'subscription',
-      }, eventId);
-      window.location.href = checkoutUrl;
-    } catch (err: unknown) {
-      const status = (err as { status?: number })?.status;
-      if (status === 409) {
-        try {
-          const targetPlan = plans?.find((plan) => plan.slug === planSlug);
-          const eventId = generateMetaEventId('initiate_checkout_plan');
-          const meta = buildMetaEventContext(eventId);
-          const res = await api.subscriptions.upgrade(accessToken, planSlug, undefined, meta);
-          trackMetaPixelEvent('InitiateCheckout', {
-            content_ids: [planSlug],
-            content_name: targetPlan?.name ?? planSlug,
-            content_type: 'product',
-            currency: targetPlan?.currency ?? uiCurrency,
-            value: (targetPlan?.priceCents ?? 0) / 100,
-            checkout_type: 'subscription',
-          }, eventId);
-          window.location.href = res.checkoutUrl;
-        } catch {
-          toast.error(t('changePlanErrorTitle'), { description: t('changePlanErrorDescription') });
-          setSubscribingSlug(null);
-        }
-      } else {
-        toast.error(t('changePlanErrorTitle'), { description: t('changePlanErrorDescription') });
-        setSubscribingSlug(null);
-      }
-    }
+    const eventId = generateMetaEventId('initiate_checkout_plan');
+    trackMetaPixelEvent('InitiateCheckout', {
+      content_ids: [planSlug],
+      content_name: targetPlan.name ?? planSlug,
+      content_type: 'product',
+      currency: targetPlan.currency ?? uiCurrency,
+      value: (targetPlan.priceCents ?? 0) / 100,
+      checkout_type: 'subscription',
+    }, eventId);
+    window.location.href = targetPlan.checkoutUrl;
   }
 
   const { data: balance, isLoading: balanceLoading } = useQuery({
@@ -146,13 +71,6 @@ function CreditosPageContent() {
   const { data: plans, isLoading: plansLoading } = useQuery({
     queryKey: ['plans', uiCurrency],
     queryFn: () => api.plans.list(accessToken!, uiCurrency),
-    enabled: !!accessToken,
-    staleTime: 5 * 60_000,
-  });
-
-  const { data: packages, isLoading: packagesLoading } = useQuery({
-    queryKey: ['credits', 'packages', uiCurrency],
-    queryFn: () => api.credits.packages(accessToken!, uiCurrency),
     enabled: !!accessToken,
     staleTime: 5 * 60_000,
   });
@@ -183,35 +101,15 @@ function CreditosPageContent() {
     ) return;
 
     const targetPlan = plans.find((p) => p.slug === planFromUrl);
-    if (!targetPlan || targetPlan.priceCents <= 0) return;
+    if (!targetPlan || targetPlan.priceCents <= 0 || !targetPlan.checkoutUrl) return;
 
     autoSubscribeTriggered.current = true;
     setSubscribingSlug(targetPlan.slug);
-
-    (async () => {
-      const recoveryPromo = getStoredRecoveryPromo();
-      try {
-        const res = await api.subscriptions.create(accessToken, targetPlan.slug, undefined, recoveryPromo);
-        if (recoveryPromo) clearRecoveryPromo();
-        window.location.href = res.checkoutUrl;
-      } catch (err: unknown) {
-        const status = (err as { status?: number })?.status;
-        if (status === 409) {
-          try {
-            const res = await api.subscriptions.upgrade(accessToken, targetPlan.slug);
-            window.location.href = res.checkoutUrl;
-            return;
-          } catch {
-            // fall through to error toast
-          }
-        }
-        toast.error(t('changePlanErrorTitle'), { description: t('changePlanErrorDescription') });
-        setSubscribingSlug(null);
-      }
-    })();
+    // Assinatura via PerfectPay: redireciona direto para o checkout externo.
+    window.location.href = targetPlan.checkoutUrl;
   }, [planFromUrl, accessToken, plansLoading, profileLoading, plans, t]);
 
-  const isLoading = authLoading || balanceLoading || plansLoading || profileLoading || packagesLoading;
+  const isLoading = authLoading || balanceLoading || plansLoading || profileLoading;
 
   if (isLoading) {
     return (
@@ -240,13 +138,6 @@ function CreditosPageContent() {
   const sub = profile?.subscription as Record<string, unknown> | null;
   const hasActiveSub = sub?.status === 'ACTIVE' || sub?.status === 'active';
 
-  function getPlanAction(targetSlug: string): 'upgrade' | 'downgrade' | 'create' {
-    if (!hasActiveSub || !currentPlanSlug || currentPlanSlug === 'free') return 'create';
-    const currentIdx = PLAN_ORDER.indexOf(currentPlanSlug);
-    const targetIdx = PLAN_ORDER.indexOf(targetSlug);
-    return targetIdx > currentIdx ? 'upgrade' : 'downgrade';
-  }
-
   const sortedPlans = (plans ?? []).slice().sort(
     (a, b) => PLAN_ORDER.indexOf(a.slug) - PLAN_ORDER.indexOf(b.slug),
   );
@@ -274,25 +165,14 @@ function CreditosPageContent() {
               </p>
             </div>
             <div className="flex w-full flex-col gap-2">
-              {PLANS_ENABLED && (
-                <button
-                  onClick={() => {
-                    const plansSection = document.getElementById('plans-section');
-                    plansSection?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
-                >
-                  {t('renewNow')}
-                </button>
-              )}
               <button
                 onClick={() => {
-                  const boostSection = document.getElementById('boost-section');
-                  boostSection?.scrollIntoView({ behavior: 'smooth' });
+                  const plansSection = document.getElementById('plans-section');
+                  plansSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className={`app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-colors ${PLANS_ENABLED ? 'border border-[#f3f0ed]/15 font-medium text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/5' : 'bg-[#e11d2a] text-[#111113] hover:bg-[#f75fae]'}`}
+                className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
               >
-                {t('buyExtraCredits')}
+                {t('renewNow')}
               </button>
             </div>
           </div>
@@ -323,24 +203,13 @@ function CreditosPageContent() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => {
-                  const boostSection = document.getElementById('boost-section');
-                  boostSection?.scrollIntoView({ behavior: 'smooth' });
+                  const plansSection = document.getElementById('plans-section');
+                  plansSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className={PLANS_ENABLED ? 'text-xs font-medium text-yellow-300/70 transition-colors hover:text-yellow-300' : 'text-xs font-bold text-[#e11d2a] transition-colors hover:text-[#f75fae]'}
+                className="text-xs font-bold text-[#e11d2a] transition-colors hover:text-[#f75fae]"
               >
-                {t('buyBoost')}
+                {t('renewPlan')}
               </button>
-              {PLANS_ENABLED && (
-                <button
-                  onClick={() => {
-                    const plansSection = document.getElementById('plans-section');
-                    plansSection?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="text-xs font-bold text-[#e11d2a] transition-colors hover:text-[#f75fae]"
-                >
-                  {t('renewPlan')}
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -458,7 +327,7 @@ function CreditosPageContent() {
         )}
 
         {/* -- Plans & Credits tabs -- */}
-        {(sortedPlans.length > 0 || (packages && packages.length > 0)) && (
+        {sortedPlans.length > 0 && (
           <div id="plans-section" className="flex flex-col gap-8">
 
             {/* Heading */}
@@ -468,126 +337,33 @@ function CreditosPageContent() {
                 <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#e11d2a]">{t('limitedOffer')}</span>
               </div>
               <h2 className="app-reveal text-2xl font-bold text-[#f3f0ed] sm:text-3xl">
-                {activeTab === 'plans' ? t('plansHeading') : t('packagesHeading')}
+                {t('plansHeading')}
               </h2>
               <p className="app-reveal max-w-md text-sm text-[#f3f0ed]/45" style={{ animationDelay: '0.08s' }}>
-                {activeTab === 'plans'
-                  ? <><span className="font-semibold text-[#f3f0ed]/70">{t('plansSubheadingCount')}</span>{t('plansSubheadingRest')}</>
-                  : t('packagesSubheading')}
+                <span className="font-semibold text-[#f3f0ed]/70">{t('plansSubheadingCount')}</span>{t('plansSubheadingRest')}
               </p>
               <div className="mt-1 flex items-center gap-4 text-[11px] text-[#f3f0ed]/30">
-                {activeTab === 'plans' ? (
-                  <>
-                    <span className="flex items-center gap-1.5"><Lock className="h-3 w-3" />{t('securePayment')}</span>
-                    <span className="flex items-center gap-1.5"><CircleOff className="h-3 w-3" />{t('cancelAnytime')}</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="flex items-center gap-1.5"><Coins className="h-3 w-3" />{t('accumulates')}</span>
-                    <span className="flex items-center gap-1.5"><Zap className="h-3 w-3" />{t('instantDelivery')}</span>
-                  </>
-                )}
+                <span className="flex items-center gap-1.5"><Lock className="h-3 w-3" />{t('securePayment')}</span>
+                <span className="flex items-center gap-1.5"><CircleOff className="h-3 w-3" />{t('cancelAnytime')}</span>
               </div>
             </div>
 
-            {/* Tab toggle — oculto enquanto planos estão desativados */}
-            {PLANS_ENABLED && packages && packages.length > 0 && (
-              <div className="flex justify-center">
-                <div className="flex rounded-xl border border-[#f3f0ed]/[0.08] bg-[#f3f0ed]/[0.03] p-1 gap-1">
-                  {sortedPlans.length > 0 && (
-                    <button
-                      onClick={() => setActiveTab('plans')}
-                      className={`flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-all duration-200 ${activeTab === 'plans' ? 'bg-[#f3f0ed]/[0.1] text-[#f3f0ed] shadow-sm' : 'text-[#f3f0ed]/40 hover:text-[#f3f0ed]/70'}`}
-                    >
-                      <BadgePercent className="h-3.5 w-3.5" />
-                      {t('tabPlans')}
-                    </button>
-                  )}
-                  <button
-                    onClick={() => setActiveTab('credits')}
-                    className={`flex items-center gap-2 rounded-lg px-5 py-2 text-[13px] font-semibold transition-all duration-200 ${activeTab === 'credits' ? 'bg-[#f3f0ed]/[0.1] text-[#f3f0ed] shadow-sm' : 'text-[#f3f0ed]/40 hover:text-[#f3f0ed]/70'}`}
-                  >
-                    <Coins className="h-3.5 w-3.5" />
-                    {t('tabCredits')}
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Plans tab */}
-            {PLANS_ENABLED && activeTab === 'plans' && sortedPlans.length > 0 && (
-              <>
-                <PlansGrid
-                  plans={sortedPlans}
-                  currentPlanSlug={currentPlanSlug}
-                  hasActiveSub={hasActiveSub}
-                  subscribingSlug={subscribingSlug}
-                  onSubscribe={handleSubscribe}
-                  onSubscribePix={(plan) => setPixAutoPlan(plan)}
-                />
-                <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-[#f3f0ed]/25">
-                  <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('noCancelFee')}</span>
-                  <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('monthlyRenewal')}</span>
-                </div>
-              </>
-            )}
-
-            {/* Credits tab */}
-            {activeTab === 'credits' && packages && packages.length > 0 && (
-              <div id="boost-section" className="flex flex-col gap-6">
-                <CreditPackagesGrid packages={packages} currency={uiCurrency} />
-                <p className="text-center text-xs text-[#f3f0ed]/20">
-                  {t('onePaymentFootnote')}
-                </p>
-              </div>
-            )}
+            {/* Plans */}
+            <PlansGrid
+              plans={sortedPlans}
+              currentPlanSlug={currentPlanSlug}
+              hasActiveSub={hasActiveSub}
+              subscribingSlug={subscribingSlug}
+              onSubscribe={handleSubscribe}
+            />
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-[#f3f0ed]/25">
+              <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('noCancelFee')}</span>
+              <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('monthlyRenewal')}</span>
+            </div>
           </div>
         )}
 
       </div>
-
-      {/* PIX Automático checkout modal */}
-      {pixAutoPlan && (
-        <PixAutoCheckoutModal
-          planSlug={pixAutoPlan.slug}
-          planName={pixAutoPlan.name}
-          priceCents={pixAutoPlan.priceCents}
-          onClose={() => setPixAutoPlan(null)}
-          onSuccess={() => {
-            queryClient.invalidateQueries({ queryKey: ['user', 'me'] });
-            queryClient.invalidateQueries({ queryKey: ['credits', 'balance'] });
-          }}
-        />
-      )}
-
-      {/* Retention modal for downgrade */}
-      {pendingDowngradeSlug && (() => {
-        const allPlans = (plans ?? []).slice().sort(
-          (a, b) => PLAN_ORDER.indexOf(a.slug) - PLAN_ORDER.indexOf(b.slug),
-        );
-        const currentPlan = allPlans.find((p) => p.slug === currentPlanSlug);
-        const targetPlan = allPlans.find((p) => p.slug === pendingDowngradeSlug);
-        const currentFeatures = currentPlan ? getPlanFeatures(currentPlan) : [];
-        const targetFeatures = targetPlan ? getPlanFeatures(targetPlan) : [];
-        const lostBenefits = currentFeatures.filter((f) => !targetFeatures.includes(f));
-        if (currentPlan && targetPlan) {
-          const creditDiff = currentPlan.creditsPerMonth - targetPlan.creditsPerMonth;
-          if (creditDiff > 0) {
-            lostBenefits.unshift(t('retentionCreditDiff', { count: numFmt.format(creditDiff) }));
-          }
-        }
-        return (
-          <CancelRetentionModal
-            action="downgrade"
-            onClose={() => setPendingDowngradeSlug(null)}
-            onConfirm={() => executeDowngrade(pendingDowngradeSlug)}
-            isLoading={isDowngrading}
-            currentPlanName={currentPlan?.name}
-            targetPlanName={targetPlan?.name}
-            lostBenefits={lostBenefits.length > 0 ? lostBenefits : [t('retentionFallbackBenefit')]}
-          />
-        );
-      })()}
     </div>
   );
 }

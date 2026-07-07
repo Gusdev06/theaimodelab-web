@@ -281,7 +281,7 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
         {isFree && <div className={compact ? 'mt-3 h-8' : 'mt-6 h-11'} />}
         {!isFree && !isDowngrade && (
           <button
-            disabled={isCurrent || !!subscribingSlug}
+            disabled={isCurrent || !!subscribingSlug || !plan.checkoutUrl}
             onClick={() => onSubscribe(plan.slug)}
             className={`app-ease flex w-full items-center justify-center gap-1.5 rounded-xl font-bold transition-all duration-300 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40 ${compact ? 'mt-3 h-8 text-[13px]' : 'mt-6 h-11 text-[13px]'
               } ${isCurrent

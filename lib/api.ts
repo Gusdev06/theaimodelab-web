@@ -179,6 +179,8 @@ export interface Plan {
   hasWatermark: boolean;
   galleryRetentionDays: number | null;
   hasApiAccess: boolean;
+  /** Link de checkout externo da assinatura mensal recorrente (PerfectPay). */
+  checkoutUrl?: string | null;
 }
 
 // ─── AI Models ───────────────────────────────────────────────────────────────

@@ -1,11 +1,8 @@
 /**
  * Feature flags do frontend.
  *
- * PLANS_ENABLED: planos de assinatura (mensal / modo ilimitado / gerenciar
- * assinatura) estão temporariamente desativados. No momento a monetização é
- * 100% via compra de pacotes de crédito (avulsos).
- *
- * Para reativar toda a UI de planos/assinatura, basta trocar para `true`.
- * Nenhum código de planos foi removido — apenas ocultado atrás desta flag.
+ * PLANS_ENABLED: planos de assinatura mensal (cobrados via PerfectPay). Assinar
+ * = redirecionar o navegador para `plan.checkoutUrl`. A compra de pacotes de
+ * crédito avulsos foi descontinuada — a vitrine agora é 100% de planos.
  */
-export const PLANS_ENABLED = false;
+export const PLANS_ENABLED = true;
