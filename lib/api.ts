@@ -5,7 +5,7 @@ import {
   trackMetaPixelEvent,
 } from './tracking';
 
-export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '') ?? '';
 
 export interface AuthUser {
   id: string;
@@ -50,6 +50,10 @@ function getCurrentLocale(): string {
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  if (!BASE_URL) {
+    throw new ApiError(0, 'API URL is not configured', 'API_URL_MISSING');
+  }
+
   const res = await fetch(`${BASE_URL}${path}`, {
     ...options,
     headers: {
@@ -1981,7 +1985,7 @@ export const api = {
 
   promptAgent: {
     analyzeImage(accessToken: string, image: string) {
-      return authRequest<{ json: any; compiledPrompt: string; creditsUsed: number }>(
+      return authRequest<{ json: unknown; compiledPrompt: string; creditsUsed: number }>(
         '/api/v1/prompt-agent/analyze-image',
         accessToken,
         {
