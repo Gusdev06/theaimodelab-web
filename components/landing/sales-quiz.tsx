@@ -15,7 +15,7 @@ import {
   Video,
   type LucideIcon,
 } from "lucide-react";
-import { trackLeadEvent, trackViewContent } from "@/lib/tracking";
+import { captureMarketingLead, trackLeadEvent, trackViewContent } from "@/lib/tracking";
 
 type QuestionId = "operation" | "bottleneck" | "scale";
 type Answers = Partial<Record<QuestionId, string>>;
@@ -255,7 +255,7 @@ export function SalesQuiz() {
 
     if (!leadTrackedRef.current && !leadTracked) {
       leadTrackedRef.current = true;
-      trackLeadEvent(
+      const eventId = trackLeadEvent(
         {
           content_name: "ai_model_sales_quiz",
           content_category: "sales_quiz",
@@ -270,6 +270,14 @@ export function SalesQuiz() {
           email: normalizedEmail,
         },
       );
+      void captureMarketingLead({
+        name: normalizedName,
+        email: normalizedEmail,
+        source: "sales_quiz",
+        quizResult: result.key,
+        quizAnswers: answers,
+        eventId,
+      });
       setLeadTracked(true);
     }
 

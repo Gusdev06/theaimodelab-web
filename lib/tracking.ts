@@ -37,6 +37,16 @@ type MetaServerUserData = {
   country?: string;
 };
 
+type CaptureMarketingLeadInput = {
+  name?: string;
+  email: string;
+  phone?: string;
+  source?: string;
+  quizResult?: string;
+  quizAnswers?: Record<string, unknown>;
+  eventId?: string;
+};
+
 type FbqFunction = (
   command: 'track' | 'init',
   eventOrPixelId: string,
@@ -219,6 +229,43 @@ export function trackLeadEvent(
   const eventId = trackMetaPixelEvent('Lead', parameters);
   void sendMetaServerEvent('Lead', parameters, eventId, userData);
   return eventId;
+}
+
+export async function captureMarketingLead(input: CaptureMarketingLeadInput): Promise<void> {
+  if (!API_BASE_URL || typeof window === 'undefined') return;
+  const attribution = buildTrackingPayload(input.eventId) ?? {};
+
+  try {
+    await fetch(`${API_BASE_URL}/api/v1/marketing-leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true,
+      body: JSON.stringify({
+        name: input.name,
+        email: input.email,
+        phone: input.phone,
+        source: input.source ?? 'sales_quiz',
+        quizResult: input.quizResult,
+        quizAnswers: input.quizAnswers,
+        eventId: input.eventId ?? attribution.event_id,
+        eventSourceUrl: attribution.event_source_url,
+        utmSource: attribution.utm_source,
+        utmMedium: attribution.utm_medium,
+        utmCampaign: attribution.utm_campaign,
+        utmContent: attribution.utm_content,
+        utmTerm: attribution.utm_term,
+        fbclid: attribution.fbclid,
+        fbp: attribution.fbp,
+        fbc: attribution.fbc,
+        gclid: attribution.gclid,
+        landingPage: attribution.landing_page,
+        referrer: attribution.referrer,
+        attribution,
+      }),
+    });
+  } catch {
+    // Lead capture must never block the quiz result.
+  }
 }
 
 export function flushPendingMetaLead(): void {
