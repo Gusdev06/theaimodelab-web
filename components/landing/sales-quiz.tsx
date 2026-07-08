@@ -30,6 +30,7 @@ type QuizQuestion = {
   id: QuestionId;
   eyebrow: string;
   title: string;
+  sellingPoint: string;
   options: QuizOption[];
 };
 
@@ -54,6 +55,7 @@ const QUESTIONS: QuizQuestion[] = [
     id: "operation",
     eyebrow: "1/3",
     title: "Where will the first AI model revenue come from?",
+    sellingPoint: "Best offers start with one buyer and one money path. Pick the revenue path first, then production becomes obvious.",
     options: [
       {
         value: "solo",
@@ -76,6 +78,7 @@ const QUESTIONS: QuizQuestion[] = [
     id: "bottleneck",
     eyebrow: "2/3",
     title: "What is most likely to make the buyer say yes?",
+    sellingPoint: "A strong offer removes the buyer's biggest doubt: believability, output, cost, or speed.",
     options: [
       {
         value: "identity",
@@ -103,6 +106,7 @@ const QUESTIONS: QuizQuestion[] = [
     id: "scale",
     eyebrow: "3/3",
     title: "What production pace can you actually commit to?",
+    sellingPoint: "The right plan is not the cheapest plan. It is the plan that produces enough proof before attention fades.",
     options: [
       {
         value: "validate",
@@ -199,6 +203,8 @@ const ASPIRATIONAL_PROOF = [
     quote: "I have a first package to sell before I build a full model factory.",
   },
 ];
+
+const MARKET_SIGNAL = "$4.8k-$10.6k creator dashboards and $81k+ payment balance screenshots show the prize is production that sells, not prompts alone.";
 
 function resolveResult(answers: Answers): QuizResult {
   if (answers.operation === "agency" || answers.scale === "agency") return RESULTS.agency;
@@ -313,7 +319,7 @@ export function SalesQuiz() {
   return (
     <section
       id="ai-model-sales-quiz"
-      className="relative min-h-screen overflow-hidden bg-[#101214] px-4 py-5 sm:px-8 sm:py-10 lg:py-16"
+      className="relative min-h-screen overflow-hidden bg-[#101214] px-4 py-4 sm:px-8 sm:py-10 lg:py-16"
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -324,18 +330,18 @@ export function SalesQuiz() {
         }}
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-5 lg:min-h-[calc(100vh-8rem)] lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-10">
-        <div className="pt-3 lg:pt-0">
+      <div className="relative mx-auto grid max-w-7xl gap-5 lg:min-h-[calc(100vh-8rem)] lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-10">
+        <div className="order-2 min-w-0 pt-0 lg:order-1 lg:pt-0">
           <span className="inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[10px] font-black uppercase text-landing-accent">
             <Sparkles className="h-3.5 w-3.5" />
             Built for model operators
           </span>
 
-          <h1 className="mt-4 max-w-xl font-sora text-[31px] font-extrabold leading-[1.04] text-landing-text sm:text-[52px] lg:text-[64px]">
+          <h1 className="mt-3 max-w-xl font-sora text-[26px] font-extrabold leading-[1.05] text-landing-text sm:text-[52px] lg:mt-4 lg:text-[64px]">
             Find the first AI model offer worth selling.
           </h1>
 
-          <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-landing-text-secondary sm:text-[17px]">
+          <p className="mt-2 max-w-lg text-[13px] leading-relaxed text-landing-text-secondary sm:text-[17px] lg:mt-3">
             For creators, OFM teams and agencies who need one AI model offer to sell before they scale production.
           </p>
 
@@ -351,11 +357,11 @@ export function SalesQuiz() {
             ))}
           </div>
 
-          <div className="mt-5 flex gap-2 overflow-x-auto pb-1 sm:grid sm:max-w-xl sm:grid-cols-3 sm:overflow-visible sm:pb-0 lg:mt-7">
+          <div className="mt-4 grid gap-2 sm:max-w-xl sm:grid-cols-3 lg:mt-7">
             {ASPIRATIONAL_PROOF.map((item) => (
               <div
                 key={item.label}
-                className="min-w-[210px] rounded-lg border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] p-3 sm:min-w-0"
+                className="rounded-lg border border-[#f3f0ed]/[0.07] bg-[#f3f0ed]/[0.035] p-3"
               >
                 <p className="text-[10px] font-black uppercase text-landing-accent">
                   {item.label}
@@ -368,8 +374,17 @@ export function SalesQuiz() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#171a1d] p-2.5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-4">
-          <div className="rounded-xl border border-[#f3f0ed]/[0.06] bg-[#0d0f11] p-4 sm:p-6">
+        <div className="order-1 min-w-0 rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#171a1d] p-2.5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-4 lg:order-2">
+          <div className="min-w-0 rounded-xl border border-[#f3f0ed]/[0.06] bg-[#0d0f11] p-4 sm:p-6">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[10px] font-black uppercase text-landing-accent">
+                <Sparkles className="h-3.5 w-3.5" />
+                Start here
+              </span>
+              <span className="text-[11px] font-bold text-[#f3f0ed]/35">
+                3 questions
+              </span>
+            </div>
             <div className="mb-5 h-1.5 overflow-hidden rounded-full bg-[#f3f0ed]/[0.06]">
               <div
                 className="h-full rounded-full bg-landing-accent transition-all duration-500"
@@ -418,6 +433,24 @@ export function SalesQuiz() {
                       </span>
                     </button>
                   ))}
+                </div>
+
+                <div className="mt-4 rounded-lg border border-emerald-300/15 bg-emerald-300/[0.06] p-3">
+                  <p className="text-[10px] font-black uppercase text-emerald-300">
+                    Market signal
+                  </p>
+                  <p className="mt-1 text-[12px] font-semibold leading-relaxed text-[#f3f0ed]/70">
+                    {MARKET_SIGNAL}
+                  </p>
+                </div>
+
+                <div className="mt-4 rounded-lg border border-landing-accent/15 bg-landing-accent/[0.06] p-3">
+                  <p className="text-[10px] font-black uppercase text-landing-accent">
+                    Offer principle
+                  </p>
+                  <p className="mt-1 text-[12px] font-semibold leading-relaxed text-[#f3f0ed]/68">
+                    {currentQuestion.sellingPoint}
+                  </p>
                 </div>
               </div>
             )}
