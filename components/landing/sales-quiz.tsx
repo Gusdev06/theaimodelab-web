@@ -15,6 +15,11 @@ import {
   Video,
   type LucideIcon,
 } from "lucide-react";
+import { Footer } from "@/components/landing/footer";
+import { Pricing } from "@/components/landing/pricing";
+import { QuizOfferBridge } from "@/components/landing/quiz-offer-bridge";
+import { QuizSocialProof } from "@/components/landing/quiz-social-proof";
+import { SupportButton } from "@/components/editor/SupportButton";
 import { captureMarketingLead, trackLeadEvent, trackViewContent } from "@/lib/tracking";
 
 type QuestionId = "operation" | "bottleneck" | "scale";
@@ -30,7 +35,6 @@ type QuizQuestion = {
   id: QuestionId;
   eyebrow: string;
   title: string;
-  sellingPoint: string;
   options: QuizOption[];
 };
 
@@ -55,7 +59,6 @@ const QUESTIONS: QuizQuestion[] = [
     id: "operation",
     eyebrow: "1/3",
     title: "Where will the first AI model revenue come from?",
-    sellingPoint: "Best offers start with one buyer and one money path. Pick the revenue path first, then production becomes obvious.",
     options: [
       {
         value: "solo",
@@ -78,7 +81,6 @@ const QUESTIONS: QuizQuestion[] = [
     id: "bottleneck",
     eyebrow: "2/3",
     title: "What is most likely to make the buyer say yes?",
-    sellingPoint: "A strong offer removes the buyer's biggest doubt: believability, output, cost, or speed.",
     options: [
       {
         value: "identity",
@@ -106,7 +108,6 @@ const QUESTIONS: QuizQuestion[] = [
     id: "scale",
     eyebrow: "3/3",
     title: "What production pace can you actually commit to?",
-    sellingPoint: "The right plan is not the cheapest plan. It is the plan that produces enough proof before attention fades.",
     options: [
       {
         value: "validate",
@@ -203,8 +204,6 @@ const ASPIRATIONAL_PROOF = [
     quote: "I have a first package to sell before I build a full model factory.",
   },
 ];
-
-const MARKET_SIGNAL = "$4.8k-$10.6k creator dashboards and $81k+ payment balance screenshots show the prize is production that sells, not prompts alone.";
 
 function resolveResult(answers: Answers): QuizResult {
   if (answers.operation === "agency" || answers.scale === "agency") return RESULTS.agency;
@@ -317,10 +316,11 @@ export function SalesQuiz() {
   }
 
   return (
-    <section
-      id="ai-model-sales-quiz"
-      className="relative min-h-screen overflow-hidden bg-[#101214] px-4 py-4 sm:px-8 sm:py-10 lg:py-16"
-    >
+    <>
+      <section
+        id="ai-model-sales-quiz"
+        className="relative min-h-screen overflow-hidden bg-[#101214] px-4 py-4 sm:px-8 sm:py-10 lg:py-16"
+      >
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
@@ -331,7 +331,7 @@ export function SalesQuiz() {
       />
 
       <div className="relative mx-auto grid max-w-7xl gap-5 lg:min-h-[calc(100vh-8rem)] lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-10">
-        <div className="order-2 min-w-0 pt-0 lg:order-1 lg:pt-0">
+        <div className="order-2 hidden min-w-0 pt-0 lg:order-1 lg:block lg:pt-0">
           <span className="inline-flex items-center gap-2 rounded-full border border-landing-accent/20 bg-landing-accent/[0.08] px-3 py-1 text-[10px] font-black uppercase text-landing-accent">
             <Sparkles className="h-3.5 w-3.5" />
             Built for model operators
@@ -367,7 +367,7 @@ export function SalesQuiz() {
                   {item.label}
                 </p>
                 <p className="mt-1 text-[11px] font-semibold leading-snug text-[#f3f0ed]/65">
-                  “{item.quote}”
+                  {item.quote}
                 </p>
               </div>
             ))}
@@ -435,23 +435,6 @@ export function SalesQuiz() {
                   ))}
                 </div>
 
-                <div className="mt-4 rounded-lg border border-emerald-300/15 bg-emerald-300/[0.06] p-3">
-                  <p className="text-[10px] font-black uppercase text-emerald-300">
-                    Market signal
-                  </p>
-                  <p className="mt-1 text-[12px] font-semibold leading-relaxed text-[#f3f0ed]/70">
-                    {MARKET_SIGNAL}
-                  </p>
-                </div>
-
-                <div className="mt-4 rounded-lg border border-landing-accent/15 bg-landing-accent/[0.06] p-3">
-                  <p className="text-[10px] font-black uppercase text-landing-accent">
-                    Offer principle
-                  </p>
-                  <p className="mt-1 text-[12px] font-semibold leading-relaxed text-[#f3f0ed]/68">
-                    {currentQuestion.sellingPoint}
-                  </p>
-                </div>
               </div>
             )}
 
@@ -631,7 +614,18 @@ export function SalesQuiz() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+
+      {stage >= 5 && (
+        <>
+          <QuizSocialProof />
+          <QuizOfferBridge />
+          <Pricing />
+          <Footer />
+          <SupportButton />
+        </>
+      )}
+    </>
   );
 }
 

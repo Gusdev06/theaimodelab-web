@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
 import { SalesQuiz } from "@/components/landing/sales-quiz";
-import { QuizSocialProof } from "@/components/landing/quiz-social-proof";
-import { QuizOfferBridge } from "@/components/landing/quiz-offer-bridge";
-import { Pricing } from "@/components/landing/pricing";
-import { Footer } from "@/components/landing/footer";
-import { SupportButton } from "@/components/editor/SupportButton";
 
 export const metadata: Metadata = {
   title: "AI Model Sales Quiz — The AI Model Lab",
@@ -53,11 +48,6 @@ export default function QuizLandingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(quizJsonLd) }}
       />
       <SalesQuiz />
-      <QuizSocialProof />
-      <QuizOfferBridge />
-      <Pricing />
-      <Footer />
-      <SupportButton />
     </main>
   );
 }
