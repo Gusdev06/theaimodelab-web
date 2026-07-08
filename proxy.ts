@@ -27,7 +27,7 @@ export function proxy(request: NextRequest) {
     const internalLocale = URL_TO_INTERNAL[urlLocale];
     const rest = '/' + segments.slice(2).join('/');
     const target = request.nextUrl.clone();
-    target.pathname = rest === '/' ? '/' : rest;
+    target.pathname = rest === '/quiz' ? pathname : rest === '/' ? '/' : rest;
 
     const headers = new Headers(request.headers);
     headers.set(LOCALE_HEADER, internalLocale);
