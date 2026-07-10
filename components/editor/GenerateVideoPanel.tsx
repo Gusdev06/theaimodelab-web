@@ -214,7 +214,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
       'gemini-omni-video': 'Gemini Omni',
       'bytedance-seedance-2': 'Seedance 2',
       'kling-v3-turbo': 'Kling V3 Turbo',
-      'comfydeploy-wan': 'Wan (ComfyDeploy)',
+      'comfydeploy-wan': 'Video ( NSFW )',
     };
     const fallback: { value: string; label: string; disabled?: boolean; unlimited?: boolean }[] = [
       { value: 'gemini-omni-video', label: labelOverride['gemini-omni-video'] },
