@@ -40,7 +40,7 @@ const quizJsonLd = {
   },
 };
 
-export default function QuizLandingPage() {
+export default function LocalizedQuizLandingPage() {
   return (
     <main>
       <script
