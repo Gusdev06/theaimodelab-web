@@ -632,6 +632,8 @@ export interface FaceSwapRequest {
   target_image: string;
   target_image_mime_type?: string;
   resolution?: string;
+  /** Quando NSFW está ligado, roteia para o modelo sem-censura (The AI Model Lab Unlocked). */
+  model_variant?: string;
 }
 
 export interface TextToVideoKieRequest {

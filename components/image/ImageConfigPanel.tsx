@@ -316,6 +316,8 @@ export function ImageConfigPanel({
   const [fsSource, setFsSource] = useState<UploadedImage | null>(null);
   const [fsTarget, setFsTarget] = useState<UploadedImage | null>(null);
   const [fsResolution, setFsResolution] = useState('2K');
+  // NSFW: quando ligado, o face swap usa o modelo sem-censura (The AI Model Lab Unlocked).
+  const [fsNsfw, setFsNsfw] = useState(false);
 
   // upscale
   const [upscaleImage, setUpscaleImage] = useState<UploadedImage | null>(null);
@@ -590,6 +592,7 @@ export function ImageConfigPanel({
           target_image: fsTarget!.base64,
           target_image_mime_type: fsTarget!.mime_type,
           resolution: fsResolution,
+          model_variant: fsNsfw ? 'SEM_CENSURA' : undefined,
         });
         track(id, t('image.toolFaceSwap'));
         return;
@@ -997,6 +1000,33 @@ export function ImageConfigPanel({
                 </SelectContent>
               </Select>
             </div>
+
+            {/* NSFW — roteia o face swap para o modelo sem-censura (The AI Model Lab Unlocked) */}
+            <button
+              type="button"
+              role="switch"
+              aria-checked={fsNsfw}
+              onClick={() => setFsNsfw((v) => !v)}
+              className="flex items-center gap-2.5 rounded-xl border border-app-hairline bg-app-surface px-3.5 py-3 text-left text-[13px] font-medium text-app-text-2 transition-colors duration-200 ease-app hover:text-app-text"
+            >
+              <span
+                className={cn(
+                  'flex h-5 w-9 shrink-0 items-center rounded-full p-0.5 transition-colors duration-200 ease-app',
+                  fsNsfw ? 'bg-app-lime' : 'bg-app-card-hover',
+                )}
+              >
+                <span
+                  className={cn(
+                    'size-4 rounded-full bg-app-text transition-transform duration-200 ease-app',
+                    fsNsfw && 'translate-x-4 !bg-app-lime-ink',
+                  )}
+                />
+              </span>
+              <span className="flex flex-col">
+                <span className="text-app-text">{t('image.faceSwapNsfw')}</span>
+                <span className="text-[11px] font-normal text-app-muted">{t('image.faceSwapNsfwHint')}</span>
+              </span>
+            </button>
           </>
         )}
 

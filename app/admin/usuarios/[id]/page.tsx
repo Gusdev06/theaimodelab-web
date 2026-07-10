@@ -86,7 +86,7 @@ function modelLabel(modelUsed: string | null): string | null {
     'gemini-3-pro-image-preview': 'Nano Banana Pro',
     'gpt-image-2': 'GPT Image 2',
     'gpt-image-2-text-to-image': 'GPT Image 2',
-    deepdeep: 'Deepnude',
+    deepdeep: 'Undress',
     'sem-censura': 'The AI Model Lab Unlocked',
     'sem-censura-fallback': 'The AI Model Lab Unlocked (fallback)',
     'kling-2.6/motion-control': 'Kling 2.6 Motion Control',

@@ -187,6 +187,8 @@
       "toolGenerateImages": "Gerar imagens",
       "toolTryon": "Provador Virtual",
       "toolFaceSwap": "Troca de Rosto",
+      "faceSwapNsfw": "NSFW",
+      "faceSwapNsfwHint": "Usa o modelo The AI Model Lab Unlocked (sem-censura)",
       "toolDeepDeep": "DeepDeep",
       "toolUpscale": "Upscale",
       "person": "Pessoa",
