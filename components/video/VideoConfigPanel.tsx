@@ -84,7 +84,7 @@ interface VideoModelConfig {
   label: string;
   variant: string;
   /** rota de geração usada pelo workspace para este modelo */
-  api: 'theaimodelab' | 'kie' | 'omni' | 'seedance' | 'grok';
+  api: 'theaimodelab' | 'kie' | 'omni' | 'seedance' | 'grok' | 'kling' | 'comfydeploy';
   durations: string[];
   defaultDuration: string;
   audio: 'toggle' | 'always-on' | 'always-off';
@@ -123,6 +123,8 @@ const VIDEO_MODELS: VideoModelConfig[] = [
   { value: 'gemini-omni-video', label: 'Gemini Omni', variant: 'GEMINI_OMNI', api: 'omni', durations: ['4s', '6s', '8s', '10s'], defaultDuration: '8s', audio: 'always-off', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: ASPECTS_VERTICAL_WIDE, defaultAspect: '9:16', refMode: 'refs', maxRefs: 7, isNew: true },
   { value: 'bytedance-seedance-2', label: 'Seedance 2', variant: 'SEEDANCE_2', api: 'seedance', durations: durationRange(4, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_480P', aspects: [{ value: '1:1', label: '1:1' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '16:9', label: '16:9' }, { value: '9:16', label: '9:16' }, { value: '21:9', label: '21:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 6, isNew: true },
   { value: 'grok-imagine', label: 'Grok Imagine', variant: 'GROK_IMAGINE', api: 'grok', durations: durationRange(6, 30), defaultDuration: '6s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '2:3', label: '2:3' }, { value: '3:2', label: '3:2' }, { value: '1:1', label: '1:1' }, { value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
+  { value: 'kling-v3-turbo', label: 'Kling V3 Turbo', variant: 'KLING_V3_TURBO', api: 'kling', durations: durationRange(3, 15), defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
+  { value: 'comfydeploy-wan', label: 'Wan (ComfyDeploy)', variant: 'COMFYDEPLOY_WAN', api: 'comfydeploy', durations: ['2s', '5s'], defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
   { value: 'veo3_fast', label: 'The AI Model Lab Fast', variant: 'VEO_FAST', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
   { value: 'veo3', label: 'The AI Model Lab Quality', variant: 'VEO_MAX', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
 ];
@@ -377,11 +379,13 @@ export function VideoConfigPanel({
   const videoType =
     tool === 'motion-control'
       ? ('MOTION_CONTROL' as const)
-      : modelConfig.api === 'grok' && firstFrame
+      : modelConfig.api === 'kling' || modelConfig.api === 'comfydeploy'
         ? ('IMAGE_TO_VIDEO' as const)
-        : references.length > 0
-          ? ('REFERENCE_VIDEO' as const)
-          : ('TEXT_TO_VIDEO' as const);
+        : modelConfig.api === 'grok' && firstFrame
+          ? ('IMAGE_TO_VIDEO' as const)
+          : references.length > 0
+            ? ('REFERENCE_VIDEO' as const)
+            : ('TEXT_TO_VIDEO' as const);
 
   // estimativa de créditos por geração — varia conforme ferramenta/modelo/config
   const estimateDuration = durationToSeconds(duration);
@@ -478,7 +482,11 @@ export function VideoConfigPanel({
       ? !!mcImage && !!mcVideo
       : modelConfig.api === 'grok'
         ? !!prompt.trim() || !!firstFrame
-        : !!prompt.trim();
+        : modelConfig.api === 'kling'
+          ? !!firstFrame
+          : modelConfig.api === 'comfydeploy'
+            ? !!firstFrame && !!prompt.trim()
+            : !!prompt.trim();
 
   const generate = async () => {
     if (!canGenerate || submitting) return;
@@ -609,6 +617,28 @@ export function VideoConfigPanel({
                 aspect_ratio: aspect,
                 model_variant: modelConfig.variant,
               });
+          break;
+        }
+        case 'kling': {
+          result = await api.generations.imageToVideoKling(accessToken, {
+            prompt: finalPrompt || undefined,
+            resolution,
+            duration_seconds: durationToSeconds(duration),
+            first_frame: firstFrame!.base64,
+            first_frame_mime_type: firstFrame!.mime_type,
+            model_variant: modelConfig.variant,
+          });
+          break;
+        }
+        case 'comfydeploy': {
+          result = await api.generations.imageToVideoComfyDeploy(accessToken, {
+            prompt: finalPrompt,
+            resolution,
+            duration_seconds: durationToSeconds(duration),
+            first_frame: firstFrame!.base64,
+            first_frame_mime_type: firstFrame!.mime_type,
+            model_variant: modelConfig.variant,
+          });
           break;
         }
         default: {
@@ -783,23 +813,25 @@ export function VideoConfigPanel({
           </Select>
         </div>
 
-        {/* referências (Grok usa primeiro/último frame) */}
+        {/* referências (Grok usa primeiro/último frame; Kling/ComfyDeploy só o primeiro) */}
         {modelConfig.refMode === 'first-frame' ? (
           <div className="flex flex-col gap-2">
             <FieldLabel>{t('video.frames')}</FieldLabel>
-            <div className="grid grid-cols-2 gap-3">
+            <div className={modelConfig.api === 'grok' ? 'grid grid-cols-2 gap-3' : 'grid grid-cols-1 gap-3'}>
               <ImageDropTile
                 label={t('video.firstFrame')}
                 value={firstFrame}
                 onChange={setFirstFrame}
                 className="h-[96px]"
               />
-              <ImageDropTile
-                label={t('video.lastFrame')}
-                value={lastFrame}
-                onChange={setLastFrame}
-                className="h-[96px]"
-              />
+              {modelConfig.api === 'grok' && (
+                <ImageDropTile
+                  label={t('video.lastFrame')}
+                  value={lastFrame}
+                  onChange={setLastFrame}
+                  className="h-[96px]"
+                />
+              )}
             </div>
           </div>
         ) : (

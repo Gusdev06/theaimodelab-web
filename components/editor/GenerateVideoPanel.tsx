@@ -213,10 +213,14 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
       'grok-imagine': 'Grok Imagine',
       'gemini-omni-video': 'Gemini Omni',
       'bytedance-seedance-2': 'Seedance 2',
+      'kling-v3-turbo': 'Kling V3 Turbo',
+      'comfydeploy-wan': 'Wan (ComfyDeploy)',
     };
     const fallback: { value: string; label: string; disabled?: boolean; unlimited?: boolean }[] = [
       { value: 'gemini-omni-video', label: labelOverride['gemini-omni-video'] },
       { value: 'bytedance-seedance-2', label: labelOverride['bytedance-seedance-2'] },
+      { value: 'kling-v3-turbo', label: labelOverride['kling-v3-turbo'] },
+      { value: 'comfydeploy-wan', label: labelOverride['comfydeploy-wan'] },
       { value: 'grok-imagine', label: labelOverride['grok-imagine'] },
       { value: 'theaimodelab-quality', label: labelOverride['theaimodelab-quality'] },
       { value: 'theaimodelab-fast', label: labelOverride['theaimodelab-fast'] },
@@ -235,7 +239,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
     return raw.map((opt) => ({
       ...opt,
       unlimited: unlimited && isModelSlugInUnlimitedPlan(unlimitedStatus, opt.value),
-      isNew: opt.value === 'grok-imagine' || opt.value === 'gemini-omni-video' || opt.value === 'bytedance-seedance-2',
+      isNew: opt.value === 'grok-imagine' || opt.value === 'gemini-omni-video' || opt.value === 'bytedance-seedance-2' || opt.value === 'kling-v3-turbo' || opt.value === 'comfydeploy-wan',
     }));
   }, [videoModelsQuery.data, unlimited, unlimitedStatus]);
 
@@ -335,6 +339,8 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
   const isGrokModel = model === 'grok-imagine';
   const isOmniModel = model === 'gemini-omni-video';
   const isSeedanceModel = model === 'bytedance-seedance-2';
+  const isKlingModel = model === 'kling-v3-turbo';
+  const isComfyDeployModel = model === 'comfydeploy-wan';
   const caps = useMemo(() => getVideoModelCapabilities(model), [model]);
   const videoModelVariant = ({
     'theaimodelab-fast': 'THEAIMODELAB_FAST',
@@ -344,6 +350,8 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
     'grok-imagine': 'GROK_IMAGINE',
     'gemini-omni-video': 'GEMINI_OMNI',
     'bytedance-seedance-2': 'SEEDANCE_2',
+    'kling-v3-turbo': 'KLING_V3_TURBO',
+    'comfydeploy-wan': 'COMFYDEPLOY_WAN',
   } as Record<string, string>)[model] ?? 'THEAIMODELAB_QUALITY';
 
   const effectiveAudio = caps.audio === 'always-on' ? true : caps.audio === 'always-off' ? false : audio;
@@ -1125,6 +1133,35 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
         } else {
           throw new Error(t('errors.grokUnsupportedMode'));
         }
+      } else if (isKlingModel) {
+        // Kling V3 Turbo — image-to-video (KIE). Exige primeiro frame.
+        if (!firstFrame) {
+          throw new Error(t('errors.grokImageRequiresFirstFrame'));
+        }
+        result = await api.generations.imageToVideoKling(accessToken, {
+          prompt: finalPrompt || undefined,
+          resolution,
+          duration_seconds: durationToSeconds(duration),
+          first_frame: firstFrame.base64,
+          first_frame_mime_type: firstFrame.mime_type,
+          model_variant: videoModelVariant,
+        });
+      } else if (isComfyDeployModel) {
+        // ComfyDeploy WanImageToVideo — image-to-video (NSFW/legacy). Exige frame + prompt.
+        if (!firstFrame) {
+          throw new Error(t('errors.grokImageRequiresFirstFrame'));
+        }
+        if (!finalPrompt) {
+          throw new Error(t('errors.seedanceRequiresPrompt'));
+        }
+        result = await api.generations.imageToVideoComfyDeploy(accessToken, {
+          prompt: finalPrompt,
+          resolution,
+          duration_seconds: durationToSeconds(duration),
+          first_frame: firstFrame.base64,
+          first_frame_mime_type: firstFrame.mime_type,
+          model_variant: videoModelVariant,
+        });
       } else if (isKieModel) {
         // KIE API — always audio, sampleCount=1
         const kiePayload = {

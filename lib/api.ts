@@ -725,6 +725,24 @@ export interface SeedanceVideoRequest {
 }
 
 
+export interface KlingImageToVideoRequest {
+  prompt?: string;
+  resolution: string; // 'RES_720P' | 'RES_1080P'
+  duration_seconds: number; // 3-15
+  first_frame: string;
+  first_frame_mime_type?: string;
+  model_variant?: string;
+}
+
+export interface ComfyDeployImageToVideoRequest {
+  prompt: string;
+  resolution?: string; // 'RES_480P' | 'RES_720P'
+  duration_seconds: number; // 2-8
+  first_frame: string;
+  first_frame_mime_type?: string;
+  model_variant?: string;
+}
+
 export interface TextToSpeechRequest {
   text: string;
   voice_id: string;
@@ -1652,6 +1670,18 @@ export const api = {
     },
     seedanceVideo(accessToken: string, payload: SeedanceVideoRequest) {
       return authRequest<CreateGenerationResponse>('/api/v1/generations/seedance-video', accessToken, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+    imageToVideoKling(accessToken: string, payload: KlingImageToVideoRequest) {
+      return authRequest<CreateGenerationResponse>('/api/v1/generations/image-to-video-kling', accessToken, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+    imageToVideoComfyDeploy(accessToken: string, payload: ComfyDeployImageToVideoRequest) {
+      return authRequest<CreateGenerationResponse>('/api/v1/generations/image-to-video-comfydeploy', accessToken, {
         method: 'POST',
         body: JSON.stringify(payload),
       });

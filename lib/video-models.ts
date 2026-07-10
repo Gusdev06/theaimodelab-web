@@ -150,6 +150,46 @@ const GROK_IMAGINE: VideoModelCapabilities = {
   supportsReferenceMode: false,
 };
 
+const KLING: VideoModelCapabilities = {
+  resolutions: [
+    { value: 'RES_720P', label: '720p' },
+    { value: 'RES_1080P', label: '1080p' },
+  ],
+  aspectRatios: [
+    { value: '9-16', apiValue: '9:16', label: '9:16' },
+    { value: '16-9', apiValue: '16:9', label: '16:9' },
+    { value: '1-1', apiValue: '1:1', label: '1:1' },
+  ],
+  duration: { type: 'slider', min: 3, max: 15, step: 1, default: '5s' },
+  audio: 'always-off',
+  samples: 'single',
+  supportsNegativePrompt: false,
+  // Kling V3 Turbo é image-to-video: exige um primeiro frame.
+  supportsTextMode: false,
+  supportsImageMode: true,
+  supportsReferenceMode: false,
+};
+
+const COMFYDEPLOY: VideoModelCapabilities = {
+  resolutions: [
+    { value: 'RES_480P', label: '480p' },
+    { value: 'RES_720P', label: '720p' },
+  ],
+  aspectRatios: [
+    { value: '9-16', apiValue: '9:16', label: '9:16' },
+    { value: '16-9', apiValue: '16:9', label: '16:9' },
+    { value: '1-1', apiValue: '1:1', label: '1:1' },
+  ],
+  duration: { type: 'preset', options: ['2s', '5s'], default: '5s' },
+  audio: 'always-off',
+  samples: 'single',
+  supportsNegativePrompt: false,
+  // WanImageToVideo é image-to-video: exige imagem de entrada.
+  supportsTextMode: false,
+  supportsImageMode: true,
+  supportsReferenceMode: false,
+};
+
 const VIDEO_MODEL_CAPABILITIES: Record<string, VideoModelCapabilities> = {
   'theaimodelab-fast': THEAIMODELAB,
   'theaimodelab-quality': THEAIMODELAB,
@@ -158,6 +198,8 @@ const VIDEO_MODEL_CAPABILITIES: Record<string, VideoModelCapabilities> = {
   'grok-imagine': GROK_IMAGINE,
   'gemini-omni-video': GEMINI_OMNI,
   'bytedance-seedance-2': SEEDANCE,
+  'kling-v3-turbo': KLING,
+  'comfydeploy-wan': COMFYDEPLOY,
 };
 
 export function getVideoModelCapabilities(slug: string): VideoModelCapabilities {
