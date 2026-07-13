@@ -112,7 +112,26 @@ async function authRequest<T>(path: string, accessToken: string, options: Reques
   }
 }
 
-export type FreeGenerationType = 'NB2' | 'NB_PRO' | 'FACE_SWAP' | 'VIRTUAL_TRY_ON' | 'THEAIMODELAB_FAST' | 'UPSCALE';
+export type FreeGenerationType =
+  | 'NB2'
+  | 'NB_PRO'
+  | 'FACE_SWAP'
+  | 'VIRTUAL_TRY_ON'
+  | 'THEAIMODELAB_FAST'
+  | 'UPSCALE'
+  | 'SEM_CENSURA'
+  | 'DEEPDEEP'
+  | 'GPT_IMAGE_2'
+  | 'SEEDREAM_LITE'
+  | 'THEAIMODELAB_QUALITY'
+  | 'VEO_FAST'
+  | 'VEO_MAX'
+  | 'GROK_IMAGINE'
+  | 'GEMINI_OMNI'
+  | 'SEEDANCE_2'
+  | 'KLING_V3_TURBO'
+  | 'COMFYDEPLOY_WAN'
+  | 'MOTION_CONTROL';
 
 export type FreeGenerationsMap = Record<FreeGenerationType, number>;
 

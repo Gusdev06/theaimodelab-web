@@ -4,7 +4,27 @@ import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
 import type { AdminUserGeneration, FreeGenerationType, CreditTransaction } from '@/lib/api';
 
-const FREE_GEN_TYPES: FreeGenerationType[] = ['NB2', 'NB_PRO', 'FACE_SWAP', 'VIRTUAL_TRY_ON', 'THEAIMODELAB_FAST', 'UPSCALE'];
+const FREE_GEN_TYPES: FreeGenerationType[] = [
+  'NB2',
+  'NB_PRO',
+  'FACE_SWAP',
+  'VIRTUAL_TRY_ON',
+  'THEAIMODELAB_FAST',
+  'UPSCALE',
+  'SEM_CENSURA',
+  'DEEPDEEP',
+  'GPT_IMAGE_2',
+  'SEEDREAM_LITE',
+  'THEAIMODELAB_QUALITY',
+  'VEO_FAST',
+  'VEO_MAX',
+  'GROK_IMAGINE',
+  'GEMINI_OMNI',
+  'SEEDANCE_2',
+  'KLING_V3_TURBO',
+  'COMFYDEPLOY_WAN',
+  'MOTION_CONTROL',
+];
 
 function freeGenLabel(type: FreeGenerationType): string {
   switch (type) {
@@ -14,6 +34,19 @@ function freeGenLabel(type: FreeGenerationType): string {
     case 'VIRTUAL_TRY_ON': return 'Try-On';
     case 'THEAIMODELAB_FAST': return 'Vídeo Veo 3.1 Fast';
     case 'UPSCALE': return 'Upscale';
+    case 'SEM_CENSURA': return 'The AI Model Unlocked';
+    case 'DEEPDEEP': return 'DeepDeep (Undress)';
+    case 'GPT_IMAGE_2': return 'GPT Image 2';
+    case 'SEEDREAM_LITE': return 'Seedream Lite';
+    case 'THEAIMODELAB_QUALITY': return 'Vídeo Veo 3.1 Quality';
+    case 'VEO_FAST': return 'Veo 3 Fast (KIE)';
+    case 'VEO_MAX': return 'Veo 3 Max (KIE)';
+    case 'GROK_IMAGINE': return 'Grok Imagine';
+    case 'GEMINI_OMNI': return 'Gemini Omni Video';
+    case 'SEEDANCE_2': return 'Seedance 2.0';
+    case 'KLING_V3_TURBO': return 'Kling V3 Turbo';
+    case 'COMFYDEPLOY_WAN': return 'Wan (ComfyDeploy)';
+    case 'MOTION_CONTROL': return 'Motion Control';
   }
 }
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -656,7 +689,7 @@ export default function AdminUserDetailPage() {
                   <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-red-400/70">
                     Gerações Gratuitas
                   </span>
-                  {(['NB2', 'NB_PRO', 'FACE_SWAP', 'VIRTUAL_TRY_ON', 'THEAIMODELAB_FAST', 'UPSCALE'] as const).map((k) => (
+                  {FREE_GEN_TYPES.filter((k) => (user.credits!.freeGenerations[k] ?? 0) > 0).map((k) => (
                     <div key={k} className="flex items-center justify-between">
                       <span className="text-xs text-[#f3f0ed]/40">{freeGenLabel(k)}</span>
                       <span className="text-sm font-medium tabular-nums text-red-400">

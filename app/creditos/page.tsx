@@ -2,6 +2,29 @@
 
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
+import type { FreeGenerationType } from '@/lib/api';
+
+const FREE_GEN_LABELS: [FreeGenerationType, string][] = [
+  ['NB2', 'Nano Banana 2'],
+  ['NB_PRO', 'Nano Banana Pro'],
+  ['FACE_SWAP', 'Face Swap'],
+  ['VIRTUAL_TRY_ON', 'Try-On'],
+  ['THEAIMODELAB_FAST', 'Vídeo (Veo 3.1 Fast)'],
+  ['UPSCALE', 'Upscale'],
+  ['SEM_CENSURA', 'The AI Model Unlocked'],
+  ['DEEPDEEP', 'DeepDeep (Undress)'],
+  ['GPT_IMAGE_2', 'GPT Image 2'],
+  ['SEEDREAM_LITE', 'Seedream Lite'],
+  ['THEAIMODELAB_QUALITY', 'Vídeo (Veo 3.1 Quality)'],
+  ['VEO_FAST', 'Veo 3 Fast'],
+  ['VEO_MAX', 'Veo 3 Max'],
+  ['GROK_IMAGINE', 'Grok Imagine'],
+  ['GEMINI_OMNI', 'Gemini Omni Video'],
+  ['SEEDANCE_2', 'Seedance 2.0'],
+  ['KLING_V3_TURBO', 'Kling V3 Turbo'],
+  ['COMFYDEPLOY_WAN', 'Wan (ComfyDeploy)'],
+  ['MOTION_CONTROL', 'Motion Control'],
+];
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useLoadingMessage } from '@/lib/loading-messages';
@@ -219,17 +242,12 @@ function CreditosPageContent() {
 
         {/* -- Free generations banner -- */}
         {balance && (() => {
-          const fg = balance.freeGenerations ?? { NB2: 0, NB_PRO: 0, FACE_SWAP: 0, VIRTUAL_TRY_ON: 0, THEAIMODELAB_FAST: 0, UPSCALE: 0 };
-          const total = fg.NB2 + fg.NB_PRO + fg.FACE_SWAP + fg.VIRTUAL_TRY_ON + fg.THEAIMODELAB_FAST + (fg.UPSCALE ?? 0);
+          const fg = balance.freeGenerations;
+          const items: { label: string; count: number }[] = FREE_GEN_LABELS
+            .map(([key, label]) => ({ label, count: fg?.[key] ?? 0 }))
+            .filter((i) => i.count > 0);
+          const total = items.reduce((sum, i) => sum + i.count, 0);
           if (total <= 0) return null;
-          const items: { label: string; count: number }[] = [
-            { label: 'Nano Banana 2', count: fg.NB2 },
-            { label: 'Nano Banana Pro', count: fg.NB_PRO },
-            { label: 'Face Swap', count: fg.FACE_SWAP },
-            { label: 'Try-On', count: fg.VIRTUAL_TRY_ON },
-            { label: 'Vídeo (Veo 3.1 Fast)', count: fg.THEAIMODELAB_FAST },
-            { label: 'Upscale', count: fg.UPSCALE ?? 0 },
-          ].filter((i) => i.count > 0);
           return (
             <div className="flex flex-col gap-4 rounded-2xl border border-red-500/20 bg-red-500/6 p-5">
               <div className="flex items-center gap-4">
