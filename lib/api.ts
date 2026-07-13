@@ -750,6 +750,8 @@ export interface KlingImageToVideoRequest {
   prompt?: string;
   resolution: string; // 'RES_720P' | 'RES_1080P'
   duration_seconds: number; // 3-15
+  aspect_ratio?: string; // '9:16' | '16:9' | '1:1' — se omitido, backend detecta da imagem
+  generate_audio?: boolean; // áudio nativo, sem custo extra
   first_frame: string;
   first_frame_mime_type?: string;
   model_variant?: string;
