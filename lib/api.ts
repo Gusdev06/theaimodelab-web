@@ -131,6 +131,8 @@ export type FreeGenerationType =
   | 'SEEDANCE_2'
   | 'KLING_V3_TURBO'
   | 'COMFYDEPLOY_WAN'
+  | 'WAVESPEED_LTX_SPICY'
+  | 'WAVESPEED_SEEDANCE_SPICY'
   | 'MOTION_CONTROL';
 
 export type FreeGenerationsMap = Record<FreeGenerationType, number>;
@@ -761,6 +763,27 @@ export interface ComfyDeployImageToVideoRequest {
   prompt: string;
   resolution?: string; // 'RES_480P' | 'RES_720P'
   duration_seconds: number; // 2-8
+  first_frame: string;
+  first_frame_mime_type?: string;
+  model_variant?: string;
+}
+
+export interface WavespeedImageToVideoRequest {
+  prompt: string;
+  resolution?: string; // 'RES_480P' | 'RES_720P' | 'RES_1080P'
+  duration_seconds: number; // 5-20
+  preset?: 'tuned' | 'original';
+  first_frame: string;
+  first_frame_mime_type?: string;
+  model_variant?: string;
+}
+
+export interface WavespeedSeedanceImageToVideoRequest {
+  prompt?: string;
+  resolution?: string; // 'RES_480P' | 'RES_720P' | 'RES_1080P' | 'RES_4K'
+  duration_seconds: number; // 4-15
+  aspect_ratio?: string; // '16:9' | '9:16' | '4:3' | '3:4' | '1:1' | '21:9'
+  generate_audio?: boolean;
   first_frame: string;
   first_frame_mime_type?: string;
   model_variant?: string;
@@ -1705,6 +1728,18 @@ export const api = {
     },
     imageToVideoComfyDeploy(accessToken: string, payload: ComfyDeployImageToVideoRequest) {
       return authRequest<CreateGenerationResponse>('/api/v1/generations/image-to-video-comfydeploy', accessToken, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+    imageToVideoWavespeed(accessToken: string, payload: WavespeedImageToVideoRequest) {
+      return authRequest<CreateGenerationResponse>('/api/v1/generations/image-to-video-wavespeed', accessToken, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+    imageToVideoSeedanceSpicy(accessToken: string, payload: WavespeedSeedanceImageToVideoRequest) {
+      return authRequest<CreateGenerationResponse>('/api/v1/generations/image-to-video-seedance-spicy', accessToken, {
         method: 'POST',
         body: JSON.stringify(payload),
       });

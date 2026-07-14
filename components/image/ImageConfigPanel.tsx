@@ -56,7 +56,6 @@ import {
 const MAX_REFERENCES = 8;
 const MAX_QUANTITY = 4;
 const REF_ACCEPTED = ['image/jpeg', 'image/png', 'image/webp'];
-const REF_MAX_BYTES = 5 * 1024 * 1024;
 const blobToDataUrl = (blob: Blob) =>
   new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
@@ -411,10 +410,6 @@ export function ImageConfigPanel({
         toast.error(t('clone.invalidFormat'));
         continue;
       }
-      if (file.size > REF_MAX_BYTES) {
-        toast.error(t('clone.tooLarge', { max: 5 }));
-        continue;
-      }
       const reader = new FileReader();
       reader.onload = () => {
         const dataUrl = reader.result as string;
@@ -445,10 +440,6 @@ export function ImageConfigPanel({
       const res = await fetch(`/api/proxy-image?url=${encodeURIComponent(url)}`);
       if (!res.ok) throw new Error();
       const blob = await res.blob();
-      if (blob.size > REF_MAX_BYTES) {
-        toast.error(t('clone.tooLarge', { max: 5 }));
-        return;
-      }
       const dataUrl = await blobToDataUrl(blob);
       setReferences((prev) =>
         prev.length >= MAX_REFERENCES
@@ -472,7 +463,6 @@ export function ImageConfigPanel({
         const res = await fetch(`/api/proxy-image?url=${encodeURIComponent(initialRefUrl)}`);
         if (!res.ok) return;
         const blob = await res.blob();
-        if (blob.size > REF_MAX_BYTES) return;
         const reader = new FileReader();
         reader.onload = () => {
           const dataUrl = reader.result as string;

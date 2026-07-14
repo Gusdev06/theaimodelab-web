@@ -84,7 +84,7 @@ interface VideoModelConfig {
   label: string;
   variant: string;
   /** rota de geração usada pelo workspace para este modelo */
-  api: 'theaimodelab' | 'kie' | 'omni' | 'seedance' | 'grok' | 'kling' | 'comfydeploy';
+  api: 'theaimodelab' | 'kie' | 'omni' | 'seedance' | 'grok' | 'kling' | 'comfydeploy' | 'wavespeed' | 'seedance-spicy';
   durations: string[];
   defaultDuration: string;
   audio: 'toggle' | 'always-on' | 'always-off';
@@ -125,6 +125,8 @@ const VIDEO_MODELS: VideoModelConfig[] = [
   { value: 'grok-imagine', label: 'Grok Imagine', variant: 'GROK_IMAGINE', api: 'grok', durations: durationRange(6, 30), defaultDuration: '6s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '2:3', label: '2:3' }, { value: '3:2', label: '3:2' }, { value: '1:1', label: '1:1' }, { value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
   { value: 'kling-v3-turbo', label: 'Kling V3 Turbo', variant: 'KLING_V3_TURBO', api: 'kling', durations: durationRange(3, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
   { value: 'comfydeploy-wan', label: 'Video ( NSFW )', variant: 'COMFYDEPLOY_WAN', api: 'comfydeploy', durations: ['2s', '5s'], defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
+  { value: 'wavespeed-ltx-spicy', label: 'LTX 2.3 Spicy ( NSFW )', variant: 'WAVESPEED_LTX_SPICY', api: 'wavespeed', durations: durationRange(5, 20), defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_480P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
+  { value: 'wavespeed-seedance-spicy', label: 'Seedance 2.0 Fast Spicy ( NSFW )', variant: 'WAVESPEED_SEEDANCE_SPICY', api: 'seedance-spicy', durations: durationRange(4, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '1:1', label: '1:1' }, { value: '21:9', label: '21:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
   { value: 'veo3_fast', label: 'The AI Model Lab Fast', variant: 'VEO_FAST', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
   { value: 'veo3', label: 'The AI Model Lab Quality', variant: 'VEO_MAX', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
 ];
@@ -379,7 +381,7 @@ export function VideoConfigPanel({
   const videoType =
     tool === 'motion-control'
       ? ('MOTION_CONTROL' as const)
-      : modelConfig.api === 'kling' || modelConfig.api === 'comfydeploy'
+      : modelConfig.api === 'kling' || modelConfig.api === 'comfydeploy' || modelConfig.api === 'wavespeed' || modelConfig.api === 'seedance-spicy'
         ? ('IMAGE_TO_VIDEO' as const)
         : modelConfig.api === 'grok' && firstFrame
           ? ('IMAGE_TO_VIDEO' as const)
@@ -482,9 +484,9 @@ export function VideoConfigPanel({
       ? !!mcImage && !!mcVideo
       : modelConfig.api === 'grok'
         ? !!prompt.trim() || !!firstFrame
-        : modelConfig.api === 'kling'
+        : modelConfig.api === 'kling' || modelConfig.api === 'seedance-spicy'
           ? !!firstFrame
-          : modelConfig.api === 'comfydeploy'
+          : modelConfig.api === 'comfydeploy' || modelConfig.api === 'wavespeed'
             ? !!firstFrame && !!prompt.trim()
             : !!prompt.trim();
 
@@ -637,6 +639,30 @@ export function VideoConfigPanel({
             prompt: finalPrompt,
             resolution,
             duration_seconds: durationToSeconds(duration),
+            first_frame: firstFrame!.base64,
+            first_frame_mime_type: firstFrame!.mime_type,
+            model_variant: modelConfig.variant,
+          });
+          break;
+        }
+        case 'wavespeed': {
+          result = await api.generations.imageToVideoWavespeed(accessToken, {
+            prompt: finalPrompt,
+            resolution,
+            duration_seconds: durationToSeconds(duration),
+            first_frame: firstFrame!.base64,
+            first_frame_mime_type: firstFrame!.mime_type,
+            model_variant: modelConfig.variant,
+          });
+          break;
+        }
+        case 'seedance-spicy': {
+          result = await api.generations.imageToVideoSeedanceSpicy(accessToken, {
+            prompt: finalPrompt || undefined,
+            resolution,
+            duration_seconds: durationToSeconds(duration),
+            aspect_ratio: aspect,
+            generate_audio: effectiveAudio,
             first_frame: firstFrame!.base64,
             first_frame_mime_type: firstFrame!.mime_type,
             model_variant: modelConfig.variant,
