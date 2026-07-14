@@ -47,6 +47,7 @@ function freeGenLabel(type: FreeGenerationType): string {
     case 'KLING_V3_TURBO': return 'Kling V3 Turbo';
     case 'COMFYDEPLOY_WAN': return 'Wan (ComfyDeploy)';
     case 'MOTION_CONTROL': return 'Motion Control';
+    default: return type;
   }
 }
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
