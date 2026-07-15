@@ -211,6 +211,12 @@
         "nb2_1K": "Nano Banana 2 images at 1K",
         "nbBoth1K": "Nano Banana 2 and Pro images at 1K"
       }
+    },
+    "categories": {
+      "videos": "Videos",
+      "images": "Images",
+      "imagesNsfw": "Uncensored images (NSFW)",
+      "videosNsfw": "Uncensored videos (NSFW)"
     }
   }
 }

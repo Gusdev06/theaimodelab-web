@@ -26,7 +26,7 @@ import {
   PLAN_UNLIMITED_FEATURE_KEYS,
   formatCurrency,
   getPlanFeatureKeys,
-  getPlanGenerationEntries,
+  getPlanGenerationBuckets,
 } from '@/lib/plans';
 
 export interface PlansGridProps {
@@ -80,8 +80,7 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
 
   const isSubscribing = subscribingSlug === plan.slug;
   const featureEntries = getPlanFeatureKeys(plan);
-  const generationEntries = getPlanGenerationEntries(plan.creditsPerMonth, plan.slug)
-    .filter((e) => !e.blocked && e.countNumber > 0);
+  const generationBuckets = getPlanGenerationBuckets(plan.creditsPerMonth);
   const isDowngrade = planAction === 'downgrade';
   const unlimitedFeatureKeys = PLAN_UNLIMITED_FEATURE_KEYS[plan.slug];
   const originalPrice = PLAN_ORIGINAL_PRICES[plan.slug];
@@ -249,21 +248,21 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
           })}
         </ul>
 
-        {/* O que dá pra criar — quantas gerações de cada modelo o plano rende */}
-        {generationEntries.length > 0 && (
+        {/* O que dá pra criar — resumo por categoria (vídeos/imagens/NSFW) */}
+        {generationBuckets.length > 0 && (
           <div className={compact ? 'mt-3' : 'mt-4'}>
             <p className={`font-semibold uppercase tracking-[0.12em] text-[#f3f0ed]/35 ${compact ? 'text-[9px]' : 'text-[10px]'}`}>
               {t('whatYouCanCreate')}
             </p>
             <ul className={`mt-2 flex flex-col ${compact ? 'gap-1' : 'gap-1.5'}`}>
-              {generationEntries.map((entry) => (
-                <li key={entry.label} className={`flex items-center ${compact ? 'gap-1.5' : 'gap-2'}`}>
+              {generationBuckets.map((bucket) => (
+                <li key={bucket.key} className={`flex items-center ${compact ? 'gap-1.5' : 'gap-2'}`}>
                   <Check className={`shrink-0 ${compact ? 'h-2.5 w-2.5' : 'h-3 w-3'} ${isRecommended ? 'text-[#e11d2a]/70' : 'text-[#f3f0ed]/35'}`} />
                   <span className="text-[12px] leading-snug text-[#f3f0ed]/55">
                     <span className="font-semibold tabular-nums text-[#f3f0ed]/80">
-                      {entry.countNumber.toLocaleString(locale)}
+                      {bucket.countNumber.toLocaleString(locale)}
                     </span>{' '}
-                    {entry.label}
+                    {t(`categories.${bucket.key}` as 'categories.videos')}
                   </span>
                 </li>
               ))}

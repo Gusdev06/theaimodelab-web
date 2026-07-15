@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useLoginModal } from "@/lib/login-modal-context";
 import { useAuth } from "@/lib/auth-context";
 import { api, Plan } from "@/lib/api";
-import { getPlanGenerationEntries, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
+import { getPlanGenerationBuckets, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
 
 // Monetização por assinatura mensal (PerfectPay). A landing lista os planos ativos
 // (endpoint público GET /api/v1/plans) e o CTA redireciona para o checkout recorrente
@@ -16,6 +16,7 @@ import { getPlanGenerationEntries, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/pla
 export function Pricing() {
   const t = useTranslations("pricing");
   const tUnlimited = useTranslations("editorPlans.unlimited");
+  const tCategories = useTranslations("editorPlans.categories");
   const locale = useLocale();
   // Preços dos planos são cobrados em dólar (USD).
   const currency = "USD";
@@ -136,19 +137,17 @@ export function Pricing() {
                     {t("generationEstimate")}
                   </p>
                   <ul className="mt-2.5 space-y-1.5 text-[13px] text-[#f3f0ed]/55">
-                    {getPlanGenerationEntries(plan.creditsPerMonth, plan.slug)
-                      .filter((e) => !e.blocked && e.countNumber > 0)
-                      .map((e) => (
-                        <li key={e.label} className="flex items-center gap-2">
-                          <Check className="h-3.5 w-3.5 shrink-0 text-landing-accent/70" />
-                          <span>
-                            <span className="font-semibold text-landing-text">
-                              {formatCredits(e.countNumber)}
-                            </span>{" "}
-                            {e.label}
-                          </span>
-                        </li>
-                      ))}
+                    {getPlanGenerationBuckets(plan.creditsPerMonth).map((b) => (
+                      <li key={b.key} className="flex items-center gap-2">
+                        <Check className="h-3.5 w-3.5 shrink-0 text-landing-accent/70" />
+                        <span>
+                          <span className="font-semibold text-landing-text">
+                            {formatCredits(b.countNumber)}
+                          </span>{" "}
+                          {tCategories(b.key)}
+                        </span>
+                      </li>
+                    ))}
                   </ul>
                   {(PLAN_UNLIMITED_FEATURE_KEYS[plan.slug]?.length ?? 0) > 0 && (
                     <div className="mt-4 rounded-2xl border border-landing-accent/20 bg-landing-accent/[0.05] p-3.5">

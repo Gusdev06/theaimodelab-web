@@ -121,69 +121,46 @@ export const PLAN_GENERATION_ENTRIES: Record<string, PlanGenerationEntry[]> = {
 };
 
 /**
- * Custo canônico em créditos por geração (mirror do backend `credit_costs`),
- * usado para calcular quantas gerações de CADA modelo o plano rende.
- * Config exibida: imagens = menor resolução do modelo; vídeos cobrados por
- * segundo = clipe de 5s (720p quando há tiers); vídeos de preço fixo = 720p.
- * Áudio (TTS) ≈ 35 créditos/áudio. Voz clonada é por cota (não por crédito).
- *
+ * Custo (menor do grupo) em créditos por geração, usado como TETO para estimar
+ * quantas gerações de cada CATEGORIA o plano rende — clipe de vídeo = 5s.
+ *   - videos (SFW): Motion Control 720p 5s → 70×5 = 350
+ *   - images (SFW): Seedream Lite 2K → 60
+ *   - imagesNsfw: Sem Censura 2K → 130
+ *   - videosNsfw: LTX 2.3 Spicy 720p 5s → 80×5 = 400
  * Mantém uma única fonte da verdade: se o preço mudar, os cards se atualizam.
  */
-const VIDEO_CLIP_SECONDS = 5;
-export const GENERATABLE_MODELS: {
-  label: string;
-  unit: GenerationUnit;
-  creditsPerGeneration: number;
-}[] = [
-  // ── Imagens (preço fixo por geração) ──
-  { label: 'Nano Banana 2', unit: 'image', creditsPerGeneration: 90 },
-  { label: 'Nano Banana Pro', unit: 'image', creditsPerGeneration: 190 },
-  { label: 'GPT Image 2', unit: 'image', creditsPerGeneration: 90 },
-  { label: 'Sem Censura', unit: 'image', creditsPerGeneration: 130 },
-  { label: 'Seedream Lite', unit: 'image', creditsPerGeneration: 60 },
-  { label: 'Deepdeep', unit: 'image', creditsPerGeneration: 200 },
-  // ── Vídeos de preço fixo por geração ──
-  { label: 'Veo 3.1 Fast', unit: 'video', creditsPerGeneration: 810 },
-  { label: 'Veo 3.1 Quality', unit: 'video', creditsPerGeneration: 1800 },
-  { label: 'The AI Model Lab Fast', unit: 'video', creditsPerGeneration: 600 },
-  { label: 'The AI Model Lab Quality', unit: 'video', creditsPerGeneration: 1000 },
-  // ── Vídeos cobrados por segundo (clipe de 5s) ──
-  { label: 'Motion Control', unit: 'video', creditsPerGeneration: 70 * VIDEO_CLIP_SECONDS },
-  { label: 'LTX 2.3 Spicy', unit: 'video', creditsPerGeneration: 80 * VIDEO_CLIP_SECONDS },
-  { label: 'Seedance 2.0 Spicy', unit: 'video', creditsPerGeneration: 200 * VIDEO_CLIP_SECONDS },
-  { label: 'Kling V3 Turbo', unit: 'video', creditsPerGeneration: 220 * VIDEO_CLIP_SECONDS },
-  { label: 'WAN', unit: 'video', creditsPerGeneration: 120 * VIDEO_CLIP_SECONDS },
-  { label: 'Grok Imagine', unit: 'video', creditsPerGeneration: 80 * VIDEO_CLIP_SECONDS },
-  // ── Áudio ──
-  { label: 'Áudio (TTS)', unit: 'audio', creditsPerGeneration: 35 },
+export const GENERATION_BUCKET_COST = {
+  videos: 350,
+  images: 60,
+  imagesNsfw: 130,
+  videosNsfw: 400,
+} as const;
+
+export type GenerationBucketKey = keyof typeof GENERATION_BUCKET_COST;
+
+export interface PlanGenerationBucket {
+  /** chave i18n em `editorPlans.categories.<key>` */
+  key: GenerationBucketKey;
+  countNumber: number;
+}
+
+/** Ordem de exibição das categorias nos cards. */
+const GENERATION_BUCKET_ORDER: GenerationBucketKey[] = [
+  'videos',
+  'images',
+  'imagesNsfw',
+  'videosNsfw',
 ];
 
 /**
- * Calcula, a partir dos créditos mensais do plano, quantas gerações de cada
- * modelo o usuário consegue fazer. Inclui "Clonar voz" pela cota de vozes
- * salvas (não é baseada em créditos). Já vem ordenado por volume desc.
+ * Resume, a partir dos créditos mensais do plano, quantas gerações de cada
+ * categoria (vídeos / imagens / imagens NSFW / vídeos NSFW) o usuário consegue.
  */
-export function getPlanGenerationEntries(
-  creditsPerMonth: number,
-  slug?: string,
-): PlanGenerationEntry[] {
-  const entries: PlanGenerationEntry[] = GENERATABLE_MODELS.map((m) => ({
-    label: m.label,
-    unit: m.unit,
-    countNumber: Math.floor(creditsPerMonth / m.creditsPerGeneration),
-  }));
-
-  const voiceQuota = slug ? PLAN_SAVED_VOICES_QUOTAS[slug] : undefined;
-  if (voiceQuota !== undefined) {
-    entries.push({
-      label: 'Clonar voz',
-      unit: 'voiceClone',
-      countNumber: voiceQuota,
-      blocked: voiceQuota === 0,
-    });
-  }
-
-  return entries;
+export function getPlanGenerationBuckets(creditsPerMonth: number): PlanGenerationBucket[] {
+  return GENERATION_BUCKET_ORDER.map((key) => ({
+    key,
+    countNumber: Math.floor(creditsPerMonth / GENERATION_BUCKET_COST[key]),
+  })).filter((b) => b.countNumber > 0);
 }
 
 /**

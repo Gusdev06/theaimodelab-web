@@ -211,6 +211,12 @@
         "nb2_1K": "Imágenes Nano Banana 2 en 1K",
         "nbBoth1K": "Imágenes Nano Banana 2 y Pro en 1K"
       }
+    },
+    "categories": {
+      "videos": "Videos",
+      "images": "Imágenes",
+      "imagesNsfw": "Imágenes sin censura (NSFW)",
+      "videosNsfw": "Videos sin censura (NSFW)"
     }
   }
 }
