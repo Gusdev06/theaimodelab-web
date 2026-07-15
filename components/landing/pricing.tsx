@@ -8,6 +8,7 @@ import { useLoginModal } from "@/lib/login-modal-context";
 import { useAuth } from "@/lib/auth-context";
 import { api, Plan } from "@/lib/api";
 import { getPlanGenerationBuckets, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
+import { withCheckoutIdentity } from "@/lib/checkout";
 
 // Monetização por assinatura mensal (PerfectPay). A landing lista os planos ativos
 // (endpoint público GET /api/v1/plans) e o CTA redireciona para o checkout recorrente
@@ -21,7 +22,7 @@ export function Pricing() {
   // Preços dos planos são cobrados em dólar (USD).
   const currency = "USD";
   const { ref, isVisible } = useScrollReveal();
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
   const { openLoginModal } = useLoginModal();
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,7 +48,11 @@ export function Pricing() {
       openLoginModal({ mode: "register" });
       return;
     }
-    window.location.href = plan.checkoutUrl;
+    // Manda o email (e nome) da conta logada para o checkout da PerfectPay.
+    window.location.href = withCheckoutIdentity(plan.checkoutUrl, {
+      email: user?.email,
+      name: user?.name,
+    });
   }
 
   const formatPrice = (cents: number, cur: string) =>

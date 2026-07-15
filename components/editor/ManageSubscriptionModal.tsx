@@ -16,6 +16,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
 import { formatCurrency, PLAN_ORDER, getPlanFeatureKeys } from '@/lib/plans';
+import { withCheckoutIdentity } from '@/lib/checkout';
 import { CancelRetentionModal } from '@/components/editor/CancelRetentionModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -255,18 +256,23 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
     }
   }
 
-  async function executeUpgrade(targetSlug: string) {
-    if (!accessToken) return;
-    setIsUpgrading(true);
-    try {
-      const { checkoutUrl } = await api.subscriptions.upgrade(accessToken, targetSlug);
-      window.location.href = checkoutUrl;
-    } catch {
+  function executeUpgrade(targetSlug: string) {
+    // Upgrade via PerfectPay = assinar o plano maior no checkout. A PerfectPay
+    // cancela a assinatura antiga automaticamente (mesmo produto) e o webhook troca
+    // o plano localmente. Redireciona direto pro checkout do plano alvo, com o email
+    // da conta pré-preenchido.
+    const targetPlan = (plans ?? []).find((p) => p.slug === targetSlug);
+    if (!targetPlan?.checkoutUrl) {
       toast.error(t('manage.toasts.upgradeError'), {
         description: t('manage.toasts.tryAgain'),
       });
-      setIsUpgrading(false);
+      return;
     }
+    setIsUpgrading(true);
+    window.location.href = withCheckoutIdentity(targetPlan.checkoutUrl, {
+      email: profile?.email,
+      name: profile?.name,
+    });
   }
 
   async function openBillingPortal() {

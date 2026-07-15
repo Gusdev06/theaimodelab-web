@@ -13,6 +13,7 @@ import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
 import { PlansGrid } from '@/components/editor/PlansGrid';
 import { PLAN_ORDER } from '@/lib/plans';
+import { withCheckoutIdentity } from '@/lib/checkout';
 
 interface PlansModalProps {
   onClose: () => void;
@@ -66,7 +67,11 @@ export function PlansModal({ onClose }: PlansModalProps) {
     const targetPlan = sorted.find((plan) => plan.slug === planSlug);
     if (!targetPlan?.checkoutUrl) return;
     setSubscribingSlug(planSlug);
-    window.location.href = targetPlan.checkoutUrl;
+    // Manda o email (e nome) da conta logada para o checkout da PerfectPay.
+    window.location.href = withCheckoutIdentity(targetPlan.checkoutUrl, {
+      email: profile?.email,
+      name: profile?.name,
+    });
   }
 
   return (

@@ -50,7 +50,10 @@ function getCurrentLocale(): string {
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  if (!BASE_URL) {
+  // BASE_URL vazio = same-origin: o browser chama `/api/v1/...` e a Vercel faz o
+  // proxy pro backend (rewrite em next.config.ts). Só é inválido no server, onde
+  // fetch exige URL absoluta — mas a API é sempre chamada a partir do browser.
+  if (!BASE_URL && typeof window === 'undefined') {
     throw new ApiError(0, 'API URL is not configured', 'API_URL_MISSING');
   }
 

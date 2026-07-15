@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '');
+// Este handler roda no server (Vercel) e chama o backend diretamente, então precisa
+// da origem ABSOLUTA — não pode depender de NEXT_PUBLIC_API_URL, que agora fica vazio
+// (same-origin) pro browser. Usa API_ORIGIN e só cai no NEXT_PUBLIC_API_URL por retro-compat.
+const BASE_URL = (process.env.API_ORIGIN ?? process.env.NEXT_PUBLIC_API_URL ?? '').replace(/\/+$/, '');
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 const PENDING_META_LEAD_COOKIE = 'theaimodelab_meta_pending_lead';
 

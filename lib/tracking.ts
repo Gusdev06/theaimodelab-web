@@ -232,7 +232,8 @@ export function trackLeadEvent(
 }
 
 export async function captureMarketingLead(input: CaptureMarketingLeadInput): Promise<void> {
-  if (!API_BASE_URL || typeof window === 'undefined') return;
+  // API_BASE_URL vazio = same-origin (proxied pela Vercel); só bloqueia no server.
+  if (typeof window === 'undefined' || (API_BASE_URL === undefined)) return;
   const attribution = buildTrackingPayload(input.eventId) ?? {};
 
   try {
@@ -295,7 +296,8 @@ async function sendMetaServerEvent(
   eventId: string,
   userData?: MetaServerUserData,
 ): Promise<void> {
-  if (!API_BASE_URL || typeof window === 'undefined') return;
+  // API_BASE_URL vazio = same-origin (proxied pela Vercel); só bloqueia no server.
+  if (typeof window === 'undefined' || (API_BASE_URL === undefined)) return;
   const metaIds = getMetaBrowserIds(readAttribution()?.fbclid);
 
   try {

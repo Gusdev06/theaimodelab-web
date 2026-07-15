@@ -46,6 +46,7 @@ import { useLoginModal } from '@/lib/login-modal-context';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { PLAN_ORDER } from '@/lib/plans';
 import { PLANS_ENABLED } from '@/lib/features';
+import { withCheckoutIdentity } from '@/lib/checkout';
 import { PlansGrid } from '@/components/editor/PlansGrid';
 import { useLocale, useTranslations } from 'next-intl';
 import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
@@ -80,7 +81,11 @@ function CreditosPageContent() {
       value: (targetPlan.priceCents ?? 0) / 100,
       checkout_type: 'subscription',
     }, eventId);
-    window.location.href = targetPlan.checkoutUrl;
+    // Manda o email (e nome) da conta logada para o checkout da PerfectPay.
+    window.location.href = withCheckoutIdentity(targetPlan.checkoutUrl, {
+      email: user?.email,
+      name: user?.name,
+    });
   }
 
   const { data: balance, isLoading: balanceLoading } = useQuery({
@@ -128,9 +133,13 @@ function CreditosPageContent() {
 
     autoSubscribeTriggered.current = true;
     setSubscribingSlug(targetPlan.slug);
-    // Assinatura via PerfectPay: redireciona direto para o checkout externo.
-    window.location.href = targetPlan.checkoutUrl;
-  }, [planFromUrl, accessToken, plansLoading, profileLoading, plans, t]);
+    // Assinatura via PerfectPay: redireciona direto para o checkout externo,
+    // já com o email (e nome) da conta logada pré-preenchido.
+    window.location.href = withCheckoutIdentity(targetPlan.checkoutUrl, {
+      email: user?.email,
+      name: user?.name,
+    });
+  }, [planFromUrl, accessToken, plansLoading, profileLoading, plans, user, t]);
 
   const isLoading = authLoading || balanceLoading || plansLoading || profileLoading;
 

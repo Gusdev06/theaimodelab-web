@@ -8,6 +8,7 @@ import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { PlansGrid } from '@/components/editor/PlansGrid';
 import { PLAN_ORDER } from '@/lib/plans';
+import { withCheckoutIdentity } from '@/lib/checkout';
 import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
 
 /** Faixa de confiança exibida abaixo dos cards (garantias do plano). */
@@ -78,7 +79,11 @@ export function PricingView() {
       value: (targetPlan.priceCents ?? 0) / 100,
       checkout_type: 'subscription',
     }, eventId);
-    window.location.href = targetPlan.checkoutUrl;
+    // Manda o email (e nome) da conta logada para o checkout da PerfectPay.
+    window.location.href = withCheckoutIdentity(targetPlan.checkoutUrl, {
+      email: profile?.email,
+      name: profile?.name,
+    });
   }
 
   return (
