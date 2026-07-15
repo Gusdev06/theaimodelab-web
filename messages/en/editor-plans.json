@@ -182,6 +182,16 @@
         "noWatermark": "Watermark-free generations",
         "currentPlanBenefits": "Credits and features from your current plan",
         "creditsLess": "{count, number} fewer monthly credits"
+      },
+      "perfectpayCancel": {
+        "title": "Cancel subscription",
+        "intro": "Your subscription is billed through PerfectPay. To stop charges, the cancellation must be done in the PerfectPay portal:",
+        "step1": "Open the PerfectPay portal and sign in",
+        "step2": "Go to “My Purchases” and select this subscription",
+        "step3": "Under “Payment Settings”, choose cancel and confirm",
+        "note": "Your access continues until the end of the period you already paid for.",
+        "openPortal": "Open PerfectPay portal",
+        "close": "Close"
       }
     },
     "unlimited": {

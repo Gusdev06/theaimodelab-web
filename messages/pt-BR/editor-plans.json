@@ -182,6 +182,16 @@
         "noWatermark": "Gerações sem marca d'água",
         "currentPlanBenefits": "Créditos e funcionalidades do plano atual",
         "creditsLess": "{count, number} créditos mensais a menos"
+      },
+      "perfectpayCancel": {
+        "title": "Cancelar assinatura",
+        "intro": "Sua assinatura é cobrada pela PerfectPay. Para interromper as cobranças, o cancelamento precisa ser feito no portal da PerfectPay:",
+        "step1": "Acesse o portal da PerfectPay e faça login",
+        "step2": "Abra “Minhas Compras” e selecione esta assinatura",
+        "step3": "Em “Configurar Pagamento”, escolha cancelar e confirme",
+        "note": "Seu acesso continua até o fim do período já pago.",
+        "openPortal": "Abrir portal PerfectPay",
+        "close": "Fechar"
       }
     },
     "unlimited": {

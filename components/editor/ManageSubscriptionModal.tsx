@@ -31,6 +31,7 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
   const { accessToken } = useAuth();
   const queryClient = useQueryClient();
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showPerfectpayCancel, setShowPerfectpayCancel] = useState(false);
   const [pendingDowngradeSlug, setPendingDowngradeSlug] = useState<string | null>(null);
   const [isDowngrading, setIsDowngrading] = useState(false);
   const [isUpgrading, setIsUpgrading] = useState(false);
@@ -203,6 +204,11 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
 
   // Retention offer already used? Hide cancel/downgrade retention modals
   const retentionOfferUsed = !!(subscription as Record<string, unknown> | null)?.retentionOfferAcceptedAt;
+
+  // Assinatura PerfectPay: downgrade não é suportado (sem agendamento/proration na
+  // PerfectPay). Escondemos as opções de downgrade; upgrade e cancelamento seguem.
+  const isPerfectpay =
+    (subscription as Record<string, unknown> | null)?.paymentProvider === 'perfectpay';
 
   // Price formatting
   const priceMain =
@@ -435,7 +441,7 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
           {isActive && !isFreeUser && (
             <div className="flex flex-col gap-3">
               {/* Change plan — collapsible with upgrade + downgrade options */}
-              {(upgradePlans.length > 0 || downgradePlans.length > 0) && !cancelAtPeriodEnd && (
+              {(upgradePlans.length > 0 || (!isPerfectpay && downgradePlans.length > 0)) && !cancelAtPeriodEnd && (
                 <div>
                   <button
                     onClick={() => setShowPlanOptions(!showPlanOptions)}
@@ -466,7 +472,7 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
                           </button>
                         );
                       })}
-                      {!scheduledPlan && downgradePlans.map((p) => {
+                      {!scheduledPlan && !isPerfectpay && downgradePlans.map((p) => {
                         const main = formatCurrency(p.priceCents, p.currency || planCurrency, locale);
                         return (
                           <button
@@ -488,7 +494,7 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
               {!cancelAtPeriodEnd ? (
                 <div className="flex justify-center pt-2">
                   <button
-                    onClick={() => setShowCancelModal(true)}
+                    onClick={() => (isPerfectpay ? setShowPerfectpayCancel(true) : setShowCancelModal(true))}
                     className="text-[11px] text-[#f3f0ed]/15 transition-colors hover:text-[#f3f0ed]/30"
                   >
                     {t('manage.needToCancel')}
@@ -519,6 +525,57 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
           )}
         </div>
       </div>
+
+      {/* PerfectPay cancel — cobrança é gerida pela PerfectPay; sem API de cancelamento,
+          o cliente precisa cancelar no portal deles. Instruímos e abrimos o portal. */}
+      {showPerfectpayCancel && (
+        <div
+          className="fixed inset-0 z-[210] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onMouseDown={(e) => { if (e.target === e.currentTarget) setShowPerfectpayCancel(false); }}
+        >
+          <div className="relative mx-4 flex w-full max-w-md flex-col gap-4 rounded-2xl border border-[#f3f0ed]/[0.08] bg-[#111113] p-5 shadow-2xl sm:p-6">
+            <h3 className="text-base font-bold text-[#f3f0ed]">
+              {t('manage.perfectpayCancel.title')}
+            </h3>
+            <p className="text-[13px] leading-relaxed text-[#f3f0ed]/60">
+              {t('manage.perfectpayCancel.intro')}
+            </p>
+            <ol className="flex flex-col gap-2 text-[13px] text-[#f3f0ed]/70">
+              {[
+                t('manage.perfectpayCancel.step1'),
+                t('manage.perfectpayCancel.step2'),
+                t('manage.perfectpayCancel.step3'),
+              ].map((step, i) => (
+                <li key={i} className="flex gap-2.5">
+                  <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#e11d2a]/15 text-[11px] font-bold text-[#e11d2a]">
+                    {i + 1}
+                  </span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+            <p className="text-[12px] text-[#f3f0ed]/35">
+              {t('manage.perfectpayCancel.note')}
+            </p>
+            <div className="flex items-center justify-end gap-2 pt-1">
+              <button
+                onClick={() => setShowPerfectpayCancel(false)}
+                className="rounded-lg px-4 py-2 text-[12px] text-[#f3f0ed]/40 transition-colors hover:text-[#f3f0ed]/70"
+              >
+                {t('manage.perfectpayCancel.close')}
+              </button>
+              <a
+                href="https://app.perfectpay.com.br"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg border border-[#e11d2a]/25 bg-[#e11d2a]/10 px-4 py-2 text-[12px] font-medium text-[#e11d2a] transition-colors hover:bg-[#e11d2a]/20"
+              >
+                {t('manage.perfectpayCancel.openPortal')}
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Cancel retention modal */}
       {showCancelModal && (
