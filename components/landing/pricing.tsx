@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useLoginModal } from "@/lib/login-modal-context";
 import { useAuth } from "@/lib/auth-context";
 import { api, Plan } from "@/lib/api";
-import { PLAN_GENERATION_ENTRIES, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
+import { getPlanGenerationEntries, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
 
 // Monetização por assinatura mensal (PerfectPay). A landing lista os planos ativos
 // (endpoint público GET /api/v1/plans) e o CTA redireciona para o checkout recorrente
@@ -136,9 +136,8 @@ export function Pricing() {
                     {t("generationEstimate")}
                   </p>
                   <ul className="mt-2.5 space-y-1.5 text-[13px] text-[#f3f0ed]/55">
-                    {(PLAN_GENERATION_ENTRIES[plan.slug] ?? [])
+                    {getPlanGenerationEntries(plan.creditsPerMonth, plan.slug)
                       .filter((e) => !e.blocked && e.countNumber > 0)
-                      .slice(0, 6)
                       .map((e) => (
                         <li key={e.label} className="flex items-center gap-2">
                           <Check className="h-3.5 w-3.5 shrink-0 text-landing-accent/70" />

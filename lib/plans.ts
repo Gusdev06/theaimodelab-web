@@ -121,6 +121,72 @@ export const PLAN_GENERATION_ENTRIES: Record<string, PlanGenerationEntry[]> = {
 };
 
 /**
+ * Custo canônico em créditos por geração (mirror do backend `credit_costs`),
+ * usado para calcular quantas gerações de CADA modelo o plano rende.
+ * Config exibida: imagens = menor resolução do modelo; vídeos cobrados por
+ * segundo = clipe de 5s (720p quando há tiers); vídeos de preço fixo = 720p.
+ * Áudio (TTS) ≈ 35 créditos/áudio. Voz clonada é por cota (não por crédito).
+ *
+ * Mantém uma única fonte da verdade: se o preço mudar, os cards se atualizam.
+ */
+const VIDEO_CLIP_SECONDS = 5;
+export const GENERATABLE_MODELS: {
+  label: string;
+  unit: GenerationUnit;
+  creditsPerGeneration: number;
+}[] = [
+  // ── Imagens (preço fixo por geração) ──
+  { label: 'Nano Banana 2', unit: 'image', creditsPerGeneration: 90 },
+  { label: 'Nano Banana Pro', unit: 'image', creditsPerGeneration: 190 },
+  { label: 'GPT Image 2', unit: 'image', creditsPerGeneration: 90 },
+  { label: 'Sem Censura', unit: 'image', creditsPerGeneration: 130 },
+  { label: 'Seedream Lite', unit: 'image', creditsPerGeneration: 60 },
+  { label: 'Deepdeep', unit: 'image', creditsPerGeneration: 200 },
+  // ── Vídeos de preço fixo por geração ──
+  { label: 'Veo 3.1 Fast', unit: 'video', creditsPerGeneration: 810 },
+  { label: 'Veo 3.1 Quality', unit: 'video', creditsPerGeneration: 1800 },
+  { label: 'The AI Model Lab Fast', unit: 'video', creditsPerGeneration: 600 },
+  { label: 'The AI Model Lab Quality', unit: 'video', creditsPerGeneration: 1000 },
+  // ── Vídeos cobrados por segundo (clipe de 5s) ──
+  { label: 'Motion Control', unit: 'video', creditsPerGeneration: 70 * VIDEO_CLIP_SECONDS },
+  { label: 'LTX 2.3 Spicy', unit: 'video', creditsPerGeneration: 80 * VIDEO_CLIP_SECONDS },
+  { label: 'Seedance 2.0 Spicy', unit: 'video', creditsPerGeneration: 200 * VIDEO_CLIP_SECONDS },
+  { label: 'Kling V3 Turbo', unit: 'video', creditsPerGeneration: 220 * VIDEO_CLIP_SECONDS },
+  { label: 'WAN', unit: 'video', creditsPerGeneration: 120 * VIDEO_CLIP_SECONDS },
+  { label: 'Grok Imagine', unit: 'video', creditsPerGeneration: 80 * VIDEO_CLIP_SECONDS },
+  // ── Áudio ──
+  { label: 'Áudio (TTS)', unit: 'audio', creditsPerGeneration: 35 },
+];
+
+/**
+ * Calcula, a partir dos créditos mensais do plano, quantas gerações de cada
+ * modelo o usuário consegue fazer. Inclui "Clonar voz" pela cota de vozes
+ * salvas (não é baseada em créditos). Já vem ordenado por volume desc.
+ */
+export function getPlanGenerationEntries(
+  creditsPerMonth: number,
+  slug?: string,
+): PlanGenerationEntry[] {
+  const entries: PlanGenerationEntry[] = GENERATABLE_MODELS.map((m) => ({
+    label: m.label,
+    unit: m.unit,
+    countNumber: Math.floor(creditsPerMonth / m.creditsPerGeneration),
+  }));
+
+  const voiceQuota = slug ? PLAN_SAVED_VOICES_QUOTAS[slug] : undefined;
+  if (voiceQuota !== undefined) {
+    entries.push({
+      label: 'Clonar voz',
+      unit: 'voiceClone',
+      countNumber: voiceQuota,
+      blocked: voiceQuota === 0,
+    });
+  }
+
+  return entries;
+}
+
+/**
  * Quantidade estimada de gerações inclusas no plano via créditos
  * (vídeos = Veo Fast 720p sem áudio; imagens = NB2 1K). Exibido no
  * dialog de planos para o usuário ter ideia do volume.
