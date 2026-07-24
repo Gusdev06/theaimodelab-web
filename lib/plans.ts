@@ -361,13 +361,13 @@ export function formatCurrency(priceCents: number, currency: string, locale: str
  * pacote como "Até X ...".
  *
  * - imageHQ: Nano Banana 2 em 1K (TEXT/IMAGE_TO_IMAGE RES_1K)
- * - motionVideo: Motion Control 720p (70 créd/seg) × 10s = 700
- * - upscale4k: upscale cobra como IMAGE_TO_IMAGE 2K do NB2 (130)
+ * - motionVideo: Motion Control 720p (100 créd/seg) × 10s = 1000
+ * - upscale4k: upscale cobra como IMAGE_TO_IMAGE 2K do NB2 (200)
  */
 export const PACKAGE_PERK_COSTS = {
-  imageHQ: 90,
-  motionVideo: 700,
-  upscale4k: 130,
+  imageHQ: 135,
+  motionVideo: 1000,
+  upscale4k: 200,
 } as const;
 
 export type PackageGenerationPerkKey = 'imagesHQ' | 'motionVideos' | 'upscales4k';

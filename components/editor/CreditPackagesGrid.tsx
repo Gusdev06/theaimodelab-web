@@ -16,12 +16,10 @@ import {
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth-context';
-import { api } from '@/lib/api';
 import type { CreditPackage } from '@/lib/api';
 import { formatCurrency, getBoostMetaKey, getPackageBadge, getPackageGenerationPerks } from '@/lib/plans';
-import { buildMetaEventContext, generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
-import { PixCheckoutModal } from './PixCheckoutModal';
-import { PixIcon } from '@/components/icons/PixIcon';
+import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
+import { withCheckoutIdentity } from '@/lib/checkout';
 
 interface CreditPackagesGridProps {
   packages: CreditPackage[];
@@ -41,10 +39,8 @@ interface CreditPackagesGridProps {
 export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnauthenticated }: CreditPackagesGridProps) {
   const t = useTranslations('editorPlans');
   const locale = useLocale();
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
   const [purchasingId, setPurchasingId] = useState<string | null>(null);
-  const [pixPkg, setPixPkg] = useState<CreditPackage | null>(null);
-  const isBRL = currency === 'BRL';
 
   const activePackages = packages
     .filter((p) => p.isActive)
@@ -55,29 +51,30 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
       ? Math.max(...activePackages.map((p) => p.priceCents / p.credits))
       : 0;
 
-  async function handlePurchase(pkg: CreditPackage) {
+  // Compra de pacote = redirecionar para o checkout externo da PerfectPay
+  // (mesmo fluxo das assinaturas), já com o email/nome da conta pré-preenchidos.
+  // Os créditos entram como saldo bônus quando o webhook confirma a venda.
+  function handlePurchase(pkg: CreditPackage) {
     if (purchasingId) return;
     if (!accessToken) {
       onUnauthenticated?.();
       return;
     }
+    if (!pkg.checkoutUrl) return;
     const eventId = generateMetaEventId('initiate_checkout_credit');
-    const meta = buildMetaEventContext(eventId);
     setPurchasingId(pkg.id);
-    try {
-      const { checkoutUrl } = await api.credits.purchase(accessToken, pkg.id, currency, meta);
-      trackMetaPixelEvent('InitiateCheckout', {
-        content_ids: [pkg.id],
-        content_name: pkg.name,
-        content_type: 'product',
-        currency,
-        value: pkg.priceCents / 100,
-        checkout_type: 'credit_package',
-      }, eventId);
-      window.location.href = checkoutUrl;
-    } catch {
-      setPurchasingId(null);
-    }
+    trackMetaPixelEvent('InitiateCheckout', {
+      content_ids: [pkg.id],
+      content_name: pkg.name,
+      content_type: 'product',
+      currency,
+      value: pkg.priceCents / 100,
+      checkout_type: 'credit_package',
+    }, eventId);
+    window.location.href = withCheckoutIdentity(pkg.checkoutUrl, {
+      email: user?.email,
+      name: user?.name,
+    });
   }
 
   if (activePackages.length === 0) return null;
@@ -280,29 +277,6 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
                         )}
                       </button>
 
-                      {/* PIX option (BRL only) */}
-                      {isBRL && (
-                        <button
-                          type="button"
-                          onClick={() => (accessToken ? setPixPkg(pkg) : onUnauthenticated?.())}
-                          disabled={!!purchasingId}
-                          className={`group/pix relative mt-2 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl border border-[#32BCAD]/30 bg-gradient-to-r from-[#32BCAD]/[0.08] via-[#32BCAD]/[0.12] to-[#32BCAD]/[0.08] font-semibold text-[#5BD9CB] transition-all duration-300 hover:border-[#32BCAD]/55 hover:from-[#32BCAD]/[0.14] hover:via-[#32BCAD]/[0.2] hover:to-[#32BCAD]/[0.14] hover:text-[#7BE8DC] hover:shadow-[0_0_20px_rgba(50,188,173,0.18)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 ${compact ? 'h-9 text-[12px]' : 'h-10 text-[13px]'}`}
-                        >
-                          {/* Subtle shine sweep on hover */}
-                          <span
-                            aria-hidden
-                            className="pointer-events-none absolute inset-y-0 left-0 w-1/3 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 ease-out group-hover/pix:translate-x-[300%]"
-                          />
-                          <PixIcon className={compact ? 'h-3.5 w-3.5' : 'h-4 w-4'} />
-                          <span>Pagar com PIX</span>
-                          {!compact && (
-                            <span className="ml-0.5 rounded-md bg-[#32BCAD]/20 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] text-[#7BE8DC]">
-                              Cai na hora
-                            </span>
-                          )}
-                        </button>
-                      )}
-
                       {/* Trust micro-copy */}
                       {!compact && (
                         <p className="mt-2.5 flex items-center justify-center gap-1.5 text-[10px] text-[#f3f0ed]/20">
@@ -315,10 +289,6 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
                 );
         })}
       </div>
-
-      {pixPkg && (
-        <PixCheckoutModal pkg={pixPkg} onClose={() => setPixPkg(null)} />
-      )}
     </div>
   );
 }
