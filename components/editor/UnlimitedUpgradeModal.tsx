@@ -21,6 +21,7 @@ import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { formatCurrency } from '@/lib/plans';
 import { PLANS_ENABLED } from '@/lib/features';
+import { withCheckoutIdentity } from '@/lib/checkout';
 
 interface UnlimitedUpgradeModalProps {
   onClose: () => void;
@@ -64,7 +65,7 @@ const UNLIMITED_PLAN_COPY: UnlimitedPlanCopy[] = [
 ];
 
 export function UnlimitedUpgradeModal({ onClose }: UnlimitedUpgradeModalProps) {
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
   const locale = useLocale();
   const t = useTranslations('editorPlans.unlimited');
   const uiCurrency = locale === 'pt-BR' ? 'BRL' : 'USD';
@@ -85,27 +86,21 @@ export function UnlimitedUpgradeModal({ onClose }: UnlimitedUpgradeModalProps) {
     return () => document.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  async function handleSubscribe(slug: string) {
-    if (!accessToken || subscribingSlug) return;
-    setSubscribingSlug(slug);
-    try {
-      const res = await api.subscriptions.create(accessToken, slug, uiCurrency);
-      window.location.href = res.checkoutUrl;
-    } catch (err: unknown) {
-      const status = (err as { status?: number })?.status;
-      if (status === 409) {
-        try {
-          const res = await api.subscriptions.upgrade(accessToken, slug, uiCurrency);
-          window.location.href = res.checkoutUrl;
-        } catch {
-          toast.error(t('checkoutError'));
-          setSubscribingSlug(null);
-        }
-      } else {
-        toast.error(t('checkoutError'));
-        setSubscribingSlug(null);
-      }
+  function handleSubscribe(slug: string) {
+    if (subscribingSlug) return;
+    // Assinatura mensal recorrente via PerfectPay (checkout CenterPag). O CTA
+    // redireciona para o `plan.checkoutUrl` — mesmo fluxo do resto da vitrine.
+    // A ativação da assinatura casa a compra pelo email/nome da conta logada.
+    const plan = plans?.find((pl) => pl.slug === slug);
+    if (!plan?.checkoutUrl) {
+      toast.error(t('checkoutError'));
+      return;
     }
+    setSubscribingSlug(slug);
+    window.location.href = withCheckoutIdentity(plan.checkoutUrl, {
+      email: user?.email,
+      name: user?.name,
+    });
   }
 
   // Modo ilimitado (assinatura) desativado — nada é renderizado.
