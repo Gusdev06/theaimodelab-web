@@ -1456,6 +1456,11 @@ export const api = {
         method: 'DELETE',
       });
     },
+    remove(accessToken: string, generationId: string) {
+      return authRequest<void>(`/api/v1/generations/${generationId}`, accessToken, {
+        method: 'DELETE',
+      });
+    },
   },
 
   folders: {

@@ -6,6 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { FolderOpen } from 'lucide-react';
 import { api, type GalleryItem } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
+import { useDeleteGeneration } from '@/lib/use-delete-generation';
 import { EmptyState } from '@/components/app/EmptyState';
 import { FilterPill } from '@/components/app/FilterPill';
 import { GalleryCard } from '@/components/gallery/GalleryCard';
@@ -42,6 +43,14 @@ export function GalleryView() {
       setSelected(null);
       setLightboxClosing(false);
     }, 180);
+  };
+
+  const deleteGeneration = useDeleteGeneration();
+
+  const handleDelete = (item: GalleryItem) => {
+    deleteGeneration.mutate(item);
+    // se o item excluído estava aberto no lightbox, fecha junto
+    if (selected?.id === item.id) closeLightbox();
   };
 
   useEffect(() => {
@@ -155,7 +164,12 @@ export function GalleryView() {
               <div key={ci} className="flex min-w-0 flex-1 flex-col">
                 {col.map((entry, ri) =>
                   entry.kind === 'item' ? (
-                    <GalleryCard key={entry.item.id} item={entry.item} onOpen={openLightbox} />
+                    <GalleryCard
+                      key={entry.item.id}
+                      item={entry.item}
+                      onOpen={openLightbox}
+                      onDelete={handleDelete}
+                    />
                   ) : (
                     <SkeletonCard key={`skel-${ci}-${ri}`} height={entry.height} index={ri} />
                   ),
@@ -174,6 +188,7 @@ export function GalleryView() {
           ratio={selectedRatio}
           closing={lightboxClosing}
           onClose={closeLightbox}
+          onDelete={handleDelete}
         />
       )}
     </div>

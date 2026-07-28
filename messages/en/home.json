@@ -350,7 +350,11 @@
       "favorited": "Added to favorites",
       "unfavorited": "Removed from favorites",
       "favoriteError": "Could not update favorite.",
-      "download": "Download"
+      "download": "Download",
+      "delete": "Delete",
+      "confirmDelete": "Confirm delete",
+      "deleted": "Generation deleted",
+      "deleteError": "Could not delete the generation."
     },
     "library": {
       "searchPlaceholder": "Search prompts...",

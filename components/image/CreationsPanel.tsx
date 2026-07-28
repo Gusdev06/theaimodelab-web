@@ -8,6 +8,7 @@ import { cn, normalizeSearch } from '@/lib/utils';
 import { api, type GalleryItem } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { useToggleFavorite } from '@/lib/use-toggle-favorite';
+import { useDeleteGeneration } from '@/lib/use-delete-generation';
 import { FilterPill } from '@/components/app/FilterPill';
 import { GalleryCard } from '@/components/gallery/GalleryCard';
 import { Lightbox } from '@/components/gallery/Lightbox';
@@ -151,6 +152,14 @@ export function CreationsPanel({
       setSelected(null);
       setLightboxClosing(false);
     }, 180);
+  };
+
+  const deleteGeneration = useDeleteGeneration();
+
+  const handleDelete = (item: GalleryItem) => {
+    deleteGeneration.mutate(item);
+    // se o item excluído estava aberto no lightbox, fecha junto
+    if (selected?.id === item.id) closeLightbox();
   };
 
   useEffect(() => {
@@ -360,6 +369,7 @@ export function CreationsPanel({
                       item={entry.item}
                       onOpen={openLightbox}
                       onToggleFavorite={handleToggleFavorite}
+                      onDelete={handleDelete}
                     />
                   ) : (
                     <SkeletonCard key={`skel-${ci}-${ri}`} height={entry.height} index={ri} />
@@ -379,6 +389,7 @@ export function CreationsPanel({
           closing={lightboxClosing}
           onClose={closeLightbox}
           onToggleFavorite={handleToggleFavorite}
+          onDelete={handleDelete}
         />
       )}
     </div>

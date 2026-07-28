@@ -350,7 +350,11 @@
       "favorited": "Añadida a favoritos",
       "unfavorited": "Eliminada de favoritos",
       "favoriteError": "No se pudo actualizar el favorito.",
-      "download": "Descargar"
+      "download": "Descargar",
+      "delete": "Eliminar",
+      "confirmDelete": "Confirmar eliminación",
+      "deleted": "Generación eliminada",
+      "deleteError": "No se pudo eliminar la generación."
     },
     "library": {
       "searchPlaceholder": "Buscar prompt...",

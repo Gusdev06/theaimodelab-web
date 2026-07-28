@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { AudioLines, Download, Heart, ImageOff } from 'lucide-react';
+import { AudioLines, Download, Heart, ImageOff, Trash2 } from 'lucide-react';
 import { cn, formatRelativeTime } from '@/lib/utils';
 import type { GalleryItem } from '@/lib/api';
 import { downloadMedia } from '@/lib/download-media';
@@ -17,9 +17,11 @@ interface GalleryCardProps {
   onOpen: (item: GalleryItem, ratio?: number) => void;
   /** quando definido, exibe o botão de favoritar sobre o card */
   onToggleFavorite?: (item: GalleryItem) => void;
+  /** quando definido, exibe o botão de excluir sobre o card (2 cliques: armar + confirmar) */
+  onDelete?: (item: GalleryItem) => void;
 }
 
-export function GalleryCard({ item, onOpen, onToggleFavorite }: GalleryCardProps) {
+export function GalleryCard({ item, onOpen, onToggleFavorite, onDelete }: GalleryCardProps) {
   const t = useTranslations('home');
   const locale = useLocale();
   const kind = kindOf(item.type);
@@ -28,6 +30,7 @@ export function GalleryCard({ item, onOpen, onToggleFavorite }: GalleryCardProps
   const title = item.prompt?.trim() || t('gallery.untitled');
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgError, setImgError] = useState(false);
+  const [deleteArmed, setDeleteArmed] = useState(false);
   const showImage = !!image && !imgError;
   // imagens podem ser arrastadas direto para as referências dos painéis de geração
   const dragUrl = kind === 'image' ? item.outputUrl || item.thumbnailUrl : undefined;
@@ -47,6 +50,7 @@ export function GalleryCard({ item, onOpen, onToggleFavorite }: GalleryCardProps
   return (
     <article
       className="group relative mb-5 break-inside-avoid"
+      onMouseLeave={deleteArmed ? () => setDeleteArmed(false) : undefined}
       draggable={canDrag || undefined}
       onDragStart={
         canDrag
@@ -130,6 +134,30 @@ export function GalleryCard({ item, onOpen, onToggleFavorite }: GalleryCardProps
             )}
           >
             <Heart className="size-4" strokeWidth={2} fill={item.isFavorited ? 'currentColor' : 'none'} />
+          </button>
+        )}
+        {onDelete && (
+          <button
+            type="button"
+            aria-label={deleteArmed ? t('gallery.confirmDelete') : t('gallery.delete')}
+            title={deleteArmed ? t('gallery.confirmDelete') : t('gallery.delete')}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!deleteArmed) {
+                setDeleteArmed(true);
+                return;
+              }
+              setDeleteArmed(false);
+              onDelete(item);
+            }}
+            className={cn(
+              'app-press flex size-8 items-center justify-center rounded-full backdrop-blur-md transition-all duration-200 ease-app',
+              deleteArmed
+                ? 'bg-[rgba(225,29,42,0.85)] text-white opacity-100 hover:bg-[rgba(225,29,42,0.95)]'
+                : 'bg-[rgba(13,16,17,0.65)] text-app-text opacity-0 hover:bg-[rgba(13,16,17,0.85)] hover:text-red-400 group-hover:opacity-100',
+            )}
+          >
+            <Trash2 className="size-4" strokeWidth={2} />
           </button>
         )}
       </div>

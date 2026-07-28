@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { AudioLines, Download, Heart, ImageOff, X } from 'lucide-react';
+import { AudioLines, Download, Heart, ImageOff, Trash2, X } from 'lucide-react';
 import { cn, formatRelativeTime } from '@/lib/utils';
 import type { GalleryItem } from '@/lib/api';
 import { downloadMedia } from '@/lib/download-media';
@@ -17,9 +17,11 @@ interface LightboxProps {
   onClose: () => void;
   /** quando definido, exibe o botão de favoritar nas ações */
   onToggleFavorite?: (item: GalleryItem) => void;
+  /** quando definido, exibe o botão de excluir nas ações (2 cliques: armar + confirmar) */
+  onDelete?: (item: GalleryItem) => void;
 }
 
-export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite }: LightboxProps) {
+export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite, onDelete }: LightboxProps) {
   const t = useTranslations('home');
   const locale = useLocale();
   const kind = kindOf(item.type);
@@ -28,6 +30,7 @@ export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite }: Li
   // skeleton até a mídia em alta carregar
   const [loaded, setLoaded] = useState(!src);
   const [mediaError, setMediaError] = useState(false);
+  const [deleteArmed, setDeleteArmed] = useState(false);
 
   const failMedia = () => {
     setMediaError(true);
@@ -192,6 +195,30 @@ export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite }: Li
               )}
             >
               <Heart className="size-4" strokeWidth={2} fill={item.isFavorited ? 'currentColor' : 'none'} />
+            </button>
+          )}
+          {onDelete && (
+            <button
+              type="button"
+              aria-label={deleteArmed ? t('gallery.confirmDelete') : t('gallery.delete')}
+              title={deleteArmed ? t('gallery.confirmDelete') : t('gallery.delete')}
+              onClick={() => {
+                if (!deleteArmed) {
+                  setDeleteArmed(true);
+                  return;
+                }
+                onDelete(item);
+              }}
+              onBlur={() => setDeleteArmed(false)}
+              className={cn(
+                'app-press flex h-9 shrink-0 items-center justify-center gap-2 rounded-[10px] border transition-colors duration-200 ease-app',
+                deleteArmed
+                  ? 'border-[rgba(225,29,42,0.5)] bg-[rgba(225,29,42,0.85)] px-3.5 text-[13px] font-semibold text-white hover:bg-[rgba(225,29,42,0.95)]'
+                  : 'w-9 border-app-hairline bg-app-surface text-app-text hover:bg-app-card-hover hover:text-red-400',
+              )}
+            >
+              <Trash2 className="size-4" strokeWidth={2} />
+              {deleteArmed && t('gallery.confirmDelete')}
             </button>
           )}
           {item.prompt?.trim() && (
