@@ -48,6 +48,7 @@ import { PLAN_ORDER } from '@/lib/plans';
 import { PLANS_ENABLED } from '@/lib/features';
 import { withCheckoutIdentity } from '@/lib/checkout';
 import { PlansGrid } from '@/components/editor/PlansGrid';
+import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
 import { useLocale, useTranslations } from 'next-intl';
 import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
 
@@ -108,6 +109,14 @@ function CreditosPageContent() {
     queryFn: () => api.users.me(accessToken!),
     enabled: !!accessToken,
     staleTime: 60_000,
+  });
+
+  // Pacotes de crédito avulsos (top-up) — compra única, créditos entram como bônus (não expiram).
+  const { data: packages } = useQuery({
+    queryKey: ['credits', 'packages', uiCurrency],
+    queryFn: () => api.credits.packages(accessToken!, uiCurrency),
+    enabled: !!accessToken,
+    staleTime: 5 * 60_000,
   });
 
   useEffect(() => {
@@ -387,6 +396,34 @@ function CreditosPageContent() {
               <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('noCancelFee')}</span>
               <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('monthlyRenewal')}</span>
             </div>
+          </div>
+        )}
+
+        {/* -- Pacotes de crédito avulsos (top-up) -- */}
+        {packages && packages.some((p) => p.isActive) && (
+          <div id="packages-section" className="flex flex-col gap-8">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <div className="flex items-center gap-2 rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.04] px-4 py-1.5">
+                <Coins className="h-3.5 w-3.5 text-[#f3f0ed]/50" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/50">{t('buyExtraCredits')}</span>
+              </div>
+              <h2 className="app-reveal text-2xl font-bold text-[#f3f0ed] sm:text-3xl">
+                {t('packagesHeading')}
+              </h2>
+              <p className="app-reveal max-w-md text-sm text-[#f3f0ed]/45" style={{ animationDelay: '0.08s' }}>
+                {t('packagesSubheading')}
+              </p>
+              <div className="mt-1 flex items-center gap-4 text-[11px] text-[#f3f0ed]/30">
+                <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('accumulates')}</span>
+                <span className="flex items-center gap-1.5"><Check className="h-3 w-3 text-[#e11d2a]/50" />{t('instantDelivery')}</span>
+              </div>
+            </div>
+
+            <CreditPackagesGrid
+              packages={packages}
+              currency={uiCurrency}
+              onUnauthenticated={openLoginModal}
+            />
           </div>
         )}
 

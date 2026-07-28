@@ -6,12 +6,14 @@ import {
   X,
   Flame,
   CircleOff,
+  Coins,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
 import { PlansGrid } from '@/components/editor/PlansGrid';
+import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
 import { PLAN_ORDER } from '@/lib/plans';
 import { withCheckoutIdentity } from '@/lib/checkout';
 
@@ -39,6 +41,15 @@ export function PlansModal({ onClose }: PlansModalProps) {
     enabled: !!accessToken,
     staleTime: 60_000,
   });
+
+  // Pacotes de crédito avulsos (top-up) — compra única, créditos entram como bônus (não expiram).
+  const { data: packages } = useQuery({
+    queryKey: ['credits', 'packages', uiCurrency],
+    queryFn: () => api.credits.packages(accessToken!, uiCurrency),
+    enabled: !!accessToken,
+    staleTime: 5 * 60_000,
+  });
+  const hasPackages = !!packages?.some((p) => p.isActive);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -132,6 +143,26 @@ export function PlansModal({ onClose }: PlansModalProps) {
               {t('plansModal.creditsRenew')}
             </span>
           </div>
+        )}
+
+        {/* Pacotes de crédito avulsos (top-up) */}
+        {hasPackages && (
+          <>
+            <div className="mt-4 flex flex-col items-center gap-2 text-center">
+              <div className="flex items-center gap-1.5 rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.04] px-3 py-1">
+                <Coins className="h-3 w-3 text-[#f3f0ed]/50" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3f0ed]/50">{t('plansModal.tabCredits')}</span>
+              </div>
+              <h2 className="app-reveal text-lg font-bold text-[#f3f0ed] sm:text-xl">
+                {t('plansModal.titleCredits')}
+              </h2>
+              <p className="max-w-md text-[12px] text-[#f3f0ed]/45">
+                {t('plansModal.creditsSubtitle')}
+              </p>
+            </div>
+
+            <CreditPackagesGrid packages={packages ?? []} currency={uiCurrency} compact />
+          </>
         )}
       </div>
     </div>

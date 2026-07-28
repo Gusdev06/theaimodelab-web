@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
 import { PlansGrid } from '@/components/editor/PlansGrid';
+import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
 import { PLAN_ORDER } from '@/lib/plans';
 import { withCheckoutIdentity } from '@/lib/checkout';
 import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
@@ -50,7 +51,16 @@ export function PricingView() {
     staleTime: 60_000,
   });
 
+  // Pacotes de crédito avulsos (top-up) — compra única, créditos entram como bônus (não expiram).
+  const { data: packages } = useQuery({
+    queryKey: ['credits', 'packages', uiCurrency],
+    queryFn: () => api.credits.packages(accessToken!, uiCurrency),
+    enabled: !!accessToken,
+    staleTime: 5 * 60_000,
+  });
+
   const isLoading = plansLoading || profileLoading;
+  const hasPackages = !!packages?.some((p) => p.isActive);
 
   const currentPlanSlug =
     ((profile?.plan as Record<string, unknown> | null)?.slug as string | null) ?? null;
@@ -124,6 +134,36 @@ export function PricingView() {
               { icon: Coins, label: t('plansModal.creditsRenew') },
             ]}
           />
+        )}
+
+        {/* pacotes de crédito avulsos (top-up) */}
+        {hasPackages && (
+          <>
+            <div className="mt-8 flex flex-col items-start gap-2.5">
+              <div className="flex items-center gap-1.5 rounded-full border border-app-hairline bg-app-surface/50 px-3 py-1">
+                <Coins className="size-3 text-app-text-2" strokeWidth={2} />
+                <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-app-text-2">
+                  {t('plansModal.tabCredits')}
+                </span>
+              </div>
+              <h2 className="app-reveal text-[26px] font-bold tracking-[-0.3px] text-app-text">
+                {t('plansModal.titleCredits')}
+              </h2>
+              <p className="app-reveal max-w-xl text-[14px] leading-relaxed text-app-text-2" style={{ animationDelay: '0.08s' }}>
+                {t('plansModal.creditsSubtitle')}
+              </p>
+            </div>
+
+            <CreditPackagesGrid packages={packages ?? []} currency={uiCurrency} compact />
+
+            <TrustBar
+              items={[
+                { icon: Coins, label: t('plansModal.stackWithPlan') },
+                { icon: Check, label: t('plansModal.instant') },
+                { icon: CircleOff, label: t('plansModal.neverExpire') },
+              ]}
+            />
+          </>
         )}
       </div>
     </div>
