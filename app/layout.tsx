@@ -38,6 +38,7 @@ import { GoogleAuthWrapper } from "@/lib/google-auth-wrapper";
 import { LoginModalProvider } from "@/lib/login-modal-context";
 import { LoginModal } from "@/components/LoginModal";
 import { MetaPixel } from "@/components/MetaPixel";
+import { UtmifyPixel } from "@/components/UtmifyPixel";
 import { Toaster } from "sonner";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -63,6 +64,7 @@ export default async function RootLayout({
               {children}
               <LoginModal />
               <MetaPixel />
+              <UtmifyPixel />
               <Toaster
                 theme="dark"
                 position="bottom-right"

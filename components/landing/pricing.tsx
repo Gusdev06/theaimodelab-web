@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Check, Shield, Loader2, Infinity as InfinityIcon } from "lucide-react";
+import { AlertTriangle, Check, Shield, Infinity as InfinityIcon } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { useScrollReveal } from "./use-scroll-reveal";
 import { useEffect, useState } from "react";
@@ -106,8 +106,26 @@ export function Pricing() {
 
         {/* Plans grid */}
         {loading ? (
-          <div className="mt-16 flex justify-center lg:mt-20">
-            <Loader2 className="h-6 w-6 animate-spin text-landing-accent" />
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex flex-col rounded-[20px] border border-[#f3f0ed]/[0.06] bg-[#16161a] p-6"
+              >
+                <div className="h-5 w-24 animate-pulse rounded-md bg-[#f3f0ed]/[0.06]" />
+                <div className="mt-4 h-9 w-32 animate-pulse rounded-md bg-[#f3f0ed]/[0.08]" />
+                <div className="mt-5 h-4 w-40 animate-pulse rounded-md bg-[#f3f0ed]/[0.05]" />
+                <div className="mt-4 space-y-2.5">
+                  {Array.from({ length: 4 }).map((_, j) => (
+                    <div
+                      key={j}
+                      className="h-3.5 w-full animate-pulse rounded-md bg-[#f3f0ed]/[0.04]"
+                    />
+                  ))}
+                </div>
+                <div className="mt-8 h-11 w-full animate-pulse rounded-full bg-[#f3f0ed]/[0.06]" />
+              </div>
+            ))}
           </div>
         ) : plans.length > 0 ? (
           <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
@@ -116,10 +134,10 @@ export function Pricing() {
               return (
                 <div
                   key={plan.id}
-                  className={`flex flex-col rounded-[20px] border bg-[#16161a] p-6 transition-colors ${
+                  className={`relative flex flex-col rounded-[20px] border bg-[#16161a] p-6 transition-all duration-300 ${
                     highlighted
-                      ? "border-landing-accent/40"
-                      : "border-[#f3f0ed]/[0.06]"
+                      ? "border-landing-accent/40 shadow-[0_0_60px_rgba(225,29,42,0.1)] lg:-translate-y-2"
+                      : "border-[#f3f0ed]/[0.06] hover:border-[#f3f0ed]/[0.12]"
                   }`}
                 >
                   {highlighted && (

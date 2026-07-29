@@ -6,13 +6,19 @@
     "faq": "FAQ",
     "login": "Ingresar",
     "tryFree": "Comenzar Ahora",
-    "accessPlatform": "Acceder a la Plataforma"
+    "accessPlatform": "Acceder a la Plataforma",
+    "freeGenerations": "Generaciones gratis para todos",
+    "freeGenerationsShort": "Generaciones gratis"
   },
   "hero": {
-    "badge": "La fábrica de modelos de IA para agencias OFM",
-    "title": "Construye y escala modelos de IA que facturan en Fanvue.",
-    "subtitle": "Crea decenas de personas hiperrealistas con un rostro 100% consistente y produce contenido en serie para alimentar cada cuenta. Sin modelos reales, sin fotógrafo, sin inflar tu equipo.",
+    "badge": "Contenido +18 sin censura para OnlyFans, Fanvue y Telegram",
+    "title": "Crea modelos de IA +18 que facturan en OnlyFans y Fanvue.",
+    "subtitle": "Genera fotos y videos +18 sin censura con un rostro 100% consistente y produce contenido en serie para alimentar cada cuenta — OnlyFans, Fanvue o tu bot de Telegram. Sin modelos reales, sin fotógrafo, sin inflar tu equipo.",
     "cta": "Comenzar Ahora",
+    "ctaSecondary": "Ver planes",
+    "trust1": "Generaciones gratis para empezar",
+    "trust2": "Sin instalar nada — directo en tu navegador",
+    "trust3": "Cancela cuando quieras",
     "microcopy": "Tu primera modelo lista en menos de 2 minutos"
   },
   "howItWorks": {
@@ -29,21 +35,21 @@
     },
     "step3": {
       "title": "Exporta y Publica",
-      "description": "Descarga en alta calidad, listo para TikTok, Instagram, YouTube o cualquier red. Sin marca de agua en los planes pagos."
+      "description": "Descarga en alta calidad, listo para OnlyFans, Fanvue, Telegram o cualquier plataforma. Sin marca de agua en los planes pagos."
     },
     "cta": "Quiero crear mi primera influencer",
     "ctaLoggedIn": "Acceder a la Plataforma"
   },
   "features": {
-    "tag": "TODO PARA TU OPERACIÓN OFM",
-    "title": "Una línea de producción completa para crear y escalar tus modelos de IA.",
-    "subtitle": "Rostro consistente, fotos, videos, movimiento y voz — todo con IA, todo en un solo lugar, listo para alimentar Fanvue.",
+    "tag": "TODO PARA TU OPERACIÓN +18",
+    "title": "Una línea de producción completa de contenido +18 para crear y escalar tus modelos de IA.",
+    "subtitle": "Rostro consistente, fotos, videos, movimiento y voz — todo con IA, sin censura, en un solo lugar, listo para alimentar OnlyFans, Fanvue y Telegram.",
     "beforeLabel": "ANTES",
     "afterLabel": "DESPUÉS",
     "items": {
       "influencers": {
         "title": "Influencers IA",
-        "description": "Crea modelos de IA hiperrealistas con rostro, cuerpo y personalidad propios — y mantén el mismo rostro en cada generación. La consistencia que retiene suscriptores en Fanvue, sin contratar a nadie y sin mostrar tu rostro."
+        "description": "Crea modelos de IA hiperrealistas con rostro, cuerpo y personalidad propios — y mantén el mismo rostro en cada generación, incluso en el contenido +18. La consistencia que retiene suscriptores en OnlyFans y Fanvue, sin contratar a nadie y sin mostrar tu rostro."
       },
       "motion": {
         "title": "Motion Control",
@@ -55,11 +61,11 @@
       },
       "imagesHD": {
         "title": "Imágenes Full HD",
-        "description": "Genera fotos profesionales en alta definición con iluminación realista, composición cinematográfica y detalles nítidos. Ideal para ads, catálogo de producto, social media y cualquier contenido que necesite impresionar desde el primer frame."
+        "description": "Genera fotos en alta definición con iluminación realista, composición cinematográfica y detalles nítidos — del lifestyle al +18 explícito, sin filtros y sin censura. Perfecto para el feed, packs y contenido exclusivo para suscriptores."
       },
       "videos": {
         "title": "Videos Ultra Realistas",
-        "description": "Accede a los mejores modelos del mercado en un solo lugar — Kling, Veo 3.1, Sora 2 Pro y más. Calidad de cine, movimiento natural y física realista, sin necesidad de 5 suscripciones diferentes para cada herramienta."
+        "description": "Accede a los mejores modelos del mercado en un solo lugar — Kling, Veo 3.1, Sora 2 Pro y más — y genera videos +18 sin censura. Calidad de cine, movimiento natural y física realista, sin necesidad de 5 suscripciones diferentes para cada herramienta."
       },
       "upscale": {
         "title": "Upscale 4K",
@@ -166,8 +172,8 @@
       {
         "name": "Camila Oliveira",
         "handle": "@camilaoliveira.brand",
-        "niche": "Gestora de Cuentas",
-        "text": "Redujimos el costo de producción en un 80% y aun así duplicamos el volumen de contenido por modelo."
+        "niche": "Dueña de Bot en Telegram",
+        "text": "Mi bot de Telegram entrega packs nuevos cada semana en automático. Reduje el costo de producción en un 80% y dupliqué el volumen de contenido."
       }
     ]
   },
@@ -207,23 +213,23 @@
   },
   "useCases": {
     "tag": "Para Quién Es",
-    "title": "De tu primer modelo a una agencia con decenas de cuentas. La línea de producción escala contigo.",
+    "title": "De tu primer modelo +18 a una agencia con decenas de cuentas. La línea de producción escala contigo.",
     "items": {
       "creators": {
-        "title": "Creadores Solo en Fanvue",
-        "desc": "Lanza tu primer modelo de IA sin aparecer y sin contratar a nadie. Publica todos los días, mantén el mismo rostro y construye una base de suscriptores que paga recurrente."
+        "title": "Creadores en OnlyFans y Fanvue",
+        "desc": "Lanza tu primer modelo +18 sin aparecer y sin contratar a nadie. Publica todos los días, mantén el mismo rostro y construye una base de suscriptores que paga recurrente."
       },
       "sellers": {
         "title": "Operadores OFM",
-        "desc": "Gestiona varios modelos a la vez con contenido en serie. Alimenta el feed de cada cuenta en Fanvue sin depender de fotógrafo, estudio o modelo real."
+        "desc": "Gestiona varios modelos a la vez con contenido en serie. Alimenta el feed de cada cuenta en OnlyFans y Fanvue sin depender de fotógrafo, estudio o modelo real."
       },
       "brands": {
         "title": "Agencias OFM",
         "desc": "Multiplica el número de cuentas sin inflar el equipo. Produce fotos y videos ilimitados para decenas de personas y reduce el costo de producción a centavos."
       },
       "social": {
-        "title": "Chatters y Gestores",
-        "desc": "Ten siempre contenido nuevo a mano para mantener a los suscriptores enganchados. Cada modelo con rostro consistente y su propia biblioteca, lista para vender."
+        "title": "Bots de Telegram",
+        "desc": "Alimenta tu bot de ventas en Telegram con packs +18 nuevos cada semana. Cada modelo con rostro consistente y su propia biblioteca, lista para entregar en automático."
       }
     }
   },
@@ -247,16 +253,16 @@
         "answer": "No. The AI Model Lab funciona 100% online, directo desde el navegador. Funciona en computadora y celular."
       },
       {
-        "question": "¿Puedo usar el contenido para monetizar en Fanvue?",
-        "answer": "Sí. La plataforma está hecha para alimentar cuentas en Fanvue y en cualquier otra plataforma de suscripción. Generas el contenido y monetizas como quieras, respetando las reglas de cada plataforma."
+        "question": "¿Puedo monetizar en OnlyFans, Fanvue y Telegram?",
+        "answer": "Sí. La plataforma está hecha para alimentar cuentas en OnlyFans, Fanvue y bots de venta en Telegram — además de cualquier otra plataforma de suscripción. Generas el contenido y monetizas como quieras."
       },
       {
         "question": "¿Los videos quedan con marca de agua?",
         "answer": "En los planes pagos, no. Todo el contenido generado es tuyo, sin marca de agua y listo para publicar."
       },
       {
-        "question": "¿Puedo usarlo para anuncios pagos?",
-        "answer": "Sí. Las imágenes y videos generados pueden usarse en Meta Ads, TikTok Ads, Google Ads y cualquier otra plataforma."
+        "question": "¿El contenido es realmente sin censura (+18)?",
+        "answer": "Sí. Generas imágenes y videos +18 sin filtros y sin bloqueos — de lo sensual a lo explícito. El contenido es 100% tuyo, listo para publicar donde quieras, respetando la edad mínima y las reglas de cada plataforma."
       },
       {
         "question": "¿Puedo mantener el mismo rostro en todas las generaciones?",
@@ -273,8 +279,8 @@
     ]
   },
   "ctaFinal": {
-    "title": "¿Listo para lanzar tu primer modelo de IA en Fanvue?",
-    "subtitle": "Únete a los operadores y agencias que ya escalan sus cuentas con contenido en serie y un rostro 100% consistente.",
+    "title": "¿Listo para lanzar tu primer modelo +18 con IA?",
+    "subtitle": "Únete a los operadores y agencias que ya escalan OnlyFans, Fanvue y bots de Telegram con contenido sin censura y un rostro 100% consistente.",
     "cta": "Comenzar Ahora",
     "ctaLoggedIn": "Acceder a la Plataforma",
     "microcopy": "Setup en 2 minutos · Cancela cuando quieras",
@@ -739,10 +745,10 @@
     "english": "Inglés"
   },
   "landingMeta": {
-    "title": "The AI Model Lab — La Fábrica de Modelos de IA para Agencias OFM y Creadores de Fanvue",
-    "description": "Crea y escala influencers de IA hiperrealistas con un rostro 100% consistente. Produce contenido en serie y monetiza en Fanvue — sin modelos reales, sin fotógrafo, sin equipo.",
-    "ogTitle": "The AI Model Lab — Modelos de IA para OFM y Fanvue",
-    "ogDescription": "Escala decenas de personas de IA consistentes y produce contenido en serie para Fanvue. Sin modelos reales. Comienza ahora."
+    "title": "The AI Model Lab — Modelos de IA +18 Sin Censura para OnlyFans, Fanvue y Telegram",
+    "description": "Crea y escala influencers de IA hiperrealistas con un rostro 100% consistente. Genera fotos y videos +18 sin censura y monetiza en OnlyFans, Fanvue y bots de Telegram — sin modelos reales, sin fotógrafo, sin equipo.",
+    "ogTitle": "The AI Model Lab — Contenido +18 Sin Censura para OnlyFans y Fanvue",
+    "ogDescription": "Escala decenas de personas de IA consistentes y produce contenido +18 sin censura para OnlyFans, Fanvue y Telegram. Sin modelos reales. Comienza ahora."
   },
   "promptsLibrary": {
     "metaTitle": "Biblioteca de Prompts · The AI Model Lab",

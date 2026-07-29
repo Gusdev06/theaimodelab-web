@@ -1,6 +1,8 @@
 import { Navbar } from "@/components/landing/navbar";
 import { HeroSection } from "@/components/landing/hero-section";
 import { SocialProof } from "@/components/landing/social-proof";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { StickyCta } from "@/components/landing/sticky-cta";
 import { Features } from "@/components/landing/features";
 import { Comparison } from "@/components/landing/comparison";
 import { UseCases } from "@/components/landing/use-cases";
@@ -17,15 +19,16 @@ export default function LandingPage() {
       <Navbar />
       <HeroSection />
       <SocialProof />
-      {/* <HowItWorks /> */}
       <Features />
+      <HowItWorks />
+      <UseCases />
       <Comparison />
       <Pricing />
-      <UseCases />
       <Testimonials />
       <Faq />
       <FinalCta />
       <Footer />
+      <StickyCta />
       <SupportButton />
     </main>
   );

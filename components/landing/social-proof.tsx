@@ -12,6 +12,18 @@ const STATS = [
   // { value: 49, labelKey: "rating", isRating: true },
 ] as const;
 
+/* Nomes de modelos/ferramentas são marcas — não passam por i18n. */
+const MODELS = [
+  "Kling 3.0",
+  "Veo 3.1",
+  "Sora 2 Pro",
+  "Nano Banana",
+  "Motion Control",
+  "Skin Enhancer",
+  "Upscale 4K",
+  "ElevenLabs",
+];
+
 function Stat({
   value,
   label,
@@ -46,10 +58,34 @@ function Stat({
   );
 }
 
+function ModelsTicker() {
+  return (
+    <div className="landing-mask-x mt-9 overflow-hidden sm:mt-11" aria-hidden="true">
+      <div className="landing-marquee-left flex w-max items-center">
+        {[0, 1].map((dup) => (
+          <div key={dup} className="flex items-center">
+            {MODELS.map((model) => (
+              <span
+                key={`${dup}-${model}`}
+                className="flex items-center whitespace-nowrap"
+              >
+                <span className="font-sora text-[13px] font-semibold tracking-[0.12em] text-[#f3f0ed]/30 uppercase sm:text-[14px]">
+                  {model}
+                </span>
+                <span className="mx-6 h-1 w-1 rounded-full bg-landing-accent/50 sm:mx-8" />
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function SocialProof() {
   const t = useTranslations("socialProof");
   return (
-    <section className="relative border-y border-[#f3f0ed]/[0.04] bg-landing-bg-secondary py-10 sm:py-12">
+    <section className="relative border-y border-[#f3f0ed]/[0.04] bg-landing-bg-secondary py-10 sm:py-14">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="landing-reveal grid grid-cols-2 gap-5 sm:gap-10 md:flex md:items-center md:justify-center md:gap-16 lg:gap-20">
           {STATS.map((s) => (
@@ -62,6 +98,7 @@ export function SocialProof() {
           ))}
         </div>
       </div>
+      <ModelsTicker />
     </section>
   );
 }

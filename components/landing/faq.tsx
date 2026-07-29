@@ -71,7 +71,7 @@ export function Faq() {
   const t = useTranslations("faq");
 
   return (
-    <section id="faq" className="bg-landing-bg-secondary py-16 sm:py-28 lg:py-36">
+    <section id="faq" className="py-16 sm:py-28 lg:py-36">
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         {/* Header */}
         <div

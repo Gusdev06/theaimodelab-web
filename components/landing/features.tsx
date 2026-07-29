@@ -11,16 +11,19 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useScrollReveal } from "./use-scroll-reveal";
+import { LazyVideo } from "./lazy-video";
 
 type Media =
   | { kind: "image"; src: string }
   | { kind: "video"; src: string; poster?: string }
   | { kind: "beforeAfter"; src: string; beforeSrc?: string; beforeFilter?: string };
 
-const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
+/* Bento grid: células largas (4/6) e altas (2/6) alternadas por linha. */
+const FEATURES: { key: string; icon: LucideIcon; media: Media; span: "wide" | "tall" }[] = [
   {
     key: "influencers",
     icon: User,
+    span: "wide",
     media: {
       kind: "image",
       src: "https://www.promptsgoat.com/en/assets/4963395053896272996.jpg",
@@ -29,6 +32,7 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
   {
     key: "motion",
     icon: Move3d,
+    span: "tall",
     media: {
       kind: "video",
       src: "https://zayraai.com/videos/motion-showcase-3.mp4?v=2",
@@ -37,6 +41,7 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
   {
     key: "imagesHD",
     icon: ImageIcon,
+    span: "tall",
     media: {
       kind: "image",
       src: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/generations/cmr3dn6co08utlc0110yinfg5/feffd1b1-fffb-4db2-a370-e22b029b85ce/output_0.jpg",
@@ -45,6 +50,7 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
   {
     key: "videos",
     icon: Video,
+    span: "wide",
     media: {
       kind: "video",
       src: "https://zayraai.com/videos/motion-zaza.mp4",
@@ -52,46 +58,6 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media }[] = [
     },
   },
 ];
-
-function LazyVideo({ src, poster }: { src: string; poster?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px" },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className="absolute inset-0">
-      {visible ? (
-        <video
-          src={src}
-          poster={poster}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          className="h-full w-full object-cover"
-        />
-      ) : (
-        <div className="h-full w-full animate-pulse bg-[#f3f0ed]/[0.03]" />
-      )}
-    </div>
-  );
-}
 
 function BeforeAfterSlider({
   src,
@@ -233,6 +199,7 @@ function FeatureCard({
   title,
   desc,
   media,
+  span,
   i,
   beforeLabel,
   afterLabel,
@@ -241,6 +208,7 @@ function FeatureCard({
   title: string;
   desc: string;
   media: Media;
+  span: "wide" | "tall";
   i: number;
   beforeLabel: string;
   afterLabel: string;
@@ -250,14 +218,16 @@ function FeatureCard({
   return (
     <div
       ref={ref}
-      className="group overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(225,29,42,0.06)]"
+      className={`group flex flex-col overflow-hidden rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card transition-all duration-500 hover:border-landing-accent/15 hover:shadow-[0_0_40px_rgba(225,29,42,0.06)] lg:min-h-[480px] ${
+        span === "wide" ? "lg:col-span-4" : "lg:col-span-2"
+      }`}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(28px)",
         transitionDelay: `${i * 80}ms`,
       }}
     >
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#0e1416]">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#0e1416] lg:aspect-auto lg:min-h-0 lg:flex-1">
         {media.kind === "image" && (
           <Image
             src={media.src}
@@ -300,7 +270,7 @@ export function Features() {
   const t = useTranslations("features");
 
   return (
-    <section id="funcionalidades" className="bg-landing-bg-secondary py-16 sm:py-28 lg:py-36">
+    <section id="funcionalidades" className="py-16 sm:py-28 lg:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div
           ref={ref}
@@ -321,7 +291,7 @@ export function Features() {
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:mt-20 lg:grid-cols-3 lg:gap-6">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:mt-20 lg:grid-cols-6 lg:gap-6">
           {FEATURES.map((f, i) => (
             <FeatureCard
               key={f.key}
@@ -329,6 +299,7 @@ export function Features() {
               title={t(`items.${f.key}.title`)}
               desc={t(`items.${f.key}.description`)}
               media={f.media}
+              span={f.span}
               i={i}
               beforeLabel={t("beforeLabel")}
               afterLabel={t("afterLabel")}

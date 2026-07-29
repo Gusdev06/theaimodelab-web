@@ -705,12 +705,48 @@ textarea::-webkit-scrollbar-thumb:hover {
   animation: landing-fade-up 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
 
+/* ─── Marquees da landing (parede de conteúdo + ticker) ────────────────────── */
+/* Conteúdo duplicado 2x dentro do track; -50% fecha o loop sem emenda visível. */
+
+@keyframes landing-marquee-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+@keyframes landing-marquee-down {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+@keyframes landing-marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.landing-marquee-up {
+  animation: landing-marquee-up 46s linear infinite;
+}
+.landing-marquee-down {
+  animation: landing-marquee-down 54s linear infinite;
+}
+.landing-marquee-left {
+  animation: landing-marquee-left 32s linear infinite;
+}
+
+/* Fades nas bordas para o marquee "sair de cena" em vez de cortar seco */
+.landing-mask-y {
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+}
+.landing-mask-x {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing-reveal,
   .landing-float,
   .landing-float-alt,
   .landing-shimmer,
-  .landing-glow-pulse {
+  .landing-glow-pulse,
+  .landing-marquee-up,
+  .landing-marquee-down,
+  .landing-marquee-left {
     animation: none !important;
   }
   .landing-btn:hover,

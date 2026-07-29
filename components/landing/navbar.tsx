@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, Sparkles, X } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useLoginModal } from "@/lib/login-modal-context";
 import Image from "next/image";
@@ -86,6 +86,10 @@ export function Navbar() {
 
           {/* desktop CTAs */}
           <div className="hidden items-center gap-3 md:flex">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-landing-accent/25 bg-landing-accent/[0.08] px-3 py-1.5 text-[12px] font-semibold text-landing-accent">
+              <Sparkles className="h-3.5 w-3.5" />
+              {tNav("freeGenerations")}
+            </span>
             {loading ? (
               <>
                 <div className="h-9 w-20 animate-pulse rounded-xl bg-landing-text/8" />
@@ -117,14 +121,20 @@ export function Navbar() {
             )}
           </div>
 
-          {/* mobile hamburger */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0a0a0b]/80 text-[#f3f0ed]/80 transition-colors hover:bg-[#f3f0ed]/[0.08] hover:text-[#f3f0ed] md:hidden"
-            aria-label="Menu"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          {/* mobile: badge + hamburger */}
+          <div className="flex items-center gap-2 md:hidden">
+            <span className="inline-flex items-center gap-1 rounded-full border border-landing-accent/25 bg-landing-accent/[0.08] px-2.5 py-1 text-[11px] font-semibold text-landing-accent">
+              <Sparkles className="h-3 w-3" />
+              {tNav("freeGenerationsShort")}
+            </span>
+            <button
+              onClick={() => setOpen(!open)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0a0a0b]/80 text-[#f3f0ed]/80 transition-colors hover:bg-[#f3f0ed]/[0.08] hover:text-[#f3f0ed]"
+              aria-label="Menu"
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -171,6 +181,10 @@ export function Navbar() {
 
         {/* CTAs */}
         <div className="flex flex-col gap-3 border-t border-[#f3f0ed]/[0.06] px-4 py-6">
+          <span className="inline-flex items-center justify-center gap-1.5 rounded-full border border-landing-accent/25 bg-landing-accent/[0.08] px-3 py-2 text-[12px] font-semibold text-landing-accent">
+            <Sparkles className="h-3.5 w-3.5" />
+            {tNav("freeGenerations")}
+          </span>
           {loading ? (
             <>
               <div className="h-12 w-full animate-pulse rounded-xl bg-landing-text/8" />

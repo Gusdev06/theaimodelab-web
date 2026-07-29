@@ -20,7 +20,9 @@ function Card({ item, i }: { item: TestimonialItem; i: number }) {
   return (
     <div
       ref={ref}
-      className="landing-glass-hover rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 sm:p-8"
+      className={`landing-glass-hover rounded-2xl border border-[#f3f0ed]/[0.06] bg-landing-card p-5 transition-all duration-500 sm:p-8 ${
+        i % 2 === 1 ? "lg:mt-10" : ""
+      }`}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(28px)",

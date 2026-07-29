@@ -55,17 +55,6 @@ function Step({
         <p className="relative mt-2.5 text-[15px] leading-relaxed text-landing-text-secondary">
           {desc}
         </p>
-
-        {/* Placeholder visual */}
-        <div className="relative mt-5 aspect-[4/3] sm:mt-7 w-full overflow-hidden rounded-xl border border-[#f3f0ed]/[0.04] bg-landing-bg-secondary">
-          {/* TODO: SUBSTITUIR POR SCREENSHOT/GIF REAL */}
-          <div className="flex h-full items-center justify-center">
-            <div className="flex flex-col items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-landing-accent/10" />
-              <div className="h-1.5 w-20 rounded-full bg-[#f3f0ed]/[0.05]" />
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -79,7 +68,7 @@ export function HowItWorks() {
   const t = useTranslations("howItWorks");
 
   return (
-    <section className="py-16 sm:py-28 lg:py-36">
+    <section className="bg-landing-bg-secondary py-16 sm:py-28 lg:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header */}
         <div
@@ -104,7 +93,7 @@ export function HowItWorks() {
         {/* Steps */}
         <div className="relative mt-10 sm:mt-16 lg:mt-20">
           {/* Dashed connector (desktop) */}
-          <div className="absolute top-[160px] hidden h-px w-full md:block">
+          <div className="absolute top-1/2 hidden h-px w-full md:block">
             <div className="mx-auto w-2/3 border-t border-dashed border-[#f3f0ed]/[0.06]" />
           </div>
 

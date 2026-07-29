@@ -17,20 +17,20 @@ export function FinalCta() {
 
   return (
     <section className="landing-noise relative overflow-hidden py-16 sm:py-28 lg:py-36">
-      {/* Background gradient — lime glow from top */}
+      {/* Background gradient — brand glow closing the page */}
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(225,29,42,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(225,29,42,0.12) 0%, transparent 70%)",
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
         <div
           ref={ref}
-          className="mx-auto flex max-w-[680px] flex-col items-center text-center transition-all duration-700"
+          className="mx-auto flex max-w-[860px] flex-col items-center text-center transition-all duration-700"
           style={{
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? "translateY(0)" : "translateY(28px)",
@@ -56,7 +56,7 @@ export function FinalCta() {
           </div>
 
           {/* Headline */}
-          <h2 className="landing-reveal font-sora text-[26px] font-bold tracking-tight text-landing-text sm:text-3xl lg:text-[48px] lg:leading-[1.1]">
+          <h2 className="landing-reveal bg-gradient-to-b from-landing-text to-landing-text/60 bg-clip-text font-sora text-[clamp(2rem,6.5vw,4.5rem)] leading-[1.02] font-extrabold tracking-[-0.025em] text-transparent">
             {t("title")}
           </h2>
 

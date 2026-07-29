@@ -61,7 +61,7 @@ export function Comparison() {
   const perMonth = t("perMonth");
 
   return (
-    <section className="py-16 sm:py-28 lg:py-36">
+    <section className="bg-landing-bg-secondary py-16 sm:py-28 lg:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header */}
         <div
