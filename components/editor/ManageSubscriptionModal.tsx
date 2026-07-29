@@ -56,9 +56,11 @@ export function ManageSubscriptionModal({ onClose }: ManageSubscriptionModalProp
     enabled: !!accessToken,
   });
 
+  // Moeda pela locale: Brasil (/pt-br) em BRL (Cakto), resto em USD (PerfectPay).
+  const uiCurrency = locale === 'pt-BR' ? 'BRL' : 'USD';
   const { data: plans } = useQuery({
-    queryKey: ['plans'],
-    queryFn: () => api.plans.list(accessToken!),
+    queryKey: ['plans', uiCurrency],
+    queryFn: () => api.plans.list(accessToken!, uiCurrency),
     enabled: !!accessToken,
     staleTime: 5 * 60_000,
   });
