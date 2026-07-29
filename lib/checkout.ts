@@ -1,10 +1,11 @@
-// A ativação da assinatura na PerfectPay casa a compra pelo email do comprador
-// (ver webhook `perfectpay-webhook.service` na API). Por isso, ao mandar o usuário
-// para o checkout, pré-preenchemos o email (e o nome, quando houver) da conta logada
-// para garantir que a compra caia na conta certa e reduzir atrito no formulário.
+// A ativação da assinatura (PerfectPay em USD, Cakto em BRL) casa a compra pelo
+// email do comprador (ver webhooks na API). Por isso, ao mandar o usuário para o
+// checkout, pré-preenchemos o email (e o nome) da conta logada para garantir que a
+// compra caia na conta certa e reduzir atrito no formulário.
 //
-// A PerfectPay aceita os parâmetros de query `email`, `name` e `phone` para
-// pré-preencher os campos do checkout.
+// A PerfectPay aceita `email`, `name` e `phone` como query params. A Cakto aceita
+// `email`/`name` (confirmar nomes exatos no painel Cakto); se ela ignorar, o
+// prefill apenas não ocorre — o usuário digita o email e o webhook casa mesmo assim.
 
 interface CheckoutIdentity {
   email?: string | null;

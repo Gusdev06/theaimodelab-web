@@ -19,8 +19,9 @@ export function Pricing() {
   const tUnlimited = useTranslations("editorPlans.unlimited");
   const tCategories = useTranslations("editorPlans.categories");
   const locale = useLocale();
-  // Preços dos planos são cobrados em dólar (USD).
-  const currency = "USD";
+  // Moeda por locale: Brasil (/pt-br) cobra em BRL via Cakto; /en e /es em USD via
+  // PerfectPay. O backend devolve o preço e o checkoutUrl da moeda pedida.
+  const currency = locale === "pt-BR" ? "BRL" : "USD";
   const { ref, isVisible } = useScrollReveal();
   const { accessToken, user } = useAuth();
   const { openLoginModal } = useLoginModal();

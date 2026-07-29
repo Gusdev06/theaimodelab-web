@@ -4,16 +4,21 @@ import { LOCALE_COOKIE, LOCALE_HEADER, URL_LOCALES, type UrlLocale } from '@/i18
 const URL_TO_INTERNAL: Record<UrlLocale, string> = {
   en: 'en',
   es: 'es',
+  'pt-br': 'pt-BR',
 };
 
 function detectFromCountry(country: string | null): UrlLocale {
-  // pt-BR descontinuado: preços 100% em dólar. Só existem /en e /es.
-  // Países de língua espanhola caem em /es; o resto (inclusive BR) em /en.
+  // A UI é traduzida (pt-BR/es/en); os preços seguem 100% em dólar (o checkout
+  // recorrente da PerfectPay cobra em USD). Países lusófonos caem em /pt-br,
+  // hispânicos em /es, o resto em /en.
+  const PORTUGUESE_COUNTRIES = new Set(['BR', 'PT']);
   const SPANISH_COUNTRIES = new Set([
     'ES', 'MX', 'AR', 'CO', 'CL', 'PE', 'VE', 'EC', 'GT', 'CU', 'BO',
     'DO', 'HN', 'PY', 'SV', 'NI', 'CR', 'PA', 'UY', 'PR', 'GQ',
   ]);
-  if (country && SPANISH_COUNTRIES.has(country.toUpperCase())) return 'es';
+  const c = country?.toUpperCase();
+  if (c && PORTUGUESE_COUNTRIES.has(c)) return 'pt-br';
+  if (c && SPANISH_COUNTRIES.has(c)) return 'es';
   return 'en';
 }
 
