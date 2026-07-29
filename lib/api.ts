@@ -1265,6 +1265,38 @@ export interface HealthStats {
   alerts: { level: 'warning' | 'critical'; message: string }[];
 }
 
+/** Bucket de atribuição: key vazia = cadastro orgânico/direto (sem UTM). */
+export interface AttributionBucket {
+  key: string;
+  signups: number;
+  paid: number;
+}
+
+export interface AttributionRecentUser {
+  id: string;
+  email: string;
+  name: string | null;
+  createdAt: string;
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  utmContent: string | null;
+  utmTerm: string | null;
+  paid: boolean;
+}
+
+export interface AttributionStats {
+  days: number;
+  totalSignups: number;
+  withAttribution: number;
+  paidTotal: number;
+  byCampaign: AttributionBucket[];
+  byContent: AttributionBucket[];
+  bySource: AttributionBucket[];
+  byMedium: AttributionBucket[];
+  recent: AttributionRecentUser[];
+}
+
 export type AnnouncementVariant = 'feature' | 'maintenance' | 'promo' | 'openai' | 'gift' | 'mic' | 'unlimited';
 
 export type AnnouncementAction =
@@ -2347,6 +2379,9 @@ export const api = {
     },
     healthStats(accessToken: string) {
       return authRequest<HealthStats>('/api/v1/admin/stats/health', accessToken);
+    },
+    attributionStats(accessToken: string, days = 30) {
+      return authRequest<AttributionStats>(`/api/v1/admin/attribution?days=${days}`, accessToken);
     },
     feedbackList(accessToken: string, page = 1, limit = 20) {
       return authRequest<{

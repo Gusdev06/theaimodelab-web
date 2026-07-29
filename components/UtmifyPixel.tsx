@@ -5,13 +5,19 @@ import Script from 'next/script';
      append manual no mesmo inline script, preservando a ordem).
    - utms/latest.js persiste os parâmetros de UTM da sessão; os atributos
      data-utmify-prevent-* vêm da configuração original do painel.
-   Um pixel por mercado: o funil BR (/pt-br, checkout Cakto) tem conta própria
-   na UTMify; EN/ES (PerfectPay USD) usam o pixel internacional. */
-const UTMIFY_PIXEL_ID_INTL = '6a2b0f26049323753c49905e';
+   Um pixel por mercado na UTMify: BR (/pt-br, checkout Cakto), EN (/en) e
+   ES (/es, PerfectPay USD) têm contas/pixels próprios. */
+const UTMIFY_PIXEL_ID_EN = '6a3f50193b081edb3545254b';
+const UTMIFY_PIXEL_ID_ES = '6a2b0f26049323753c49905e';
 const UTMIFY_PIXEL_ID_BR = '6a6a55544707045235cbbc17';
 
 export function UtmifyPixel({ locale }: { locale: string }) {
-  const pixelId = locale === 'pt-BR' ? UTMIFY_PIXEL_ID_BR : UTMIFY_PIXEL_ID_INTL;
+  const pixelId =
+    locale === 'pt-BR'
+      ? UTMIFY_PIXEL_ID_BR
+      : locale === 'en'
+        ? UTMIFY_PIXEL_ID_EN
+        : UTMIFY_PIXEL_ID_ES;
 
   return (
     <>

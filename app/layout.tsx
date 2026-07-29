@@ -37,7 +37,10 @@ import { QueryProvider } from "@/lib/query-provider";
 import { GoogleAuthWrapper } from "@/lib/google-auth-wrapper";
 import { LoginModalProvider } from "@/lib/login-modal-context";
 import { LoginModal } from "@/components/LoginModal";
-import { MetaPixel } from "@/components/MetaPixel";
+// Meta Pixel desativado (2026-07-29): eventos de conversão são enviados
+// exclusivamente pela UTMify (pixel abaixo + webhooks dos gateways no painel).
+// Para reativar, restaure <MetaPixel /> de @/components/MetaPixel.
+import { TrackingCapture } from "@/components/TrackingCapture";
 import { UtmifyPixel } from "@/components/UtmifyPixel";
 import { Toaster } from "sonner";
 import { NextIntlClientProvider } from "next-intl";
@@ -63,7 +66,7 @@ export default async function RootLayout({
             <TooltipProvider delayDuration={0}>
               {children}
               <LoginModal />
-              <MetaPixel />
+              <TrackingCapture />
               <UtmifyPixel locale={locale} />
               <Toaster
                 theme="dark"
