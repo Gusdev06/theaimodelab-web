@@ -47,7 +47,7 @@ function LoginModalContent() {
             key={`${initialMode}-${planParam ?? ''}`}
             planParam={planParam}
             initialMode={initialMode}
-            initialView={initialMode === 'register' ? 'email' : 'options'}
+            initialView="options"
             onSuccess={closeLoginModal}
             onClose={closeLoginModal}
           />
