@@ -49,7 +49,8 @@ export function PlansModal({ onClose }: PlansModalProps) {
     enabled: !!accessToken,
     staleTime: 5 * 60_000,
   });
-  const hasPackages = !!packages?.some((p) => p.isActive);
+  // No Brasil (/pt-br) os pacotes de crédito ficam ocultos: só têm preço USD, sem top-up em BRL.
+  const hasPackages = locale !== 'pt-BR' && !!packages?.some((p) => p.isActive);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {

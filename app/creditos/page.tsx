@@ -400,7 +400,8 @@ function CreditosPageContent() {
         )}
 
         {/* -- Pacotes de crédito avulsos (top-up) -- */}
-        {packages && packages.some((p) => p.isActive) && (
+        {/* Ocultos no Brasil (/pt-br): os pacotes só têm preço USD, não há top-up em BRL. */}
+        {locale !== 'pt-BR' && packages && packages.some((p) => p.isActive) && (
           <div id="packages-section" className="flex flex-col gap-8">
             <div className="flex flex-col items-center gap-3 text-center">
               <div className="flex items-center gap-2 rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.04] px-4 py-1.5">
