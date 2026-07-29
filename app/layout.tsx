@@ -64,7 +64,7 @@ export default async function RootLayout({
               {children}
               <LoginModal />
               <MetaPixel />
-              <UtmifyPixel />
+              <UtmifyPixel locale={locale} />
               <Toaster
                 theme="dark"
                 position="bottom-right"
