@@ -1,0 +1,12 @@
+{
+  "freeGens": {
+    "modal": {
+      "badge": "On the house",
+      "title": "You have free generations waiting",
+      "description": "We gave you <highlight>{total, plural, =1 {# free generation} other {# free generations}}</highlight> to try our models. They're already in your account — use them whenever.",
+      "listTitle": "Available now",
+      "cta": "Start creating",
+      "dismiss": "Later"
+    }
+  }
+}

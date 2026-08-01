@@ -776,5 +776,11 @@
       "image_to_video": "Imagem → Vídeo",
       "motion_control": "Controle de Movimento"
     }
+  },
+  "modelWall": {
+    "tag": "As modelos",
+    "title": "Um catálogo infinito de rostos que convertem.",
+    "subtitle": "Cada imagem e clipe aqui é 100% IA — a mesma consistência que você vai usar pra abastecer cada conta, sem parar.",
+    "alt": "Modelo {index}"
   }
 }

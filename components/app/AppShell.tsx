@@ -8,6 +8,7 @@ import { AppSidebar } from '@/components/app/AppSidebar';
 import { AppTopbar } from '@/components/app/AppTopbar';
 import { MobileBottomNav } from '@/components/app/MobileBottomNav';
 import { CommandPalette } from '@/components/app/CommandPalette';
+import { FreeGenerationsTrigger } from '@/components/app/FreeGenerationsTrigger';
 
 /**
  * Shell da plataforma logada (The AI Model Lab 2.0): dois "cards gigantes" (sidebar +
@@ -33,6 +34,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
       <MobileBottomNav />
       <CommandPalette />
+      <FreeGenerationsTrigger />
     </ShellProvider>
   );
 }

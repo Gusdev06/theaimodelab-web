@@ -776,5 +776,11 @@
       "image_to_video": "Image → Video",
       "motion_control": "Motion Control"
     }
+  },
+  "modelWall": {
+    "tag": "The models",
+    "title": "An endless roster of faces that convert.",
+    "subtitle": "Every image and clip here is 100% AI — the same consistency you’ll use to fill every account, on repeat.",
+    "alt": "Model {index}"
   }
 }

@@ -73,6 +73,16 @@ function clearAuth() {
     }
     keysToRemove.forEach((key) => localStorage.removeItem(key));
   }
+  // Limpa flags de sessão (ex.: modal de gerações grátis mostrado) para que o
+  // próximo login volte a exibi-los.
+  if (typeof sessionStorage !== 'undefined') {
+    const sessionKeysToRemove: string[] = [];
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
+      if (key && key.startsWith('theaimodelab-')) sessionKeysToRemove.push(key);
+    }
+    sessionKeysToRemove.forEach((key) => sessionStorage.removeItem(key));
+  }
 }
 
 function useLoginMutation(onSuccess: (res: Awaited<ReturnType<typeof api.auth.login>>) => void) {

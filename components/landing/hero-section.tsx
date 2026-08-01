@@ -9,12 +9,12 @@ import { LazyVideo } from "./lazy-video";
 import { HeroVsl } from "./hero-vsl";
 
 const HERO_VIDEOS = [
-  "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/generations/cmmo0y3ig001pmj012ef18i2x/f8b501b1-404e-4f90-80e5-6369dd0a1c85/output_1.mp4",
-  "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/utils/hf_20260215_062116_c9ddf0ba-3933-4775-a153-416f3a4ceba2.mp4",
-  "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/utils/hf_20260201_001035_5d855ac6-5faf-4ec9-ad55-5b8b3c6c8b27.mp4",
-  "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/generations/cmnb7rni6004qli01djg36ikq/79f3dded-b759-487e-90d3-3ba02d3decda/output_0.mp4",
-  "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/utils/output_0%20(1).mp4",
-  "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/utils/hf_20260304_053449_2ac62494-bf74-454e-8c64-9b04f658037a.mp4",
+  "/midia/reel-1.mp4",
+  "/midia/reel-2.mp4",
+  "/midia/reel-3.mp4",
+  "/midia/reel-4.mp4",
+  "/midia/reel-5.mp4",
+  "/midia/reel-6.mp4",
 ];
 
 /* Parede de conteúdo do desktop: duas colunas em marquee vertical, sentidos

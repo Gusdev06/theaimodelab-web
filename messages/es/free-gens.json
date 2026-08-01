@@ -1,0 +1,12 @@
+{
+  "freeGens": {
+    "modal": {
+      "badge": "Cortesía de la casa",
+      "title": "Tienes generaciones gratis esperando",
+      "description": "Te dimos <highlight>{total, plural, =1 {# generación gratis} other {# generaciones gratis}}</highlight> para probar nuestros modelos. Ya están en tu cuenta — úsalas cuando quieras.",
+      "listTitle": "Disponibles ahora",
+      "cta": "Empezar a crear",
+      "dismiss": "Ver después"
+    }
+  }
+}

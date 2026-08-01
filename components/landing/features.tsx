@@ -26,7 +26,7 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media; span: "wide" | "t
     span: "wide",
     media: {
       kind: "image",
-      src: "https://www.promptsgoat.com/en/assets/4963395053896272996.jpg",
+      src: "/midia/model-1.jpg",
     },
   },
   {
@@ -35,7 +35,7 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media; span: "wide" | "t
     span: "tall",
     media: {
       kind: "video",
-      src: "https://zayraai.com/videos/motion-showcase-3.mp4?v=2",
+      src: "/midia/reel-2.mp4",
     },
   },
   {
@@ -44,7 +44,7 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media; span: "wide" | "t
     span: "tall",
     media: {
       kind: "image",
-      src: "https://cdn.geraew.com.br/storage/v1/object/public/ai-generations/generations/cmr3dn6co08utlc0110yinfg5/feffd1b1-fffb-4db2-a370-e22b029b85ce/output_0.jpg",
+      src: "/midia/model-2.jpg",
     },
   },
   {
@@ -53,8 +53,8 @@ const FEATURES: { key: string; icon: LucideIcon; media: Media; span: "wide" | "t
     span: "wide",
     media: {
       kind: "video",
-      src: "https://zayraai.com/videos/motion-zaza.mp4",
-      poster: "https://zayraai.com/images/motion-zaza-poster.jpg",
+      src: "/midia/reel-4.mp4",
+      poster: "/midia/model-3.jpg",
     },
   },
 ];

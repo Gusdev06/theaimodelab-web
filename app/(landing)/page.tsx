@@ -4,6 +4,8 @@ import { SocialProof } from "@/components/landing/social-proof";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { StickyCta } from "@/components/landing/sticky-cta";
 import { Features } from "@/components/landing/features";
+import { Gallery } from "@/components/landing/gallery";
+import { ModelWall } from "@/components/landing/model-wall";
 import { Comparison } from "@/components/landing/comparison";
 import { UseCases } from "@/components/landing/use-cases";
 import { Testimonials } from "@/components/landing/testimonials";
@@ -21,10 +23,12 @@ export default function LandingPage() {
       <SocialProof />
       <Features />
       <HowItWorks />
+      <Gallery />
       <UseCases />
       <Comparison />
       <Pricing />
       <Testimonials />
+      <ModelWall />
       <Faq />
       <FinalCta />
       <Footer />
