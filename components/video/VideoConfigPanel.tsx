@@ -176,6 +176,8 @@ interface VideoConfigPanelProps {
   initialPrompt?: string;
   /** ferramenta pré-selecionada (vinda do ?tool= na URL) */
   initialTool?: VideoToolId;
+  /** URL de imagem para pré-carregar como referência (ex.: "Animar com IA" do upsell) */
+  initialRefUrl?: string;
   /** gerações em andamento desta aba (com url quando concluem, para revelar no preview) */
   onPendingChange: (pending: PendingGeneration[]) => void;
   /** registra a função que foca o prompt desta aba */
@@ -193,6 +195,7 @@ export function VideoConfigPanel({
   hidden = false,
   initialPrompt,
   initialTool,
+  initialRefUrl,
   onPendingChange,
   registerFocus,
   seed,
@@ -376,6 +379,37 @@ export function VideoConfigPanel({
     // com vídeo anexado, a quota de imagens do Omni cai para 5
     if (file) setReferences((prev) => prev.slice(0, 5));
   };
+
+  // pré-carrega uma imagem inicial (ex.: "Animar com IA" do upsell pós-geração) como
+  // entrada do modelo: primeiro frame nos modelos first-frame, referência nos demais.
+  const initialRefLoaded = useRef(false);
+  useEffect(() => {
+    if (!initialRefUrl || initialRefLoaded.current) return;
+    initialRefLoaded.current = true;
+    (async () => {
+      try {
+        const res = await fetch(`/api/proxy-image?url=${encodeURIComponent(initialRefUrl)}`);
+        if (!res.ok) return;
+        const blob = await res.blob();
+        if (blob.size > REF_MAX_BYTES) return;
+        const dataUrl = await blobToDataUrl(blob);
+        const image: UploadedImage = {
+          base64: dataUrl.split(',')[1],
+          mime_type: blob.type || 'image/jpeg',
+          preview: dataUrl,
+        };
+        if (modelConfig.refMode === 'first-frame') {
+          setFirstFrame(image);
+        } else {
+          setReferences((prev) => (prev.length >= modelConfig.maxRefs ? prev : [...prev, image]));
+        }
+      } catch {
+        /* sem referência — segue sem ela */
+      }
+    })();
+    // modelConfig muda com o modelo; só queremos rodar isto uma vez no mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialRefUrl]);
 
   // tipo de geração p/ pricing — espelha o painel do workspace
   const videoType =

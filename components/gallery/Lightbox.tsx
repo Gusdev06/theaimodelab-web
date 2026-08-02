@@ -19,9 +19,11 @@ interface LightboxProps {
   onToggleFavorite?: (item: GalleryItem) => void;
   /** quando definido, exibe o botão de excluir nas ações (2 cliques: armar + confirmar) */
   onDelete?: (item: GalleryItem) => void;
+  /** slot extra renderizado sob a barra de ações (ex.: upsell pós-geração no estúdio) */
+  renderExtra?: (item: GalleryItem) => React.ReactNode;
 }
 
-export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite, onDelete }: LightboxProps) {
+export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite, onDelete, renderExtra }: LightboxProps) {
   const t = useTranslations('home');
   const locale = useLocale();
   const kind = kindOf(item.type);
@@ -229,6 +231,9 @@ export function Lightbox({ item, ratio, closing, onClose, onToggleFavorite, onDe
             />
           )}
         </div>
+
+        {/* slot extra (ex.: upsell pós-geração) — segue a largura da mídia */}
+        {loaded && !mediaError && renderExtra?.(item)}
       </div>
 
       {/* fechar */}

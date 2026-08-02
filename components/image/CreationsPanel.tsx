@@ -13,9 +13,10 @@ import { FilterPill } from '@/components/app/FilterPill';
 import { GalleryCard } from '@/components/gallery/GalleryCard';
 import { Lightbox } from '@/components/gallery/Lightbox';
 import { SKELETON_HEIGHTS, SkeletonCard } from '@/components/gallery/GallerySkeletons';
-import { GALLERY_FILTERS } from '@/components/gallery/kind';
+import { GALLERY_FILTERS, kindOf } from '@/components/gallery/kind';
 import { EmptyState } from '@/components/app/EmptyState';
 import { GenerationPreview } from '@/components/editor/GenerationPreview';
+import { PostGenerationUpsell } from '@/components/app/PostGenerationUpsell';
 import type { PendingGeneration } from '@/components/image/types';
 import { FolderOpen } from 'lucide-react';
 
@@ -28,6 +29,8 @@ interface CreationsPanelProps {
   defaultFilter?: string;
   /** chamado pelo CTA do estado vazio (ex.: focar o prompt) */
   onCreateNew?: () => void;
+  /** exibe a barra de upsell pós-geração no lightbox (só nas telas de estúdio) */
+  showUpsell?: boolean;
 }
 
 /** Preview de geração: aurora enquanto processa; ao receber a url, a imagem
@@ -114,6 +117,7 @@ export function CreationsPanel({
   pending = [],
   defaultFilter = 'all',
   onCreateNew,
+  showUpsell = false,
 }: CreationsPanelProps) {
   const t = useTranslations('home');
   const { user, accessToken } = useAuth();
@@ -390,6 +394,23 @@ export function CreationsPanel({
           onClose={closeLightbox}
           onToggleFavorite={handleToggleFavorite}
           onDelete={handleDelete}
+          renderExtra={
+            showUpsell
+              ? (item) => {
+                  const mediaUrl = item.outputUrl || item.thumbnailUrl;
+                  const k = kindOf(item.type);
+                  if (!mediaUrl || (k !== 'image' && k !== 'video')) return null;
+                  return (
+                    <PostGenerationUpsell
+                      kind={k}
+                      mediaUrl={mediaUrl}
+                      prompt={item.prompt ?? undefined}
+                      onNavigate={closeLightbox}
+                    />
+                  );
+                }
+              : undefined
+          }
         />
       )}
     </div>

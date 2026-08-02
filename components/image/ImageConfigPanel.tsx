@@ -453,7 +453,9 @@ export function ImageConfigPanel({
     }
   };
 
-  // anexa a imagem inicial (ex.: produto do TikTok Shop) como referência, uma vez
+  // anexa a imagem inicial (ex.: produto do TikTok Shop, ou a criação levada pelo
+  // upsell pós-geração) como entrada da ferramenta inicial, uma vez. Tools de imagem
+  // única (upscale/deepdeep) recebem no seu tile próprio; as demais como referência.
   const initialRefLoaded = useRef(false);
   useEffect(() => {
     if (!initialRefUrl || initialRefLoaded.current) return;
@@ -466,18 +468,25 @@ export function ImageConfigPanel({
         const reader = new FileReader();
         reader.onload = () => {
           const dataUrl = reader.result as string;
-          setReferences((prev) =>
-            prev.length >= MAX_REFERENCES
-              ? prev
-              : [...prev, { base64: dataUrl.split(',')[1], mime_type: blob.type || 'image/jpeg', preview: dataUrl }],
-          );
+          const image: UploadedImage = {
+            base64: dataUrl.split(',')[1],
+            mime_type: blob.type || 'image/jpeg',
+            preview: dataUrl,
+          };
+          if (initialTool === 'upscale') {
+            setUpscaleImage(image);
+          } else if (initialTool === 'deepdeep') {
+            setDeepdeepImage(image);
+          } else {
+            setReferences((prev) => (prev.length >= MAX_REFERENCES ? prev : [...prev, image]));
+          }
         };
         reader.readAsDataURL(blob);
       } catch {
         /* sem referência — segue sem ela */
       }
     })();
-  }, [initialRefUrl]);
+  }, [initialRefUrl, initialTool]);
 
   const canGenerate = (() => {
     switch (tool) {

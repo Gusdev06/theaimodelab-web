@@ -21,11 +21,23 @@ const STORAGE_KEY = 'theaimodelab-tabs-image';
 /** chave de persistência da config de cada aba (o painel se auto-salva por aqui) */
 const tabKey = (id: number) => `theaimodelab-image-tab-${id}`;
 
+/** ferramentas endereçáveis via ?tool= na URL */
+const URL_TOOLS = ['generate', 'try-on', 'face-swap', 'upscale'] as const;
+
+/** intent de deep-link (?prompt= / ?tool= / ?ref=) aplicado a uma aba nova */
+interface UrlIntent {
+  prompt?: string;
+  tool?: (typeof URL_TOOLS)[number];
+  refUrl?: string;
+}
+
 interface Tab {
   id: number;
   pinned?: boolean;
   /** config copiada ao duplicar uma aba */
   seed?: ImagePanelSeed;
+  /** intent aplicado quando a aba foi aberta por navegação client-side na mesma rota */
+  intent?: UrlIntent;
 }
 
 interface PersistedTabs {
@@ -39,20 +51,27 @@ export function ImageGeneratorView() {
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get('prompt') ?? undefined;
   const toolParam = searchParams.get('tool');
-  const initialTool = (['generate', 'try-on', 'face-swap', 'upscale'] as const).find(
-    (id) => id === toolParam,
-  );
+  const initialTool = URL_TOOLS.find((id) => id === toolParam);
   const initialRefUrl = searchParams.get('ref') ?? undefined;
 
   // ── estado das abas: restaurado do localStorage no mount (lazy init) ──
-  // deep-links (?prompt= / ?tool= / ?ref=) abrem uma aba nova e limpa.
+  // deep-links (?prompt= / ?tool= / ?ref=) abrem uma aba nova e limpa. O intent
+  // fica CONGELADO na aba (estado), para mudanças de URL pós-mount não vazarem
+  // para abas já montadas — essas são tratadas pelo efeito de searchParams.
   const hasUrlIntent = !!(initialPrompt || initialTool || initialRefUrl);
   const boot = useMemo(
     () => (hasUrlIntent ? null : loadPersisted<PersistedTabs>(STORAGE_KEY)),
     [hasUrlIntent],
   );
   const [tabs, setTabs] = useState<Tab[]>(() =>
-    boot?.tabs?.length ? boot.tabs.map((tb) => ({ id: tb.id, pinned: tb.pinned })) : [{ id: 1 }],
+    boot?.tabs?.length
+      ? boot.tabs.map((tb) => ({ id: tb.id, pinned: tb.pinned }))
+      : [{
+          id: 1,
+          intent: hasUrlIntent
+            ? { prompt: initialPrompt, tool: initialTool, refUrl: initialRefUrl }
+            : undefined,
+        }],
   );
   const [activeId, setActiveId] = useState(() => {
     if (boot?.tabs?.some((tb) => tb.id === boot.activeId)) return boot.activeId;
@@ -76,6 +95,32 @@ export function ImageGeneratorView() {
       nextId: nextId.current,
     });
   }, [tabs, activeId]);
+
+  // navegação client-side na MESMA rota (ex.: "Upscale 4K" do upsell pós-geração
+  // estando já em /image): as abas montadas só leem o intent no mount, então
+  // quando os searchParams mudam de fato (guard pelo último valor processado,
+  // inicializado no mount — que já é tratado pelas props iniciais da aba 1),
+  // abrimos uma aba nova com tool+ref aplicados, igual ao deep-link em full load.
+  const lastSearchRef = useRef(searchParams.toString());
+  useEffect(() => {
+    const current = searchParams.toString();
+    if (current === lastSearchRef.current) return;
+    lastSearchRef.current = current;
+    const intent: UrlIntent = {
+      prompt: searchParams.get('prompt') ?? undefined,
+      tool: URL_TOOLS.find((id) => id === searchParams.get('tool')),
+      refUrl: searchParams.get('ref') ?? undefined,
+    };
+    if (!intent.prompt && !intent.tool && !intent.refUrl) return;
+    if (tabs.length >= MAX_TABS) {
+      toast.info(t('image.maxTabs', { max: MAX_TABS }));
+      return;
+    }
+    const id = nextId.current++;
+    setTabs((prev) => [...prev, { id, intent }]);
+    setActiveId(id);
+    setMobileView('config');
+  }, [searchParams, tabs.length, t]);
 
   // recupera gerações ainda em andamento após um reload da página
   const { accessToken } = useAuth();
@@ -302,9 +347,9 @@ export function ImageGeneratorView() {
             <ImageConfigPanel
               key={tab.id}
               hidden={tab.id !== activeId}
-              initialPrompt={tab.id === 1 ? initialPrompt : undefined}
-              initialTool={tab.id === 1 ? initialTool : undefined}
-              initialRefUrl={tab.id === 1 ? initialRefUrl : undefined}
+              initialPrompt={tab.intent?.prompt}
+              initialTool={tab.intent?.tool}
+              initialRefUrl={tab.intent?.refUrl}
               seed={tab.seed}
               persistKey={tabKey(tab.id)}
               onPendingChange={(pending) => handlePendingChange(tab.id, pending)}
@@ -329,6 +374,7 @@ export function ImageGeneratorView() {
             pending={allPending}
             defaultFilter="image"
             onCreateNew={() => promptFocusers.current[activeId]?.()}
+            showUpsell
           />
         </div>
       </div>

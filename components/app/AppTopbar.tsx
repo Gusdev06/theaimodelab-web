@@ -3,12 +3,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { BarChart3, Coins, LogOut, UserRound } from 'lucide-react';
 import { SCREEN_TITLES, stripLocalePrefix } from '@/lib/home-nav';
 import { api } from '@/lib/api';
+import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth-context';
+import { useBalanceAwareness } from '@/lib/use-balance-awareness';
 import { useLoginModal } from '@/lib/login-modal-context';
 import {
   DropdownMenu,
@@ -23,6 +25,7 @@ const itemClass =
 
 export function AppTopbar() {
   const t = useTranslations('home');
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const { user, accessToken, logout, loading } = useAuth();
@@ -37,6 +40,15 @@ export function AppTopbar() {
     queryFn: () => api.credits.balance(accessToken!),
     enabled: !!accessToken && !!user,
     staleTime: 30_000,
+  });
+
+  const spendable = balance?.totalCreditsAvailable ?? 0;
+  // Badge de créditos ao lado de "Pricing": normal / âmbar (<1 vídeo) / vermelho (0).
+  const { balanceStatus, balanceTooltip } = useBalanceAwareness({
+    credits: spendable,
+    loading: !balance,
+    enabled: !!user,
+    surface: 'app_topbar',
   });
 
   const used = balance?.planCreditsUsed ?? 0;
@@ -73,6 +85,49 @@ export function AppTopbar() {
       </div>
 
       <div className="flex shrink-0 items-center gap-5">
+        {user && (
+          /* saldo de créditos — vira âmbar (<1 vídeo) / vermelho (0), leva aos créditos */
+          <Link
+            href="/creditos"
+            title={balanceTooltip}
+            aria-label={balanceTooltip}
+            className={cn(
+              'flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-semibold transition-colors duration-200 ease-app',
+              balanceStatus === 'zero'
+                ? 'border-red-500/40 bg-red-500/10 text-app-text hover:bg-red-500/[0.16]'
+                : balanceStatus === 'low'
+                  ? 'border-amber-500/40 bg-amber-500/10 text-app-text hover:bg-amber-500/[0.16]'
+                  : 'border-app-hairline-2 bg-app-surface text-app-text hover:bg-app-card-hover',
+            )}
+          >
+            <Coins
+              className={cn(
+                'size-[15px]',
+                balanceStatus === 'zero'
+                  ? 'text-red-400'
+                  : balanceStatus === 'low'
+                    ? 'text-amber-400'
+                    : 'text-app-lime',
+              )}
+              strokeWidth={1.8}
+            />
+            {balance ? (
+              <span className="font-mono tabular-nums">
+                {new Intl.NumberFormat(locale).format(spendable)}
+              </span>
+            ) : (
+              <span className="h-3 w-8 animate-pulse rounded-full bg-app-card-hover" />
+            )}
+            {(balanceStatus === 'zero' || balanceStatus === 'low') && (
+              <span
+                className={cn(
+                  'size-1.5 shrink-0 rounded-full',
+                  balanceStatus === 'zero' ? 'bg-red-400' : 'bg-amber-400',
+                )}
+              />
+            )}
+          </Link>
+        )}
         <Link
           href="/pricing"
           className="text-[14.5px] font-semibold text-app-lime transition-colors duration-200 ease-app hover:text-app-lime-bright"

@@ -14,13 +14,11 @@ import { PLANS_ENABLED } from '@/lib/features';
 import { PlansModal } from './PlansModal';
 import { WeeklyClaimWidget } from './WeeklyClaimWidget';
 import { useLoginModal } from '@/lib/login-modal-context';
-import { GENERATION_BUCKET_COST } from '@/lib/plans';
-import { trackPaywallEvent } from '@/lib/tracking';
+import { useBalanceAwareness } from '@/lib/use-balance-awareness';
 
 export function TopNavbar() {
   const t = useTranslations('editorChrome.navbar');
   const tMenu = useTranslations('editorChrome.navbar.menu');
-  const tUpsell = useTranslations('editorUpsell.navbar');
   const locale = useLocale();
   const router = useRouter();
   const { credits, creditsLoading, creditsBalance, studioMode, toggleStudioMode } = useEditor();
@@ -70,48 +68,13 @@ export function TopNavbar() {
     router.push('/');
   }
 
-  // ── Low-balance awareness ────────────────────────────────────────────────
-  // zero → red "out of credits"; >0 but below a single video → amber warning.
-  const VIDEO_COST = GENERATION_BUCKET_COST.videos;
-  const balanceStatus: 'ok' | 'low' | 'zero' =
-    creditsLoading || !user
-      ? 'ok'
-      : credits <= 0
-        ? 'zero'
-        : credits < VIDEO_COST
-          ? 'low'
-          : 'ok';
-  const balanceTooltip =
-    balanceStatus === 'zero'
-      ? tUpsell('zeroBalance')
-      : balanceStatus === 'low'
-        ? tUpsell('lowBalance')
-        : undefined;
-
-  // Fire a paywall "view" at most once per session per state.
-  const balanceTrackedRef = useRef(false);
-  useEffect(() => {
-    if (balanceStatus === 'ok') return;
-    if (balanceTrackedRef.current) return;
-    const sessionKey = `theaimodelab-navbar-balance-tracked-${balanceStatus}`;
-    try {
-      if (sessionStorage.getItem(sessionKey)) {
-        balanceTrackedRef.current = true;
-        return;
-      }
-      sessionStorage.setItem(sessionKey, '1');
-    } catch {
-      /* sessionStorage may be unavailable */
-    }
-    balanceTrackedRef.current = true;
-    trackPaywallEvent({
-      action: 'view',
-      trigger: balanceStatus === 'zero' ? 'zero_balance' : 'low_balance',
-      surface: 'navbar',
-      creditsAvailable: credits,
-      creditsNeeded: VIDEO_COST,
-    });
-  }, [balanceStatus, credits, VIDEO_COST]);
+  // ── Low-balance awareness (shared with the active shell AppTopbar) ──────────
+  const { balanceStatus, balanceTooltip } = useBalanceAwareness({
+    credits,
+    loading: creditsLoading,
+    enabled: !!user,
+    surface: 'navbar',
+  });
 
   if (studioMode) {
     return (
