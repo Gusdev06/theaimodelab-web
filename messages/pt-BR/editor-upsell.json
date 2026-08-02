@@ -1,0 +1,20 @@
+{
+  "editorUpsell": {
+    "navbar": {
+      "zeroBalance": "Sem créditos",
+      "lowBalance": "Seus créditos não cobrem mais 1 vídeo"
+    },
+    "postGeneration": {
+      "heading": "E agora?",
+      "dismiss": "Dispensar",
+      "credits": "{count} créditos",
+      "image": {
+        "upscale": "Upscale 4K",
+        "animate": "Animar com IA"
+      },
+      "video": {
+        "variation": "Gerar variação"
+      }
+    }
+  }
+}

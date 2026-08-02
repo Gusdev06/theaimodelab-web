@@ -29,6 +29,8 @@
       "buyNow": "Buy now"
     },
     "whatYouCanCreate": "What you can create",
+    "estimatePlan": "≈ {images, number} images or {videos, number} videos/mo",
+    "estimatePackage": "≈ {images, number} images or {videos, number} videos",
     "features": {
       "credits": "{count, number} credits",
       "emailSupport": "Email support",
@@ -97,7 +99,13 @@
         "intenseProduction": "Intense production, worry-free",
         "creditsNeverExpire": "Credits never expire"
       },
-      "trust": "One-time payment · No subscription"
+      "trust": "One-time payment · No subscription",
+      "anchor": {
+        "title": "A plan gives you far more",
+        "body": "With the {plan} plan ({price}/mo) you get {credits, number} credits — {multiplier}x more credits per dollar.",
+        "bodyUsd": "With the {plan} plan ({price}/mo) you get {credits, number} credits — {multiplier}x more credits per dollar.",
+        "cta": "See plans"
+      }
     },
     "packageSections": {
       "quick": "Quick top-ups",
@@ -227,6 +235,16 @@
       "images": "Images",
       "imagesNsfw": "Uncensored images (NSFW)",
       "videosNsfw": "Uncensored videos (NSFW)"
+    },
+    "zeroCreditsUpgrade": {
+      "title": "You're out of credits",
+      "usageLine": "You used {credits, number} credits in {days, plural, one {# day} other {# days}}.",
+      "upgradeOffer": "On the {plan} plan you'd get {credits, number} credits per month.",
+      "upgradeCta": "Upgrade to {plan}",
+      "buyPackageCta": "Buy a credit package",
+      "maxTierTitle": "You're already on the top plan",
+      "maxTierBody": "Buy a one-time credit package to keep generating — they never expire.",
+      "close": "Close"
     }
   }
 }

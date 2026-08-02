@@ -24,6 +24,7 @@ import {
   PLAN_ORIGINAL_PRICES,
   PLAN_SOCIAL_PROOF_ICONS,
   PLAN_UNLIMITED_FEATURE_KEYS,
+  estimateGenerations,
   formatCurrency,
   getPlanFeatureKeys,
   getPlanGenerationBuckets,
@@ -81,6 +82,7 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
   const isSubscribing = subscribingSlug === plan.slug;
   const featureEntries = getPlanFeatureKeys(plan);
   const generationBuckets = getPlanGenerationBuckets(plan.creditsPerMonth);
+  const estimate = estimateGenerations(plan.creditsPerMonth);
   const isDowngrade = planAction === 'downgrade';
   const unlimitedFeatureKeys = PLAN_UNLIMITED_FEATURE_KEYS[plan.slug];
   const originalPrice = PLAN_ORIGINAL_PRICES[plan.slug];
@@ -214,6 +216,13 @@ function PlanCard({ plan, isCurrent, planAction, onSubscribe, onSubscribePix, su
             </span>
           </div>
         </div>
+
+        {/* Créditos traduzidos em resultados (discreto) */}
+        {!isFree && (estimate.images > 0 || estimate.videos > 0) && (
+          <p className={`text-[#f3f0ed]/35 ${compact ? 'mt-1 text-[11px]' : 'mt-1.5 text-[11px]'}`}>
+            {t('estimatePlan', { images: estimate.images, videos: estimate.videos })}
+          </p>
+        )}
 
 
         {/* Social proof */}

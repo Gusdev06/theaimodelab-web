@@ -30,6 +30,7 @@ async function loadPartials(locale: Locale): Promise<Record<string, unknown>> {
     'editor-dialogs',
     'editor-misc',
     'editor-rewards',
+    'editor-upsell',
     'feedback',
     'free-gens',
   ] as const;

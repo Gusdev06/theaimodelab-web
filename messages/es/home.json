@@ -67,7 +67,10 @@
       "perfil": "Perfil"
     },
     "profile": {
-      "tabs": { "account": "Cuenta", "usage": "Uso" }
+      "tabs": {
+        "account": "Cuenta",
+        "usage": "Uso"
+      }
     },
     "notifications": {
       "title": "Notificaciones",
@@ -240,19 +243,41 @@
       "searchPlaceholder": "Busca proyectos, recursos y mucho más"
     },
     "quick": {
-      "workspace": { "title": "Workspace", "desc": "Lienzo infinito colaborativo" },
-      "imagem": { "title": "Imagen", "desc": "Genera y transforma imágenes" },
-      "video": { "title": "Video", "desc": "Videos de principio a fin" },
-      "audio": { "title": "Audio", "desc": "Sonido, voz y banda sonora" },
-      "avatares": { "title": "Avatares", "desc": "Clónate a ti mismo" },
-      "tiktokShop": { "title": "TikTok Shop", "desc": "Contenido para TikTok Shop" }
+      "workspace": {
+        "title": "Workspace",
+        "desc": "Lienzo infinito colaborativo"
+      },
+      "imagem": {
+        "title": "Imagen",
+        "desc": "Genera y transforma imágenes"
+      },
+      "video": {
+        "title": "Video",
+        "desc": "Videos de principio a fin"
+      },
+      "audio": {
+        "title": "Audio",
+        "desc": "Sonido, voz y banda sonora"
+      },
+      "avatares": {
+        "title": "Avatares",
+        "desc": "Clónate a ti mismo"
+      },
+      "tiktokShop": {
+        "title": "TikTok Shop",
+        "desc": "Contenido para TikTok Shop"
+      }
     },
     "continue": {
       "title": "Continúa donde lo dejaste",
       "untitled": "Sin título",
       "emptyTitle": "Tus creaciones recientes aparecen aquí",
       "emptyCta": "Crear mi primera generación",
-      "kind": { "imagem": "Imagen", "video": "Video", "audio": "Audio" }
+      "kind": {
+        "imagem": "Imagen",
+        "video": "Video",
+        "audio": "Audio"
+      }
     },
     "panels": {
       "tools": "Herramientas",
@@ -284,19 +309,58 @@
         "commerce": "Comercio"
       },
       "items": {
-        "gerarImagens": { "title": "Generar imágenes", "desc": "Crea imágenes con IA a partir de texto" },
-        "melhorarImagem": { "title": "Mejorar imagen", "desc": "Aumenta calidad, nitidez y resolución" },
-        "provadorVirtual": { "title": "Probador virtual", "desc": "Viste cualquier ropa en una persona" },
-        "trocaDeRosto": { "title": "Cambio de rostro", "desc": "Cambia rostros en imágenes y videos" },
-        "removerFundo": { "title": "Quitar fondo", "desc": "Recorta el fondo automáticamente" },
-        "gerarVideos": { "title": "Generar videos", "desc": "Crea videos de principio a fin" },
-        "copiarMovimentos": { "title": "Copiar movimientos", "desc": "Aplica el movimiento de un video a tu imagen" },
-        "textoParaVoz": { "title": "Texto a voz", "desc": "Locuciones realistas con IA" },
-        "clonarVoz": { "title": "Clonar voz", "desc": "Crea una voz a partir de un audio tuyo" },
-        "musica": { "title": "Música", "desc": "Compón bandas sonoras originales" },
-        "efeitosSonoros": { "title": "Efectos de sonido", "desc": "Genera efectos bajo demanda" },
-        "avatares": { "title": "Avatares", "desc": "Clónate en avatares" },
-        "tiktokShop": { "title": "TikTok Shop", "desc": "Contenido listo para vender" }
+        "gerarImagens": {
+          "title": "Generar imágenes",
+          "desc": "Crea imágenes con IA a partir de texto"
+        },
+        "melhorarImagem": {
+          "title": "Mejorar imagen",
+          "desc": "Aumenta calidad, nitidez y resolución"
+        },
+        "provadorVirtual": {
+          "title": "Probador virtual",
+          "desc": "Viste cualquier ropa en una persona"
+        },
+        "trocaDeRosto": {
+          "title": "Cambio de rostro",
+          "desc": "Cambia rostros en imágenes y videos"
+        },
+        "removerFundo": {
+          "title": "Quitar fondo",
+          "desc": "Recorta el fondo automáticamente"
+        },
+        "gerarVideos": {
+          "title": "Generar videos",
+          "desc": "Crea videos de principio a fin"
+        },
+        "copiarMovimentos": {
+          "title": "Copiar movimientos",
+          "desc": "Aplica el movimiento de un video a tu imagen"
+        },
+        "textoParaVoz": {
+          "title": "Texto a voz",
+          "desc": "Locuciones realistas con IA"
+        },
+        "clonarVoz": {
+          "title": "Clonar voz",
+          "desc": "Crea una voz a partir de un audio tuyo"
+        },
+        "musica": {
+          "title": "Música",
+          "desc": "Compón bandas sonoras originales"
+        },
+        "efeitosSonoros": {
+          "title": "Efectos de sonido",
+          "desc": "Genera efectos bajo demanda"
+        },
+        "avatares": {
+          "title": "Avatares",
+          "desc": "Clónate en avatares"
+        },
+        "tiktokShop": {
+          "title": "TikTok Shop",
+          "desc": "Contenido listo para vender"
+        }
       }
     },
     "clone": {
@@ -397,6 +461,18 @@
         "precos": "Planes y precios",
         "perfil": "Perfil"
       }
+    },
+    "firstRun": {
+      "title": "Crea tu primera modelo de IA ahora",
+      "subtitle": "En menos de 2 minutos: describe el estilo, genera la primera foto y comprueba con tus propios ojos la calidad y la consistencia del rostro.",
+      "freeCreditsBadge": "Tienes {credits} créditos de bono — la primera foto corre por nuestra cuenta",
+      "steps": {
+        "prompt": "Describe tu modelo o usa un prompt listo",
+        "generate": "Genera tu primera foto en Full HD",
+        "unlock": "Desbloquea fotos ilimitadas y videos"
+      },
+      "cta": "Generar mi primera foto",
+      "secondaryCta": "Ver planes y créditos"
     }
   }
 }

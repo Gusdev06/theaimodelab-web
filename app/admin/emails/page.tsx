@@ -1,10 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
-import { Loader2, Plus, Mail, CheckCircle2, AlertCircle, Clock, XCircle } from 'lucide-react';
+import { Loader2, Plus, Mail, CheckCircle2, AlertCircle, Clock, XCircle, Zap, Gift } from 'lucide-react';
 
 const STATUS_LABEL: Record<string, string> = {
   PENDING: 'Aguardando',
@@ -31,6 +32,140 @@ function StatusBadge({ status }: { status: string }) {
       <Icon className={`h-3 w-3 ${status === 'PROCESSING' ? 'animate-spin' : ''}`} />
       {STATUS_LABEL[status] ?? status}
     </span>
+  );
+}
+
+function SequenceToggleCard() {
+  const { accessToken } = useAuth();
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
+    queryKey: ['admin', 'emails', 'sequence-settings'],
+    queryFn: () => api.adminEmails.sequenceSettings(accessToken!),
+    enabled: !!accessToken,
+  });
+
+  const mutation = useMutation({
+    mutationFn: (enabled: boolean) =>
+      api.adminEmails.updateSequenceSettings(accessToken!, { enabled }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['admin', 'emails', 'sequence-settings'] }),
+  });
+
+  const enabled = query.data?.enabled ?? false;
+  const totalSent = (query.data?.stats ?? []).reduce((sum, s) => sum + s.sent, 0);
+  const busy = query.isLoading || mutation.isPending;
+
+  return (
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] px-5 py-4">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <Zap className="h-4 w-4 text-[#e11d2a]" />
+          <h2 className="text-sm font-semibold text-[#f3f0ed]">
+            Sequência automática de onboarding
+          </h2>
+        </div>
+        <p className="mt-1 text-xs text-[#f3f0ed]/50">
+          7 emails de conversão (14 dias) + 2 de ativação pós-assinatura · cron diário às 10h (BRT)
+          {totalSent > 0 && (
+            <> · {totalSent.toLocaleString('pt-BR')} enviados</>
+          )}
+        </p>
+      </div>
+      <div className="flex shrink-0 items-center gap-3">
+        <Link
+          href="/admin/emails/sequencias"
+          className="text-xs font-medium text-[#f3f0ed]/60 underline-offset-2 transition-colors hover:text-[#f3f0ed] hover:underline"
+        >
+          Ver emails
+        </Link>
+        <span className={`text-xs font-medium ${enabled ? 'text-[#e11d2a]' : 'text-[#f3f0ed]/40'}`}>
+          {query.isLoading ? '…' : enabled ? 'Ativa' : 'Desativada'}
+        </span>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={enabled}
+          aria-label="Ligar/desligar sequência automática de onboarding"
+          onClick={() => mutation.mutate(!enabled)}
+          disabled={busy}
+          className={`relative h-6 w-11 rounded-full transition-colors disabled:opacity-50 ${
+            enabled ? 'bg-[#e11d2a]' : 'bg-[#f3f0ed]/15'
+          }`}
+        >
+          <span
+            className={`absolute top-0.5 h-5 w-5 rounded-full bg-[#f3f0ed] transition-all ${
+              enabled ? 'left-[22px]' : 'left-0.5'
+            }`}
+          />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function WelcomeCreditsCard() {
+  const { accessToken } = useAuth();
+  const queryClient = useQueryClient();
+  const [draft, setDraft] = useState<string | null>(null);
+
+  const query = useQuery({
+    queryKey: ['admin', 'emails', 'sequence-settings'],
+    queryFn: () => api.adminEmails.sequenceSettings(accessToken!),
+    enabled: !!accessToken,
+  });
+
+  const mutation = useMutation({
+    mutationFn: (welcomeCredits: number) =>
+      api.adminEmails.updateSequenceSettings(accessToken!, { welcomeCredits }),
+    onSuccess: () => {
+      setDraft(null);
+      queryClient.invalidateQueries({ queryKey: ['admin', 'emails', 'sequence-settings'] });
+    },
+  });
+
+  const saved = query.data?.welcomeCredits ?? 0;
+  const value = draft ?? String(saved);
+  const parsed = Number.parseInt(value, 10);
+  const valid = Number.isFinite(parsed) && parsed >= 0;
+  const dirty = draft !== null && valid && parsed !== saved;
+  const busy = query.isLoading || mutation.isPending;
+
+  return (
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b] px-5 py-4">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <Gift className="h-4 w-4 text-[#e11d2a]" />
+          <h2 className="text-sm font-semibold text-[#f3f0ed]">Créditos de boas-vindas</h2>
+        </div>
+        <p className="mt-1 text-xs text-[#f3f0ed]/50">
+          Bônus concedido a cada cadastro novo, pro usuário gerar a primeira foto antes do
+          paywall. 0 = desligado · referência: foto 1K = 90 cr, 2K = 130 cr
+          {saved > 0 && <> · <span className="text-[#e11d2a]">ativo ({saved} cr)</span></>}
+        </p>
+      </div>
+      <div className="flex shrink-0 items-center gap-2">
+        <input
+          type="number"
+          min={0}
+          step={10}
+          value={value}
+          onChange={(e) => setDraft(e.target.value)}
+          disabled={busy}
+          aria-label="Créditos de boas-vindas por cadastro"
+          className="h-9 w-24 rounded-lg border border-[#f3f0ed]/10 bg-transparent px-3 text-right text-sm text-[#f3f0ed] outline-none transition-colors focus:border-[#e11d2a]/50 disabled:opacity-50"
+        />
+        <button
+          type="button"
+          onClick={() => valid && mutation.mutate(parsed)}
+          disabled={busy || !dirty}
+          className="app-btn inline-flex h-9 items-center gap-1.5 border border-[#f3f0ed]/10 px-3 text-xs font-medium text-[#f3f0ed]/80 transition-colors hover:border-[#e11d2a]/50 hover:text-[#f3f0ed] disabled:opacity-40"
+        >
+          {mutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+          Salvar
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -72,6 +207,9 @@ export default function AdminEmailsListPage() {
           Novo email
         </Link>
       </div>
+
+      <SequenceToggleCard />
+      <WelcomeCreditsCard />
 
       <div className="rounded-2xl border border-[#f3f0ed]/6 bg-[#0a0a0b]">
         {query.isLoading ? (

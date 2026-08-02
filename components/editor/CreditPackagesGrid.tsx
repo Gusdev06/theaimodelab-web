@@ -10,15 +10,16 @@ import {
   Loader2,
   Rocket,
   Shield,
+  Sparkles,
   Trophy,
   Zap,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth-context';
-import type { CreditPackage } from '@/lib/api';
-import { formatCurrency, getBoostMetaKey, getPackageBadge, getPackageGenerationPerks } from '@/lib/plans';
-import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
+import type { CreditPackage, Plan } from '@/lib/api';
+import { estimateGenerations, formatCurrency, getBoostMetaKey, getPackageAnchor, getPackageBadge, getPackageGenerationPerks } from '@/lib/plans';
+import { generateMetaEventId, trackMetaPixelEvent, trackPaywallEvent } from '@/lib/tracking';
 import { withCheckoutIdentity } from '@/lib/checkout';
 
 interface CreditPackagesGridProps {
@@ -34,13 +35,25 @@ interface CreditPackagesGridProps {
    * (e.g. on the public landing). Use it to open the login/register modal.
    */
   onUnauthenticated?: () => void;
+  /**
+   * Planos carregados (mesma moeda). Quando informado (e habilitado),
+   * mostra um callout de âncora preço-por-crédito apontando pro melhor plano.
+   */
+  plans?: Plan[];
+  /** Dispara ao clicar no callout de âncora (scroll/tab pros planos). */
+  onAnchorClick?: () => void;
+  /** Surface reportada no tracking de paywall (ex.: 'creditos_page', 'plans_modal'). */
+  surface?: string;
 }
 
-export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnauthenticated }: CreditPackagesGridProps) {
+export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnauthenticated, plans, onAnchorClick, surface = 'credit_packages_grid' }: CreditPackagesGridProps) {
   const t = useTranslations('editorPlans');
   const locale = useLocale();
   const { accessToken, user } = useAuth();
   const [purchasingId, setPurchasingId] = useState<string | null>(null);
+
+  const anchor = plans && plans.length > 0 ? getPackageAnchor(plans, packages) : null;
+  const anchorBodyKey = currency === 'BRL' ? 'packages.anchor.body' : 'packages.anchor.bodyUsd';
 
   const activePackages = packages
     .filter((p) => p.isActive)
@@ -61,6 +74,13 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
       return;
     }
     if (!pkg.checkoutUrl) return;
+    trackPaywallEvent({
+      action: 'click',
+      trigger: 'page_visit',
+      surface,
+      creditsAvailable: pkg.credits,
+      targetId: pkg.id,
+    });
     const eventId = generateMetaEventId('initiate_checkout_credit');
     setPurchasingId(pkg.id);
     trackMetaPixelEvent('InitiateCheckout', {
@@ -91,6 +111,35 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
 
   return (
     <div className={`flex flex-col ${compact ? 'gap-4' : 'gap-6'}`}>
+      {/* Âncora preço-por-crédito → aponta pro plano com melhor custo-benefício */}
+      {anchor && (
+        <button
+          type="button"
+          onClick={onAnchorClick}
+          className={`group flex w-full items-center gap-3 rounded-2xl border border-[#e11d2a]/25 bg-[#e11d2a]/[0.06] text-left transition-all hover:border-[#e11d2a]/40 hover:bg-[#e11d2a]/[0.1] ${compact ? 'px-3.5 py-3' : 'px-5 py-4'}`}
+        >
+          <div className={`flex shrink-0 items-center justify-center rounded-xl bg-[#e11d2a]/15 ${compact ? 'h-8 w-8' : 'h-10 w-10'}`}>
+            <Sparkles className={`text-[#e11d2a] ${compact ? 'h-4 w-4' : 'h-5 w-5'}`} />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className={`font-bold text-[#f3f0ed] ${compact ? 'text-[12px]' : 'text-[13px]'}`}>
+              {t('packages.anchor.title')}
+            </span>
+            <span className={`text-[#f3f0ed]/55 ${compact ? 'text-[11px]' : 'text-[12px]'}`}>
+              {t(anchorBodyKey as 'packages.anchor.body', {
+                plan: anchor.plan.name,
+                price: formatCurrency(anchor.plan.priceCents, anchor.plan.currency || currency, locale),
+                credits: anchor.plan.creditsPerMonth,
+                multiplier: anchor.multiplier,
+              })}
+            </span>
+          </div>
+          <span className={`ml-auto flex shrink-0 items-center gap-1 font-bold text-[#e11d2a] ${compact ? 'text-[11px]' : 'text-[12px]'}`}>
+            {t('packages.anchor.cta')}
+            <ArrowRight className={compact ? 'h-3 w-3' : 'h-3.5 w-3.5'} />
+          </span>
+        </button>
+      )}
       <div className={`grid grid-cols-1 items-stretch sm:grid-cols-2 lg:grid-cols-3 ${compact ? 'gap-3' : 'gap-4 xl:gap-5'}`}>
         {activePackages.map((pkg, globalIndex) => {
                 const badge = getPackageBadge(globalIndex, activePackages.length);
@@ -213,6 +262,17 @@ export function CreditPackagesGrid({ packages, currency = 'BRL', compact, onUnau
                           <span className={`ml-1 text-[#f3f0ed]/30 ${compact ? 'text-[12px]' : 'text-[11px]'}`}>{t('credits')}</span>
                         </div>
                       </div>
+
+                      {/* Créditos traduzidos em resultados (discreto) */}
+                      {(() => {
+                        const est = estimateGenerations(pkg.credits);
+                        if (est.images <= 0 && est.videos <= 0) return null;
+                        return (
+                          <p className={`text-[#f3f0ed]/35 ${compact ? 'mt-1 text-[11px]' : 'mt-1.5 text-[11px]'}`}>
+                            {t('estimatePackage', { images: est.images, videos: est.videos })}
+                          </p>
+                        );
+                      })()}
 
                       {/* Savings callout */}
                       {savingsPct > 0 && (

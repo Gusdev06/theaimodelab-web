@@ -138,6 +138,30 @@ export const GENERATION_BUCKET_COST = {
 
 export type GenerationBucketKey = keyof typeof GENERATION_BUCKET_COST;
 
+/**
+ * Custos de referência (SFW) para traduzir créditos em resultados de forma
+ * simples e discreta nos cards: "≈ X imagens ou Y vídeos". Mantém uma única
+ * fonte da verdade a partir de `GENERATION_BUCKET_COST`.
+ *   - imagem SFW ≈ 60 créditos
+ *   - vídeo SFW ≈ 350 créditos
+ */
+export interface GenerationEstimate {
+  images: number;
+  videos: number;
+}
+
+/**
+ * Estima, a partir de uma quantidade de créditos, quantas imagens OU vídeos
+ * (SFW) rendem, usando os custos de referência existentes. Cada número é o
+ * total se TODOS os créditos fossem gastos naquela categoria (ou/ou, não e).
+ */
+export function estimateGenerations(credits: number): GenerationEstimate {
+  return {
+    images: Math.floor(credits / GENERATION_BUCKET_COST.images),
+    videos: Math.floor(credits / GENERATION_BUCKET_COST.videos),
+  };
+}
+
 export interface PlanGenerationBucket {
   /** chave i18n em `editorPlans.categories.<key>` */
   key: GenerationBucketKey;
@@ -396,6 +420,51 @@ export function getPackagePerks(pkg: CreditPackage): string[] {
     'Créditos entram na hora',
     'Acumulam com os do plano',
   ];
+}
+
+/**
+ * Âncora preço-por-crédito: aponta o plano com melhor custo-benefício
+ * (mais créditos por unidade monetária) e quantas vezes ele rende mais
+ * créditos/moeda do que os pacotes avulsos. Calculado 100% a partir dos
+ * dados reais carregados (planos + pacotes) — nada de preço hardcode.
+ *
+ * Retorna `null` quando não há dados suficientes ou quando os pacotes já
+ * são tão bons quanto os planos (ratio <= 1), pra não mostrar âncora fraca.
+ */
+export interface PackageAnchor {
+  /** plano recomendado (melhor créditos/moeda entre os planos pagos) */
+  plan: Plan;
+  /** múltiplo arredondado: quantas vezes mais créditos por moeda vs pacotes */
+  multiplier: number;
+}
+
+export function getPackageAnchor(
+  plans: Plan[],
+  packages: CreditPackage[],
+): PackageAnchor | null {
+  const paidPlans = plans.filter(
+    (p) => p.slug !== 'free' && p.priceCents > 0 && p.creditsPerMonth > 0,
+  );
+  const activePackages = packages.filter(
+    (p) => p.isActive && p.priceCents > 0 && p.credits > 0,
+  );
+  if (paidPlans.length === 0 || activePackages.length === 0) return null;
+
+  // Melhor plano = maior créditos por centavo.
+  const bestPlan = paidPlans.reduce((best, p) =>
+    p.creditsPerMonth / p.priceCents > best.creditsPerMonth / best.priceCents ? p : best,
+  );
+  // Melhor pacote (pra ser justo, comparamos com o pacote mais eficiente).
+  const bestPackageCreditsPerCent = Math.max(
+    ...activePackages.map((p) => p.credits / p.priceCents),
+  );
+  const planCreditsPerCent = bestPlan.creditsPerMonth / bestPlan.priceCents;
+  if (bestPackageCreditsPerCent <= 0) return null;
+
+  const multiplier = Math.round(planCreditsPerCent / bestPackageCreditsPerCent);
+  if (multiplier < 2) return null;
+
+  return { plan: bestPlan, multiplier };
 }
 
 export function getPackageBadge(

@@ -48,6 +48,8 @@ import { StudioSelectPill } from './studio/StudioControls';
 import { StudioImageInputHandle, StudioImageOutputHandle, StudioTextInputHandle } from './studio/StudioHandles';
 import { useIncomingImage, urlToImagePayload } from '@/lib/use-incoming-image';
 import { useIncomingText } from '@/lib/use-incoming-text';
+import { trackPaywallEvent } from '@/lib/tracking';
+import { PostGenerationUpsell } from './PostGenerationUpsell';
 
 // ─── types ────────────────────────────────────────────────────────────────────
 
@@ -125,7 +127,7 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
   const tCommon = useTranslations('editorPanels.common');
   const tUnlimited = useTranslations('editorPanels.unlimited');
   const LOADING_MESSAGES = t.raw('loadingMessages') as string[];
-  const { setNodeImage, nodeUpscaleStates, setNodeUpscaleState, consumeCredits, refetchCredits, prependToGallery, openGalleryPicker, pendingPromptRef, consumePendingPrompt, pendingPanelImageRef, consumePendingPanelImage, setNodeGenerating, studioMode } =
+  const { setNodeImage, nodeUpscaleStates, setNodeUpscaleState, consumeCredits, refetchCredits, prependToGallery, openGalleryPicker, pendingPromptRef, consumePendingPrompt, pendingPanelImageRef, consumePendingPanelImage, setNodeGenerating, studioMode, credits } =
     useEditor();
   const [initialPendingPrompt] = useState(() => {
     if (pendingPromptRef.current?.panelType === 'generate-image') {
@@ -693,6 +695,14 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
         clearMsgTimer();
         setGenState('idle');
         if (err instanceof ApiError && [400, 402, 403].includes(err.status)) {
+          trackPaywallEvent({
+            action: 'view',
+            trigger: 'insufficient_credits',
+            surface: 'generate_image',
+            toolType: imageType,
+            creditsNeeded: estimate?.creditsRequired,
+            creditsAvailable: credits,
+          });
           setPlansModalOpen(true);
           return;
         }
@@ -1319,6 +1329,16 @@ export function GenerateImagePanel({ nodeId, onClose, onDuplicate }: GenerateIma
                 <X className="h-3.5 w-3.5" />
               </ActionButton>
             </GenerationPreview>
+
+            {/* ── Post-generation upsell (Upscale / Animate) ───────────── */}
+            {genState === 'done' && generatedImageUrl && imageVisible && (
+              <PostGenerationUpsell
+                kind="image"
+                mediaUrl={generatedImageUrl}
+                prompt={prompt}
+                onOpenPlans={() => setPlansModalOpen(true)}
+              />
+            )}
 
             {/* ── Folder dialog ───────────────────────────────────────── */}
             {generationId && (

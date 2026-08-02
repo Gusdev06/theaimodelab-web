@@ -14,10 +14,13 @@ import { PLANS_ENABLED } from '@/lib/features';
 import { PlansModal } from './PlansModal';
 import { WeeklyClaimWidget } from './WeeklyClaimWidget';
 import { useLoginModal } from '@/lib/login-modal-context';
+import { GENERATION_BUCKET_COST } from '@/lib/plans';
+import { trackPaywallEvent } from '@/lib/tracking';
 
 export function TopNavbar() {
   const t = useTranslations('editorChrome.navbar');
   const tMenu = useTranslations('editorChrome.navbar.menu');
+  const tUpsell = useTranslations('editorUpsell.navbar');
   const locale = useLocale();
   const router = useRouter();
   const { credits, creditsLoading, creditsBalance, studioMode, toggleStudioMode } = useEditor();
@@ -67,6 +70,49 @@ export function TopNavbar() {
     router.push('/');
   }
 
+  // ── Low-balance awareness ────────────────────────────────────────────────
+  // zero → red "out of credits"; >0 but below a single video → amber warning.
+  const VIDEO_COST = GENERATION_BUCKET_COST.videos;
+  const balanceStatus: 'ok' | 'low' | 'zero' =
+    creditsLoading || !user
+      ? 'ok'
+      : credits <= 0
+        ? 'zero'
+        : credits < VIDEO_COST
+          ? 'low'
+          : 'ok';
+  const balanceTooltip =
+    balanceStatus === 'zero'
+      ? tUpsell('zeroBalance')
+      : balanceStatus === 'low'
+        ? tUpsell('lowBalance')
+        : undefined;
+
+  // Fire a paywall "view" at most once per session per state.
+  const balanceTrackedRef = useRef(false);
+  useEffect(() => {
+    if (balanceStatus === 'ok') return;
+    if (balanceTrackedRef.current) return;
+    const sessionKey = `theaimodelab-navbar-balance-tracked-${balanceStatus}`;
+    try {
+      if (sessionStorage.getItem(sessionKey)) {
+        balanceTrackedRef.current = true;
+        return;
+      }
+      sessionStorage.setItem(sessionKey, '1');
+    } catch {
+      /* sessionStorage may be unavailable */
+    }
+    balanceTrackedRef.current = true;
+    trackPaywallEvent({
+      action: 'view',
+      trigger: balanceStatus === 'zero' ? 'zero_balance' : 'low_balance',
+      surface: 'navbar',
+      creditsAvailable: credits,
+      creditsNeeded: VIDEO_COST,
+    });
+  }, [balanceStatus, credits, VIDEO_COST]);
+
   if (studioMode) {
     return (
       <>
@@ -95,14 +141,28 @@ export function TopNavbar() {
               <div className="h-6 w-40 animate-pulse rounded-full bg-[#f3f0ed]/5" />
             ) : user ? (
               <>
-                <div className="flex h-7 items-center gap-1.5 rounded-full bg-[#f3f0ed]/[0.04] px-2.5 text-[11px] font-medium text-[#f3f0ed]/70">
-                  <Coins className="h-3 w-3 text-[#e11d2a]" />
+                <Link
+                  href="/creditos"
+                  title={balanceTooltip}
+                  aria-label={balanceTooltip}
+                  className={`flex h-7 items-center gap-1.5 rounded-full px-2.5 text-[11px] font-medium transition-colors ${
+                    balanceStatus === 'zero'
+                      ? 'bg-[#ef4444]/12 text-[#f3f0ed]/80 ring-1 ring-inset ring-[#ef4444]/40 hover:bg-[#ef4444]/18'
+                      : balanceStatus === 'low'
+                        ? 'bg-[#f59e0b]/12 text-[#f3f0ed]/80 ring-1 ring-inset ring-[#f59e0b]/40 hover:bg-[#f59e0b]/18'
+                        : 'bg-[#f3f0ed]/[0.04] text-[#f3f0ed]/70 hover:bg-[#f3f0ed]/[0.08]'
+                  }`}
+                >
+                  <Coins className={`h-3 w-3 ${balanceStatus === 'zero' ? 'text-[#ef4444]' : balanceStatus === 'low' ? 'text-[#f59e0b]' : 'text-[#e11d2a]'}`} />
                   {creditsLoading ? (
                     <span className="h-2.5 w-8 animate-pulse rounded-full bg-[#f3f0ed]/10" />
                   ) : (
                     <span className="tabular-nums">{new Intl.NumberFormat(locale).format(credits)}</span>
                   )}
-                </div>
+                  {(balanceStatus === 'zero' || balanceStatus === 'low') && (
+                    <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${balanceStatus === 'zero' ? 'bg-[#ef4444]' : 'bg-[#f59e0b]'}`} />
+                  )}
+                </Link>
 
                 <button
                   onClick={() => setPlansModalOpen(true)}
@@ -224,15 +284,29 @@ export function TopNavbar() {
             </div>
           ) : user ? (
             <div className="navbar-fade-in flex items-center gap-1.5 sm:gap-2">
-              {/* Credit badge */}
-              <div className="flex items-center gap-1.5 rounded-full bg-white/[0.05] ring-1 ring-inset ring-white/[0.07] backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_4px_12px_-4px_rgba(0,0,0,0.4)] px-2 py-1.5 sm:px-3">
-                <Coins className="h-3.5 w-3.5 text-[#e11d2a]" />
+              {/* Credit badge — turns amber/red when balance runs low */}
+              <Link
+                href="/creditos"
+                title={balanceTooltip}
+                aria-label={balanceTooltip}
+                className={`flex items-center gap-1.5 rounded-full ring-1 ring-inset backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_4px_12px_-4px_rgba(0,0,0,0.4)] px-2 py-1.5 sm:px-3 transition-colors ${
+                  balanceStatus === 'zero'
+                    ? 'bg-[#ef4444]/12 ring-[#ef4444]/40 hover:bg-[#ef4444]/18'
+                    : balanceStatus === 'low'
+                      ? 'bg-[#f59e0b]/12 ring-[#f59e0b]/40 hover:bg-[#f59e0b]/18'
+                      : 'bg-white/[0.05] ring-white/[0.07] hover:bg-white/[0.08]'
+                }`}
+              >
+                <Coins className={`h-3.5 w-3.5 ${balanceStatus === 'zero' ? 'text-[#ef4444]' : balanceStatus === 'low' ? 'text-[#f59e0b]' : 'text-[#e11d2a]'}`} />
                 {creditsLoading ? (
                   <div className="h-3 w-10 animate-pulse rounded-full bg-[#f3f0ed]/10" />
                 ) : (
                   <span className="text-xs font-semibold text-[#f3f0ed]">{new Intl.NumberFormat(locale).format(credits)}</span>
                 )}
-              </div>
+                {(balanceStatus === 'zero' || balanceStatus === 'low') && (
+                  <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${balanceStatus === 'zero' ? 'bg-[#ef4444]' : 'bg-[#f59e0b]'}`} />
+                )}
+              </Link>
 
               {/* Buy button — accent lime (icon-only on mobile) */}
               <button

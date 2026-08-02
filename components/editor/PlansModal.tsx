@@ -8,7 +8,7 @@ import {
   CircleOff,
   Coins,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/lib/auth-context';
 import { api } from '@/lib/api';
@@ -16,17 +16,24 @@ import { PlansGrid } from '@/components/editor/PlansGrid';
 import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
 import { PLAN_ORDER } from '@/lib/plans';
 import { withCheckoutIdentity } from '@/lib/checkout';
+import { trackPaywallEvent } from '@/lib/tracking';
 
 interface PlansModalProps {
   onClose: () => void;
+  /** Motivo pelo qual o modal foi aberto — reportado no tracking de paywall. */
+  trigger?: string;
 }
 
-export function PlansModal({ onClose }: PlansModalProps) {
+export function PlansModal({ onClose, trigger = 'page_visit' }: PlansModalProps) {
   const t = useTranslations('editorPlans');
   const locale = useLocale();
   const uiCurrency = locale === 'pt-BR' ? 'BRL' : 'USD';
   const { accessToken } = useAuth();
   const [subscribingSlug, setSubscribingSlug] = useState<string | null>(null);
+  const plansRef = useRef<HTMLDivElement>(null);
+  // true quando o usuário clica num CTA (assinar/comprar) — evita registrar
+  // 'dismiss' de paywall depois de uma ação real.
+  const didActRef = useRef(false);
 
   const { data: plans, isLoading: plansLoading } = useQuery({
     queryKey: ['plans', uiCurrency],
@@ -49,16 +56,32 @@ export function PlansModal({ onClose }: PlansModalProps) {
     enabled: !!accessToken,
     staleTime: 5 * 60_000,
   });
-  // No Brasil (/pt-br) os pacotes de crédito ficam ocultos: só têm preço USD, sem top-up em BRL.
-  const hasPackages = locale !== 'pt-BR' && !!packages?.some((p) => p.isActive);
+  // Exibição orientada a dados: mostra os pacotes sempre que a API retornar
+  // pacotes ativos para a moeda do usuário (o backend passou a devolver BRL).
+  const hasPackages = !!packages?.some((p) => p.isActive);
+
+  // Fecha registrando 'dismiss' se o usuário não tomou nenhuma ação (CTA).
+  function handleClose() {
+    if (!didActRef.current) {
+      trackPaywallEvent({ action: 'dismiss', trigger, surface: 'plans_modal' });
+    }
+    onClose();
+  }
+
+  // 'view' quando o modal abre.
+  useEffect(() => {
+    trackPaywallEvent({ action: 'view', trigger, surface: 'plans_modal' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
     }
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [onClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onClose, trigger]);
 
   const isLoading = plansLoading || profileLoading;
 
@@ -78,6 +101,13 @@ export function PlansModal({ onClose }: PlansModalProps) {
     if (subscribingSlug) return;
     const targetPlan = sorted.find((plan) => plan.slug === planSlug);
     if (!targetPlan?.checkoutUrl) return;
+    didActRef.current = true;
+    trackPaywallEvent({
+      action: 'click',
+      trigger,
+      surface: 'plans_modal',
+      targetId: planSlug,
+    });
     setSubscribingSlug(planSlug);
     // Manda o email (e nome) da conta logada para o checkout da PerfectPay.
     window.location.href = withCheckoutIdentity(targetPlan.checkoutUrl, {
@@ -89,14 +119,14 @@ export function PlansModal({ onClose }: PlansModalProps) {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm"
-      onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onMouseDown={(e) => { if (e.target === e.currentTarget) handleClose(); }}
     >
       <div className="relative mx-4 flex max-h-[88vh] w-full max-w-6xl flex-col gap-3 overflow-y-auto sidebar-scroll rounded-[20px] border border-[#f3f0ed]/[0.06] bg-[#111113] p-4 shadow-2xl sm:p-5">
 
         {/* Close */}
         <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="app-press app-ease flex h-8 w-8 items-center justify-center rounded-full text-landing-text/30 transition-all hover:bg-landing-text/8 hover:text-landing-text/80"
           >
             <X className="h-4 w-4" />
@@ -124,15 +154,17 @@ export function PlansModal({ onClose }: PlansModalProps) {
         </div>
 
         {/* Plans */}
-        <PlansGrid
-          plans={plans ?? []}
-          currentPlanSlug={currentPlanSlug}
-          hasActiveSub={hasActiveSub}
-          subscribingSlug={subscribingSlug}
-          onSubscribe={handleSubscribe}
-          compact
-          isLoading={isLoading}
-        />
+        <div ref={plansRef}>
+          <PlansGrid
+            plans={plans ?? []}
+            currentPlanSlug={currentPlanSlug}
+            hasActiveSub={hasActiveSub}
+            subscribingSlug={subscribingSlug}
+            onSubscribe={handleSubscribe}
+            compact
+            isLoading={isLoading}
+          />
+        </div>
         {!isLoading && (
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[10px] text-[#f3f0ed]/25">
             <span className="flex items-center gap-1">
@@ -162,7 +194,14 @@ export function PlansModal({ onClose }: PlansModalProps) {
               </p>
             </div>
 
-            <CreditPackagesGrid packages={packages ?? []} currency={uiCurrency} compact />
+            <CreditPackagesGrid
+              packages={packages ?? []}
+              currency={uiCurrency}
+              compact
+              plans={plans ?? []}
+              surface="plans_modal"
+              onAnchorClick={() => plansRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+            />
           </>
         )}
       </div>

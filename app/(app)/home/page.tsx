@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useShell } from '@/components/app/shell-context';
 import { useTypewriter } from '@/components/app/use-typewriter';
 import { CreateMenu } from '@/components/app/CreateMenu';
+import { FirstRunHero } from '@/components/home/FirstRunHero';
 import { QuickActions } from '@/components/home/QuickActions';
 import { ContinueSection } from '@/components/home/ContinueSection';
 import { HomePanels } from '@/components/home/HomePanels';
@@ -51,6 +52,7 @@ export default function InicioPage() {
       </button>
 
       <div className="flex flex-col gap-10">
+        <FirstRunHero />
         <QuickActions />
         <ContinueSection />
         <HomePanels />

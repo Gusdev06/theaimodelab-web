@@ -29,6 +29,8 @@
       "buyNow": "Comprar ahora"
     },
     "whatYouCanCreate": "Lo que puedes crear",
+    "estimatePlan": "≈ {images, number} imágenes o {videos, number} videos/mes",
+    "estimatePackage": "≈ {images, number} imágenes o {videos, number} videos",
     "features": {
       "credits": "{count, number} créditos",
       "emailSupport": "Soporte por correo",
@@ -97,7 +99,13 @@
         "intenseProduction": "Producción intensa sin preocupaciones",
         "creditsNeverExpire": "Los créditos no expiran"
       },
-      "trust": "Pago único · Sin suscripción"
+      "trust": "Pago único · Sin suscripción",
+      "anchor": {
+        "title": "Un plan rinde mucho más",
+        "body": "Con el plan {plan} ({price}/mes) obtienes {credits, number} créditos — {multiplier}x más créditos por dólar.",
+        "bodyUsd": "Con el plan {plan} ({price}/mes) obtienes {credits, number} créditos — {multiplier}x más créditos por dólar.",
+        "cta": "Ver planes"
+      }
     },
     "packageSections": {
       "quick": "Recargas rápidas",
@@ -227,6 +235,16 @@
       "images": "Imágenes",
       "imagesNsfw": "Imágenes sin censura (NSFW)",
       "videosNsfw": "Videos sin censura (NSFW)"
+    },
+    "zeroCreditsUpgrade": {
+      "title": "Te quedaste sin créditos",
+      "usageLine": "Usaste {credits, number} créditos en {days, plural, one {# día} other {# días}}.",
+      "upgradeOffer": "Con el plan {plan} tendrías {credits, number} créditos por mes.",
+      "upgradeCta": "Hacer upgrade a {plan}",
+      "buyPackageCta": "Comprar un paquete de créditos",
+      "maxTierTitle": "Ya estás en el plan máximo",
+      "maxTierBody": "Compra un paquete de créditos adicional para seguir generando — nunca expiran.",
+      "close": "Cerrar"
     }
   }
 }

@@ -40,6 +40,8 @@ import {
   AlertTriangle,
   Flame,
   CircleOff,
+  ArrowRight,
+  X,
 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useLoginModal } from '@/lib/login-modal-context';
@@ -50,7 +52,7 @@ import { withCheckoutIdentity } from '@/lib/checkout';
 import { PlansGrid } from '@/components/editor/PlansGrid';
 import { CreditPackagesGrid } from '@/components/editor/CreditPackagesGrid';
 import { useLocale, useTranslations } from 'next-intl';
-import { generateMetaEventId, trackMetaPixelEvent } from '@/lib/tracking';
+import { generateMetaEventId, trackMetaPixelEvent, trackPaywallEvent } from '@/lib/tracking';
 
 function CreditosPageContent() {
   const router = useRouter();
@@ -62,7 +64,10 @@ function CreditosPageContent() {
   const [subscribingSlug, setSubscribingSlug] = useState<string | null>(null);
   const t = useTranslations('account.credits');
   const tCommon = useTranslations('account.common');
+  const tPlans = useTranslations('editorPlans');
   const locale = useLocale();
+  // Permite fechar o modal de zero créditos sem tomar ação (fechar claro, sem dark pattern).
+  const [zeroCreditsDismissed, setZeroCreditsDismissed] = useState(false);
   const dateLocale = locale === 'pt-BR' ? 'pt-BR' : locale === 'es' ? 'es' : 'en-US';
   const numFmt = new Intl.NumberFormat(dateLocale);
 
@@ -72,6 +77,12 @@ function CreditosPageContent() {
     const targetPlan = plans?.find((plan) => plan.slug === planSlug);
     if (!targetPlan?.checkoutUrl) return;
 
+    trackPaywallEvent({
+      action: 'click',
+      trigger: 'page_visit',
+      surface: 'creditos_page',
+      targetId: planSlug,
+    });
     setSubscribingSlug(planSlug);
     const eventId = generateMetaEventId('initiate_checkout_plan');
     trackMetaPixelEvent('InitiateCheckout', {
@@ -150,6 +161,24 @@ function CreditosPageContent() {
     });
   }, [planFromUrl, accessToken, plansLoading, profileLoading, plans, user, t]);
 
+  // Registra 'view' quando o modal de zero créditos aparece (uma vez).
+  const zeroModalViewTracked = useRef(false);
+  useEffect(() => {
+    const slug = (profile?.plan as Record<string, unknown> | null)?.slug as string | null ?? null;
+    const isFree = slug === 'free' || !slug;
+    const isZero = !isFree && !!balance && balance.totalCreditsAvailable === 0;
+    if (isZero && !zeroCreditsDismissed && !zeroModalViewTracked.current) {
+      zeroModalViewTracked.current = true;
+      trackPaywallEvent({
+        action: 'view',
+        trigger: 'zero_balance',
+        surface: 'zero_credits_modal',
+        creditsAvailable: 0,
+        creditsNeeded: balance.planCreditsUsed,
+      });
+    }
+  }, [balance, profile, zeroCreditsDismissed]);
+
   const isLoading = authLoading || balanceLoading || plansLoading || profileLoading;
 
   if (isLoading) {
@@ -188,34 +217,178 @@ function CreditosPageContent() {
     ? (balance!.totalCreditsAvailable / totalCredits) * 100
     : 100;
   const showLowCreditsBanner = !isFreeUser && creditsPercent > 0 && creditsPercent <= 20;
-  const showZeroCreditsModal = !isFreeUser && balance && balance.totalCreditsAvailable === 0;
+  const showZeroCreditsModal =
+    !isFreeUser && !!balance && balance.totalCreditsAvailable === 0 && !zeroCreditsDismissed;
+
+  // Upgrade guiado: assinante ativo que zerou os créditos antes do fim do ciclo.
+  // Oferecemos o próximo tier com a conta feita (créditos usados × dias do ciclo).
+  const nextTierPlan = (() => {
+    if (!hasActiveSub || !currentPlanSlug || currentPlanSlug === 'free') return null;
+    const currentIdx = PLAN_ORDER.indexOf(currentPlanSlug);
+    if (currentIdx < 0) return null;
+    // Procura o próximo plano pago acima do atual (na ordem de tiers).
+    for (let i = currentIdx + 1; i < PLAN_ORDER.length; i++) {
+      const candidate = sortedPlans.find((p) => p.slug === PLAN_ORDER[i] && p.priceCents > 0);
+      if (candidate) return candidate;
+    }
+    return null;
+  })();
+
+  const cycleDaysUsed = balance
+    ? Math.max(
+        1,
+        Math.round(
+          (Date.now() - new Date(balance.periodStart).getTime()) / (1000 * 60 * 60 * 24),
+        ),
+      )
+    : 0;
+  const creditsUsedThisCycle = balance?.planCreditsUsed ?? 0;
+
+  // Fecha o modal de zero créditos registrando 'dismiss' (sem ação).
+  function dismissZeroCreditsModal() {
+    trackPaywallEvent({
+      action: 'dismiss',
+      trigger: 'zero_balance',
+      surface: 'zero_credits_modal',
+      creditsAvailable: 0,
+    });
+    setZeroCreditsDismissed(true);
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-[#111113] overflow-y-auto sidebar-scroll">
       {/* Zero credits modal */}
       {showZeroCreditsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="mx-4 flex w-full max-w-sm flex-col items-center gap-5 rounded-2xl border border-[#f3f0ed]/10 bg-[#1a1a1e] p-8">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onMouseDown={(e) => { if (e.target === e.currentTarget) dismissZeroCreditsModal(); }}
+        >
+          <div className="relative mx-4 flex w-full max-w-sm flex-col items-center gap-5 rounded-2xl border border-[#f3f0ed]/10 bg-[#1a1a1e] p-8">
+            {/* Fechar claro (sem dark pattern) */}
+            <button
+              onClick={dismissZeroCreditsModal}
+              aria-label={tPlans('zeroCreditsUpgrade.close')}
+              className="app-press app-ease absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-[#f3f0ed]/30 transition-all hover:bg-[#f3f0ed]/8 hover:text-[#f3f0ed]/80"
+            >
+              <X className="h-4 w-4" />
+            </button>
+
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/15">
               <AlertTriangle className="h-7 w-7 text-red-400" />
             </div>
-            <div className="text-center">
-              <h3 className="text-lg font-bold text-[#f3f0ed]">{t('zeroTitle')}</h3>
-              <p className="mt-2 text-sm text-[#f3f0ed]/50">
-                {t('zeroDescription')}
-              </p>
-            </div>
-            <div className="flex w-full flex-col gap-2">
-              <button
-                onClick={() => {
-                  const plansSection = document.getElementById('plans-section');
-                  plansSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
-              >
-                {t('renewNow')}
-              </button>
-            </div>
+
+            {nextTierPlan ? (
+              /* Assinante ativo → upgrade guiado com a conta feita */
+              <>
+                <div className="text-center">
+                  <h3 className="text-lg font-bold text-[#f3f0ed]">{tPlans('zeroCreditsUpgrade.title')}</h3>
+                  <p className="mt-2 text-sm text-[#f3f0ed]/50">
+                    {tPlans('zeroCreditsUpgrade.usageLine', {
+                      credits: creditsUsedThisCycle,
+                      days: cycleDaysUsed,
+                    })}
+                  </p>
+                  <p className="mt-3 rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/[0.06] px-3 py-2.5 text-sm font-semibold text-[#f3f0ed]/80">
+                    {tPlans('zeroCreditsUpgrade.upgradeOffer', {
+                      plan: nextTierPlan.name,
+                      credits: nextTierPlan.creditsPerMonth,
+                    })}
+                  </p>
+                </div>
+                <div className="flex w-full flex-col gap-2">
+                  <button
+                    onClick={() => handleSubscribe(nextTierPlan.slug)}
+                    disabled={!!subscribingSlug || !nextTierPlan.checkoutUrl}
+                    className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae] disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {subscribingSlug === nextTierPlan.slug ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <>
+                        {tPlans('zeroCreditsUpgrade.upgradeCta', { plan: nextTierPlan.name })}
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      trackPaywallEvent({
+                        action: 'click',
+                        trigger: 'zero_balance',
+                        surface: 'zero_credits_modal',
+                        targetId: 'buy_package',
+                      });
+                      setZeroCreditsDismissed(true);
+                      document.getElementById('packages-section')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="app-press app-ease flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-[#f3f0ed]/10 text-sm font-semibold text-[#f3f0ed]/70 transition-colors hover:bg-[#f3f0ed]/5 hover:text-[#f3f0ed]"
+                  >
+                    {tPlans('zeroCreditsUpgrade.buyPackageCta')}
+                  </button>
+                </div>
+              </>
+            ) : hasActiveSub ? (
+              /* Já está no tier máximo → oferecer pacotes */
+              <>
+                <div className="text-center">
+                  <h3 className="text-lg font-bold text-[#f3f0ed]">{tPlans('zeroCreditsUpgrade.maxTierTitle')}</h3>
+                  <p className="mt-2 text-sm text-[#f3f0ed]/50">
+                    {tPlans('zeroCreditsUpgrade.usageLine', {
+                      credits: creditsUsedThisCycle,
+                      days: cycleDaysUsed,
+                    })}
+                  </p>
+                  <p className="mt-2 text-sm text-[#f3f0ed]/50">
+                    {tPlans('zeroCreditsUpgrade.maxTierBody')}
+                  </p>
+                </div>
+                <div className="flex w-full flex-col gap-2">
+                  <button
+                    onClick={() => {
+                      trackPaywallEvent({
+                        action: 'click',
+                        trigger: 'zero_balance',
+                        surface: 'zero_credits_modal',
+                        targetId: 'buy_package',
+                      });
+                      setZeroCreditsDismissed(true);
+                      document.getElementById('packages-section')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
+                  >
+                    {tPlans('zeroCreditsUpgrade.buyPackageCta')}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              /* Fallback (assinatura inativa/legada) → comportamento original: renovar */
+              <>
+                <div className="text-center">
+                  <h3 className="text-lg font-bold text-[#f3f0ed]">{t('zeroTitle')}</h3>
+                  <p className="mt-2 text-sm text-[#f3f0ed]/50">
+                    {t('zeroDescription')}
+                  </p>
+                </div>
+                <div className="flex w-full flex-col gap-2">
+                  <button
+                    onClick={() => {
+                      trackPaywallEvent({
+                        action: 'click',
+                        trigger: 'zero_balance',
+                        surface: 'zero_credits_modal',
+                        targetId: 'renew',
+                      });
+                      setZeroCreditsDismissed(true);
+                      document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="app-press app-ease flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#e11d2a] text-sm font-bold text-[#111113] transition-colors hover:bg-[#f75fae]"
+                  >
+                    {t('renewNow')}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
@@ -400,8 +573,9 @@ function CreditosPageContent() {
         )}
 
         {/* -- Pacotes de crédito avulsos (top-up) -- */}
-        {/* Ocultos no Brasil (/pt-br): os pacotes só têm preço USD, não há top-up em BRL. */}
-        {locale !== 'pt-BR' && packages && packages.some((p) => p.isActive) && (
+        {/* Exibição orientada a dados: mostra sempre que a API retornar pacotes
+            ativos para a moeda do usuário (o backend passou a devolver BRL). */}
+        {packages && packages.some((p) => p.isActive) && (
           <div id="packages-section" className="flex flex-col gap-8">
             <div className="flex flex-col items-center gap-3 text-center">
               <div className="flex items-center gap-2 rounded-full border border-[#f3f0ed]/10 bg-[#f3f0ed]/[0.04] px-4 py-1.5">
@@ -424,6 +598,11 @@ function CreditosPageContent() {
               packages={packages}
               currency={uiCurrency}
               onUnauthenticated={openLoginModal}
+              plans={sortedPlans}
+              surface="creditos_page"
+              onAnchorClick={() => {
+                document.getElementById('plans-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             />
           </div>
         )}

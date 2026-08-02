@@ -2694,6 +2694,37 @@ export const api = {
         limit: number;
       }>(`/api/v1/admin/emails?page=${page}&limit=${limit}`, accessToken);
     },
+    sequenceSettings(accessToken: string) {
+      return authRequest<{
+        enabled: boolean;
+        welcomeCredits: number;
+        stats: Array<{ sequence: string; sent: number }>;
+      }>('/api/v1/admin/emails/sequences/settings', accessToken);
+    },
+    updateSequenceSettings(
+      accessToken: string,
+      payload: { enabled?: boolean; welcomeCredits?: number },
+    ) {
+      return authRequest<{ enabled: boolean; welcomeCredits: number }>(
+        '/api/v1/admin/emails/sequences/settings',
+        accessToken,
+        { method: 'PATCH', body: JSON.stringify(payload) },
+      );
+    },
+    sequenceTemplates(accessToken: string) {
+      return authRequest<{
+        items: Array<{
+          key: string;
+          sequence: string;
+          trigger: string;
+          sample: boolean;
+          content: Record<
+            'pt-BR' | 'en' | 'es',
+            { subject: string; bodyMarkdown: string }
+          >;
+        }>;
+      }>('/api/v1/admin/emails/sequences/templates', accessToken);
+    },
     detail(accessToken: string, id: string) {
       return authRequest<{
         id: string;

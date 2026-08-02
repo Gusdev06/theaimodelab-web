@@ -38,6 +38,8 @@ import { InlineAudioPlayer } from './InlineAudioPlayer';
 import { StudioImageInputHandle, StudioTextInputHandle } from './studio/StudioHandles';
 import { useIncomingImage, urlToImagePayload } from '@/lib/use-incoming-image';
 import { useIncomingText } from '@/lib/use-incoming-text';
+import { trackPaywallEvent } from '@/lib/tracking';
+import { PostGenerationUpsell } from './PostGenerationUpsell';
 import { EnhancePromptToggle } from './EnhancePromptToggle';
 import { UnlimitedToggle } from './UnlimitedToggle';
 import {
@@ -127,10 +129,18 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
   const tCommon = useTranslations('editorPanels.common');
   const tUnlimited = useTranslations('editorPanels.unlimited');
   const VIDEO_LOADING_MESSAGES = t.raw('loadingMessages') as string[];
-  const { setNodeImage, consumeCredits, refetchCredits, prependToGallery, openGalleryPicker, pendingPromptRef, consumePendingPrompt, setNodeGenerating, studioMode } = useEditor();
+  const { setNodeImage, consumeCredits, refetchCredits, prependToGallery, openGalleryPicker, pendingPromptRef, consumePendingPrompt, setNodeGenerating, studioMode, credits, pendingPanelImageRef, consumePendingPanelImage } = useEditor();
   const [initialPendingPrompt] = useState(() => {
     if (pendingPromptRef.current?.panelType === 'generate-video') {
       return consumePendingPrompt()!.prompt;
+    }
+    return null;
+  });
+  // Hand-off from the post-generation upsell ("Animate with AI"): opens this
+  // panel in image-to-video mode with the image already set as the first frame.
+  const [initialPendingImage] = useState(() => {
+    if (pendingPanelImageRef.current?.panelType === 'generate-video') {
+      return consumePendingPanelImage();
     }
     return null;
   });
@@ -159,7 +169,7 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
   const [sampleCount, setSampleCount] = useState<number>(stored?.sampleCount ?? 1);
   const [generatedVideoUrls, setGeneratedVideoUrls] = useState<string[]>(stored?.generatedVideoUrls ?? []);
 
-  const [videoMode, setVideoMode] = useState<'text' | 'image'>(stored?.videoMode ?? 'text');
+  const [videoMode, setVideoMode] = useState<'text' | 'image'>(initialPendingImage ? 'image' : (stored?.videoMode ?? 'text'));
   const [refImages, setRefImages] = useState<{ base64: string; mime_type: string; preview: string }[]>([]);
   const [firstFrame, setFirstFrame] = useState<{ base64: string; mime_type: string; preview: string } | null>(null);
   const [lastFrame, setLastFrame] = useState<{ base64: string; mime_type: string; preview: string } | null>(null);
@@ -1286,6 +1296,14 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
       }
 
       if (err instanceof ApiError && [400, 402, 403].includes(err.status)) {
+        trackPaywallEvent({
+          action: 'view',
+          trigger: 'insufficient_credits',
+          surface: 'generate_video',
+          toolType: videoType,
+          creditsNeeded: estimate?.creditsRequired,
+          creditsAvailable: credits,
+        });
         setPlansModalOpen(true);
         return;
       }
@@ -1405,6 +1423,17 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
       setFirstFrame((prev) => (prev && prev.base64 === connectionPayload.base64 ? null : prev));
     }
   }, [connectionPayload, videoMode]);
+
+  // Load the pending image (from the post-generation upsell) as the first frame.
+  useEffect(() => {
+    if (!initialPendingImage?.imageUrl) return;
+    let cancelled = false;
+    urlToImagePayload(initialPendingImage.imageUrl)
+      .then((payload) => { if (!cancelled) setFirstFrame(payload); })
+      .catch((err) => { console.error('[video-panel] failed to load pending image', err); });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (studioMode) {
     const PROPORTION_LABELS: Record<string, string> = { '16-9': '16:9', '9-16': '9:16', '1-1': '1:1', '2-3': '2:3', '3-2': '3:2' };
@@ -2374,6 +2403,16 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
                   </button>
                 ))}
               </div>
+            )}
+
+            {/* ── Post-generation upsell (generate variation) ──────────── */}
+            {genState === 'done' && generatedVideoUrls.length > 0 && videosVisible && (
+              <PostGenerationUpsell
+                kind="video"
+                mediaUrl={generatedVideoUrls[selectedVideoIdx]}
+                prompt={prompt}
+                onOpenPlans={() => setPlansModalOpen(true)}
+              />
             )}
 
             {/* ── Options toggle ─────────────────────────────────────── */}

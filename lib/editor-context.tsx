@@ -23,7 +23,7 @@ export interface PendingPrompt {
 }
 
 export interface PendingPanelImage {
-  panelType: 'generate-image';
+  panelType: 'generate-image' | 'generate-video' | 'upscale';
   imageUrl: string;
   /** Optional title to seed the prompt (e.g., product name from Trending). */
   productTitle?: string;

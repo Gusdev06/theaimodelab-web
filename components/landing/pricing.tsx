@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useLoginModal } from "@/lib/login-modal-context";
 import { useAuth } from "@/lib/auth-context";
 import { api, Plan } from "@/lib/api";
-import { getPlanGenerationBuckets, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
+import { estimateGenerations, getPlanGenerationBuckets, PLAN_UNLIMITED_FEATURE_KEYS } from "@/lib/plans";
 import { withCheckoutIdentity } from "@/lib/checkout";
 
 // Monetização por assinatura mensal (PerfectPay). A landing lista os planos ativos
@@ -18,6 +18,7 @@ export function Pricing() {
   const t = useTranslations("pricing");
   const tUnlimited = useTranslations("editorPlans.unlimited");
   const tCategories = useTranslations("editorPlans.categories");
+  const tEditorPlans = useTranslations("editorPlans");
   const locale = useLocale();
   // Moeda por locale: Brasil (/pt-br) cobra em BRL via Cakto; /en e /es em USD via
   // PerfectPay. O backend devolve o preço e o checkoutUrl da moeda pedida.
@@ -157,6 +158,15 @@ export function Pricing() {
                   <p className="mt-4 text-[13px] font-semibold text-landing-text">
                     {t("creditsPerMonth", { credits: formatCredits(plan.creditsPerMonth) })}
                   </p>
+                  {(() => {
+                    const est = estimateGenerations(plan.creditsPerMonth);
+                    if (est.images <= 0 && est.videos <= 0) return null;
+                    return (
+                      <p className="mt-1 text-[12px] text-[#f3f0ed]/40">
+                        {tEditorPlans("estimatePlan", { images: est.images, videos: est.videos })}
+                      </p>
+                    );
+                  })()}
                   <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#f3f0ed]/35">
                     {t("generationEstimate")}
                   </p>

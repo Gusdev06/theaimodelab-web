@@ -290,6 +290,77 @@ export function flushPendingMetaLead(): void {
   }
 }
 
+// ─── Paywall / upsell analytics ─────────────────────────────────────────────
+
+export type PaywallEventAction = 'view' | 'click' | 'dismiss';
+
+export type PaywallEvent = {
+  action: PaywallEventAction;
+  /** Why the paywall/upsell showed up, e.g. 'insufficient_credits', 'low_balance'. */
+  trigger: string;
+  /** Where it showed up, e.g. 'generate_image', 'navbar', 'post_generation_upsell'. */
+  surface: string;
+  toolType?: string;
+  creditsNeeded?: number;
+  creditsAvailable?: number;
+  targetId?: string;
+};
+
+const LOCALE_COOKIE_NAME = 'theaimodelab-locale';
+
+function readLocale(): string | undefined {
+  const fromCookie = readCookie(LOCALE_COOKIE_NAME);
+  if (fromCookie) return fromCookie;
+  if (typeof document !== 'undefined' && document.documentElement.lang) {
+    return document.documentElement.lang;
+  }
+  return undefined;
+}
+
+/**
+ * Fire-and-forget analytics ping for paywall / upsell interactions.
+ * Never throws, never blocks the UI, and is a no-op during SSR.
+ * The backend endpoint is provisioned separately — this tolerates its absence.
+ */
+export function trackPaywallEvent(event: PaywallEvent): void {
+  // API_BASE_URL vazio = same-origin (proxied pela Vercel); só bloqueia no server.
+  if (typeof window === 'undefined' || API_BASE_URL === undefined) return;
+
+  try {
+    const attribution = readAttribution() ?? {};
+    const metaIds = getMetaBrowserIds(attribution.fbclid);
+    // Auth opcional: com o token no header o backend preenche userId no evento
+    // (funil por usuário); sem token o evento fica anônimo, o que também vale.
+    const accessToken = readCookie('theaimodelab-access-token');
+
+    void fetch(`${API_BASE_URL}/api/v1/analytics/events`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      },
+      keepalive: true,
+      body: JSON.stringify({
+        eventName: 'paywall',
+        ...event,
+        locale: readLocale(),
+        url: window.location.href.slice(0, 2048),
+        utm_source: attribution.utm_source,
+        utm_medium: attribution.utm_medium,
+        utm_campaign: attribution.utm_campaign,
+        utm_content: attribution.utm_content,
+        utm_term: attribution.utm_term,
+        fbp: metaIds.fbp,
+        fbc: metaIds.fbc,
+      }),
+    }).catch(() => {
+      // Analytics must never block UX.
+    });
+  } catch {
+    // Analytics must never throw.
+  }
+}
+
 async function sendMetaServerEvent(
   eventName: MetaServerEvent,
   customData: Record<string, unknown>,

@@ -1,0 +1,20 @@
+{
+  "editorUpsell": {
+    "navbar": {
+      "zeroBalance": "Out of credits",
+      "lowBalance": "Your credits don't cover another video"
+    },
+    "postGeneration": {
+      "heading": "What's next?",
+      "dismiss": "Dismiss",
+      "credits": "{count} credits",
+      "image": {
+        "upscale": "Upscale 4K",
+        "animate": "Animate with AI"
+      },
+      "video": {
+        "variation": "Generate variation"
+      }
+    }
+  }
+}

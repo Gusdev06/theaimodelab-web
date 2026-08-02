@@ -63,7 +63,7 @@ interface UpscalePanelProps {
 export function UpscalePanel({ nodeId, onClose, onDuplicate }: UpscalePanelProps) {
   const t = useTranslations('editorPanels.upscale');
   const tCommon = useTranslations('editorPanels.common');
-  const { setNodeImage, consumeCredits, refetchCredits, prependToGallery, setNodeGenerating, studioMode } = useEditor();
+  const { setNodeImage, consumeCredits, refetchCredits, prependToGallery, setNodeGenerating, studioMode, pendingPanelImageRef, consumePendingPanelImage } = useEditor();
   const { accessToken } = useAuth();
   const { openLoginModal } = useLoginModal();
   const loadingMessages = t.raw('loadingMessages') as string[];
@@ -79,10 +79,29 @@ export function UpscalePanel({ nodeId, onClose, onDuplicate }: UpscalePanelProps
   const model = 'gemini-3-pro-image-preview';
   const [sourceImage, setSourceImage] = useState<{ base64: string; mime_type: string; preview: string } | null>(null);
 
+  // Hand-off from the post-generation upsell: opens this panel with the image
+  // already selected as the upscale source.
+  const [initialPendingImage] = useState(() => {
+    if (pendingPanelImageRef.current?.panelType === 'upscale') {
+      return consumePendingPanelImage();
+    }
+    return null;
+  });
+
   useEffect(() => {
     idbLoad<{ sourceImage: { base64: string; mime_type: string; preview: string } | null }>(`${storageKey}-images`)
       .then((data) => { if (data?.sourceImage) setSourceImage(data.sourceImage); })
       .catch((err) => { console.error('[upscale-panel] failed to fetch incoming image', err); });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!initialPendingImage?.imageUrl) return;
+    let cancelled = false;
+    urlToImagePayload(initialPendingImage.imageUrl)
+      .then((payload) => { if (!cancelled) setSourceImage(payload); })
+      .catch((err) => { console.error('[upscale-panel] failed to load pending image', err); });
+    return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
