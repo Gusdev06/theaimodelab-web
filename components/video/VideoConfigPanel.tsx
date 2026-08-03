@@ -349,9 +349,12 @@ export function VideoConfigPanel({
     setUnlimited(true);
   };
 
-  // desliga o ilimitado se o modelo selecionado sair do plano
+  // desliga o ilimitado se o modelo selecionado sair do plano.
+  // Aguarda o status carregar: com `unlimitedStatus` undefined (query ainda em
+  // voo) o check retornaria false e desligaria silenciosamente o toggle
+  // persistido — e a geração seguinte debitaria créditos sem o usuário saber.
   useEffect(() => {
-    if (!unlimited) return;
+    if (!unlimited || !unlimitedStatus) return;
     if (!isModelSlugInUnlimitedPlan(unlimitedStatus, model)) setUnlimited(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [model, unlimitedStatus]);
