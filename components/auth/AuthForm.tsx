@@ -54,9 +54,6 @@ export function AuthForm({
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState(googleError || '');
-  const [success, setSuccess] = useState('');
-  const [resendLoading, setResendLoading] = useState(false);
-  const [showResend, setShowResend] = useState(false);
 
   // Forgot password
   const [forgotEmail, setForgotEmail] = useState('');
@@ -193,8 +190,6 @@ export function AuthForm({
   async function handleEmailSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     setError('');
-    setSuccess('');
-    setShowResend(false);
     setLoading(true);
     try {
       if (mode === 'login') {
@@ -205,28 +200,21 @@ export function AuthForm({
         setView('verify');
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : tCommon('genericError');
-      setError(message);
-      if (err instanceof ApiError && err.code === 'EMAIL_NOT_VERIFIED') setShowResend(true);
+      if (err instanceof ApiError && err.code === 'EMAIL_NOT_VERIFIED') {
+        // Conta existe mas nunca foi verificada: reenvia o código e abre a tela
+        // de verificação em vez de deixar o usuário preso no erro de login.
+        api.auth.resendVerificationByEmail(email).catch(() => {});
+        setDigits(['', '', '', '', '', '']);
+        setVerifyStatus('input');
+        setVerifyMessage('');
+        setView('verify');
+      } else {
+        setError(err instanceof Error ? err.message : tCommon('genericError'));
+      }
     } finally {
       setLoading(false);
     }
   }
-  async function handleResendVerification() {
-    setResendLoading(true);
-    setError('');
-    setSuccess('');
-    try {
-      const res = await api.auth.resendVerificationByEmail(email);
-      setSuccess(res.message);
-      setShowResend(false);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : tCommon('genericError'));
-    } finally {
-      setResendLoading(false);
-    }
-  }
-
   return (
     <>
       {/* ── View: Options ── */}
@@ -464,17 +452,7 @@ export function AuthForm({
                 </button>
               </div>
             </div>
-            {success && <p className="rounded-xl border border-[#e11d2a]/20 bg-[#e11d2a]/10 px-3 py-2 text-xs text-[#e11d2a]">{success}</p>}
-            {error && (
-              <div className="flex flex-col gap-2">
-                <p className="rounded-xl border border-red-400/20 bg-red-400/10 px-3 py-2 text-xs text-red-400">{error}</p>
-                {showResend && (
-                  <button type="button" onClick={handleResendVerification} disabled={resendLoading} className="text-xs text-[#e11d2a]/70 hover:text-[#e11d2a] transition-colors disabled:opacity-50">
-                    {resendLoading ? tCommon('resending') : tCommon('resendVerification')}
-                  </button>
-                )}
-              </div>
-            )}
+            {error && <p className="rounded-xl border border-red-400/20 bg-red-400/10 px-3 py-2 text-xs text-red-400">{error}</p>}
             {mode === 'login' && (
               <div className="flex justify-end">
                 <button type="button" onClick={() => { setForgotEmail(email); setView('forgot'); }} className="text-[11px] text-[#e11d2a]/50 hover:text-[#e11d2a]/80 transition-colors">
