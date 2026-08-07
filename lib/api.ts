@@ -792,6 +792,43 @@ export interface WavespeedSeedanceImageToVideoRequest {
   model_variant?: string;
 }
 
+// MiniMax H3 (WaveSpeed) — modelo geral, 3 modos, áudio nativo. Resolução
+// 'RES_480P' (480p) | 'RES_720P' (768p). Duração 5-15s.
+export interface MinimaxH3TextToVideoRequest {
+  prompt: string;
+  resolution?: string;
+  duration_seconds: number;
+  aspect_ratio?: string; // '16:9' | '9:16' | '1:1' | '4:3' | '3:4' | '21:9' | '9:21'
+  model_variant?: string;
+}
+
+export interface MinimaxH3ImageToVideoRequest {
+  prompt: string;
+  resolution?: string;
+  duration_seconds: number;
+  first_frame: string;
+  first_frame_mime_type?: string;
+  last_frame?: string;
+  last_frame_mime_type?: string;
+  model_variant?: string;
+}
+
+export interface MinimaxH3ReferenceMedia {
+  base64: string;
+  mime_type?: string;
+}
+
+export interface MinimaxH3ReferenceToVideoRequest {
+  prompt: string;
+  resolution?: string;
+  duration_seconds: number;
+  aspect_ratio?: string;
+  reference_images?: MinimaxH3ReferenceMedia[]; // máx 9
+  reference_videos?: MinimaxH3ReferenceMedia[]; // máx 3
+  reference_audios?: MinimaxH3ReferenceMedia[]; // máx 3
+  model_variant?: string;
+}
+
 export interface TextToSpeechRequest {
   text: string;
   voice_id: string;
@@ -1780,6 +1817,24 @@ export const api = {
     },
     imageToVideoSeedanceSpicy(accessToken: string, payload: WavespeedSeedanceImageToVideoRequest) {
       return authRequest<CreateGenerationResponse>('/api/v1/generations/image-to-video-seedance-spicy', accessToken, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+    textToVideoMinimax(accessToken: string, payload: MinimaxH3TextToVideoRequest) {
+      return authRequest<CreateGenerationResponse>('/api/v1/generations/minimax-h3-text-to-video', accessToken, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+    imageToVideoMinimax(accessToken: string, payload: MinimaxH3ImageToVideoRequest) {
+      return authRequest<CreateGenerationResponse>('/api/v1/generations/minimax-h3-image-to-video', accessToken, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+    referenceToVideoMinimax(accessToken: string, payload: MinimaxH3ReferenceToVideoRequest) {
+      return authRequest<CreateGenerationResponse>('/api/v1/generations/minimax-h3-reference-to-video', accessToken, {
         method: 'POST',
         body: JSON.stringify(payload),
       });

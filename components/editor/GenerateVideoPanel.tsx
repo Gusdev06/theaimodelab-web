@@ -83,6 +83,10 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 const MAX_REFERENCE_SIZE = 1920;
 const REFERENCE_QUALITY = 0.85;
 
+// Modelos de vídeo que NÃO devem aparecer neste painel do editor (só têm UI no
+// painel /video). MiniMax H3 é multi-modo e não tem branch de geração aqui.
+const EDITOR_HIDDEN_VIDEO_SLUGS = new Set<string>(['wavespeed-minimax-h3']);
+
 async function compressImage(dataUrl: string, mimeType: string): Promise<{ dataUrl: string; mimeType: string }> {
   return new Promise((resolve) => {
     const img = new window.Image();
@@ -239,7 +243,10 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
     ];
     const raw = videoModelsQuery.data
       ? videoModelsQuery.data
-          .filter((m) => !m.isGateway)
+          // MiniMax H3 é multi-modo (texto/imagem/referência) e só tem UI no painel
+          // /video (VideoConfigPanel). Este painel do editor não tem branch de geração
+          // para ele — esconder pra não renderizar quebrado.
+          .filter((m) => !m.isGateway && !EDITOR_HIDDEN_VIDEO_SLUGS.has(m.slug))
           .map((m) => ({
             value: m.slug,
             label: labelOverride[m.slug] ?? m.label,
@@ -258,7 +265,9 @@ export function GenerateVideoPanel({ nodeId, onClose, onDuplicate }: GenerateVid
     if (!videoModelsQuery.data) return;
     const current = videoModelsQuery.data.find((m) => m.slug === model);
     if (current && !current.isActive) {
-      const firstActive = videoModelsQuery.data.find((m) => m.isActive && !m.isGateway);
+      const firstActive = videoModelsQuery.data.find(
+        (m) => m.isActive && !m.isGateway && !EDITOR_HIDDEN_VIDEO_SLUGS.has(m.slug),
+      );
       if (firstActive) setModel(firstActive.slug);
     }
   }, [videoModelsQuery.data, model]);

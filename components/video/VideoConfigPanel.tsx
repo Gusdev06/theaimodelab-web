@@ -84,7 +84,7 @@ interface VideoModelConfig {
   label: string;
   variant: string;
   /** rota de geração usada pelo workspace para este modelo */
-  api: 'theaimodelab' | 'kie' | 'omni' | 'seedance' | 'grok' | 'kling' | 'comfydeploy' | 'wavespeed' | 'seedance-spicy';
+  api: 'theaimodelab' | 'kie' | 'omni' | 'seedance' | 'grok' | 'kling' | 'comfydeploy' | 'wavespeed' | 'seedance-spicy' | 'minimax';
   durations: string[];
   defaultDuration: string;
   audio: 'toggle' | 'always-on' | 'always-off';
@@ -94,8 +94,8 @@ interface VideoModelConfig {
   /** proporções aceitas (apiValue enviado ao provider; KIE usa 'Auto' p/ 1:1) */
   aspects: { value: string; label: string }[];
   defaultAspect: string;
-  /** referências múltiplas (refs) ou primeiro frame único (Grok) */
-  refMode: 'refs' | 'first-frame';
+  /** referências múltiplas (refs), primeiro frame único (Grok) ou seletor de modo (MiniMax) */
+  refMode: 'refs' | 'first-frame' | 'multi-mode';
   maxRefs: number;
   /** exibe badge "Novo" no seletor */
   isNew?: boolean;
@@ -127,6 +127,7 @@ const VIDEO_MODELS: VideoModelConfig[] = [
   { value: 'comfydeploy-wan', label: 'Video ( NSFW )', variant: 'COMFYDEPLOY_WAN', api: 'comfydeploy', durations: ['2s', '5s'], defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
   { value: 'wavespeed-ltx-spicy', label: 'LTX 2.3 Spicy ( NSFW )', variant: 'WAVESPEED_LTX_SPICY', api: 'wavespeed', durations: durationRange(5, 20), defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_480P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
   { value: 'wavespeed-seedance-spicy', label: 'Seedance 2.0 Fast Spicy ( NSFW )', variant: 'WAVESPEED_SEEDANCE_SPICY', api: 'seedance-spicy', durations: durationRange(4, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '1:1', label: '1:1' }, { value: '21:9', label: '21:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
+  { value: 'wavespeed-minimax-h3', label: 'MiniMax H3', variant: 'WAVESPEED_MINIMAX_H3', api: 'minimax', durations: durationRange(5, 15), defaultDuration: '5s', audio: 'always-on', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '768p' }], defaultResolution: 'RES_480P', aspects: [{ value: '16:9', label: '16:9' }, { value: '9:16', label: '9:16' }, { value: '1:1', label: '1:1' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '21:9', label: '21:9' }, { value: '9:21', label: '9:21' }], defaultAspect: '16:9', refMode: 'multi-mode', maxRefs: 9, isNew: true },
   { value: 'veo3_fast', label: 'The AI Model Lab Fast', variant: 'VEO_FAST', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
   { value: 'veo3', label: 'The AI Model Lab Quality', variant: 'VEO_MAX', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
 ];
@@ -234,6 +235,10 @@ export function VideoConfigPanel({
   const [omniVideo, setOmniVideo] = useState<MediaFile | null>(null);
   const [seedanceVideo, setSeedanceVideo] = useState<MediaFile | null>(null);
   const [seedanceAudio, setSeedanceAudio] = useState<MediaFile | null>(null);
+  // MiniMax H3: modo (texto/imagem/referência) + mídia de referência (multimodal)
+  const [minimaxMode, setMinimaxMode] = useState<'text' | 'image' | 'reference'>('text');
+  const [minimaxRefVideo, setMinimaxRefVideo] = useState<MediaFile | null>(null);
+  const [minimaxRefAudio, setMinimaxRefAudio] = useState<MediaFile | null>(null);
   const [prompt, setPrompt] = useState(seed?.prompt ?? initialPrompt ?? stored?.prompt ?? '');
   const [enhance, setEnhance] = useState(init?.enhance ?? false);
   const [duration, setDuration] = useState(init?.duration ?? '8s');
@@ -280,6 +285,14 @@ export function VideoConfigPanel({
   const isSeedance = modelConfig.api === 'seedance';
   // quota KIE do Omni: imagens + 2×vídeos ≤ 7 — com vídeo anexado sobram 5
   const effectiveMaxRefs = isOmni && omniVideo ? 5 : modelConfig.maxRefs;
+  // MiniMax H3 — modelo unificado com seletor de modo (texto/imagem/referência)
+  const isMinimax = modelConfig.api === 'minimax';
+  const showFrameInput = isMinimax
+    ? minimaxMode === 'image'
+    : modelConfig.refMode === 'first-frame';
+  const showRefsInput = isMinimax
+    ? minimaxMode === 'reference'
+    : modelConfig.refMode !== 'first-frame';
 
   // modelos do banco sobrescrevem labels/disponibilidade dos base
   const modelsQuery = useQuery({
@@ -321,6 +334,12 @@ export function VideoConfigPanel({
     if (cfg.refMode !== 'first-frame') {
       setFirstFrame(null);
       setLastFrame(null);
+    }
+    // MiniMax começa no modo texto; mídia de referência é exclusiva dele
+    if (cfg.api === 'minimax') setMinimaxMode('text');
+    else {
+      setMinimaxRefVideo(null);
+      setMinimaxRefAudio(null);
     }
   };
 
@@ -418,13 +437,19 @@ export function VideoConfigPanel({
   const videoType =
     tool === 'motion-control'
       ? ('MOTION_CONTROL' as const)
-      : modelConfig.api === 'kling' || modelConfig.api === 'comfydeploy' || modelConfig.api === 'wavespeed' || modelConfig.api === 'seedance-spicy'
-        ? ('IMAGE_TO_VIDEO' as const)
-        : modelConfig.api === 'grok' && firstFrame
+      : isMinimax
+        ? minimaxMode === 'image'
           ? ('IMAGE_TO_VIDEO' as const)
-          : references.length > 0
+          : minimaxMode === 'reference'
             ? ('REFERENCE_VIDEO' as const)
-            : ('TEXT_TO_VIDEO' as const);
+            : ('TEXT_TO_VIDEO' as const)
+        : modelConfig.api === 'kling' || modelConfig.api === 'comfydeploy' || modelConfig.api === 'wavespeed' || modelConfig.api === 'seedance-spicy'
+          ? ('IMAGE_TO_VIDEO' as const)
+          : modelConfig.api === 'grok' && firstFrame
+            ? ('IMAGE_TO_VIDEO' as const)
+            : references.length > 0
+              ? ('REFERENCE_VIDEO' as const)
+              : ('TEXT_TO_VIDEO' as const);
 
   // estimativa de créditos por geração — varia conforme ferramenta/modelo/config
   const estimateDuration = durationToSeconds(duration);
@@ -519,13 +544,19 @@ export function VideoConfigPanel({
   const canGenerate =
     tool === 'motion-control'
       ? !!mcImage && !!mcVideo
-      : modelConfig.api === 'grok'
-        ? !!prompt.trim() || !!firstFrame
-        : modelConfig.api === 'kling' || modelConfig.api === 'seedance-spicy'
-          ? !!firstFrame
-          : modelConfig.api === 'comfydeploy' || modelConfig.api === 'wavespeed'
-            ? !!firstFrame && !!prompt.trim()
-            : !!prompt.trim();
+      : isMinimax
+        ? minimaxMode === 'image'
+          ? !!firstFrame && !!prompt.trim()
+          : minimaxMode === 'reference'
+            ? (references.length > 0 || !!minimaxRefVideo || !!minimaxRefAudio) && !!prompt.trim()
+            : !!prompt.trim()
+        : modelConfig.api === 'grok'
+          ? !!prompt.trim() || !!firstFrame
+          : modelConfig.api === 'kling' || modelConfig.api === 'seedance-spicy'
+            ? !!firstFrame
+            : modelConfig.api === 'comfydeploy' || modelConfig.api === 'wavespeed'
+              ? !!firstFrame && !!prompt.trim()
+              : !!prompt.trim();
 
   const generate = async () => {
     if (!canGenerate || submitting) return;
@@ -706,6 +737,45 @@ export function VideoConfigPanel({
           });
           break;
         }
+        case 'minimax': {
+          const minimaxBase = {
+            prompt: finalPrompt,
+            resolution,
+            duration_seconds: durationToSeconds(duration),
+            model_variant: modelConfig.variant,
+          };
+          if (minimaxMode === 'image') {
+            result = await api.generations.imageToVideoMinimax(accessToken, {
+              ...minimaxBase,
+              first_frame: firstFrame!.base64,
+              first_frame_mime_type: firstFrame!.mime_type,
+              ...(lastFrame && {
+                last_frame: lastFrame.base64,
+                last_frame_mime_type: lastFrame.mime_type,
+              }),
+            });
+          } else if (minimaxMode === 'reference') {
+            result = await api.generations.referenceToVideoMinimax(accessToken, {
+              ...minimaxBase,
+              aspect_ratio: aspect,
+              ...(references.length > 0 && {
+                reference_images: references.map(({ base64, mime_type }) => ({ base64, mime_type })),
+              }),
+              ...(minimaxRefVideo && {
+                reference_videos: [{ base64: minimaxRefVideo.base64, mime_type: minimaxRefVideo.mime_type }],
+              }),
+              ...(minimaxRefAudio && {
+                reference_audios: [{ base64: minimaxRefAudio.base64, mime_type: minimaxRefAudio.mime_type }],
+              }),
+            });
+          } else {
+            result = await api.generations.textToVideoMinimax(accessToken, {
+              ...minimaxBase,
+              aspect_ratio: aspect,
+            });
+          }
+          break;
+        }
         default: {
           const basePayload = {
             prompt: finalPrompt,
@@ -878,18 +948,47 @@ export function VideoConfigPanel({
           </Select>
         </div>
 
-        {/* referências (Grok usa primeiro/último frame; Kling/ComfyDeploy só o primeiro) */}
-        {modelConfig.refMode === 'first-frame' ? (
+        {/* MiniMax H3 — seletor de modo (texto / imagem / referência) */}
+        {isMinimax && (
+          <div className="flex flex-col gap-2">
+            <FieldLabel>{t('video.mode')}</FieldLabel>
+            <div className="grid grid-cols-3 gap-2">
+              {([
+                { id: 'text', labelKey: 'video.modeText', icon: Pencil },
+                { id: 'image', labelKey: 'video.modeImage', icon: ImageIcon },
+                { id: 'reference', labelKey: 'video.modeReference', icon: Film },
+              ] as const).map(({ id, labelKey, icon: ModeIcon }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setMinimaxMode(id)}
+                  className={cn(
+                    'flex h-10 items-center justify-center gap-1.5 rounded-[10px] border px-2 text-[12.5px] font-semibold transition-colors duration-200 ease-app',
+                    minimaxMode === id
+                      ? 'border-[rgba(225,29,42,0.5)] text-app-lime'
+                      : 'border-app-hairline bg-app-surface text-app-text-2 hover:text-app-text',
+                  )}
+                >
+                  <ModeIcon className="size-[15px]" strokeWidth={1.8} />
+                  {t(labelKey)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* referências (Grok/MiniMax usam primeiro/último frame; Kling/ComfyDeploy só o primeiro) */}
+        {showFrameInput ? (
           <div className="flex flex-col gap-2">
             <FieldLabel>{t('video.frames')}</FieldLabel>
-            <div className={modelConfig.api === 'grok' ? 'grid grid-cols-2 gap-3' : 'grid grid-cols-1 gap-3'}>
+            <div className={modelConfig.api === 'grok' || isMinimax ? 'grid grid-cols-2 gap-3' : 'grid grid-cols-1 gap-3'}>
               <ImageDropTile
                 label={t('video.firstFrame')}
                 value={firstFrame}
                 onChange={setFirstFrame}
                 className="h-[96px]"
               />
-              {modelConfig.api === 'grok' && (
+              {(modelConfig.api === 'grok' || isMinimax) && (
                 <ImageDropTile
                   label={t('video.lastFrame')}
                   value={lastFrame}
@@ -899,7 +998,7 @@ export function VideoConfigPanel({
               )}
             </div>
           </div>
-        ) : (
+        ) : showRefsInput ? (
         <div className="flex flex-col gap-2">
           <FieldLabel
             right={
@@ -985,6 +1084,28 @@ export function VideoConfigPanel({
                 />
               </>
             )}
+            {isMinimax && (
+              <>
+                <MediaFileTile
+                  label={t('video.refVideo')}
+                  icon={Film}
+                  kind="video"
+                  value={minimaxRefVideo}
+                  onChange={setMinimaxRefVideo}
+                  maxMB={50}
+                  maxSeconds={15}
+                />
+                <MediaFileTile
+                  label={t('video.refAudio')}
+                  icon={AudioLines}
+                  kind="audio"
+                  value={minimaxRefAudio}
+                  onChange={setMinimaxRefAudio}
+                  maxMB={15}
+                  maxSeconds={15}
+                />
+              </>
+            )}
             {refLoading ? (
               <div className="flex h-[76px] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-[rgba(225,29,42,0.4)] bg-[rgba(225,29,42,0.05)] text-app-text-2">
                 <Loader2 className="size-[19px] animate-spin text-app-lime" strokeWidth={2} />
@@ -1003,7 +1124,7 @@ export function VideoConfigPanel({
             )}
           </div>
         </div>
-        )}
+        ) : null}
 
         {/* prompt */}
         <div className="flex flex-col gap-2">
@@ -1090,7 +1211,8 @@ export function VideoConfigPanel({
             </SelectContent>
           </Select>
 
-          {/* proporção (opções variam por modelo) */}
+          {/* proporção (opções variam por modelo; MiniMax image-to-video segue a imagem) */}
+          {!(isMinimax && minimaxMode === 'image') && (
           <Select value={aspect} onValueChange={setAspect}>
             <SelectTrigger className={cn(selectTriggerClass, '!h-10')}>
               <SquarePlay className="size-[15px] !text-app-lime" strokeWidth={1.8} />
@@ -1106,6 +1228,7 @@ export function VideoConfigPanel({
               ))}
             </SelectContent>
           </Select>
+          )}
 
           {/* toggle de áudio (design 6.9: ON = lime); travado quando o modelo força */}
           <button
