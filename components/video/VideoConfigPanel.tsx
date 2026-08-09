@@ -29,7 +29,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useLoginModal } from '@/lib/login-modal-context';
 import type { PendingGeneration } from '@/components/image/types';
 import { useGenerationTracker } from '@/components/image/use-generation-tracker';
-import { useGenerationErrorMessage } from '@/lib/use-generation-error';
+import { useGenerationErrorMessage, isContentPolicyError } from '@/lib/use-generation-error';
 import { ImageDropTile, type UploadedImage } from '@/components/image/ImageDropTile';
 import { ImageCropModal } from '@/components/image/ImageCropModal';
 import { loadPersisted, savePersisted } from '@/lib/panel-persistence';
@@ -120,17 +120,23 @@ const ASPECTS_VERTICAL_WIDE = [
 const VIDEO_MODELS: VideoModelConfig[] = [
   { value: 'theaimodelab-fast', label: 'Veo 3.1 Fast', variant: 'THEAIMODELAB_FAST', api: 'theaimodelab', durations: ['4s', '6s', '8s'], defaultDuration: '8s', audio: 'toggle', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: ASPECTS_VERTICAL_WIDE, defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
   { value: 'theaimodelab-quality', label: 'Veo 3.1 Quality', variant: 'THEAIMODELAB_QUALITY', api: 'theaimodelab', durations: ['4s', '6s', '8s'], defaultDuration: '8s', audio: 'toggle', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: ASPECTS_VERTICAL_WIDE, defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
-  { value: 'gemini-omni-video', label: 'Gemini Omni', variant: 'GEMINI_OMNI', api: 'omni', durations: ['4s', '6s', '8s', '10s'], defaultDuration: '8s', audio: 'always-off', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: ASPECTS_VERTICAL_WIDE, defaultAspect: '9:16', refMode: 'refs', maxRefs: 7, isNew: true },
-  { value: 'bytedance-seedance-2', label: 'Seedance 2', variant: 'SEEDANCE_2', api: 'seedance', durations: durationRange(4, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_480P', aspects: [{ value: '1:1', label: '1:1' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '16:9', label: '16:9' }, { value: '9:16', label: '9:16' }, { value: '21:9', label: '21:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 6, isNew: true },
-  { value: 'grok-imagine', label: 'Grok Imagine', variant: 'GROK_IMAGINE', api: 'grok', durations: durationRange(6, 30), defaultDuration: '6s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '2:3', label: '2:3' }, { value: '3:2', label: '3:2' }, { value: '1:1', label: '1:1' }, { value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
-  { value: 'kling-v3-turbo', label: 'Kling V3 Turbo', variant: 'KLING_V3_TURBO', api: 'kling', durations: durationRange(3, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
-  { value: 'comfydeploy-wan', label: 'Video ( NSFW )', variant: 'COMFYDEPLOY_WAN', api: 'comfydeploy', durations: ['2s', '5s'], defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
-  { value: 'wavespeed-ltx-spicy', label: 'LTX 2.3 Spicy ( NSFW )', variant: 'WAVESPEED_LTX_SPICY', api: 'wavespeed', durations: durationRange(5, 20), defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_480P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
-  { value: 'wavespeed-seedance-spicy', label: 'Seedance 2.0 Fast Spicy ( NSFW )', variant: 'WAVESPEED_SEEDANCE_SPICY', api: 'seedance-spicy', durations: durationRange(4, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '1:1', label: '1:1' }, { value: '21:9', label: '21:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1, isNew: true },
-  { value: 'wavespeed-minimax-h3', label: 'MiniMax H3', variant: 'WAVESPEED_MINIMAX_H3', api: 'minimax', durations: durationRange(5, 15), defaultDuration: '5s', audio: 'always-on', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '768p' }], defaultResolution: 'RES_480P', aspects: [{ value: '16:9', label: '16:9' }, { value: '9:16', label: '9:16' }, { value: '1:1', label: '1:1' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '21:9', label: '21:9' }, { value: '9:21', label: '9:21' }], defaultAspect: '16:9', refMode: 'multi-mode', maxRefs: 9, isNew: true },
+  { value: 'gemini-omni-video', label: 'Gemini Omni', variant: 'GEMINI_OMNI', api: 'omni', durations: ['4s', '6s', '8s', '10s'], defaultDuration: '8s', audio: 'always-off', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: ASPECTS_VERTICAL_WIDE, defaultAspect: '9:16', refMode: 'refs', maxRefs: 7 },
+  { value: 'bytedance-seedance-2', label: 'Seedance 2', variant: 'SEEDANCE_2', api: 'seedance', durations: durationRange(4, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_480P', aspects: [{ value: '1:1', label: '1:1' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '16:9', label: '16:9' }, { value: '9:16', label: '9:16' }, { value: '21:9', label: '21:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 6 },
+  { value: 'grok-imagine', label: 'Grok Imagine', variant: 'GROK_IMAGINE', api: 'grok', durations: durationRange(6, 30), defaultDuration: '6s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '2:3', label: '2:3' }, { value: '3:2', label: '3:2' }, { value: '1:1', label: '1:1' }, { value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1 },
+  { value: 'kling-v3-turbo', label: 'Kling V3 Turbo', variant: 'KLING_V3_TURBO', api: 'kling', durations: durationRange(3, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1 },
+  { value: 'comfydeploy-wan', label: 'Video ( NSFW )', variant: 'COMFYDEPLOY_WAN', api: 'comfydeploy', durations: ['2s', '5s'], defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1 },
+  { value: 'wavespeed-ltx-spicy', label: 'LTX 2.3 Spicy ( NSFW )', variant: 'WAVESPEED_LTX_SPICY', api: 'wavespeed', durations: durationRange(5, 20), defaultDuration: '5s', audio: 'always-off', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_480P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '1:1', label: '1:1' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1 },
+  { value: 'wavespeed-seedance-spicy', label: 'Seedance 2.0 Fast Spicy ( NSFW )', variant: 'WAVESPEED_SEEDANCE_SPICY', api: 'seedance-spicy', durations: durationRange(4, 15), defaultDuration: '5s', audio: 'toggle', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '720p' }, { value: 'RES_1080P', label: '1080p' }], defaultResolution: 'RES_720P', aspects: [{ value: '9:16', label: '9:16' }, { value: '16:9', label: '16:9' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '1:1', label: '1:1' }, { value: '21:9', label: '21:9' }], defaultAspect: '9:16', refMode: 'first-frame', maxRefs: 1 },
+  { value: 'wavespeed-minimax-h3', label: 'MiniMax H3 ( NSFW )', variant: 'WAVESPEED_MINIMAX_H3', api: 'minimax', durations: durationRange(5, 15), defaultDuration: '5s', audio: 'always-on', resolutions: [{ value: 'RES_480P', label: '480p' }, { value: 'RES_720P', label: '768p' }], defaultResolution: 'RES_480P', aspects: [{ value: '16:9', label: '16:9' }, { value: '9:16', label: '9:16' }, { value: '1:1', label: '1:1' }, { value: '4:3', label: '4:3' }, { value: '3:4', label: '3:4' }, { value: '21:9', label: '21:9' }, { value: '9:21', label: '9:21' }], defaultAspect: '16:9', refMode: 'multi-mode', maxRefs: 9, isNew: true },
   { value: 'veo3_fast', label: 'The AI Model Lab Fast', variant: 'VEO_FAST', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
   { value: 'veo3', label: 'The AI Model Lab Quality', variant: 'VEO_MAX', api: 'kie', durations: ['8s'], defaultDuration: '8s', audio: 'always-on', resolutions: RES_HD, defaultResolution: 'RES_1080P', aspects: [{ value: '9:16', label: '9:16' }, { value: 'Auto', label: 'Auto' }, { value: '16:9', label: '16:9' }], defaultAspect: '9:16', refMode: 'refs', maxRefs: 8 },
 ];
+
+/**
+ * APIs dos modelos sem censura (NSFW). Modelos fora desta lista (Kling, Veo/Google,
+ * Seedance, Grok…) recusam conteúdo sensível — nesse caso sugerimos trocar por um destes.
+ */
+const NSFW_APIS: ReadonlyArray<VideoModelConfig['api']> = ['comfydeploy', 'wavespeed', 'seedance-spicy', 'minimax'];
 
 function durationToSeconds(d: string): number {
   return parseInt(d, 10) || 8;
@@ -287,6 +293,10 @@ export function VideoConfigPanel({
   const effectiveMaxRefs = isOmni && omniVideo ? 5 : modelConfig.maxRefs;
   // MiniMax H3 — modelo unificado com seletor de modo (texto/imagem/referência)
   const isMinimax = modelConfig.api === 'minimax';
+  // modelo sem censura? modelos censurados recusam conteúdo sensível — nesse caso
+  // sugerimos trocar por LTX/Seedance Spicy/MiniMax (ver nsfwSuggestion abaixo).
+  const isNsfwModel = NSFW_APIS.includes(modelConfig.api);
+  const nsfwSuggestion = isNsfwModel ? undefined : t('errors.tryNsfwModels');
   const showFrameInput = isMinimax
     ? minimaxMode === 'image'
     : modelConfig.refMode === 'first-frame';
@@ -801,13 +811,15 @@ export function VideoConfigPanel({
         }
       }
 
-      track(result.id, finalPrompt || t('video.tab'), undefined, unlimited);
+      track(result.id, finalPrompt || t('video.tab'), undefined, unlimited, nsfwSuggestion);
     } catch (err) {
       // erros específicos do modo ilimitado têm tratamento próprio
       if (err instanceof ApiError && handleUnlimitedError(err)) {
         // tratado (modal/toast)
       } else {
-        const msg = mapError(err instanceof ApiError || err instanceof Error ? err.message : null);
+        const raw = err instanceof ApiError || err instanceof Error ? err.message : null;
+        // modelo censurado recusou o conteúdo → orienta a trocar pelos modelos sem censura
+        const msg = nsfwSuggestion && isContentPolicyError(raw) ? nsfwSuggestion : mapError(raw);
         toast.error(msg);
         setGenerationError(msg);
       }

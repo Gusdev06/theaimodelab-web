@@ -7,6 +7,7 @@
       "noResult": "Não foi possível gerar um resultado. Tente ajustar o prompt ou as imagens.",
       "blockedContent": "Conteúdo bloqueado pela IA. Tente com outras imagens ou instruções.",
       "sensitiveContent": "Conteúdo sensível detectado. Tente com outras imagens ou instruções.",
+      "tryNsfwModels": "Este modelo recusa conteúdo sensível. Para cenas +18, troque para um modelo sem censura: LTX Spicy, Seedance Spicy ou MiniMax.",
       "insufficientCredits": "Créditos insuficientes para esta geração.",
       "limitReached": "Você atingiu o limite do seu plano para esta ação.",
       "rateLimited": "Muitas requisições em pouco tempo. Aguarde alguns segundos e tente novamente.",

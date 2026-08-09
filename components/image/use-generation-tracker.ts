@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { api } from '@/lib/api';
 import { useAuth } from '@/lib/auth-context';
-import { useGenerationErrorMessage } from '@/lib/use-generation-error';
+import { useGenerationErrorMessage, isContentPolicyError } from '@/lib/use-generation-error';
 import { kindOf } from '@/components/gallery/kind';
 import type { PendingGeneration } from '@/components/image/types';
 
@@ -45,7 +45,18 @@ export function useGenerationTracker(options?: { onError?: (message: string) => 
   }, []);
 
   const track = useCallback(
-    (id: string, prompt: string, kind?: PendingGeneration['kind'], unlimited?: boolean) => {
+    (
+      id: string,
+      prompt: string,
+      kind?: PendingGeneration['kind'],
+      unlimited?: boolean,
+      /**
+       * Mensagem que substitui o erro quando a falha for por política/conteúdo
+       * sensível — usada em modelos censurados para orientar o usuário a trocar
+       * pelos modelos sem censura. Ignorada em qualquer outro tipo de falha.
+       */
+      contentBlockSuggestion?: string,
+    ) => {
       if (!accessToken || trackedIds.current.has(id)) return;
       trackedIds.current.add(id);
       setPending((list) => [...list, { key: id, prompt, kind, unlimited }]);
@@ -85,7 +96,10 @@ export function useGenerationTracker(options?: { onError?: (message: string) => 
           if (status === 'FAILED') {
             // mapeia o erro do provedor para uma mensagem amigável e localizada;
             // erros não mapeados viram a mensagem genérica (nunca o texto cru)
-            const message = mapErrorRef.current(gen.errorMessage);
+            const message =
+              contentBlockSuggestion && isContentPolicyError(gen.errorMessage)
+                ? contentBlockSuggestion
+                : mapErrorRef.current(gen.errorMessage);
             // mostra o card de erro no painel e remove depois de um tempo
             setPending((list) => list.map((p) => (p.key === id ? { ...p, error: message } : p)));
             // falha estorna os créditos — reflete o saldo de volta

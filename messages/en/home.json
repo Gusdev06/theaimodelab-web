@@ -7,6 +7,7 @@
       "noResult": "Couldn't produce a result. Try adjusting the prompt or the images.",
       "blockedContent": "Content blocked by the AI. Try different images or instructions.",
       "sensitiveContent": "Sensitive content detected. Try different images or instructions.",
+      "tryNsfwModels": "This model rejects sensitive content. For adult scenes, switch to an uncensored model: LTX Spicy, Seedance Spicy or MiniMax.",
       "insufficientCredits": "Not enough credits for this generation.",
       "limitReached": "You've reached your plan limit for this action.",
       "rateLimited": "Too many requests in a short time. Wait a few seconds and try again.",
