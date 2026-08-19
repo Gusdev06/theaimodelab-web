@@ -79,11 +79,13 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-const WHATSAPP_SUPPORT_HREF = `https://wa.me/5511943735978?text=${encodeURIComponent('Olá! Preciso de ajuda com a AI Model Lab.')}`;
+const WHATSAPP_SUPPORT_NUMBER = '5511922198321';
 
 export function AppSidebar() {
   const t = useTranslations('home');
+  const tCommon = useTranslations('common');
   const { sidebarCollapsed: collapsed, toggleSidebar } = useShell();
+  const whatsappSupportHref = `https://wa.me/${WHATSAPP_SUPPORT_NUMBER}?text=${encodeURIComponent(tCommon('supportWhatsappMessage'))}`;
 
   return (
     <aside
@@ -155,7 +157,7 @@ export function AppSidebar() {
         <Tooltip>
           <TooltipTrigger asChild>
             <a
-              href={WHATSAPP_SUPPORT_HREF}
+              href={whatsappSupportHref}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t('shell.help')}

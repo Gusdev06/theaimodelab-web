@@ -41,7 +41,8 @@
       "avatarsTooltip": "My avatars",
       "comingSoonSuffix": "COMING SOON",
       "logoAlt": "The AI Model Lab",
-      "menuLabel": "Menu"
+      "menuLabel": "Menu",
+      "support": "Support"
     },
     "rightSidebar": {
       "wipBadge": "Work in progress",

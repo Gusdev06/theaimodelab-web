@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export function SupportButton() {
+  const t = useTranslations('common');
   const [dismissed, setDismissed] = useState(false);
-  const message = encodeURIComponent('Olá! Preciso de ajuda com a AI Model Lab.');
-  const href = `https://wa.me/5511943735978?text=${message}`;
+  const message = encodeURIComponent(t('supportWhatsappMessage'));
+  const href = `https://wa.me/5511922198321?text=${message}`;
 
   if (dismissed) return null;
 
@@ -13,7 +15,7 @@ export function SupportButton() {
     <div className="fixed bottom-5 right-5 z-50 hidden sm:block transition-transform hover:scale-110">
       <button
         onClick={() => setDismissed(true)}
-        aria-label="Fechar"
+        aria-label={t('close')}
         className="app-press app-ease absolute -top-1 -right-1 z-10 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-black/70 text-white/80 hover:bg-black hover:text-white transition-colors"
       >
         <svg viewBox="0 0 10 10" className="h-1.5 w-1.5" aria-hidden="true">
@@ -24,8 +26,8 @@ export function SupportButton() {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Suporte via WhatsApp"
-        title="Falar com o suporte"
+        aria-label={t('supportWhatsapp')}
+        title={t('supportWhatsapp')}
         className="app-press app-ease flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/40 transition-colors hover:bg-[#e11d2a] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-[#111113]"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden="true">

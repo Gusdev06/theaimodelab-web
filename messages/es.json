@@ -738,7 +738,9 @@
     "tryAgain": "Intentar de nuevo",
     "close": "Cerrar",
     "save": "Guardar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "supportWhatsapp": "Soporte por WhatsApp",
+    "supportWhatsappMessage": "¡Hola! Necesito ayuda con The AI Model Lab."
   },
   "locale": {
     "portuguese": "Portugués",
